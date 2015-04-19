@@ -28,26 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.Group_Configuration = new System.Windows.Forms.GroupBox();
-            this.Radio_Technique_Wavelet = new System.Windows.Forms.RadioButton();
-            this.Radio_Technique_DCT = new System.Windows.Forms.RadioButton();
-            this.Radio_Technique_Radish = new System.Windows.Forms.RadioButton();
+            this.Label_Technique_Wavelet_Level = new System.Windows.Forms.Label();
+            this.Number_Technique_Wavelet_Level = new System.Windows.Forms.NumericUpDown();
+            this.Label_Technique_Wavelet_Alpha = new System.Windows.Forms.Label();
+            this.Number_Technique_Wavelet_Alpha = new System.Windows.Forms.NumericUpDown();
             this.Label_Technique_Radish_Angles = new System.Windows.Forms.Label();
             this.Label_Technique_Radish_Sigma = new System.Windows.Forms.Label();
             this.Label_Technique_Radish_Gamma = new System.Windows.Forms.Label();
             this.Number_Technique_Radish_Angles = new System.Windows.Forms.NumericUpDown();
             this.Number_Technique_Radish_Sigma = new System.Windows.Forms.NumericUpDown();
             this.Number_Technique_Radish_Gamma = new System.Windows.Forms.NumericUpDown();
-            this.Label_Technique_Wavelet_Level = new System.Windows.Forms.Label();
-            this.Number_Technique_Wavelet_Level = new System.Windows.Forms.NumericUpDown();
-            this.Label_Technique_Wavelet_Alpha = new System.Windows.Forms.Label();
-            this.Number_Technique_Wavelet_Alpha = new System.Windows.Forms.NumericUpDown();
+            this.Radio_Technique_Wavelet = new System.Windows.Forms.RadioButton();
+            this.Radio_Technique_DCT = new System.Windows.Forms.RadioButton();
+            this.Radio_Technique_Radish = new System.Windows.Forms.RadioButton();
+            this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.Group_Configuration.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Level)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Alpha)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Angles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Sigma)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Gamma)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Level)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Alpha)).BeginInit();
             this.SuspendLayout();
             // 
             // Group_Configuration
@@ -72,40 +74,65 @@
             this.Group_Configuration.TabStop = false;
             this.Group_Configuration.Text = "Configuration";
             // 
-            // Radio_Technique_Wavelet
+            // Label_Technique_Wavelet_Level
             // 
-            this.Radio_Technique_Wavelet.AutoSize = true;
-            this.Radio_Technique_Wavelet.Location = new System.Drawing.Point(17, 65);
-            this.Radio_Technique_Wavelet.Name = "Radio_Technique_Wavelet";
-            this.Radio_Technique_Wavelet.Size = new System.Drawing.Size(149, 17);
-            this.Radio_Technique_Wavelet.TabIndex = 5;
-            this.Radio_Technique_Wavelet.Text = "Marr/Mexican hat wavelet";
-            this.Radio_Technique_Wavelet.UseVisualStyleBackColor = true;
-            this.Radio_Technique_Wavelet.CheckedChanged += new System.EventHandler(this.Radio_Technique_Wavelet_CheckedChanged);
+            this.Label_Technique_Wavelet_Level.AutoSize = true;
+            this.Label_Technique_Wavelet_Level.Location = new System.Drawing.Point(307, 65);
+            this.Label_Technique_Wavelet_Level.Name = "Label_Technique_Wavelet_Level";
+            this.Label_Technique_Wavelet_Level.Size = new System.Drawing.Size(36, 13);
+            this.Label_Technique_Wavelet_Level.TabIndex = 18;
+            this.Label_Technique_Wavelet_Level.Text = "Level:";
             // 
-            // Radio_Technique_DCT
+            // Number_Technique_Wavelet_Level
             // 
-            this.Radio_Technique_DCT.AutoSize = true;
-            this.Radio_Technique_DCT.Location = new System.Drawing.Point(17, 42);
-            this.Radio_Technique_DCT.Name = "Radio_Technique_DCT";
-            this.Radio_Technique_DCT.Size = new System.Drawing.Size(73, 17);
-            this.Radio_Technique_DCT.TabIndex = 4;
-            this.Radio_Technique_DCT.Text = "DCT hash";
-            this.Radio_Technique_DCT.UseVisualStyleBackColor = true;
-            this.Radio_Technique_DCT.CheckedChanged += new System.EventHandler(this.Radio_Technique_DCT_CheckedChanged);
+            this.Number_Technique_Wavelet_Level.DecimalPlaces = 1;
+            this.Number_Technique_Wavelet_Level.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.Number_Technique_Wavelet_Level.Location = new System.Drawing.Point(352, 61);
+            this.Number_Technique_Wavelet_Level.Name = "Number_Technique_Wavelet_Level";
+            this.Number_Technique_Wavelet_Level.Size = new System.Drawing.Size(45, 20);
+            this.Number_Technique_Wavelet_Level.TabIndex = 17;
+            this.Number_Technique_Wavelet_Level.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ToolTip.SetToolTip(this.Number_Technique_Wavelet_Level, "Level of the scale factor");
+            this.Number_Technique_Wavelet_Level.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.Number_Technique_Wavelet_Level.ValueChanged += new System.EventHandler(this.Number_Technique_Wavelet_Level_ValueChanged);
             // 
-            // Radio_Technique_Radish
+            // Label_Technique_Wavelet_Alpha
             // 
-            this.Radio_Technique_Radish.AutoSize = true;
-            this.Radio_Technique_Radish.Checked = true;
-            this.Radio_Technique_Radish.Location = new System.Drawing.Point(17, 19);
-            this.Radio_Technique_Radish.Name = "Radio_Technique_Radish";
-            this.Radio_Technique_Radish.Size = new System.Drawing.Size(131, 17);
-            this.Radio_Technique_Radish.TabIndex = 3;
-            this.Radio_Technique_Radish.TabStop = true;
-            this.Radio_Technique_Radish.Text = "Radial hash (RADISH)";
-            this.Radio_Technique_Radish.UseVisualStyleBackColor = true;
-            this.Radio_Technique_Radish.CheckedChanged += new System.EventHandler(this.Radio_Technique_Radish_CheckedChanged);
+            this.Label_Technique_Wavelet_Alpha.AutoSize = true;
+            this.Label_Technique_Wavelet_Alpha.Location = new System.Drawing.Point(172, 65);
+            this.Label_Technique_Wavelet_Alpha.Name = "Label_Technique_Wavelet_Alpha";
+            this.Label_Technique_Wavelet_Alpha.Size = new System.Drawing.Size(37, 13);
+            this.Label_Technique_Wavelet_Alpha.TabIndex = 16;
+            this.Label_Technique_Wavelet_Alpha.Text = "Alpha:";
+            // 
+            // Number_Technique_Wavelet_Alpha
+            // 
+            this.Number_Technique_Wavelet_Alpha.DecimalPlaces = 1;
+            this.Number_Technique_Wavelet_Alpha.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.Number_Technique_Wavelet_Alpha.Location = new System.Drawing.Point(224, 61);
+            this.Number_Technique_Wavelet_Alpha.Name = "Number_Technique_Wavelet_Alpha";
+            this.Number_Technique_Wavelet_Alpha.Size = new System.Drawing.Size(45, 20);
+            this.Number_Technique_Wavelet_Alpha.TabIndex = 15;
+            this.Number_Technique_Wavelet_Alpha.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ToolTip.SetToolTip(this.Number_Technique_Wavelet_Alpha, "Scale factor for marr wavelet");
+            this.Number_Technique_Wavelet_Alpha.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.Number_Technique_Wavelet_Alpha.ValueChanged += new System.EventHandler(this.Number_Technique_Wavelet_Alpha_ValueChanged);
             // 
             // Label_Technique_Radish_Angles
             // 
@@ -166,11 +193,12 @@
             this.Number_Technique_Radish_Sigma.Size = new System.Drawing.Size(45, 20);
             this.Number_Technique_Radish_Sigma.TabIndex = 10;
             this.Number_Technique_Radish_Sigma.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ToolTip.SetToolTip(this.Number_Technique_Radish_Sigma, "Value for the deviation for gaussian filter");
             this.Number_Technique_Radish_Sigma.Value = new decimal(new int[] {
-            1,
+            35,
             0,
             0,
-            0});
+            65536});
             this.Number_Technique_Radish_Sigma.ValueChanged += new System.EventHandler(this.Number_Technique_Radish_Sigma_ValueChanged);
             // 
             // Number_Technique_Radish_Gamma
@@ -186,6 +214,7 @@
             this.Number_Technique_Radish_Gamma.Size = new System.Drawing.Size(45, 20);
             this.Number_Technique_Radish_Gamma.TabIndex = 9;
             this.Number_Technique_Radish_Gamma.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ToolTip.SetToolTip(this.Number_Technique_Radish_Gamma, "Value for gamma correction on the input image");
             this.Number_Technique_Radish_Gamma.Value = new decimal(new int[] {
             1,
             0,
@@ -193,63 +222,48 @@
             0});
             this.Number_Technique_Radish_Gamma.ValueChanged += new System.EventHandler(this.Number_Technique_Radish_Gamma_ValueChanged);
             // 
-            // Label_Technique_Wavelet_Level
+            // Radio_Technique_Wavelet
             // 
-            this.Label_Technique_Wavelet_Level.AutoSize = true;
-            this.Label_Technique_Wavelet_Level.Location = new System.Drawing.Point(307, 65);
-            this.Label_Technique_Wavelet_Level.Name = "Label_Technique_Wavelet_Level";
-            this.Label_Technique_Wavelet_Level.Size = new System.Drawing.Size(36, 13);
-            this.Label_Technique_Wavelet_Level.TabIndex = 18;
-            this.Label_Technique_Wavelet_Level.Text = "Level:";
+            this.Radio_Technique_Wavelet.AutoSize = true;
+            this.Radio_Technique_Wavelet.Location = new System.Drawing.Point(17, 65);
+            this.Radio_Technique_Wavelet.Name = "Radio_Technique_Wavelet";
+            this.Radio_Technique_Wavelet.Size = new System.Drawing.Size(149, 17);
+            this.Radio_Technique_Wavelet.TabIndex = 5;
+            this.Radio_Technique_Wavelet.Text = "Marr/Mexican hat wavelet";
+            this.ToolTip.SetToolTip(this.Radio_Technique_Wavelet, "Hashing technique: Wavelet");
+            this.Radio_Technique_Wavelet.UseVisualStyleBackColor = true;
+            this.Radio_Technique_Wavelet.CheckedChanged += new System.EventHandler(this.Radio_Technique_Wavelet_CheckedChanged);
             // 
-            // Number_Technique_Wavelet_Level
+            // Radio_Technique_DCT
             // 
-            this.Number_Technique_Wavelet_Level.DecimalPlaces = 1;
-            this.Number_Technique_Wavelet_Level.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.Number_Technique_Wavelet_Level.Location = new System.Drawing.Point(352, 61);
-            this.Number_Technique_Wavelet_Level.Name = "Number_Technique_Wavelet_Level";
-            this.Number_Technique_Wavelet_Level.Size = new System.Drawing.Size(45, 20);
-            this.Number_Technique_Wavelet_Level.TabIndex = 17;
-            this.Number_Technique_Wavelet_Level.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Number_Technique_Wavelet_Level.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.Number_Technique_Wavelet_Level.ValueChanged += new System.EventHandler(this.Number_Technique_Wavelet_Level_ValueChanged);
+            this.Radio_Technique_DCT.AutoSize = true;
+            this.Radio_Technique_DCT.Location = new System.Drawing.Point(17, 42);
+            this.Radio_Technique_DCT.Name = "Radio_Technique_DCT";
+            this.Radio_Technique_DCT.Size = new System.Drawing.Size(73, 17);
+            this.Radio_Technique_DCT.TabIndex = 4;
+            this.Radio_Technique_DCT.Text = "DCT hash";
+            this.ToolTip.SetToolTip(this.Radio_Technique_DCT, "Hashing technique: DCT (Discrete Cosine Tranform)");
+            this.Radio_Technique_DCT.UseVisualStyleBackColor = true;
+            this.Radio_Technique_DCT.CheckedChanged += new System.EventHandler(this.Radio_Technique_DCT_CheckedChanged);
             // 
-            // Label_Technique_Wavelet_Alpha
+            // Radio_Technique_Radish
             // 
-            this.Label_Technique_Wavelet_Alpha.AutoSize = true;
-            this.Label_Technique_Wavelet_Alpha.Location = new System.Drawing.Point(172, 65);
-            this.Label_Technique_Wavelet_Alpha.Name = "Label_Technique_Wavelet_Alpha";
-            this.Label_Technique_Wavelet_Alpha.Size = new System.Drawing.Size(37, 13);
-            this.Label_Technique_Wavelet_Alpha.TabIndex = 16;
-            this.Label_Technique_Wavelet_Alpha.Text = "Alpha:";
+            this.Radio_Technique_Radish.AutoSize = true;
+            this.Radio_Technique_Radish.Checked = true;
+            this.Radio_Technique_Radish.Location = new System.Drawing.Point(17, 19);
+            this.Radio_Technique_Radish.Name = "Radio_Technique_Radish";
+            this.Radio_Technique_Radish.Size = new System.Drawing.Size(131, 17);
+            this.Radio_Technique_Radish.TabIndex = 3;
+            this.Radio_Technique_Radish.TabStop = true;
+            this.Radio_Technique_Radish.Text = "Radial hash (RADISH)";
+            this.ToolTip.SetToolTip(this.Radio_Technique_Radish, "Hashing technique: RADISH");
+            this.Radio_Technique_Radish.UseVisualStyleBackColor = true;
+            this.Radio_Technique_Radish.CheckedChanged += new System.EventHandler(this.Radio_Technique_Radish_CheckedChanged);
             // 
-            // Number_Technique_Wavelet_Alpha
+            // ToolTip
             // 
-            this.Number_Technique_Wavelet_Alpha.DecimalPlaces = 1;
-            this.Number_Technique_Wavelet_Alpha.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.Number_Technique_Wavelet_Alpha.Location = new System.Drawing.Point(224, 61);
-            this.Number_Technique_Wavelet_Alpha.Name = "Number_Technique_Wavelet_Alpha";
-            this.Number_Technique_Wavelet_Alpha.Size = new System.Drawing.Size(45, 20);
-            this.Number_Technique_Wavelet_Alpha.TabIndex = 15;
-            this.Number_Technique_Wavelet_Alpha.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Number_Technique_Wavelet_Alpha.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.Number_Technique_Wavelet_Alpha.ValueChanged += new System.EventHandler(this.Number_Technique_Wavelet_Alpha_ValueChanged);
+            this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.ToolTip.ToolTipTitle = "Information";
             // 
             // TechniqueSelection
             // 
@@ -260,11 +274,11 @@
             this.Size = new System.Drawing.Size(610, 100);
             this.Group_Configuration.ResumeLayout(false);
             this.Group_Configuration.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Level)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Alpha)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Angles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Sigma)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Gamma)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Level)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Alpha)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -285,5 +299,6 @@
         private System.Windows.Forms.NumericUpDown Number_Technique_Wavelet_Level;
         private System.Windows.Forms.Label Label_Technique_Wavelet_Alpha;
         private System.Windows.Forms.NumericUpDown Number_Technique_Wavelet_Alpha;
+        private System.Windows.Forms.ToolTip ToolTip;
     }
 }

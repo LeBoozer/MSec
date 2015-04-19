@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.MainDialog_MainTab = new System.Windows.Forms.TabControl();
             this.pageImageVsImage = new System.Windows.Forms.TabPage();
             this.Progress_ImageVsImage = new System.Windows.Forms.ProgressBar();
@@ -36,6 +37,7 @@
             this.Selection_ImageSource1 = new ImageSourceSelection();
             this.Selection_ImageSource0 = new ImageSourceSelection();
             this.Selection_Technique = new TechniqueSelection();
+            this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.MainDialog_MainTab.SuspendLayout();
             this.pageImageVsImage.SuspendLayout();
             this.SuspendLayout();
@@ -68,9 +70,10 @@
             // 
             this.Progress_ImageVsImage.Enabled = false;
             this.Progress_ImageVsImage.Location = new System.Drawing.Point(3, 448);
-            this.Progress_ImageVsImage.MarqueeAnimationSpeed = 50;
+            this.Progress_ImageVsImage.MarqueeAnimationSpeed = 20;
             this.Progress_ImageVsImage.Name = "Progress_ImageVsImage";
             this.Progress_ImageVsImage.Size = new System.Drawing.Size(656, 10);
+            this.Progress_ImageVsImage.Step = 20;
             this.Progress_ImageVsImage.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.Progress_ImageVsImage.TabIndex = 7;
             this.Progress_ImageVsImage.Visible = false;
@@ -93,6 +96,7 @@
             this.Button_ImageVsImage_Compute.Size = new System.Drawing.Size(19, 23);
             this.Button_ImageVsImage_Compute.TabIndex = 5;
             this.Button_ImageVsImage_Compute.Text = "C";
+            this.ToolTip.SetToolTip(this.Button_ImageVsImage_Compute, "Starts the hashing of both selected images and the subsequent comparison");
             this.Button_ImageVsImage_Compute.UseVisualStyleBackColor = true;
             // 
             // Selection_ImageSource1
@@ -117,6 +121,11 @@
             this.Selection_Technique.Name = "Selection_Technique";
             this.Selection_Technique.Size = new System.Drawing.Size(610, 100);
             this.Selection_Technique.TabIndex = 0;
+            // 
+            // ToolTip
+            // 
+            this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.ToolTip.ToolTipTitle = "Information";
             // 
             // MainDialog
             // 
@@ -148,6 +157,7 @@
         private System.Windows.Forms.Button Button_ImageVsImage_Compute;
         private System.Windows.Forms.Label Label_ImageVsImage_Result;
         private System.Windows.Forms.ProgressBar Progress_ImageVsImage;
+        private System.Windows.Forms.ToolTip ToolTip;
     }
 }
 

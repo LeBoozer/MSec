@@ -32,10 +32,10 @@ namespace MSec
         }
 
         #region Controls
-        private PictureBox m_picturePreview = null;
-        private TextBox m_textInstructions = null;
-        private Button m_buttonLoad = null;
-        private Button m_buttonDelete = null;
+        private PictureBox      m_picturePreview = null;
+        private TextBox         m_textInstructions = null;
+        private Button          m_buttonLoad = null;
+        private Button          m_buttonDelete = null;
         #endregion Controls
 
         // Delegate functions

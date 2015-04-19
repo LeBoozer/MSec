@@ -305,7 +305,7 @@ namespace MSec
                     // Store result
                     result = new ComparativeData<double>(dis, (double _d) =>
                     {
-                        return "Normalized hamming distance: " + _d.ToString();
+                        return "Normalized hamming distance: " + _d.ToString("#0.0000");
                     });
                     return result;
                 }
