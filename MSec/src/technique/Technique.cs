@@ -207,7 +207,7 @@ namespace MSec
                     result.m_isDifferent = isSame == 1 ? false : true;
                     return new ComparativeData<RadishComparativeData>(result, (RadishComparativeData _data) =>
                     {
-                        return "Different: " + _data.m_isDifferent.ToString() + " | Peak: " + _data.m_crossCorrelationPeak;
+                        return "Peak: " + _data.m_crossCorrelationPeak;
                     });
                 }
             );
@@ -246,7 +246,10 @@ namespace MSec
                     dis = PHash.computeHammingDistance(_h0.Data, _h1.Data);
 
                     // Store result
-                    result = new ComparativeData<int>(dis);
+                    result = new ComparativeData<int>(dis, (int _d) =>
+                    {
+                        return "Hamming distance: " + _d.ToString();
+                    });
                     return result;
                 }
             );
@@ -300,7 +303,10 @@ namespace MSec
                     dis = PHash.computeHammingDistance(_h0.Data.m_data, _h0.Data.m_dataLength, _h1.Data.m_data, _h1.Data.m_dataLength);
 
                     // Store result
-                    result = new ComparativeData<double>(dis);
+                    result = new ComparativeData<double>(dis, (double _d) =>
+                    {
+                        return "Normalized hamming distance: " + _d.ToString();
+                    });
                     return result;
                 }
             );

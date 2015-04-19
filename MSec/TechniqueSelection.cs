@@ -96,6 +96,7 @@ namespace MSec
 
         // Delegate functions
         public delegate void delegate_onTechniqueChanged(TechniqueID _nextTechnique);
+        public delegate void delegate_onAttributeChanged();
         public delegate void delegate_onRadishGammaChanged(decimal _v);
         public delegate void delegate_onRadishSigmaChanged(decimal _v);
         public delegate void delegate_onRadishNumberOfAnglesChanged(decimal _v);
@@ -104,6 +105,7 @@ namespace MSec
 
         // Events
         public event delegate_onTechniqueChanged OnTechniqueChanged = delegate { };
+        public event delegate_onAttributeChanged OnAttributeChanged = delegate { };
         public event delegate_onRadishGammaChanged OnRadishGammaChanged = delegate { };
         public event delegate_onRadishSigmaChanged OnRadishSigmaChanged = delegate { };
         public event delegate_onRadishNumberOfAnglesChanged OnRadishNumberOfAnglesChanged = delegate { };
@@ -251,6 +253,7 @@ namespace MSec
             // Set value and notify
             m_radishGamma = m_numberRadishGamma.Value;
             OnRadishGammaChanged(m_radishGamma);
+            OnAttributeChanged();
         }
 
         private void Number_Technique_Radish_Sigma_ValueChanged(object sender, EventArgs e)
@@ -258,6 +261,7 @@ namespace MSec
             // Set value and notify
             m_radishSigma = m_numberRadishSigma.Value;
             OnRadishSigmaChanged(m_radishSigma);
+            OnAttributeChanged();
         }
 
         private void Number_Technique_Radish_Angles_ValueChanged(object sender, EventArgs e)
@@ -265,6 +269,7 @@ namespace MSec
             // Set value and notify
             m_radishAngles = m_numberRadishAngles.Value;
             OnRadishNumberOfAnglesChanged(m_radishAngles);
+            OnAttributeChanged();
         }
         #endregion Events: Technique: Radish
 
@@ -274,6 +279,7 @@ namespace MSec
             // Set value and notify
             m_waveletAlpha = m_numberWaveletAlpha.Value;
             OnWaveletAlphaChanged(m_waveletAlpha);
+            OnAttributeChanged();
         }
 
         private void Number_Technique_Wavelet_Level_ValueChanged(object sender, EventArgs e)
@@ -281,6 +287,7 @@ namespace MSec
             // Set value and notify
             m_waveletLevel = m_numberWaveletLevel.Value;
             OnWaveletLevelChanged(m_waveletLevel);
+            OnAttributeChanged();
         }
         #endregion Events: Technique: Wavelet
     }

@@ -30,6 +30,8 @@
         {
             this.MainDialog_MainTab = new System.Windows.Forms.TabControl();
             this.pageImageVsImage = new System.Windows.Forms.TabPage();
+            this.Progress_ImageVsImage = new System.Windows.Forms.ProgressBar();
+            this.Label_ImageVsImage_Result = new System.Windows.Forms.Label();
             this.Button_ImageVsImage_Compute = new System.Windows.Forms.Button();
             this.Selection_ImageSource1 = new ImageSourceSelection();
             this.Selection_ImageSource0 = new ImageSourceSelection();
@@ -49,6 +51,8 @@
             // 
             // pageImageVsImage
             // 
+            this.pageImageVsImage.Controls.Add(this.Progress_ImageVsImage);
+            this.pageImageVsImage.Controls.Add(this.Label_ImageVsImage_Result);
             this.pageImageVsImage.Controls.Add(this.Button_ImageVsImage_Compute);
             this.pageImageVsImage.Controls.Add(this.Selection_ImageSource1);
             this.pageImageVsImage.Controls.Add(this.Selection_ImageSource0);
@@ -60,14 +64,35 @@
             this.pageImageVsImage.Text = "Image vs. Image";
             this.pageImageVsImage.UseVisualStyleBackColor = true;
             // 
+            // Progress_ImageVsImage
+            // 
+            this.Progress_ImageVsImage.Enabled = false;
+            this.Progress_ImageVsImage.Location = new System.Drawing.Point(3, 448);
+            this.Progress_ImageVsImage.MarqueeAnimationSpeed = 50;
+            this.Progress_ImageVsImage.Name = "Progress_ImageVsImage";
+            this.Progress_ImageVsImage.Size = new System.Drawing.Size(656, 10);
+            this.Progress_ImageVsImage.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.Progress_ImageVsImage.TabIndex = 7;
+            this.Progress_ImageVsImage.Visible = false;
+            // 
+            // Label_ImageVsImage_Result
+            // 
+            this.Label_ImageVsImage_Result.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_ImageVsImage_Result.Location = new System.Drawing.Point(3, 413);
+            this.Label_ImageVsImage_Result.Name = "Label_ImageVsImage_Result";
+            this.Label_ImageVsImage_Result.Size = new System.Drawing.Size(656, 32);
+            this.Label_ImageVsImage_Result.TabIndex = 6;
+            this.Label_ImageVsImage_Result.Text = "-";
+            this.Label_ImageVsImage_Result.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Button_ImageVsImage_Compute
             // 
             this.Button_ImageVsImage_Compute.Enabled = false;
-            this.Button_ImageVsImage_Compute.Location = new System.Drawing.Point(292, 416);
+            this.Button_ImageVsImage_Compute.Location = new System.Drawing.Point(322, 383);
             this.Button_ImageVsImage_Compute.Name = "Button_ImageVsImage_Compute";
-            this.Button_ImageVsImage_Compute.Size = new System.Drawing.Size(75, 23);
+            this.Button_ImageVsImage_Compute.Size = new System.Drawing.Size(19, 23);
             this.Button_ImageVsImage_Compute.TabIndex = 5;
-            this.Button_ImageVsImage_Compute.Text = "Compute";
+            this.Button_ImageVsImage_Compute.Text = "C";
             this.Button_ImageVsImage_Compute.UseVisualStyleBackColor = true;
             // 
             // Selection_ImageSource1
@@ -121,6 +146,8 @@
         private ImageSourceSelection Selection_ImageSource1;
         private ImageSourceSelection Selection_ImageSource0;
         private System.Windows.Forms.Button Button_ImageVsImage_Compute;
+        private System.Windows.Forms.Label Label_ImageVsImage_Result;
+        private System.Windows.Forms.ProgressBar Progress_ImageVsImage;
     }
 }
 

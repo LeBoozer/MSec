@@ -88,6 +88,16 @@ namespace MSec
             });
         }
 
+        // Sets the instruction text
+        public void setInstructionText(string _text)
+        {
+            // Run in GUI thread
+            Utility.invokeInGuiThread(m_textInstructions, delegate
+            {
+                m_textInstructions.Text = _text;
+            });
+        }
+
         // Initializes the user control
         private void initializeUserControl()
         {
@@ -170,6 +180,7 @@ namespace MSec
             {
                 m_imageSource = null;
                 m_picturePreview.Image = null;
+                m_textInstructions.Text = "";
             }
 
             // Notify listener
