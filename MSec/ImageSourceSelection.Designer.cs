@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.Group_ImageSource = new System.Windows.Forms.GroupBox();
-            this.Picture_Preview = new System.Windows.Forms.PictureBox();
-            this.Button_Load = new System.Windows.Forms.Button();
-            this.Button_Delete = new System.Windows.Forms.Button();
             this.Text_Instructions = new System.Windows.Forms.TextBox();
+            this.Button_Delete = new System.Windows.Forms.Button();
+            this.Button_Load = new System.Windows.Forms.Button();
+            this.Picture_Preview = new System.Windows.Forms.PictureBox();
             this.Group_ImageSource.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).BeginInit();
             this.SuspendLayout();
@@ -50,33 +50,6 @@
             this.Group_ImageSource.TabStop = false;
             this.Group_ImageSource.Text = "Image source";
             // 
-            // Picture_Preview
-            // 
-            this.Picture_Preview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Picture_Preview.Location = new System.Drawing.Point(6, 19);
-            this.Picture_Preview.Name = "Picture_Preview";
-            this.Picture_Preview.Size = new System.Drawing.Size(298, 212);
-            this.Picture_Preview.TabIndex = 0;
-            this.Picture_Preview.TabStop = false;
-            // 
-            // Button_Load
-            // 
-            this.Button_Load.Location = new System.Drawing.Point(281, 237);
-            this.Button_Load.Name = "Button_Load";
-            this.Button_Load.Size = new System.Drawing.Size(23, 23);
-            this.Button_Load.TabIndex = 1;
-            this.Button_Load.Text = "L";
-            this.Button_Load.UseVisualStyleBackColor = true;
-            // 
-            // Button_Delete
-            // 
-            this.Button_Delete.Location = new System.Drawing.Point(281, 266);
-            this.Button_Delete.Name = "Button_Delete";
-            this.Button_Delete.Size = new System.Drawing.Size(23, 23);
-            this.Button_Delete.TabIndex = 2;
-            this.Button_Delete.Text = "D";
-            this.Button_Delete.UseVisualStyleBackColor = true;
-            // 
             // Text_Instructions
             // 
             this.Text_Instructions.Location = new System.Drawing.Point(6, 237);
@@ -86,13 +59,46 @@
             this.Text_Instructions.Size = new System.Drawing.Size(269, 52);
             this.Text_Instructions.TabIndex = 3;
             // 
+            // Button_Delete
+            // 
+            this.Button_Delete.Location = new System.Drawing.Point(281, 266);
+            this.Button_Delete.Name = "Button_Delete";
+            this.Button_Delete.Size = new System.Drawing.Size(23, 23);
+            this.Button_Delete.TabIndex = 2;
+            this.Button_Delete.Text = "D";
+            this.Button_Delete.UseVisualStyleBackColor = true;
+            this.Button_Delete.Click += new System.EventHandler(this.Button_Delete_Click);
+            // 
+            // Button_Load
+            // 
+            this.Button_Load.Location = new System.Drawing.Point(281, 237);
+            this.Button_Load.Name = "Button_Load";
+            this.Button_Load.Size = new System.Drawing.Size(23, 23);
+            this.Button_Load.TabIndex = 1;
+            this.Button_Load.Text = "L";
+            this.Button_Load.UseVisualStyleBackColor = true;
+            this.Button_Load.Click += new System.EventHandler(this.Button_Load_Click);
+            // 
+            // Picture_Preview
+            // 
+            this.Picture_Preview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Picture_Preview.Location = new System.Drawing.Point(6, 19);
+            this.Picture_Preview.Name = "Picture_Preview";
+            this.Picture_Preview.Size = new System.Drawing.Size(298, 212);
+            this.Picture_Preview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Picture_Preview.TabIndex = 0;
+            this.Picture_Preview.TabStop = false;
+            // 
             // ImageSourceSelection
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.Group_ImageSource);
             this.Name = "ImageSourceSelection";
             this.Size = new System.Drawing.Size(317, 301);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ImageSourceSelection_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ImageSourceSelection_DragEnter);
             this.Group_ImageSource.ResumeLayout(false);
             this.Group_ImageSource.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).EndInit();

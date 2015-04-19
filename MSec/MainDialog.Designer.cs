@@ -30,10 +30,9 @@
         {
             this.MainDialog_MainTab = new System.Windows.Forms.TabControl();
             this.pageImageVsImage = new System.Windows.Forms.TabPage();
+            this.Button_ImageVsImage_Compute = new System.Windows.Forms.Button();
             this.Selection_ImageSource1 = new ImageSourceSelection();
             this.Selection_ImageSource0 = new ImageSourceSelection();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.Selection_Technique = new TechniqueSelection();
             this.MainDialog_MainTab.SuspendLayout();
             this.pageImageVsImage.SuspendLayout();
@@ -50,10 +49,9 @@
             // 
             // pageImageVsImage
             // 
+            this.pageImageVsImage.Controls.Add(this.Button_ImageVsImage_Compute);
             this.pageImageVsImage.Controls.Add(this.Selection_ImageSource1);
             this.pageImageVsImage.Controls.Add(this.Selection_ImageSource0);
-            this.pageImageVsImage.Controls.Add(this.button2);
-            this.pageImageVsImage.Controls.Add(this.button1);
             this.pageImageVsImage.Controls.Add(this.Selection_Technique);
             this.pageImageVsImage.Location = new System.Drawing.Point(4, 22);
             this.pageImageVsImage.Name = "pageImageVsImage";
@@ -62,8 +60,19 @@
             this.pageImageVsImage.Text = "Image vs. Image";
             this.pageImageVsImage.UseVisualStyleBackColor = true;
             // 
+            // Button_ImageVsImage_Compute
+            // 
+            this.Button_ImageVsImage_Compute.Enabled = false;
+            this.Button_ImageVsImage_Compute.Location = new System.Drawing.Point(292, 416);
+            this.Button_ImageVsImage_Compute.Name = "Button_ImageVsImage_Compute";
+            this.Button_ImageVsImage_Compute.Size = new System.Drawing.Size(75, 23);
+            this.Button_ImageVsImage_Compute.TabIndex = 5;
+            this.Button_ImageVsImage_Compute.Text = "Compute";
+            this.Button_ImageVsImage_Compute.UseVisualStyleBackColor = true;
+            // 
             // Selection_ImageSource1
             // 
+            this.Selection_ImageSource1.AllowDrop = true;
             this.Selection_ImageSource1.Location = new System.Drawing.Point(342, 109);
             this.Selection_ImageSource1.Name = "Selection_ImageSource1";
             this.Selection_ImageSource1.Size = new System.Drawing.Size(317, 301);
@@ -71,28 +80,11 @@
             // 
             // Selection_ImageSource0
             // 
+            this.Selection_ImageSource0.AllowDrop = true;
             this.Selection_ImageSource0.Location = new System.Drawing.Point(3, 109);
             this.Selection_ImageSource0.Name = "Selection_ImageSource0";
             this.Selection_ImageSource0.Size = new System.Drawing.Size(317, 301);
             this.Selection_ImageSource0.TabIndex = 3;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(114, 425);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(112, 33);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Unlock";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(292, 428);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 33);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Lock";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // Selection_Technique
             // 
@@ -126,10 +118,9 @@
         private System.Windows.Forms.TabControl MainDialog_MainTab;
         private System.Windows.Forms.TabPage pageImageVsImage;
         private TechniqueSelection Selection_Technique;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
         private ImageSourceSelection Selection_ImageSource1;
         private ImageSourceSelection Selection_ImageSource0;
+        private System.Windows.Forms.Button Button_ImageVsImage_Compute;
     }
 }
 

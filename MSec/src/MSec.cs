@@ -92,25 +92,5 @@ namespace MSec
             d = new ProcessDialog(_jobDesc, _job);
             d.ShowDialog();
         }
-
-        // Opens the file selection dialog for pictures
-        public string dialogSelectPictureFile()
-        {
-            // Local variables
-            OpenFileDialog dialog = new OpenFileDialog();
-
-            // Set filter
-            dialog.Filter = "Image files (*bmp, *.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *bmp; *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
-            dialog.FilterIndex = 0;
-
-            // Disable multiselections
-            dialog.Multiselect = true;
-
-            // Show dialog
-            if (dialog.ShowDialog() == DialogResult.OK)
-                return dialog.FileName;
-
-            return null;
-        }
     }
 }
