@@ -5,6 +5,7 @@ External/pHash/Release
 MSec/obj
 MSec/bin
 
+*.suo
 *.sdf
 *.user
 *.exp
