@@ -60,7 +60,7 @@
             this.Text_Instructions.ReadOnly = true;
             this.Text_Instructions.Size = new System.Drawing.Size(269, 52);
             this.Text_Instructions.TabIndex = 3;
-            this.ToolTip.SetToolTip(this.Text_Instructions, "Displays informations about the current operation or the computed image hash");
+            this.ToolTip.SetToolTip(this.Text_Instructions, "Displays informations about the current\r\noperation or the computed image hash");
             // 
             // Button_Delete
             // 

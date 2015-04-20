@@ -16,5 +16,23 @@ namespace MSec
         {
             InitializeComponent();
         }
+
+        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            // Forward event to main class
+            MSec.Instance.onShowAboutDialog();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Forward event to main class
+            MSec.Instance.onOpenLinkInBrowser("http://www.freepik.com/");
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Forward event to main class
+            MSec.Instance.onOpenLinkInBrowser("http://www.flaticon.com");
+        }
     }
 }

@@ -33,6 +33,7 @@ namespace MSec
     public abstract class Technique
     {
         // Constant and pre-defined names of attributes for the common techniques
+        public static readonly string ATT_GENERAL_THRESHOLD = "general_threshold";
         public static readonly string ATT_RADISH_GAMMA = "radish_gamma";
         public static readonly string ATT_RADISH_SIGMA = "radish_sigma";
         public static readonly string ATT_RADISH_NUM_ANGLES = "radish_num_angles";
@@ -193,21 +194,26 @@ namespace MSec
                     RadishComparativeData result = null;
                     int isSame = 0;
                     double peak = 0.0;
+                    decimal threshold = 90m;
                     IntPtr h0 = IntPtr.Zero;
                     IntPtr h1 = IntPtr.Zero;
+
+                    // Extract attributes
+                    if (_t.isAttributeAvailable(Technique.ATT_GENERAL_THRESHOLD) == true)
+                        _t.getAttribute<decimal>(Technique.ATT_GENERAL_THRESHOLD, out threshold);
 
                     // Compute cross correlation
                     h0 = Utility.convertSimpleStructureToUnmanagedPtr<Digest>(_h0.Data);
                     h1 = Utility.convertSimpleStructureToUnmanagedPtr<Digest>(_h1.Data);
-                    isSame = PHash.computeCrossCorrelation(h0, h1, ref peak);
+                    isSame = PHash.computeCrossCorrelation(h0, h1, ref peak, Convert.ToSingle(threshold) / 100.0);
 
                     // Store result
                     result = new RadishComparativeData();
                     result.m_crossCorrelationPeak = peak;
                     result.m_isDifferent = isSame == 1 ? false : true;
-                    return new ComparativeData<RadishComparativeData>(result, (RadishComparativeData _data) =>
+                    return new ComparativeData<RadishComparativeData>(result, isSame == 1 ? true : false, (RadishComparativeData _data) =>
                     {
-                        return "Peak: " + _data.m_crossCorrelationPeak;
+                        return "Peak: " + _data.m_crossCorrelationPeak.ToString("#0.0000");
                     });
                 }
             );
@@ -240,13 +246,19 @@ namespace MSec
                 {
                     // Local variables
                     int dis = 0;
+                    bool isSame = false;
+                    decimal threshold = 90m;
                     ComparativeData<int> result = null;
+
+                    // Extract attributes
+                    if (_t.isAttributeAvailable(Technique.ATT_GENERAL_THRESHOLD) == true)
+                        _t.getAttribute<decimal>(Technique.ATT_GENERAL_THRESHOLD, out threshold);
 
                     // Compute distance
                     dis = PHash.computeHammingDistance(_h0.Data, _h1.Data);
 
                     // Store result
-                    result = new ComparativeData<int>(dis, (int _d) =>
+                    result = new ComparativeData<int>(dis, isSame, (int _d) =>
                     {
                         return "Hamming distance: " + _d.ToString();
                     });
@@ -297,13 +309,22 @@ namespace MSec
                 {
                     // Local variables
                     double dis = 0;
+                    decimal threshold = 90m;
+                    bool isSame = false;
                     ComparativeData<double> result = null;
+
+                    // Extract attributes
+                    if (_t.isAttributeAvailable(Technique.ATT_GENERAL_THRESHOLD) == true)
+                        _t.getAttribute<decimal>(Technique.ATT_GENERAL_THRESHOLD, out threshold);
 
                     // Compute distance
                     dis = PHash.computeHammingDistance(_h0.Data.m_data, _h0.Data.m_dataLength, _h1.Data.m_data, _h1.Data.m_dataLength);
 
+                    // Is accepted?
+                    isSame = (1.0 - dis) >= Convert.ToSingle(threshold);
+
                     // Store result
-                    result = new ComparativeData<double>(dis, (double _d) =>
+                    result = new ComparativeData<double>(dis, isSame, (double _d) =>
                     {
                         return "Normalized hamming distance: " + _d.ToString("#0.0000");
                     });

@@ -28,6 +28,14 @@ namespace MSec
             private set { }
         }
 
+        // General: threshold
+        private decimal m_generalThreshold = 0;
+        public decimal Threshold
+        {
+            get { return m_generalThreshold; }
+            private set { }
+        }
+
         #region Values::Radish
         // Radish: gamma
         private decimal m_radishGamma = 0;
@@ -72,6 +80,10 @@ namespace MSec
         }
         #endregion Values::Wavelet
 
+        #region Controls::General
+        private NumericUpDown m_numberGeneralThreshold = null;
+        #endregion Controls::General
+
         #region Controls::Technique::Radish
         private RadioButton m_radioTechniqueRadish = null;
         private Label m_labelRadishGamma = null;
@@ -97,6 +109,7 @@ namespace MSec
         // Delegate functions
         public delegate void delegate_onTechniqueChanged(TechniqueID _nextTechnique);
         public delegate void delegate_onAttributeChanged();
+        public delegate void delegate_onGeneralThresholdChanged(decimal _v);
         public delegate void delegate_onRadishGammaChanged(decimal _v);
         public delegate void delegate_onRadishSigmaChanged(decimal _v);
         public delegate void delegate_onRadishNumberOfAnglesChanged(decimal _v);
@@ -106,6 +119,7 @@ namespace MSec
         // Events
         public event delegate_onTechniqueChanged OnTechniqueChanged = delegate { };
         public event delegate_onAttributeChanged OnAttributeChanged = delegate { };
+        public event delegate_onGeneralThresholdChanged OnGeneralThresholdChanged = delegate { };
         public event delegate_onRadishGammaChanged OnRadishGammaChanged = delegate { };
         public event delegate_onRadishSigmaChanged OnRadishSigmaChanged = delegate { };
         public event delegate_onRadishNumberOfAnglesChanged OnRadishNumberOfAnglesChanged = delegate { };
@@ -125,6 +139,14 @@ namespace MSec
         // Initializes the user control
         private void initializeUserControl()
         {
+            #region General
+            // Get controls
+            m_numberGeneralThreshold = this.Number_General_Threshold;
+
+            // Extract default values
+            m_generalThreshold = m_numberGeneralThreshold.Value;
+            #endregion General
+
             #region Technique::Radish
             // Get controls
             m_radioTechniqueRadish = this.Radio_Technique_Radish;
@@ -290,5 +312,15 @@ namespace MSec
             OnAttributeChanged();
         }
         #endregion Events: Technique: Wavelet
+
+        #region Events: General
+        private void Number_General_Threshold_ValueChanged(object sender, EventArgs e)
+        {
+            // Set value and notify
+            m_generalThreshold = m_numberGeneralThreshold.Value;
+            OnGeneralThresholdChanged(m_generalThreshold);
+            OnAttributeChanged();
+        }
+        #endregion Events: General
     }
 }

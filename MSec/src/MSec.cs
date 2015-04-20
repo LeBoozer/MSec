@@ -73,11 +73,6 @@ namespace MSec
             return true;
         }
 
-        // Sets a new technique
-        public void changeTechnique(TechniqueID _type)
-        {
-        }
-
         // Starts a new job (process dialog is modal!)
         public void startJob(Action _job, string _jobDesc)
         {
@@ -91,6 +86,20 @@ namespace MSec
             // Create dialog
             d = new ProcessDialog(_jobDesc, _job);
             d.ShowDialog();
+        }
+
+        // Opens a link with the standard browser
+        public void onOpenLinkInBrowser(string _url)
+        {
+            // Open URL
+            System.Diagnostics.Process.Start(_url);
+        }
+
+        // Shows the about dialogue
+        public void onShowAboutDialog()
+        {
+            // Show about box
+            new AboutBox().ShowDialog();
         }
     }
 }

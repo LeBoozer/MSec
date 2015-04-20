@@ -19,6 +19,9 @@ namespace MSec
         // Returns the type of the hash data
         Type getDataType();
 
+        // Returns true if the result is accpeted (depending on the threshold and technique!)
+        bool isAccepted();
+
         // Converts the hash into a readable format
         string convertToString();
     }
@@ -43,6 +46,9 @@ namespace MSec
             private set { }
         }
 
+        // True if the "same" (depending on the threshold and technique!)
+        private bool m_isAccepted = false;
+
         // The convert to string function
         private delegate_convertToString m_funcConv = null;
         public delegate_convertToString FuncConvertToString
@@ -52,10 +58,11 @@ namespace MSec
         }
 
         // Constructor
-        public ComparativeData(_T _data, delegate_convertToString _funcConv = null)
+        public ComparativeData(_T _data, bool _accepted, delegate_convertToString _funcConv = null)
         {
             // Copy
             m_data = _data;
+            m_isAccepted = _accepted;
             m_funcConv = _funcConv;
         }
 
@@ -63,6 +70,12 @@ namespace MSec
         public Type getDataType()
         {
             return typeof(_T);
+        }
+
+        // Override: ComparativeData::getDataType
+        public bool isAccepted()
+        {
+            return m_isAccepted;
         }
 
         // Override: ComparativeData::convertToString

@@ -44,12 +44,17 @@
             this.Radio_Technique_DCT = new System.Windows.Forms.RadioButton();
             this.Radio_Technique_Radish = new System.Windows.Forms.RadioButton();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.Label_General_Threshold = new System.Windows.Forms.Label();
+            this.Group_General = new System.Windows.Forms.GroupBox();
+            this.Number_General_Threshold = new System.Windows.Forms.NumericUpDown();
             this.Group_Configuration.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Level)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Alpha)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Angles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Sigma)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Gamma)).BeginInit();
+            this.Group_General.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Number_General_Threshold)).BeginInit();
             this.SuspendLayout();
             // 
             // Group_Configuration
@@ -69,7 +74,7 @@
             this.Group_Configuration.Controls.Add(this.Radio_Technique_Radish);
             this.Group_Configuration.Location = new System.Drawing.Point(3, 3);
             this.Group_Configuration.Name = "Group_Configuration";
-            this.Group_Configuration.Size = new System.Drawing.Size(603, 92);
+            this.Group_Configuration.Size = new System.Drawing.Size(604, 92);
             this.Group_Configuration.TabIndex = 0;
             this.Group_Configuration.TabStop = false;
             this.Group_Configuration.Text = "Configuration";
@@ -265,13 +270,54 @@
             this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.ToolTip.ToolTipTitle = "Information";
             // 
+            // Label_General_Threshold
+            // 
+            this.Label_General_Threshold.AutoSize = true;
+            this.Label_General_Threshold.Location = new System.Drawing.Point(9, 21);
+            this.Label_General_Threshold.Name = "Label_General_Threshold";
+            this.Label_General_Threshold.Size = new System.Drawing.Size(57, 13);
+            this.Label_General_Threshold.TabIndex = 1;
+            this.Label_General_Threshold.Text = "Threshold:";
+            // 
+            // Group_General
+            // 
+            this.Group_General.Controls.Add(this.Number_General_Threshold);
+            this.Group_General.Controls.Add(this.Label_General_Threshold);
+            this.Group_General.Location = new System.Drawing.Point(613, 3);
+            this.Group_General.Name = "Group_General";
+            this.Group_General.Size = new System.Drawing.Size(74, 92);
+            this.Group_General.TabIndex = 2;
+            this.Group_General.TabStop = false;
+            this.Group_General.Text = "General";
+            // 
+            // Number_General_Threshold
+            // 
+            this.Number_General_Threshold.Location = new System.Drawing.Point(9, 40);
+            this.Number_General_Threshold.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.Number_General_Threshold.Name = "Number_General_Threshold";
+            this.Number_General_Threshold.Size = new System.Drawing.Size(56, 20);
+            this.Number_General_Threshold.TabIndex = 19;
+            this.Number_General_Threshold.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ToolTip.SetToolTip(this.Number_General_Threshold, "The lower limit for the degree of similarity\r\nduring the acceptance test");
+            this.Number_General_Threshold.Value = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+            this.Number_General_Threshold.ValueChanged += new System.EventHandler(this.Number_General_Threshold_ValueChanged);
+            // 
             // TechniqueSelection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.Group_General);
             this.Controls.Add(this.Group_Configuration);
             this.Name = "TechniqueSelection";
-            this.Size = new System.Drawing.Size(610, 100);
+            this.Size = new System.Drawing.Size(690, 100);
             this.Group_Configuration.ResumeLayout(false);
             this.Group_Configuration.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Level)).EndInit();
@@ -279,6 +325,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Angles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Sigma)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Gamma)).EndInit();
+            this.Group_General.ResumeLayout(false);
+            this.Group_General.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Number_General_Threshold)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -300,5 +349,8 @@
         private System.Windows.Forms.Label Label_Technique_Wavelet_Alpha;
         private System.Windows.Forms.NumericUpDown Number_Technique_Wavelet_Alpha;
         private System.Windows.Forms.ToolTip ToolTip;
+        private System.Windows.Forms.Label Label_General_Threshold;
+        private System.Windows.Forms.GroupBox Group_General;
+        private System.Windows.Forms.NumericUpDown Number_General_Threshold;
     }
 }

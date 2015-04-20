@@ -48,6 +48,11 @@ namespace MSec
             m_techniqueDCT = Technique.createTechniqueDCT();
             m_techniqueWavelet = Technique.createTechniqueWavelet();
 
+            // Set default values for: general
+            m_techniqueDCT.addAttribute(Technique.ATT_GENERAL_THRESHOLD, m_controlTechniqueSelection.Threshold);
+            m_techniqueRadish.addAttribute(Technique.ATT_GENERAL_THRESHOLD, m_controlTechniqueSelection.Threshold);
+            m_techniqueWavelet.addAttribute(Technique.ATT_GENERAL_THRESHOLD, m_controlTechniqueSelection.Threshold);
+
             // Set default values for: RADISH
             m_techniqueRadish.addAttribute(Technique.ATT_RADISH_GAMMA, m_controlTechniqueSelection.RadishGamma);
             m_techniqueRadish.addAttribute(Technique.ATT_RADISH_SIGMA, m_controlTechniqueSelection.RadishSigma);
@@ -74,6 +79,13 @@ namespace MSec
                         m_currentTechnique = m_techniqueWavelet;
                     else
                         m_currentTechnique = m_techniqueDCT;
+                };
+
+            m_controlTechniqueSelection.OnGeneralThresholdChanged += (decimal _v) =>
+                {
+                    m_techniqueDCT.addAttribute(Technique.ATT_GENERAL_THRESHOLD, m_controlTechniqueSelection.Threshold);
+                    m_techniqueRadish.addAttribute(Technique.ATT_GENERAL_THRESHOLD, m_controlTechniqueSelection.Threshold);
+                    m_techniqueWavelet.addAttribute(Technique.ATT_GENERAL_THRESHOLD, m_controlTechniqueSelection.Threshold);
                 };
 
             m_controlTechniqueSelection.OnRadishGammaChanged += (decimal _v) =>

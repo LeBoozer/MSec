@@ -72,6 +72,7 @@ namespace MSec
                 m_controlImageSourceSelection0.setInstructionText("");
                 m_controlImageSourceSelection1.setInstructionText("");
 
+                m_controlLabelResult.ForeColor = System.Drawing.Color.Black;
                 m_controlLabelResult.Text = "-";
             });
         }
@@ -189,6 +190,12 @@ namespace MSec
                         m_controlLabelResult.Text = MSG_ERROR_COMPUTATION;
                     else
                         m_controlLabelResult.Text = _r.convertToString();
+
+                    // Accepted?
+                    if (_r.isAccepted() == true)
+                        m_controlLabelResult.ForeColor = System.Drawing.Color.DarkGreen;
+                    else
+                        m_controlLabelResult.ForeColor = System.Drawing.Color.DarkRed;
 
                     // Undo the preparations 
                     m_controlButtonCompute.Enabled = true;
