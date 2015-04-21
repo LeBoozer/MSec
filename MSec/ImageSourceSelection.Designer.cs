@@ -31,10 +31,10 @@
             this.components = new System.ComponentModel.Container();
             this.Group_ImageSource = new System.Windows.Forms.GroupBox();
             this.Text_Instructions = new System.Windows.Forms.TextBox();
+            this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.Button_Delete = new System.Windows.Forms.Button();
             this.Button_Load = new System.Windows.Forms.Button();
             this.Picture_Preview = new System.Windows.Forms.PictureBox();
-            this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.Group_ImageSource.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).BeginInit();
             this.SuspendLayout();
@@ -62,24 +62,31 @@
             this.Text_Instructions.TabIndex = 3;
             this.ToolTip.SetToolTip(this.Text_Instructions, "Displays informations about the current\r\noperation or the computed image hash");
             // 
+            // ToolTip
+            // 
+            this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.ToolTip.ToolTipTitle = "Information";
+            // 
             // Button_Delete
             // 
+            this.Button_Delete.BackgroundImage = global::MSec.Properties.Resources.delete;
+            this.Button_Delete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Button_Delete.Location = new System.Drawing.Point(281, 266);
             this.Button_Delete.Name = "Button_Delete";
             this.Button_Delete.Size = new System.Drawing.Size(23, 23);
             this.Button_Delete.TabIndex = 2;
-            this.Button_Delete.Text = "D";
             this.ToolTip.SetToolTip(this.Button_Delete, "Deletes the currently selected image");
             this.Button_Delete.UseVisualStyleBackColor = true;
             this.Button_Delete.Click += new System.EventHandler(this.Button_Delete_Click);
             // 
             // Button_Load
             // 
+            this.Button_Load.BackgroundImage = global::MSec.Properties.Resources.add;
+            this.Button_Load.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Button_Load.Location = new System.Drawing.Point(281, 237);
             this.Button_Load.Name = "Button_Load";
             this.Button_Load.Size = new System.Drawing.Size(23, 23);
             this.Button_Load.TabIndex = 1;
-            this.Button_Load.Text = "L";
             this.ToolTip.SetToolTip(this.Button_Load, "Selects a new image");
             this.Button_Load.UseVisualStyleBackColor = true;
             this.Button_Load.Click += new System.EventHandler(this.Button_Load_Click);
@@ -94,11 +101,6 @@
             this.Picture_Preview.TabIndex = 0;
             this.Picture_Preview.TabStop = false;
             this.ToolTip.SetToolTip(this.Picture_Preview, "Preview of the selected image");
-            // 
-            // ToolTip
-            // 
-            this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.ToolTip.ToolTipTitle = "Information";
             // 
             // ImageSourceSelection
             // 

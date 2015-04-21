@@ -25,14 +25,20 @@ namespace MSec
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // Forward event to main class
+            // Open link
             MSec.Instance.onOpenLinkInBrowser("http://www.freepik.com/");
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // Forward event to main class
+            // Open link
             MSec.Instance.onOpenLinkInBrowser("http://www.flaticon.com");
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Open link
+            MSec.Instance.onOpenLinkInBrowser("http://www.phash.org/");
         }
     }
 }
