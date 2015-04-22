@@ -15,11 +15,9 @@ namespace MSec
         {
             InitializeComponent();
             this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-            this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
+            this.Label_ProductName.Text = AssemblyProduct;
+            this.Label_Version.Text = String.Format("Version {0}", AssemblyVersion);
+            this.Label_Copyright.Text = AssemblyCopyright;
         }
 
         #region Assembly Attribute Accessors
@@ -101,5 +99,7 @@ namespace MSec
             }
         }
         #endregion
+
+
     }
 }

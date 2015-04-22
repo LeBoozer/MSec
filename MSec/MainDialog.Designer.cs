@@ -61,7 +61,7 @@
             this.MainDialog_MainTab.Location = new System.Drawing.Point(12, 27);
             this.MainDialog_MainTab.Name = "MainDialog_MainTab";
             this.MainDialog_MainTab.SelectedIndex = 0;
-            this.MainDialog_MainTab.Size = new System.Drawing.Size(705, 487);
+            this.MainDialog_MainTab.Size = new System.Drawing.Size(705, 523);
             this.MainDialog_MainTab.TabIndex = 0;
             // 
             // pageImageVsImage
@@ -75,7 +75,7 @@
             this.pageImageVsImage.ImageIndex = 0;
             this.pageImageVsImage.Location = new System.Drawing.Point(4, 23);
             this.pageImageVsImage.Name = "pageImageVsImage";
-            this.pageImageVsImage.Size = new System.Drawing.Size(697, 460);
+            this.pageImageVsImage.Size = new System.Drawing.Size(697, 496);
             this.pageImageVsImage.TabIndex = 1;
             this.pageImageVsImage.Text = "Image vs. Image";
             this.pageImageVsImage.UseVisualStyleBackColor = true;
@@ -90,7 +90,7 @@
             // Progress_ImageVsImage
             // 
             this.Progress_ImageVsImage.Enabled = false;
-            this.Progress_ImageVsImage.Location = new System.Drawing.Point(3, 443);
+            this.Progress_ImageVsImage.Location = new System.Drawing.Point(3, 480);
             this.Progress_ImageVsImage.MarqueeAnimationSpeed = 20;
             this.Progress_ImageVsImage.Name = "Progress_ImageVsImage";
             this.Progress_ImageVsImage.Size = new System.Drawing.Size(690, 10);
@@ -102,7 +102,7 @@
             // Label_ImageVsImage_Result
             // 
             this.Label_ImageVsImage_Result.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_ImageVsImage_Result.Location = new System.Drawing.Point(4, 410);
+            this.Label_ImageVsImage_Result.Location = new System.Drawing.Point(4, 445);
             this.Label_ImageVsImage_Result.Name = "Label_ImageVsImage_Result";
             this.Label_ImageVsImage_Result.Size = new System.Drawing.Size(690, 32);
             this.Label_ImageVsImage_Result.TabIndex = 6;
@@ -128,7 +128,7 @@
             this.Selection_ImageSource1.AllowDrop = true;
             this.Selection_ImageSource1.Location = new System.Drawing.Point(376, 106);
             this.Selection_ImageSource1.Name = "Selection_ImageSource1";
-            this.Selection_ImageSource1.Size = new System.Drawing.Size(317, 301);
+            this.Selection_ImageSource1.Size = new System.Drawing.Size(317, 336);
             this.Selection_ImageSource1.TabIndex = 4;
             // 
             // Selection_ImageSource0
@@ -136,7 +136,7 @@
             this.Selection_ImageSource0.AllowDrop = true;
             this.Selection_ImageSource0.Location = new System.Drawing.Point(3, 106);
             this.Selection_ImageSource0.Name = "Selection_ImageSource0";
-            this.Selection_ImageSource0.Size = new System.Drawing.Size(317, 301);
+            this.Selection_ImageSource0.Size = new System.Drawing.Size(317, 336);
             this.Selection_ImageSource0.TabIndex = 3;
             // 
             // ImageList_MainTab
@@ -182,7 +182,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(558, 517);
+            this.linkLabel1.Location = new System.Drawing.Point(560, 553);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(42, 13);
             this.linkLabel1.TabIndex = 2;
@@ -193,7 +193,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(485, 517);
+            this.label1.Location = new System.Drawing.Point(487, 553);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(76, 13);
             this.label1.TabIndex = 9;
@@ -202,7 +202,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(597, 517);
+            this.label2.Location = new System.Drawing.Point(599, 553);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(27, 13);
             this.label2.TabIndex = 10;
@@ -211,7 +211,7 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(620, 517);
+            this.linkLabel2.Location = new System.Drawing.Point(622, 553);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(94, 13);
             this.linkLabel2.TabIndex = 11;
@@ -222,7 +222,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 517);
+            this.label3.Location = new System.Drawing.Point(12, 553);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 12;
@@ -231,7 +231,7 @@
             // linkLabel3
             // 
             this.linkLabel3.AutoSize = true;
-            this.linkLabel3.Location = new System.Drawing.Point(69, 517);
+            this.linkLabel3.Location = new System.Drawing.Point(72, 553);
             this.linkLabel3.Name = "linkLabel3";
             this.linkLabel3.Size = new System.Drawing.Size(68, 13);
             this.linkLabel3.TabIndex = 13;
@@ -244,7 +244,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(726, 535);
+            this.ClientSize = new System.Drawing.Size(726, 572);
             this.Controls.Add(this.linkLabel3);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.linkLabel2);
@@ -256,7 +256,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Menu_Main;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(742, 574);
+            this.MaximumSize = new System.Drawing.Size(742, 611);
             this.MinimizeBox = false;
             this.Name = "MainDialog";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;

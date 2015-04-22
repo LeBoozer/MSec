@@ -31,30 +31,32 @@
             this.components = new System.ComponentModel.Container();
             this.Group_ImageSource = new System.Windows.Forms.GroupBox();
             this.Text_Instructions = new System.Windows.Forms.TextBox();
-            this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.Button_Delete = new System.Windows.Forms.Button();
             this.Button_Load = new System.Windows.Forms.Button();
             this.Picture_Preview = new System.Windows.Forms.PictureBox();
+            this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.Text_Path = new System.Windows.Forms.TextBox();
             this.Group_ImageSource.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).BeginInit();
             this.SuspendLayout();
             // 
             // Group_ImageSource
             // 
+            this.Group_ImageSource.Controls.Add(this.Text_Path);
             this.Group_ImageSource.Controls.Add(this.Text_Instructions);
             this.Group_ImageSource.Controls.Add(this.Button_Delete);
             this.Group_ImageSource.Controls.Add(this.Button_Load);
             this.Group_ImageSource.Controls.Add(this.Picture_Preview);
             this.Group_ImageSource.Location = new System.Drawing.Point(3, 3);
             this.Group_ImageSource.Name = "Group_ImageSource";
-            this.Group_ImageSource.Size = new System.Drawing.Size(312, 294);
+            this.Group_ImageSource.Size = new System.Drawing.Size(312, 326);
             this.Group_ImageSource.TabIndex = 0;
             this.Group_ImageSource.TabStop = false;
             this.Group_ImageSource.Text = "Image source";
             // 
             // Text_Instructions
             // 
-            this.Text_Instructions.Location = new System.Drawing.Point(6, 237);
+            this.Text_Instructions.Location = new System.Drawing.Point(6, 266);
             this.Text_Instructions.Multiline = true;
             this.Text_Instructions.Name = "Text_Instructions";
             this.Text_Instructions.ReadOnly = true;
@@ -62,16 +64,11 @@
             this.Text_Instructions.TabIndex = 3;
             this.ToolTip.SetToolTip(this.Text_Instructions, "Displays informations about the current\r\noperation or the computed image hash");
             // 
-            // ToolTip
-            // 
-            this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.ToolTip.ToolTipTitle = "Information";
-            // 
             // Button_Delete
             // 
             this.Button_Delete.BackgroundImage = global::MSec.Properties.Resources.delete;
             this.Button_Delete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Button_Delete.Location = new System.Drawing.Point(281, 266);
+            this.Button_Delete.Location = new System.Drawing.Point(281, 295);
             this.Button_Delete.Name = "Button_Delete";
             this.Button_Delete.Size = new System.Drawing.Size(23, 23);
             this.Button_Delete.TabIndex = 2;
@@ -83,7 +80,7 @@
             // 
             this.Button_Load.BackgroundImage = global::MSec.Properties.Resources.add;
             this.Button_Load.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Button_Load.Location = new System.Drawing.Point(281, 237);
+            this.Button_Load.Location = new System.Drawing.Point(281, 266);
             this.Button_Load.Name = "Button_Load";
             this.Button_Load.Size = new System.Drawing.Size(23, 23);
             this.Button_Load.TabIndex = 1;
@@ -102,6 +99,20 @@
             this.Picture_Preview.TabStop = false;
             this.ToolTip.SetToolTip(this.Picture_Preview, "Preview of the selected image");
             // 
+            // ToolTip
+            // 
+            this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.ToolTip.ToolTipTitle = "Information";
+            // 
+            // Text_Path
+            // 
+            this.Text_Path.Location = new System.Drawing.Point(6, 238);
+            this.Text_Path.Name = "Text_Path";
+            this.Text_Path.ReadOnly = true;
+            this.Text_Path.Size = new System.Drawing.Size(298, 20);
+            this.Text_Path.TabIndex = 4;
+            this.ToolTip.SetToolTip(this.Text_Path, "Contains the path of the\r\nselected image source");
+            // 
             // ImageSourceSelection
             // 
             this.AllowDrop = true;
@@ -109,7 +120,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.Group_ImageSource);
             this.Name = "ImageSourceSelection";
-            this.Size = new System.Drawing.Size(317, 301);
+            this.Size = new System.Drawing.Size(317, 331);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ImageSourceSelection_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ImageSourceSelection_DragEnter);
             this.Group_ImageSource.ResumeLayout(false);
@@ -127,5 +138,6 @@
         private System.Windows.Forms.Button Button_Delete;
         private System.Windows.Forms.Button Button_Load;
         private System.Windows.Forms.ToolTip ToolTip;
+        private System.Windows.Forms.TextBox Text_Path;
     }
 }

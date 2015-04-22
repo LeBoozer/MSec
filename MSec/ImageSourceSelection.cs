@@ -33,6 +33,7 @@ namespace MSec
 
         #region Controls
         private PictureBox      m_picturePreview = null;
+        private TextBox         m_textPath = null;
         private TextBox         m_textInstructions = null;
         private Button          m_buttonLoad = null;
         private Button          m_buttonDelete = null;
@@ -104,6 +105,7 @@ namespace MSec
             #region Controls
             // Get controls
             m_picturePreview = this.Picture_Preview;
+            m_textPath = this.Text_Path;
             m_textInstructions = this.Text_Instructions;
             m_buttonLoad = this.Button_Load;
             m_buttonDelete = this.Button_Delete;
@@ -136,14 +138,11 @@ namespace MSec
 
                 // Create preview
                 img = res.createSystemImage();
-                if (m_picturePreview.InvokeRequired == true)
+                Utility.invokeInGuiThread(m_picturePreview, delegate
                 {
-                    // Run in control thread
-                    delegate_internal_setImagePreview c = new delegate_internal_setImagePreview((Image _d) => { m_picturePreview.Image = _d; });
-                    m_picturePreview.Invoke(c, new object[] { img });
-                }
-                else
                     m_picturePreview.Image = img;
+                    m_textPath.Text = _params[0] as string;
+                });
 
                 return res;
             },
@@ -180,6 +179,7 @@ namespace MSec
             {
                 m_imageSource = null;
                 m_picturePreview.Image = null;
+                m_textPath.Text = "";
                 m_textInstructions.Text = "";
             }
 
