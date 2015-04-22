@@ -4,6 +4,8 @@ External/pHash/Debug
 External/pHash/Release
 MSec/obj
 MSec/bin
+Documentation/MSec.pdf
+
 
 *.suo
 *.sdf
@@ -12,6 +14,11 @@ MSec/bin
 *.ilk
 *.pdb
 *.opensdf
+
+*.aux
+*.bcf
+*.log
+*.gz
 
 #Unity3D Generated File On Crash Reports
 sysinfo.txt

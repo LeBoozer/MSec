@@ -1,0 +1,154 @@
+%#####################################################################################################################
+% Datei	: MSec.tex
+% Autor	: Byron Worms
+%#####################################################################################################################
+% Dokumenteinstellungen
+\documentclass[conference]{acmsiggraph}
+
+% Umlaute etc..
+\usepackage[latin1]{inputenc}						
+\usepackage[T1]{fontenc}
+
+% Bibliothek für das Quellenverzeichnisse
+\let\bibhang\relax
+\usepackage[style=alphabetic,backend=biber,sorting=none]{biblatex}
+\addbibresource{Literaturverzeichnis.bib}
+\renewcommand{\bibfont}{\small}
+
+% Bilder unterstützen
+\usepackage[]{graphicx}
+
+% Farben unterstützen
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{colortbl}
+
+% Verweise auf Title
+\usepackage{titleref}
+
+% Sprachunterstützung (Letzte Sprache wird als Richtlinie genutzt!)
+\usepackage[english,ngerman]{babel}
+\usepackage{csquotes}
+
+% Symbolunterstützung wie Â€
+\usepackage{textcomp}
+
+% Anhang unterstützen
+\usepackage[titletoc]{appendix}
+
+% Erweiterte Fußnoten unterstützen
+\usepackage[hang]{footmisc}
+\setlength{\footnotemargin}{1em}
+
+% Unterstützung mehrzeiliger Kommentare
+\usepackage{comment}
+
+% Erweiterte Tabellen unterstützen
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tabulary}
+\usepackage{longtable,tabu}
+\usepackage{array}
+
+% Mathematische Operationen in {} Ausdrücken erlauben (z.B. {\linewidth-4cm})
+\usepackage{calc}
+
+% "float" Positionierung unterstützen
+\usepackage{scrhack}
+\usepackage{float}
+
+% Erweiterte Aufzählungen unterstützen
+\usepackage{enumitem}
+
+% Erweiterte Tabellenlinien unterstützen
+\usepackage{hhline,float}
+
+% Rotationen unterstützen
+\usepackage{rotating}
+
+% Erweiterte Symbole unterstützen
+\usepackage{bbding} 
+\usepackage{dingbat}
+\usepackage{wasysym}
+
+% Begrenzungsrahmen anzeigen lassen
+%\usepackage{showframe}
+
+% Tabellen werden nicht von Latex neupositioniert
+\restylefloat{table}
+
+% Bilder werden nicht von Latex neupositioniert
+\restylefloat{figure}
+
+% PDF Version 1.6 erzwingen
+\pdfminorversion=6
+
+% Kompression ausschalten (hyperref setzt das Level auf 9!)
+\pdfcompresslevel=9
+
+% Verschiebungen und Formattierungen des Modus "twoside" aufheben
+\raggedbottom
+
+% Diverse Hilfsfunktionen
+\newcommand{\bold}{\normalfont \bfseries}
+\newcommand{\boldtext}[1]{{\normalfont \bfseries {#1}}}
+
+% Eigene Definition von "\toprule" und "\bottomrule".
+% Verhindert den Abstand zwischen den beiden Linien und den Vertikalen
+\newcommand{\mytoprule}{\specialrule{1.25pt}{0em}{0em}}
+\newcommand{\mybottomrule}{\specialrule{1.25pt}{0em}{0em}}
+\newcommand{\mytoprulehalf}{\specialrule{0.75pt}{0em}{0em}}
+\newcommand{\mybottomrulehalf}{\specialrule{0.75pt}{0em}{0em}}
+
+% Eigene Definition für das Einbinden von Grafiken (erzeugt automatisch einen Rahmen um die Grafik)
+% Bsp: \framepicture[width=0.5\textwidth, page=1]{...}
+\newcommand{\framepicture}[2][\empty]{\fbox{\includegraphics[#1]{#2}}}
+
+% Titel und Autoren festlegen
+\title{SS15 Topic 05: Perceptual Hashing of Images}
+\author{
+	Byron Worms\\
+	Multimedia and Security\\
+	Fakultät für Informatik\\
+	bworms@st.ovgu.de
+	\and
+	Raik Dankworth\\
+	Multimedia and Security\\	
+	Fakultät für Informatik\\
+	dankwort@st.ovgu.de
+	}
+\pdfauthor{Byron Worms}
+
+% Schlagwörter festlegen
+\keywords{multimedia, security, hashing, perceptual, images, hash}
+
+%---------------------------------------------------------------------------------------------------------------------
+% Einstiegspunkt
+%---------------------------------------------------------------------------------------------------------------------
+\begin{document}
+	\pagenumbering{arabic}
+	\maketitle						% Title generieren
+	\input{Inhalt/Abstract}			% Abstrakt einbinden	
+	\keywordlist					% Keywords ausgeben
+	\copyrightspace					% Copyright-Sektion generieren
+	%................................................................
+	% Ab hier den eigentlichen Inhalt einfügen
+	\input{Inhalt/Introduction}		% Einleitung einbinden
+	\input{Inhalt/TaskDescription}	% Aufgabenstellung einbinden
+	\input{Inhalt/Solution}			% Lösungsansatz einbinden
+	\input{Inhalt/Experimental}		% Experimentelle Untersuchungen einbinden
+	\input{Inhalt/Results}			% Ergebnisse einbinden
+	\input{Inhalt/Conclusion}		% Zusammenfassung/Fazit einbinden	
+	%................................................................
+	\sloppy
+	\newpage
+	\printbibliography				% Literaturverzeichnis ausgeben
+	
+	\onecolumn						% Der Anhang erfolgt einspaltig!
+	\begin{appendices}
+		\input{Inhalt/AppendixA}	% Anhang A einbinden (Aufgabebeschreibung)
+		\input{Inhalt/AppendixB}	% Anhang B einbinden (Dokumentation der benutzen Daten)
+		\input{Inhalt/AppendixC}	% Anhang C einbinden (Problembeschreibungen und offene Punkte)
+		\input{Inhalt/AppendixD}	% Anhang D einbinden (Abbildungen)
+	\end{appendices}
+\end{document}
