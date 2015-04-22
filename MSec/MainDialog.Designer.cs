@@ -73,9 +73,9 @@
             this.pageImageVsImage.Controls.Add(this.Selection_ImageSource1);
             this.pageImageVsImage.Controls.Add(this.Selection_ImageSource0);
             this.pageImageVsImage.ImageIndex = 0;
-            this.pageImageVsImage.Location = new System.Drawing.Point(4, 27);
+            this.pageImageVsImage.Location = new System.Drawing.Point(4, 23);
             this.pageImageVsImage.Name = "pageImageVsImage";
-            this.pageImageVsImage.Size = new System.Drawing.Size(697, 456);
+            this.pageImageVsImage.Size = new System.Drawing.Size(697, 460);
             this.pageImageVsImage.TabIndex = 1;
             this.pageImageVsImage.Text = "Image vs. Image";
             this.pageImageVsImage.UseVisualStyleBackColor = true;

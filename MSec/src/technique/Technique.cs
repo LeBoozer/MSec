@@ -213,7 +213,8 @@ namespace MSec
                     result.m_isDifferent = isSame == 1 ? false : true;
                     return new ComparativeData<RadishComparativeData>(result, isSame == 1 ? true : false, (RadishComparativeData _data) =>
                     {
-                        return "Peak: " + _data.m_crossCorrelationPeak.ToString("#0.0000");
+                        return "Match rate: " + _data.m_crossCorrelationPeak.ToString("#0.0000");
+                       // return "Peak: " + _data.m_crossCorrelationPeak.ToString("#0.0000");
                     });
                 }
             );
@@ -222,13 +223,13 @@ namespace MSec
         }
 
         // Create the default technique instance for the algorithm: DCT
-        public static Technique<UInt64, int> createTechniqueDCT()
+        public static Technique<UInt64, double> createTechniqueDCT()
         {
             // Local variables
-            Technique<UInt64, int> t = null;
+            Technique<UInt64, double> t = null;
 
             // Create technique
-            t = new Technique<UInt64, int>(TechniqueID.DCT,
+            t = new Technique<UInt64, double>(TechniqueID.DCT,
                 (Technique _t, ImageSource _image) =>
                 {
                     // Local variables
@@ -245,22 +246,26 @@ namespace MSec
                 (Technique _t, HashData<UInt64> _h0, HashData<UInt64> _h1) =>
                 {
                     // Local variables
-                    int dis = 0;
+                    double dis = 0;
                     bool isSame = false;
                     decimal threshold = 90m;
-                    ComparativeData<int> result = null;
+                    ComparativeData<double> result = null;
 
                     // Extract attributes
                     if (_t.isAttributeAvailable(Technique.ATT_GENERAL_THRESHOLD) == true)
                         _t.getAttribute<decimal>(Technique.ATT_GENERAL_THRESHOLD, out threshold);
 
-                    // Compute distance
+                    // Compute distance and normalize it
                     dis = PHash.computeHammingDistance(_h0.Data, _h1.Data);
+                    dis /= 64;
+
+                    // Is accepted?
+                    isSame = (1.0 - dis) >= Convert.ToSingle(threshold) / 100.0;
 
                     // Store result
-                    result = new ComparativeData<int>(dis, isSame, (int _d) =>
+                    result = new ComparativeData<double>(dis, isSame, (double _d) =>
                     {
-                        return "Hamming distance: " + _d.ToString();
+                        return "Match rate: " + (1.0 - _d).ToString("#0.0000");
                     });
                     return result;
                 }
@@ -321,12 +326,12 @@ namespace MSec
                     dis = PHash.computeHammingDistance(_h0.Data.m_data, _h0.Data.m_dataLength, _h1.Data.m_data, _h1.Data.m_dataLength);
 
                     // Is accepted?
-                    isSame = (1.0 - dis) >= Convert.ToSingle(threshold);
+                    isSame = (1.0 - dis) >= Convert.ToSingle(threshold) / 100.0;
 
                     // Store result
                     result = new ComparativeData<double>(dis, isSame, (double _d) =>
                     {
-                        return "Normalized hamming distance: " + _d.ToString("#0.0000");
+                        return "Match rate: " + (1.0 - _d).ToString("#0.0000");
                     });
                     return result;
                 }
