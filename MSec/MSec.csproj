@@ -109,10 +109,10 @@
     <Compile Include="src\libwrapper\PHash.cs" />
     <Compile Include="src\libwrapper\RadishComparativeData.cs" />
     <Compile Include="src\libwrapper\WaveletHash.cs" />
-    <Compile Include="src\technique\Comparator.cs" />
     <Compile Include="src\libwrapper\Digest.cs" />
     <Compile Include="src\MSec.cs" />
     <Compile Include="src\technique\ComparativeData.cs" />
+    <Compile Include="src\technique\ComparisonPair.cs" />
     <Compile Include="src\technique\HashData.cs" />
     <Compile Include="src\technique\ImageSource.cs" />
     <Compile Include="src\technique\Technique.cs" />

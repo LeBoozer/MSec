@@ -20,11 +20,11 @@ namespace MSec
 {
     public partial class CC_ComparisonDetails : UserControl
     {
-        // The current set comparator
-        private Comparator m_comparator = null;
-        public Comparator CurrentComparator
+        // The current set comparison pair
+        private ComparisonPair m_pair = null;
+        public ComparisonPair CurrentPair
         {
-            get { return m_comparator; }
+            get { return m_pair; }
             private set { }
         }
 
@@ -47,8 +47,8 @@ namespace MSec
             m_textSource1    = this.CC_Text_Source1;
         }
 
-        // Updates the control's content with an comparator (null to delete content
-        public void setComparator(Comparator _comp)
+        // Updates the control's content with a comparison pair (null to delete content)
+        public void setComparator(ComparisonPair _pair)
         {
             // Run in GUI thread
             Utility.invokeInGuiThread(this, delegate
@@ -57,35 +57,35 @@ namespace MSec
                 m_pictureSource0.Image = m_pictureSource1.Image = null;
                 m_textSource0.Text = m_textSource1.Text = "";
 
-                m_comparator = null;
+                m_pair = null;
             });
 
             // Check parameter
-            if (_comp == null)
+            if (_pair == null)
                 return;
 
             // Copy parameter
-            m_comparator = _comp;
+            m_pair = _pair;
 
             // Run in GUI thread
             Utility.invokeInGuiThread(this, delegate
             {
                 // Set content: source 0
-                if (m_comparator.Source0 != null)
+                if (m_pair.Source0 != null)
                 {
                     // Set preview
-                    m_pictureSource0.Image = m_comparator.Source0.createSystemImage();
+                    m_pictureSource0.Image = m_pair.Source0.createSystemImage();
 
                     // Set patch
-                    m_textSource0.Text = m_comparator.Source0.FilePath;
+                    m_textSource0.Text = m_pair.Source0.FilePath;
                 }
-                if (m_comparator.Source1 != null)
+                if (m_pair.Source1 != null)
                 {
                     // Set preview
-                    m_pictureSource1.Image = m_comparator.Source1.createSystemImage();
+                    m_pictureSource1.Image = m_pair.Source1.createSystemImage();
 
                     // Set patch
-                    m_textSource1.Text = m_comparator.Source1.FilePath;
+                    m_textSource1.Text = m_pair.Source1.FilePath;
                 }
             });
         }

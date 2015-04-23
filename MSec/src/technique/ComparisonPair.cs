@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************************************************************************************************
-	File	:	Comparator.cs
+	File	:	ComparisonPair.cs
 	Project	:	MSec
 	Author	:	Byron Worms
 *******************************************************************************************************************************************************************/
@@ -14,15 +14,18 @@ using System.Threading.Tasks;
 *******************************************************************************************************************************************************************/
 namespace MSec
 {
-    public class Comparator
+    public class ComparisonPair
     {
-        // The comparator's ID (combined hashes of both sources!)
-        private int m_comparatorID = 0;
-        public int ComparatorID
+        // The pair's ID (combined hashes of both sources!)
+        private int m_pairID = 0;
+        public int PairID
         {
-            get { return m_comparatorID; }
+            get { return m_pairID; }
             private set { }
         }
+
+        // The data lock
+        private object m_dataLock = new object();
 
         // The first source
         private ImageSource m_source0 = null;
@@ -53,11 +56,19 @@ namespace MSec
         public ComparativeData ComparativeResult
         {
             get { return m_compData; }
-            private set { }
+            set 
+            {
+                if (value == null)
+                    return;
+                lock(m_dataLock)
+                {
+                    m_compData = value;
+                }
+            }
         }
 
         // Constructor
-        public Comparator(ImageSource _source0, ImageSource _source1, Technique _technique)
+        public ComparisonPair(ImageSource _source0, ImageSource _source1, Technique _technique)
         {
             // Copy parameters
             m_source0 = _source0;
@@ -65,36 +76,9 @@ namespace MSec
             m_technique = _technique;
 
             // Compute comparator's ID
-            m_comparatorID = 17;
-            m_comparatorID = m_comparatorID * 31 + m_source0.FilePath.GetHashCode();
-            m_comparatorID = m_comparatorID * 31 + m_source1.FilePath.GetHashCode();
-            m_comparatorID = m_comparatorID * 31 + _technique.ID.GetHashCode();
-        }
-
-        // Compares both defined sources (can be null!)
-        public ComparativeData compareSources(bool _recompute = false)
-        {
-            // Check parameter
-            if (m_source0 == null || m_source1 == null || m_technique == null)
-                return null;
-
-            // Hashes available?
-            if (m_technique.containsHashDataDefaultValue(m_source0.getHashDataForTechnique(m_technique.ID)) == true ||
-                m_technique.containsHashDataDefaultValue(m_source1.getHashDataForTechnique(m_technique.ID)) == true)
-                return null;
-
-            // Recompute?
-            if (m_compData != null && _recompute == false)
-            {
-                // Default value?
-                if (m_technique.containsComparativeDataDefaultValue(m_compData) == false)
-                    return m_compData;
-            }
-
-            // Compare hashes
-            m_compData = m_technique.compareHashData(m_source0.getHashDataForTechnique(m_technique.ID), m_source1.getHashDataForTechnique(m_technique.ID));
-
-            return m_compData;
+            m_pairID = 17;
+            m_pairID = m_pairID * 31 + m_source0.FilePath.GetHashCode();
+            m_pairID = m_pairID * 31 + m_source1.FilePath.GetHashCode();
         }
     }
 }
