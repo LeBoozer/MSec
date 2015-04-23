@@ -3,7 +3,11 @@ Output/Release/MSec.exe
 External/pHash/Debug
 External/pHash/Release
 MSec/obj
-MSec/bin
+MSec/bin/Release/*.exe
+MSec/bin/Release/*.config
+MSec/bin/Release/*.manifest
+MSec/bin/Debug/*.exe
+MSec/bin/Debug/*.config
 Documentation/MSec.pdf
 
 

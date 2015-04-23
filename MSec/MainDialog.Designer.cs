@@ -29,6 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            "True",
+            "img0.png",
+            "img1.png",
+            "sd7f8z432oilur",
+            "sdf897324z5r9o8i",
+            "85"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            "False",
+            "img0.jpg",
+            "img1.jpg",
+            "sadf43tre4gfds",
+            "sadf43tzergfd",
+            "44"}, -1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainDialog));
             this.MainDialog_MainTab = new System.Windows.Forms.TabControl();
             this.pageImageVsImage = new System.Windows.Forms.TabPage();
@@ -38,6 +52,16 @@
             this.Button_ImageVsImage_Compute = new System.Windows.Forms.Button();
             this.Selection_ImageSource1 = new ImageSourceSelection();
             this.Selection_ImageSource0 = new ImageSourceSelection();
+            this.pageCrossComparison = new System.Windows.Forms.TabPage();
+            this.CC_List_Results = new System.Windows.Forms.ListView();
+            this.columnAccepted = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnImageSource0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnImageSource1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHash0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHash1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnMatch = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.CC_Group_SourceLocation = new System.Windows.Forms.GroupBox();
+            this.CC_Selection_Technique = new TechniqueSelection();
             this.ImageList_MainTab = new System.Windows.Forms.ImageList(this.components);
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.Menu_Main = new System.Windows.Forms.MenuStrip();
@@ -51,12 +75,14 @@
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.MainDialog_MainTab.SuspendLayout();
             this.pageImageVsImage.SuspendLayout();
+            this.pageCrossComparison.SuspendLayout();
             this.Menu_Main.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainDialog_MainTab
             // 
             this.MainDialog_MainTab.Controls.Add(this.pageImageVsImage);
+            this.MainDialog_MainTab.Controls.Add(this.pageCrossComparison);
             this.MainDialog_MainTab.ImageList = this.ImageList_MainTab;
             this.MainDialog_MainTab.Location = new System.Drawing.Point(12, 27);
             this.MainDialog_MainTab.Name = "MainDialog_MainTab";
@@ -138,6 +164,92 @@
             this.Selection_ImageSource0.Name = "Selection_ImageSource0";
             this.Selection_ImageSource0.Size = new System.Drawing.Size(317, 336);
             this.Selection_ImageSource0.TabIndex = 3;
+            // 
+            // pageCrossComparison
+            // 
+            this.pageCrossComparison.Controls.Add(this.CC_List_Results);
+            this.pageCrossComparison.Controls.Add(this.CC_Group_SourceLocation);
+            this.pageCrossComparison.Controls.Add(this.CC_Selection_Technique);
+            this.pageCrossComparison.Location = new System.Drawing.Point(4, 23);
+            this.pageCrossComparison.Name = "pageCrossComparison";
+            this.pageCrossComparison.Size = new System.Drawing.Size(697, 496);
+            this.pageCrossComparison.TabIndex = 2;
+            this.pageCrossComparison.Text = "Cross Comparison";
+            this.pageCrossComparison.UseVisualStyleBackColor = true;
+            // 
+            // CC_List_Results
+            // 
+            this.CC_List_Results.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnAccepted,
+            this.columnImageSource0,
+            this.columnImageSource1,
+            this.columnHash0,
+            this.columnHash1,
+            this.columnMatch});
+            this.CC_List_Results.FullRowSelect = true;
+            this.CC_List_Results.GridLines = true;
+            this.CC_List_Results.HideSelection = false;
+            this.CC_List_Results.HoverSelection = true;
+            this.CC_List_Results.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2});
+            this.CC_List_Results.Location = new System.Drawing.Point(3, 147);
+            this.CC_List_Results.Name = "CC_List_Results";
+            this.CC_List_Results.Size = new System.Drawing.Size(690, 311);
+            this.CC_List_Results.TabIndex = 2;
+            this.CC_List_Results.UseCompatibleStateImageBehavior = false;
+            this.CC_List_Results.View = System.Windows.Forms.View.Details;
+            // 
+            // columnAccepted
+            // 
+            this.columnAccepted.Text = "Accepted";
+            this.columnAccepted.Width = 69;
+            // 
+            // columnImageSource0
+            // 
+            this.columnImageSource0.Text = "Image source 0";
+            this.columnImageSource0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnImageSource0.Width = 100;
+            // 
+            // columnImageSource1
+            // 
+            this.columnImageSource1.Text = "Image source 1";
+            this.columnImageSource1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnImageSource1.Width = 100;
+            // 
+            // columnHash0
+            // 
+            this.columnHash0.Text = "Hash 0";
+            this.columnHash0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHash0.Width = 100;
+            // 
+            // columnHash1
+            // 
+            this.columnHash1.Text = "Hash 1";
+            this.columnHash1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHash1.Width = 109;
+            // 
+            // columnMatch
+            // 
+            this.columnMatch.Text = "Match (%)";
+            this.columnMatch.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnMatch.Width = 94;
+            // 
+            // CC_Group_SourceLocation
+            // 
+            this.CC_Group_SourceLocation.Location = new System.Drawing.Point(3, 97);
+            this.CC_Group_SourceLocation.Name = "CC_Group_SourceLocation";
+            this.CC_Group_SourceLocation.Size = new System.Drawing.Size(690, 44);
+            this.CC_Group_SourceLocation.TabIndex = 1;
+            this.CC_Group_SourceLocation.TabStop = false;
+            this.CC_Group_SourceLocation.Text = "Reference folder";
+            // 
+            // CC_Selection_Technique
+            // 
+            this.CC_Selection_Technique.Location = new System.Drawing.Point(3, 0);
+            this.CC_Selection_Technique.Name = "CC_Selection_Technique";
+            this.CC_Selection_Technique.Size = new System.Drawing.Size(690, 100);
+            this.CC_Selection_Technique.TabIndex = 0;
             // 
             // ImageList_MainTab
             // 
@@ -264,6 +376,7 @@
             this.Text = "Percuptual Image Hashing";
             this.MainDialog_MainTab.ResumeLayout(false);
             this.pageImageVsImage.ResumeLayout(false);
+            this.pageCrossComparison.ResumeLayout(false);
             this.Menu_Main.ResumeLayout(false);
             this.Menu_Main.PerformLayout();
             this.ResumeLayout(false);
@@ -292,6 +405,16 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.LinkLabel linkLabel3;
         private System.Windows.Forms.ImageList ImageList_MainTab;
+        private System.Windows.Forms.TabPage pageCrossComparison;
+        private TechniqueSelection CC_Selection_Technique;
+        private System.Windows.Forms.GroupBox CC_Group_SourceLocation;
+        private System.Windows.Forms.ListView CC_List_Results;
+        private System.Windows.Forms.ColumnHeader columnAccepted;
+        private System.Windows.Forms.ColumnHeader columnImageSource0;
+        private System.Windows.Forms.ColumnHeader columnImageSource1;
+        private System.Windows.Forms.ColumnHeader columnHash0;
+        private System.Windows.Forms.ColumnHeader columnHash1;
+        private System.Windows.Forms.ColumnHeader columnMatch;
     }
 }
 

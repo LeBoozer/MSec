@@ -50,6 +50,12 @@
     <ApplicationIcon>Resources\app_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Luminous">
+      <HintPath>C:\Users\Byron\Desktop\Luminous.dll</HintPath>
+    </Reference>
+    <Reference Include="Luminous.Windows.Forms">
+      <HintPath>C:\Users\Byron\Desktop\Luminous.Windows.Forms.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -67,6 +73,12 @@
     </Compile>
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CC_ComparisonDetails.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CC_ComparisonDetails.Designer.cs">
+      <DependentUpon>CC_ComparisonDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageSourceSelection.cs">
       <SubType>UserControl</SubType>
@@ -106,6 +118,7 @@
     <Compile Include="src\technique\Technique.cs" />
     <Compile Include="src\Utility.cs" />
     <Compile Include="src\views\View.cs" />
+    <Compile Include="src\views\ViewCrossComparison.cs" />
     <Compile Include="src\views\ViewImageVsImage.cs" />
     <Compile Include="src\views\ViewWithTechniqueSelection.cs" />
     <Compile Include="TechniqueSelection.cs">
@@ -116,6 +129,9 @@
     </Compile>
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CC_ComparisonDetails.resx">
+      <DependentUpon>CC_ComparisonDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ImageSourceSelection.resx">
       <DependentUpon>ImageSourceSelection.cs</DependentUpon>

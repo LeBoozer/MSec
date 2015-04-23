@@ -49,6 +49,13 @@ namespace MSec
             private set { }
         }
 
+        private ViewCrossComparison m_viewCrossComparison = null;
+        public ViewCrossComparison ViewCrossComparison
+        {
+            get { return m_viewCrossComparison; }
+            private set { }
+        }
+
         // Initializes MSec
         public bool initialize(MainDialog _handle)
         {
@@ -63,6 +70,7 @@ namespace MSec
 
             // Create views
             m_viewImageVsImage = new ViewImageVsImage(tabCtrl.TabPages["pageImageVsImage"]);
+            m_viewCrossComparison = new ViewCrossComparison(tabCtrl.TabPages["pageCrossComparison"]);
 
             return true;
         }
