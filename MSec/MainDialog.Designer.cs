@@ -170,6 +170,7 @@
             this.pageCrossComparison.Controls.Add(this.CC_List_Results);
             this.pageCrossComparison.Controls.Add(this.CC_Group_SourceLocation);
             this.pageCrossComparison.Controls.Add(this.CC_Selection_Technique);
+            this.pageCrossComparison.ImageIndex = 1;
             this.pageCrossComparison.Location = new System.Drawing.Point(4, 23);
             this.pageCrossComparison.Name = "pageCrossComparison";
             this.pageCrossComparison.Size = new System.Drawing.Size(697, 496);
@@ -189,7 +190,6 @@
             this.CC_List_Results.FullRowSelect = true;
             this.CC_List_Results.GridLines = true;
             this.CC_List_Results.HideSelection = false;
-            this.CC_List_Results.HoverSelection = true;
             this.CC_List_Results.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
             listViewItem2});
@@ -256,6 +256,7 @@
             this.ImageList_MainTab.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList_MainTab.ImageStream")));
             this.ImageList_MainTab.TransparentColor = System.Drawing.Color.Transparent;
             this.ImageList_MainTab.Images.SetKeyName(0, "compare.png");
+            this.ImageList_MainTab.Images.SetKeyName(1, "arrows.png");
             // 
             // ToolTip
             // 

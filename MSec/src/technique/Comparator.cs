@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 *******************************************************************************************************************************************************************/
 namespace MSec
 {
-    class Comparator
+    public class Comparator
     {
         // The comparator's ID (combined hashes of both sources!)
         private int m_comparatorID = 0;

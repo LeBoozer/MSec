@@ -21,8 +21,9 @@ namespace MSec
     public class ViewCrossComparison : ViewWithTechniqueSelection
     {
         // Comparison details stuff
-        private Popup       m_popupWindow = null;
-        private Rectangle   m_popupPosition;
+        private CC_ComparisonDetails    m_comparatorDetails = null;
+        private Popup                   m_popupWindow = null;
+        private Rectangle               m_popupPosition;
 
         // Controls
         private ListView m_listResults = null;
@@ -32,12 +33,12 @@ namespace MSec
             base(_tabPage, "CC_Selection_Technique")
         {
             // Local variables
-            CC_ComparisonDetails ccDetails = new CC_ComparisonDetails();
             int x = 0;
             int y = 0;
 
             // Create pop-up window
-            m_popupWindow = new Popup(ccDetails);
+            m_comparatorDetails = new CC_ComparisonDetails();
+            m_popupWindow = new Popup(m_comparatorDetails);
             m_popupWindow.HidingAnimation = PopupAnimations.None;
             m_popupWindow.ShowingAnimation = PopupAnimations.None;
             m_popupWindow.FocusOnOpen = false;
@@ -50,7 +51,7 @@ namespace MSec
 
             // Define pop-up position
             x = m_listResults.Width;
-            y = (m_listResults.Height / 2) - (ccDetails.Height / 2);
+            y = (m_listResults.Height / 2) - (m_comparatorDetails.Height / 2);
             m_popupPosition = new Rectangle(x, y, 1, 1);
         }
 
