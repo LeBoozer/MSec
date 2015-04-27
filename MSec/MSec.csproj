@@ -116,7 +116,10 @@
     <Compile Include="src\technique\HashData.cs" />
     <Compile Include="src\technique\ImageSource.cs" />
     <Compile Include="src\technique\Technique.cs" />
-    <Compile Include="src\Utility.cs" />
+    <Compile Include="src\utility\ListViewFlickerFree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\utility\Utility.cs" />
     <Compile Include="src\views\View.cs" />
     <Compile Include="src\views\ViewCrossComparison.cs" />
     <Compile Include="src\views\ViewImageVsImage.cs" />

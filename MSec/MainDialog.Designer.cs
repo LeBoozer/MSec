@@ -42,7 +42,7 @@
             this.CC_ToolStrip = new System.Windows.Forms.StatusStrip();
             this.CC_ToolStrip_Label_Action = new System.Windows.Forms.ToolStripStatusLabel();
             this.CC_ToolStrip_Progress = new System.Windows.Forms.ToolStripProgressBar();
-            this.CC_List_Results = new System.Windows.Forms.ListView();
+            this.CC_List_Results = new ListViewFlickerFree();
             this.columnAccepted = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnImageSource0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnImageSource1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -486,7 +486,7 @@
         private System.Windows.Forms.TabPage pageCrossComparison;
         private TechniqueSelection CC_Selection_Technique;
         private System.Windows.Forms.GroupBox CC_Group_SourceLocation;
-        private System.Windows.Forms.ListView CC_List_Results;
+        private ListViewFlickerFree CC_List_Results;
         private System.Windows.Forms.ColumnHeader columnAccepted;
         private System.Windows.Forms.ColumnHeader columnImageSource0;
         private System.Windows.Forms.ColumnHeader columnImageSource1;

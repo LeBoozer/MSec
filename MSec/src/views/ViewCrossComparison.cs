@@ -29,6 +29,10 @@ namespace MSec
         private static readonly string  ACTION_READY                = "Ready for the comparison...";
         private static readonly string  ACTION_EXECUTION            = "The comparison is being executed...";
 
+        private static readonly string  CUSTOM_ACTION_HASHING       = "Hashes computed: {0}/{1}";
+        private static readonly string  CUSTOM_ACTION_COMPARISON    = "Hashes compared: {0}/{1}";
+        private static readonly string  CUSTOM_ACTION_PROCESS_DATA  = "Post-processing data...";
+
         // All possible states
         private enum eState
         {
@@ -272,6 +276,7 @@ namespace MSec
                         m_buttonReferenceFolderSelect.Enabled = false;
                         m_buttonReferenceFolderDelete.Enabled = false;
                         m_buttonReferenceFolderStart.Enabled = false;
+                        m_listResults.Enabled = false;
                         lockTechniqueSelection();
                     };
 
@@ -281,6 +286,7 @@ namespace MSec
                         m_buttonReferenceFolderSelect.Enabled = true;
                         m_buttonReferenceFolderDelete.Enabled = true;
                         m_buttonReferenceFolderStart.Enabled = true;
+                        m_listResults.Enabled = true;
                         unlockTechniqueSelection();
                     };
                 }
@@ -432,7 +438,6 @@ namespace MSec
                 bool result = true;
                 int numImageHashesComputed = 0;
                 string oldActionText = "";
-                string actionText = "Hashes computed: {0}/{1}";
 
                 // Get all image sources
                 sources = extractImageSourcesFromNode(m_loadedData, true);
@@ -441,7 +446,7 @@ namespace MSec
                 sourceQueue = new ConcurrentQueue<ImageSource>(sources);
 
                 // Get current action text
-                oldActionText = setCustomActionText(String.Format(actionText, numImageHashesComputed, sources.Length));
+                oldActionText = setCustomActionText(String.Format(CUSTOM_ACTION_HASHING, numImageHashesComputed, sources.Length));
 
                 // Spawn woker jobs
                 jobCount = Math.Min(sources.Length, Environment.ProcessorCount);
@@ -469,7 +474,7 @@ namespace MSec
                                 ++numImageHashesComputed;
 
                                 // Set text
-                                setCustomActionText(String.Format(actionText, numImageHashesComputed, sources.Length));
+                                setCustomActionText(String.Format(CUSTOM_ACTION_HASHING, numImageHashesComputed, sources.Length));
                             }
                         }
 
@@ -535,7 +540,6 @@ namespace MSec
                 bool result = true;
                 int numComparisonsDone = 0;
                 string oldActionText = "";
-                string actionText = "Comparisons are done: {0}/{1}";
 
                 // Create pairs
                 for (int i = 0; i < _sourceList.Length; ++i)
@@ -550,7 +554,7 @@ namespace MSec
                 pairQueue = new ConcurrentQueue<ComparisonPair>(pairs);
 
                 // Get current action text
-                oldActionText = setCustomActionText(String.Format(actionText, numComparisonsDone, pairs.Count));
+                oldActionText = setCustomActionText(String.Format(CUSTOM_ACTION_COMPARISON, numComparisonsDone, pairs.Count));
 
                 // Spawn woker jobs
                 jobCount = Math.Min(pairs.Count, Environment.ProcessorCount);
@@ -581,7 +585,7 @@ namespace MSec
                                 ++numComparisonsDone;
 
                                 // Set text
-                                setCustomActionText(String.Format(actionText, numComparisonsDone, pairs.Count));
+                                setCustomActionText(String.Format(CUSTOM_ACTION_COMPARISON, numComparisonsDone, pairs.Count));
                             }
                         }
 
@@ -604,8 +608,26 @@ namespace MSec
                 }
 
                 // Add all pairs to the list view
-                foreach(ComparisonPair p in pairs)
-                    addComparisonPairToListView(p);
+                lock (m_dataLock)
+                {
+                    m_comparisonPairs = new Dictionary<int, ComparisonPair>(pairs.Count);
+                    numComparisonsDone = 0;
+
+                    // Set status
+                    setCustomActionText(CUSTOM_ACTION_PROCESS_DATA);
+
+                    // Loop through all pais
+                    foreach (ComparisonPair p in pairs)
+                    {
+                        // Add to dictionary
+                        m_comparisonPairs.Add(p.PairID, p);
+
+                        // Add to list view
+                        addComparisonPairToListView(p);
+
+                        
+                    }
+                }
 
                 // Reset action text
                 setCustomActionText(oldActionText);
@@ -627,14 +649,6 @@ namespace MSec
                     setNextState(eState.STATE_READY);
                     MessageBox.Show("An unknown error occurred during the comparison of the image hashes!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
-                }
-
-                // Set result
-                lock(m_dataLock)
-                {
-                    m_comparisonPairs = new Dictionary<int, ComparisonPair>(pairs.Count);
-                    foreach (var p in pairs)
-                        m_comparisonPairs.Add(p.PairID, p);
                 }
 
                 // Done
