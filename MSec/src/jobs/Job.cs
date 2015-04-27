@@ -134,16 +134,20 @@ namespace MSec
         // Returns true, if the job is done!
         public bool waitForDone(int _milliseconds = -1)
         {
+            // Local variables
+            Task t = null;
+
             // Lock
             lock (m_jobLock)
             {
                 // Already done?
                 if (m_jobDone == true)
                     return true;
-
-                // Wait
-                return m_taskObject.Wait(_milliseconds);
+                t = m_taskObject;
             }
+
+            // Wait
+            return t.Wait(_milliseconds);
         }
 
         // Will be called as soon as the job has been enqueued for execution
@@ -201,9 +205,23 @@ namespace MSec
                     error = _e;
                 }
 
+                // Set result
+                _job.Result = result;
+
                 // Excute finish function
-                if (_job.JobDoneFunc != null)
-                    _job.JobDoneFunc(result, error);
+                try
+                {
+                    if (_job.JobDoneFunc != null)
+                        _job.JobDoneFunc(result, error);
+                }
+                catch(Exception _e)
+                {
+                    // Copy error
+                    error = _e;
+                }
+
+                // Job is done
+                _job._done(result, error);
 
                 return result;
             });
@@ -211,8 +229,9 @@ namespace MSec
             // Start task
             if (_job.isEnqueued == true)
                 return _job;
-            task = Task.Factory.StartNew(f, p);
+            task = new Task<_R>(f, p);
             _job._enqueued(task);
+            task.Start();
 
             return _job;
         }

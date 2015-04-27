@@ -96,6 +96,23 @@ namespace MSec
             return "";
         }
 
+        // Opens the dialog to pick an folder
+        // Returns the path of the folder or an empty string in cases the user pressed abort
+        public static string openSelectFolderDialog()
+        {
+            // Local variables
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+
+            // Set options
+            dialog.RootFolder = Environment.SpecialFolder.Desktop;
+
+            // Show dialog
+            if (dialog.ShowDialog() == DialogResult.OK)
+                return dialog.SelectedPath;
+
+            return "";
+        }
+
         // Executes the defined action in the control's main thread
         public static void invokeInGuiThread(Control _ctrl, Action _action)
         {

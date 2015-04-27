@@ -121,7 +121,6 @@ namespace MSec
         {
             // Local variables
             Job<ImageSource> job = null;
-            var context = TaskScheduler.FromCurrentSynchronizationContext();
 
             // Notify listener
             OnImageSourceChanging();

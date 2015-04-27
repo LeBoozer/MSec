@@ -215,6 +215,10 @@ namespace MSec
                     {
                         return "Match rate: " + _data.m_crossCorrelationPeak.ToString("#0.0000");
                        // return "Peak: " + _data.m_crossCorrelationPeak.ToString("#0.0000");
+                    },
+                    (RadishComparativeData _data) =>
+                    {
+                        return _data.m_crossCorrelationPeak;
                     });
                 }
             );
@@ -266,6 +270,10 @@ namespace MSec
                     result = new ComparativeData<double>(dis, isSame, (double _d) =>
                     {
                         return "Match rate: " + (1.0 - _d).ToString("#0.0000");
+                    },
+                    (double _d) =>
+                    {
+                        return _d;
                     });
                     return result;
                 }
@@ -332,6 +340,10 @@ namespace MSec
                     result = new ComparativeData<double>(dis, isSame, (double _d) =>
                     {
                         return "Match rate: " + (1.0 - _d).ToString("#0.0000");
+                    },
+                    (double _d) =>
+                    {
+                        return _d;
                     });
                     return result;
                 }

@@ -22,6 +22,9 @@ namespace MSec
         // Returns true if the result is accpeted (depending on the threshold and technique!)
         bool isAccepted();
 
+        // Returns the match rate
+        double? getMatchRate();
+
         // Converts the hash into a readable format
         string convertToString();
     }
@@ -37,6 +40,7 @@ namespace MSec
     {
         // Delegate for the hashing function
         public delegate string delegate_convertToString(_T _data);
+        public delegate double delegate_convertToDouble(_T _data);
 
         // The hash data
         private _T m_data = default(_T);
@@ -57,13 +61,22 @@ namespace MSec
             set { m_funcConv = value; }
         }
 
+        // The convert to double function
+        private delegate_convertToDouble m_funcConvDouble = null;
+        public delegate_convertToDouble FuncConvertToDouble
+        {
+            private get { return m_funcConvDouble; }
+            set { m_funcConvDouble = value; }
+        }
+
         // Constructor
-        public ComparativeData(_T _data, bool _accepted, delegate_convertToString _funcConv = null)
+        public ComparativeData(_T _data, bool _accepted, delegate_convertToString _funcConv = null, delegate_convertToDouble _funcConvDouble = null)
         {
             // Copy
             m_data = _data;
             m_isAccepted = _accepted;
             m_funcConv = _funcConv;
+            m_funcConvDouble = _funcConvDouble;
         }
 
         // Override: ComparativeData::getDataType
@@ -76,6 +89,14 @@ namespace MSec
         public bool isAccepted()
         {
             return m_isAccepted;
+        }
+
+        // Override: ComparativeData::getMatchRate
+        public double? getMatchRate()
+        {
+            if (m_funcConvDouble != null)
+                return m_funcConvDouble(m_data);
+            return null;
         }
 
         // Override: ComparativeData::convertToString

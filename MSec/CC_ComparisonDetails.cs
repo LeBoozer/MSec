@@ -48,7 +48,7 @@ namespace MSec
         }
 
         // Updates the control's content with a comparison pair (null to delete content)
-        public void setComparator(ComparisonPair _pair)
+        public void setComparisonPair(ComparisonPair _pair)
         {
             // Run in GUI thread
             Utility.invokeInGuiThread(this, delegate
