@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 /*******************************************************************************************************************************************************************
 	Class: Job
@@ -17,10 +18,10 @@ namespace MSec
     public sealed class Job<_R>
     {
         // Delegate for the job function function
-        public delegate _R delegate_job(params object[] _args);
+        public delegate _R delegate_job(JobParameter<_R> _params);
 
         // Delegate for the job finish function function
-        public delegate void delegate_job_done(_R _result, Exception _error);
+        public delegate void delegate_job_done(JobParameter<_R> _params);
 
         // The lock object
         private object              m_jobLock = new object();
@@ -59,6 +60,9 @@ namespace MSec
 
         // The internal task
         private Task<_R>            m_taskObject = null;
+
+        // The internal cancellation token source
+        private CancellationTokenSource m_tokenSource;
 
         // The result value
         private _R                  m_result = default(_R);
@@ -150,14 +154,28 @@ namespace MSec
             return t.Wait(_milliseconds);
         }
 
-        // Will be called as soon as the job has been enqueued for execution
-        private void _enqueued(Task<_R> _task)
+        // Tries to cancel the job (the job must support cancellations!)
+        public void cancel()
         {
             // Lock
             lock (m_jobLock)
             {
-                // Copy task
+                // Already done?
+                if (m_taskObject.IsCanceled == true || m_jobDone == true)
+                    return;
+                m_tokenSource.Cancel();
+            }
+        }
+
+        // Will be called as soon as the job has been enqueued for execution
+        private void _enqueued(Task<_R> _task, CancellationTokenSource _tokenSource)
+        {
+            // Lock
+            lock (m_jobLock)
+            {
+                // Copy
                 m_taskObject = _task;
+                m_tokenSource = _tokenSource;
 
                 // Set flag
                 m_isEnqueued = true;
@@ -176,6 +194,10 @@ namespace MSec
 
                 // Set flag
                 m_jobDone = true;
+
+                // Delete token
+                m_tokenSource.Dispose();
+                m_tokenSource = null;
             }
         }
 
@@ -184,7 +206,8 @@ namespace MSec
         {
             // Local parameters
             Task<_R> task = null;
-            _JobParameter p = new _JobParameter(_jobParams);
+            CancellationTokenSource tokenSrc = new CancellationTokenSource();
+            JobParameter<_R> p = new JobParameter<_R>(_jobParams, tokenSrc.Token);
 
             // Create wrapper function
             Func<object, _R> f = new Func<object, _R>((object _data) =>
@@ -197,27 +220,31 @@ namespace MSec
                 try
                 {
                     if (_job.JobFunc != null)
-                        result = _job.JobFunc((_data as _JobParameter).m_data);
+                        result = _job.JobFunc((_data as JobParameter<_R>));
                 }
                 catch(Exception _e)
                 {
                     // Copy error
-                    error = _e;
+                    if (_e is TaskCanceledException == false && _e is OperationCanceledException == false)
+                        error = _e;
                 }
 
                 // Set result
                 _job.Result = result;
+                (_data as JobParameter<_R>).Result = result;
+                (_data as JobParameter<_R>).Error = error;
 
                 // Excute finish function
                 try
                 {
                     if (_job.JobDoneFunc != null)
-                        _job.JobDoneFunc(result, error);
+                        _job.JobDoneFunc((_data as JobParameter<_R>));
                 }
                 catch(Exception _e)
                 {
                     // Copy error
-                    error = _e;
+                    if (_e is TaskCanceledException == false && _e is OperationCanceledException == false)
+                        error = _e;
                 }
 
                 // Job is done
@@ -229,8 +256,8 @@ namespace MSec
             // Start task
             if (_job.isEnqueued == true)
                 return _job;
-            task = new Task<_R>(f, p);
-            _job._enqueued(task);
+            task = new Task<_R>(f, p, tokenSrc.Token);
+            _job._enqueued(task, tokenSrc);
             task.Start();
 
             return _job;
@@ -244,7 +271,7 @@ namespace MSec
         }
 
         // Creates a job for computing the percuptual hash for a certain image source by means of a defined technique
-        public static Job<HashData> createJobComputeHash(ImageSource _src, Technique _technique, delegate_job_done _jobDoneFunc,
+        public static Job<HashData> createJobComputeHash(ImageSource _src, Technique _technique, Job<HashData>.delegate_job_done _jobDoneFunc,
             bool _recompute = false, bool _autoStart = true)
         {
             // Local variables
@@ -255,16 +282,16 @@ namespace MSec
                 return null;
 
             // Create job
-            job = new Job<HashData>((object[] _params) =>
+            job = new Job<HashData>((JobParameter<HashData> _params) =>
             {
                 // Calculate hash
                 return _technique.computeHash(_src, _recompute);
             },
-            (HashData _result, Exception _error) =>
+            (JobParameter<HashData> _params) =>
             {
                 // Call user function
                 if (_jobDoneFunc != null)
-                    _jobDoneFunc((_R)_result, _error);
+                    _jobDoneFunc(_params);
             });
 
             // Auto start job?
@@ -285,7 +312,8 @@ namespace MSec
         }
 
         // Creates a job for comparing two computed perceptual hashes by means of a defined technique
-        public static Job<ComparativeData> createJobCompareHashData(ImageSource _src0, ImageSource _src1, Technique _technique, delegate_job_done _jobDoneFunc,
+        public static Job<ComparativeData> createJobCompareHashData(ImageSource _src0, ImageSource _src1, Technique _technique,
+            Job<ComparativeData>.delegate_job_done _jobDoneFunc,
             bool _autoStart = true)
         {
             // Local variables
@@ -296,16 +324,16 @@ namespace MSec
                 return null;
 
             // Create job
-            job = new Job<ComparativeData>((object[] _params) =>
+            job = new Job<ComparativeData>((JobParameter<ComparativeData> _params) =>
             {
                 // Compare hashes
                 return _technique.compareHashData(_src0, _src1);
             },
-            (ComparativeData _result, Exception _error) =>
+            (JobParameter<ComparativeData> _params) =>
             {
                 // Call user function
                 if (_jobDoneFunc != null)
-                    _jobDoneFunc((_R)_result, _error);
+                    _jobDoneFunc(_params);
             });
 
             // Auto start job?
@@ -316,16 +344,6 @@ namespace MSec
             }
 
             return job;
-        }
-
-        // Internal wrapper for the job parameter
-        private sealed class _JobParameter
-        {
-            public object[] m_data;
-            public _JobParameter(object[] _data)
-            {
-                m_data = _data;
-            }
         }
     }
 }

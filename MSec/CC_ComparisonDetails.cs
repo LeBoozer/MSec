@@ -20,6 +20,12 @@ namespace MSec
 {
     public partial class CC_ComparisonDetails : UserControl
     {
+        // Constants
+        private static readonly string TEXT_LOADING_IMAGE_SOURCE = "Loading image source...";
+
+        // The data lock
+        private object m_dataLock = new object();
+
         // The current set comparison pair
         private ComparisonPair m_pair = null;
         public ComparisonPair CurrentPair
@@ -33,6 +39,10 @@ namespace MSec
         private PictureBox m_pictureSource1 = null;
         private TextBox    m_textSource0 = null;
         private TextBox    m_textSource1 = null;
+
+        // Loading jobs
+        private Job<Image> m_jobLoadingSource0 = null;
+        private Job<Image> m_jobLoadingSource1 = null;
 
         // Constructor
         public CC_ComparisonDetails()
@@ -50,44 +60,95 @@ namespace MSec
         // Updates the control's content with a comparison pair (null to delete content)
         public void setComparisonPair(ComparisonPair _pair)
         {
-            // Run in GUI thread
-            Utility.invokeInGuiThread(this, delegate
+            // Local variables
+            Job<Image>.delegate_job func = null;
+            Job<Image>.delegate_job_done funcDone = null;
+
+            // Lock data
+            lock(m_dataLock)
             {
-                // Reset GUI content
-                m_pictureSource0.Image = m_pictureSource1.Image = null;
-                m_textSource0.Text = m_textSource1.Text = "";
+                // Cancel old jobs
+                if(m_jobLoadingSource0 != null)
+                {
+                    m_jobLoadingSource0.cancel();
+                    m_jobLoadingSource0 = null;
+                }
+                if(m_jobLoadingSource1 != null)
+                {
+                    m_jobLoadingSource1.cancel();
+                    m_jobLoadingSource1 = null;
+                }
 
-                m_pair = null;
-            });
+                // Run in GUI thread
+                Utility.invokeInGuiThread(this, delegate
+                {
+                    // Delete images
+                    if (m_pictureSource0.Image != null)
+                    {
+                        m_pictureSource0.Image.Dispose();
+                        m_pictureSource0.Image = null;
+                    }
+                    if (m_pictureSource1.Image != null)
+                    {
+                        m_pictureSource1.Image.Dispose();
+                        m_pictureSource1.Image = null;
+                    }
 
-            // Check parameter
-            if (_pair == null)
+                    // Reset GUI content
+                    if (_pair == null)
+                        m_textSource0.Text = m_textSource1.Text = "";
+                    else
+                        m_textSource0.Text = m_textSource1.Text = TEXT_LOADING_IMAGE_SOURCE;
+                });
+            }
+
+            // Copy
+            m_pair = _pair;
+            if (m_pair == null)
                 return;
 
-            // Copy parameter
-            m_pair = _pair;
-
-            // Run in GUI thread
-            Utility.invokeInGuiThread(this, delegate
+            // Job function
+            func = (JobParameter<Image> _params) =>
             {
-                // Set content: source 0
-                if (m_pair.Source0 != null)
-                {
-                    // Set preview
-                    m_pictureSource0.Image = m_pair.Source0.createSystemImage();
+                // Cancelled?
+                if (_params.IsCancellationRequested == true)
+                    _params.dropJob();
 
-                    // Set patch
-                    m_textSource0.Text = m_pair.Source0.FilePath;
-                }
-                if (m_pair.Source1 != null)
-                {
-                    // Set preview
-                    m_pictureSource1.Image = m_pair.Source1.createSystemImage();
+                // Create bitmap
+                return (_params.Data[0] as ImageSource).createSystemImage();
+            };
 
-                    // Set patch
-                    m_textSource1.Text = m_pair.Source1.FilePath;
+            // Job done function
+            funcDone = (JobParameter<Image> _params) =>
+            {
+                // Lock data
+                lock (m_dataLock)
+                {
+                    // Cancelled?
+                    if (_params.IsCancellationRequested == true)
+                    {
+                        // Delete image
+                        _params.Result.Dispose();
+
+                        // Drop
+                        _params.dropJob();
+                    }
+
+                    // Run in GUI thread
+                    Utility.invokeInGuiThread(this, delegate
+                    {
+                        // Set image
+                        (_params.Data[1] as PictureBox).Image = _params.Result;
+
+                        // Set text
+                        (_params.Data[2] as TextBox).Text = (_params.Data[0] as ImageSource).FilePath;
+                    });
                 }
-            });
+            };
+
+            // Create jobs
+            m_jobLoadingSource0 = new Job<Image>(func, funcDone, true, new object[] { _pair.Source0, m_pictureSource0, m_textSource0 });
+            m_jobLoadingSource1 = new Job<Image>(func, funcDone, true, new object[] { _pair.Source1, m_pictureSource1, m_textSource1 });
         }
 
         // Override: UserControl::OnPaint

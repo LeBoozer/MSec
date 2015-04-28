@@ -49,7 +49,9 @@
             this.columnHash0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHash1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnMatch = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ImageList_CC_List_Results = new System.Windows.Forms.ImageList(this.components);
             this.CC_Group_SourceLocation = new System.Windows.Forms.GroupBox();
+            this.CC_Label_ReferenceFolder_NumSources = new System.Windows.Forms.Label();
             this.CC_Button_ReferenceFolder_Start = new System.Windows.Forms.Button();
             this.CC_Button_ReferenceFolder_Delete = new System.Windows.Forms.Button();
             this.CC_Button_ReferenceFolder_Select = new System.Windows.Forms.Button();
@@ -216,14 +218,16 @@
             this.CC_List_Results.MultiSelect = false;
             this.CC_List_Results.Name = "CC_List_Results";
             this.CC_List_Results.Size = new System.Drawing.Size(690, 311);
+            this.CC_List_Results.SmallImageList = this.ImageList_CC_List_Results;
             this.CC_List_Results.TabIndex = 2;
+            this.ToolTip.SetToolTip(this.CC_List_Results, "Contains an brief overview of the hashed/compared\r\nimage sources.");
             this.CC_List_Results.UseCompatibleStateImageBehavior = false;
             this.CC_List_Results.View = System.Windows.Forms.View.Details;
             // 
             // columnAccepted
             // 
-            this.columnAccepted.Text = "Accepted";
-            this.columnAccepted.Width = 69;
+            this.columnAccepted.Text = "";
+            this.columnAccepted.Width = 26;
             // 
             // columnImageSource0
             // 
@@ -250,8 +254,16 @@
             this.columnMatch.Text = "Match (%)";
             this.columnMatch.Width = 70;
             // 
+            // ImageList_CC_List_Results
+            // 
+            this.ImageList_CC_List_Results.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList_CC_List_Results.ImageStream")));
+            this.ImageList_CC_List_Results.TransparentColor = System.Drawing.Color.Transparent;
+            this.ImageList_CC_List_Results.Images.SetKeyName(0, "checkmark.png");
+            this.ImageList_CC_List_Results.Images.SetKeyName(1, "cross.png");
+            // 
             // CC_Group_SourceLocation
             // 
+            this.CC_Group_SourceLocation.Controls.Add(this.CC_Label_ReferenceFolder_NumSources);
             this.CC_Group_SourceLocation.Controls.Add(this.CC_Button_ReferenceFolder_Start);
             this.CC_Group_SourceLocation.Controls.Add(this.CC_Button_ReferenceFolder_Delete);
             this.CC_Group_SourceLocation.Controls.Add(this.CC_Button_ReferenceFolder_Select);
@@ -264,6 +276,15 @@
             this.CC_Group_SourceLocation.TabStop = false;
             this.CC_Group_SourceLocation.Text = "Reference folder";
             // 
+            // CC_Label_ReferenceFolder_NumSources
+            // 
+            this.CC_Label_ReferenceFolder_NumSources.Location = new System.Drawing.Point(547, 21);
+            this.CC_Label_ReferenceFolder_NumSources.Name = "CC_Label_ReferenceFolder_NumSources";
+            this.CC_Label_ReferenceFolder_NumSources.Size = new System.Drawing.Size(137, 13);
+            this.CC_Label_ReferenceFolder_NumSources.TabIndex = 10;
+            this.CC_Label_ReferenceFolder_NumSources.Text = "Image source count: 0";
+            this.CC_Label_ReferenceFolder_NumSources.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // CC_Button_ReferenceFolder_Start
             // 
             this.CC_Button_ReferenceFolder_Start.BackgroundImage = global::MSec.Properties.Resources.play;
@@ -273,7 +294,7 @@
             this.CC_Button_ReferenceFolder_Start.Name = "CC_Button_ReferenceFolder_Start";
             this.CC_Button_ReferenceFolder_Start.Size = new System.Drawing.Size(23, 23);
             this.CC_Button_ReferenceFolder_Start.TabIndex = 9;
-            this.ToolTip.SetToolTip(this.CC_Button_ReferenceFolder_Start, "Deletes the currently selected image");
+            this.ToolTip.SetToolTip(this.CC_Button_ReferenceFolder_Start, "Executes the hashing and the subsequent\r\ncomparison of those hashes.");
             this.CC_Button_ReferenceFolder_Start.UseVisualStyleBackColor = true;
             // 
             // CC_Button_ReferenceFolder_Delete
@@ -284,7 +305,8 @@
             this.CC_Button_ReferenceFolder_Delete.Name = "CC_Button_ReferenceFolder_Delete";
             this.CC_Button_ReferenceFolder_Delete.Size = new System.Drawing.Size(23, 23);
             this.CC_Button_ReferenceFolder_Delete.TabIndex = 8;
-            this.ToolTip.SetToolTip(this.CC_Button_ReferenceFolder_Delete, "Deletes the currently selected image");
+            this.ToolTip.SetToolTip(this.CC_Button_ReferenceFolder_Delete, "Deletes the currently selected image sources.\r\nDoes not delete the comparison dat" +
+        "a!");
             this.CC_Button_ReferenceFolder_Delete.UseVisualStyleBackColor = true;
             // 
             // CC_Button_ReferenceFolder_Select
@@ -295,7 +317,7 @@
             this.CC_Button_ReferenceFolder_Select.Name = "CC_Button_ReferenceFolder_Select";
             this.CC_Button_ReferenceFolder_Select.Size = new System.Drawing.Size(23, 23);
             this.CC_Button_ReferenceFolder_Select.TabIndex = 7;
-            this.ToolTip.SetToolTip(this.CC_Button_ReferenceFolder_Select, "Selects a new image");
+            this.ToolTip.SetToolTip(this.CC_Button_ReferenceFolder_Select, "Selects a folder with image sources.\r\nSubfolders will be searched recursively.");
             this.CC_Button_ReferenceFolder_Select.UseVisualStyleBackColor = true;
             // 
             // CC_Label_ReferenceFolder
@@ -314,7 +336,7 @@
             this.CC_Text_ReferenceFolder_Path.ReadOnly = true;
             this.CC_Text_ReferenceFolder_Path.Size = new System.Drawing.Size(233, 20);
             this.CC_Text_ReferenceFolder_Path.TabIndex = 5;
-            this.ToolTip.SetToolTip(this.CC_Text_ReferenceFolder_Path, "Contains the path of the\r\nselected image source");
+            this.ToolTip.SetToolTip(this.CC_Text_ReferenceFolder_Path, "Contains the path of the source folder\r\nfor the image sources.");
             // 
             // CC_Selection_Technique
             // 
@@ -501,6 +523,8 @@
         private System.Windows.Forms.ToolStripStatusLabel CC_ToolStrip_Label_Action;
         private System.Windows.Forms.ToolStripProgressBar CC_ToolStrip_Progress;
         private System.Windows.Forms.Button CC_Button_ReferenceFolder_Start;
+        private System.Windows.Forms.ImageList ImageList_CC_List_Results;
+        private System.Windows.Forms.Label CC_Label_ReferenceFolder_NumSources;
     }
 }
 

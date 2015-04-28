@@ -106,6 +106,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="src\jobs\Job.cs" />
+    <Compile Include="src\jobs\JobParameter.cs" />
     <Compile Include="src\libwrapper\PHash.cs" />
     <Compile Include="src\libwrapper\RadishComparativeData.cs" />
     <Compile Include="src\libwrapper\WaveletHash.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="src\technique\HashData.cs" />
     <Compile Include="src\technique\ImageSource.cs" />
     <Compile Include="src\technique\Technique.cs" />
+    <Compile Include="src\utility\ListViewColumnSorter.cs" />
     <Compile Include="src\utility\ListViewFlickerFree.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -212,6 +214,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hourglass.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

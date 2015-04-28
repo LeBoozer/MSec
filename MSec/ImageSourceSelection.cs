@@ -126,31 +126,31 @@ namespace MSec
             OnImageSourceChanging();
 
             // Create loader job
-            job = new Job<ImageSource>((object[] _params) =>
+            job = new Job<ImageSource>((JobParameter<ImageSource> _params) =>
             {
                 // Local variables
                 ImageSource res = null;
                 Image img = null;
 
                 // Create source
-                res = new ImageSource(_params[0] as string);
+                res = new ImageSource(_params.Data[0] as string);
 
                 // Create preview
                 img = res.createSystemImage();
                 Utility.invokeInGuiThread(m_picturePreview, delegate
                 {
                     m_picturePreview.Image = img;
-                    m_textPath.Text = _params[0] as string;
+                    m_textPath.Text = _params.Data[0] as string;
                 });
 
                 return res;
             },
-            (ImageSource _result, Exception _error) =>
+            (JobParameter<ImageSource> _params) =>
             {
                 // Set image source
                 lock(m_dataLock)
                 {
-                    m_imageSource = _result;
+                    m_imageSource = _params.Result;
                 }
 
                 // Notify listener

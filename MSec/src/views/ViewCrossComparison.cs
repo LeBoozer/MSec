@@ -29,9 +29,11 @@ namespace MSec
         private static readonly string  ACTION_READY                = "Ready for the comparison...";
         private static readonly string  ACTION_EXECUTION            = "The comparison is being executed...";
 
-        private static readonly string  CUSTOM_ACTION_HASHING       = "Hashes computed: {0}/{1}";
-        private static readonly string  CUSTOM_ACTION_COMPARISON    = "Hashes compared: {0}/{1}";
+        private static readonly string  CUSTOM_ACTION_HASHING       = "Hashes are being computed: {0}/{1}";
+        private static readonly string  CUSTOM_ACTION_COMPARISON    = "Hashes are being compared: {0}/{1}";
         private static readonly string  CUSTOM_ACTION_PROCESS_DATA  = "Post-processing data...";
+
+        private static readonly string  STRING_FORMAT_NUM_SOURCES   = "Image source count: {0}";
 
         // All possible states
         private enum eState
@@ -136,6 +138,9 @@ namespace MSec
         // The comparison data
         private Dictionary<int,ComparisonPair> m_comparisonPairs = null;
 
+        // The sorter for the list-view (column-based)
+        private ListViewColumnSorter    m_listResultsSorter = null;
+
         // State stuff
         private eState                  m_currentState = eState.STATE_NONE;
         private Action                  m_onStateEnter = delegate { };
@@ -152,6 +157,7 @@ namespace MSec
         private Button                  m_buttonReferenceFolderSelect = null;
         private Button                  m_buttonReferenceFolderDelete = null;
         private Button                  m_buttonReferenceFolderStart = null;
+        private Label                   m_labelReferenceFolderNumImageSources = null;
         private ToolStripLabel          m_labelAction = null;
         private ToolStripProgressBar    m_progressBar = null;
 
@@ -162,6 +168,29 @@ namespace MSec
             // Local variables
             int x = 0;
             int y = 0;
+            
+            #region List-view sorter (result list)
+            // Comparison function for image index based compares
+            ListViewColumnSorter.delegate_compare_item funcImageIndexCompare = (ListViewItem _x, ListViewItem _y) =>
+            {
+                return _x.ImageIndex.CompareTo(_y.ImageIndex);
+            };
+
+            // Comparison function for text based compares
+            ListViewColumnSorter.delegate_compare funcTextCompare = (ListViewItem.ListViewSubItem _x, ListViewItem.ListViewSubItem _y) =>
+            {
+                return _x.Text.CompareTo(_y.Text);
+            };
+
+            // Comparison function for double based compares
+            ListViewColumnSorter.delegate_compare funcDoubleCompare = (ListViewItem.ListViewSubItem _x, ListViewItem.ListViewSubItem _y) =>
+            {
+                return double.Parse(_x.Text).CompareTo(double.Parse(_y.Text));
+            };
+
+            // Create list-view sorter
+            m_listResultsSorter = new ListViewColumnSorter(funcImageIndexCompare, funcTextCompare, funcTextCompare, funcTextCompare, funcTextCompare, funcDoubleCompare);
+            #endregion List-view sorter (result list)
 
             // Create pop-up window
             m_comparatorDetails = new CC_ComparisonDetails();
@@ -175,12 +204,15 @@ namespace MSec
             m_textReferenceFolder = _tabPage.Controls.Find("CC_Text_ReferenceFolder_Path", true)[0] as TextBox;
             m_buttonReferenceFolderSelect = _tabPage.Controls.Find("CC_Button_ReferenceFolder_Select", true)[0] as Button;
             m_buttonReferenceFolderDelete = _tabPage.Controls.Find("CC_Button_ReferenceFolder_Delete", true)[0] as Button;
-            m_buttonReferenceFolderStart = _tabPage.Controls.Find("CC_Button_ReferenceFolder_Start", true)[0] as Button;     
+            m_buttonReferenceFolderStart = _tabPage.Controls.Find("CC_Button_ReferenceFolder_Start", true)[0] as Button;
+            m_labelReferenceFolderNumImageSources = _tabPage.Controls.Find("CC_Label_ReferenceFolder_NumSources", true)[0] as Label; 
             m_labelAction = (_tabPage.Controls.Find("CC_ToolStrip", true)[0] as ToolStrip).Items.Find("CC_ToolStrip_Label_Action", true)[0] as ToolStripLabel;
             m_progressBar = (_tabPage.Controls.Find("CC_ToolStrip", true)[0] as ToolStrip).Items.Find("CC_ToolStrip_Progress", true)[0] as ToolStripProgressBar;
 
             // Add events to: list of results
+            m_listResults.ListViewItemSorter = m_listResultsSorter;
             m_listResults.ItemSelectionChanged += onItemSelectionChanged;
+            m_listResults.ColumnClick += onColumnClick;
 
             // Add events to: buttons
             m_buttonReferenceFolderSelect.Click += onButtonReferenceFolderSelectClick;
@@ -307,10 +339,10 @@ namespace MSec
             setNextState(eState.STATE_LOADING_FILES);
 
             // Create job
-            job = new Job<TreeNode>((object[] _params) =>
+            job = new Job<TreeNode>((JobParameter<TreeNode> _params) =>
             {
                 // Local variables
-                string currentPath = _params[0] as string;
+                string currentPath = _params.Data[0] as string;
                 TreeNode root = null;
 
                 // Create node tree
@@ -318,18 +350,19 @@ namespace MSec
 
                 return root;
             },
-            (TreeNode _root, Exception _error) =>
+            (JobParameter<TreeNode> _params) =>
             {
                 // Set loaded data
                 lock(m_dataLock)
                 {
-                    m_loadedData = _root;
+                    m_loadedData = _params.Result;
                 }
 
                 // Update GUI
                 Utility.invokeInGuiThread(m_tabPage, delegate
                 {
-                    m_textReferenceFolder.Text = _root.NodePath;
+                    m_textReferenceFolder.Text = _params.Result.NodePath;
+                    m_labelReferenceFolderNumImageSources.Text = String.Format(STRING_FORMAT_NUM_SOURCES, _params.Result.NumAllImageSources);
                 });
 
                 // Set state
@@ -354,6 +387,7 @@ namespace MSec
             Utility.invokeInGuiThread(m_tabPage, delegate
             {
                 m_textReferenceFolder.Text = "";
+                m_labelReferenceFolderNumImageSources.Text = String.Format(STRING_FORMAT_NUM_SOURCES, 0);
             });
         }
 
@@ -429,7 +463,7 @@ namespace MSec
             });
            
             // Spawn watch job
-            new Job<bool?>((object[] _params) =>
+            new Job<bool?>((JobParameter<bool?> _params) =>
             {
                 #region Watch job
                 // Local variables
@@ -455,7 +489,7 @@ namespace MSec
                 {
                     #region Worker job
                     // Create worker
-                    jobList[i] = new Job<bool?>((object[] _data) =>
+                    jobList[i] = new Job<bool?>((JobParameter<bool?> _data) =>
                     {
                         // Local variables
                         ImageSource src = null;
@@ -480,7 +514,7 @@ namespace MSec
 
                         return true;
                     },
-                    (bool? _result, Exception _error) =>
+                    (JobParameter<bool?> _result) =>
                     {
                         // Ignore result here!
                     },
@@ -502,16 +536,16 @@ namespace MSec
                 return result;
                 #endregion Watch job
             },
-            (bool? _result, Exception _error) =>
+            (JobParameter<bool?> _params) =>
             {
                 // Failed?
-                if(_result == null || _result == false)
+                if(_params.Result == null || _params.Result == false)
                 {
                     setNextState(eState.STATE_READY);
                     MessageBox.Show("Hash computation for the selected image sources failed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                else if(_error != null)
+                else if(_params.Error != null)
                 {
                     setNextState(eState.STATE_READY);
                     MessageBox.Show("An unknown error occurred during the computation of the image hashes!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -531,7 +565,7 @@ namespace MSec
             ConcurrentQueue<ComparisonPair> pairQueue = null;
 
             // Spawn watch job
-            new Job<bool?>((object[] _params) =>
+            new Job<bool?>((JobParameter<bool?> _params) =>
             {
                 #region Watch job
                 // Local variables
@@ -563,7 +597,7 @@ namespace MSec
                 {
                     #region Worker job
                     // Create worker
-                    jobList[i] = new Job<bool?>((object[] _data) =>
+                    jobList[i] = new Job<bool?>((JobParameter<bool?> _data) =>
                     {
                         // Local variables
                         ComparativeData compResult = null;
@@ -591,7 +625,7 @@ namespace MSec
 
                         return true;
                     },
-                    (bool? _result, Exception _error) =>
+                    (JobParameter<bool?> _result) =>
                     {
                         // Ignore result here!
                     },
@@ -616,17 +650,15 @@ namespace MSec
                     // Set status
                     setCustomActionText(CUSTOM_ACTION_PROCESS_DATA);
 
-                    // Loop through all pais
+                    // Add pairs to dictionary
                     foreach (ComparisonPair p in pairs)
                     {
                         // Add to dictionary
                         m_comparisonPairs.Add(p.PairID, p);
-
-                        // Add to list view
-                        addComparisonPairToListView(p);
-
-                        
                     }
+
+                    // Add pairs to list
+                    addComparisonPairsToListView(pairs.ToArray());
                 }
 
                 // Reset action text
@@ -635,16 +667,16 @@ namespace MSec
                 return result;
                 #endregion Watch job
             },
-            (bool? _result, Exception _error) =>
+            (JobParameter<bool?> _params) =>
             {
                 // Failed?
-                if (_result == null || _result == false)
+                if (_params.Result == null || _params.Result == false)
                 {
                     setNextState(eState.STATE_READY);
                     MessageBox.Show("Hash comparison for the selected image sources failed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                else if (_error != null)
+                else if (_params.Error != null)
                 {
                     setNextState(eState.STATE_READY);
                     MessageBox.Show("An unknown error occurred during the comparison of the image hashes!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -708,41 +740,69 @@ namespace MSec
         }
 
         // Adds a new comparison pair to the list view
-        private void addComparisonPairToListView(ComparisonPair _pair)
+        private void addComparisonPairsToListView(ComparisonPair[] _pairs)
         {
+            // Local variables
+            ListViewItem[] items = null;
+            double match = 0.0;
+
             // Check
-            if (_pair == null)
+            if (_pairs == null || _pairs.Length == 0)
                 return;
+
+            // Create items
+            items = new ListViewItem[_pairs.Length];
+            for (int i = 0; i < _pairs.Length; ++i)
+            {
+                // Get match rate
+                if (_pairs[i].ComparativeResult.getMatchRate() != null)
+                    match = (double)_pairs[i].ComparativeResult.getMatchRate();
+
+                // Create item
+                items[i] = new ListViewItem();
+                items[i].Tag = _pairs[i].PairID;
+                items[i].ImageIndex = _pairs[i].ComparativeResult.isAccepted() == true ? 0 : 1;
+
+                // Add sub-items: source0, source1, hash0, hash1, match
+                items[i].SubItems.Add(Path.GetFileName(_pairs[i].Source0.FilePath));
+                items[i].SubItems.Add(Path.GetFileName(_pairs[i].Source1.FilePath));
+                items[i].SubItems.Add(_pairs[i].Source0.getHashDataForTechnique(_pairs[i].ComparatorTechnique.ID).convertToString());
+                items[i].SubItems.Add(_pairs[i].Source1.getHashDataForTechnique(_pairs[i].ComparatorTechnique.ID).convertToString());
+                items[i].SubItems.Add(((int)(match * 100)).ToString());
+            }
 
             // Run in GUI thread
             Utility.invokeInGuiThread(m_listResults, delegate
             {
-                // Local variables
-                ListViewItem item = null;
-                double match = 0.0;
-
-                // Get match rate
-                if (_pair.ComparativeResult.getMatchRate() != null)
-                    match = (double)_pair.ComparativeResult.getMatchRate();
-
-                // Create item
-                item = new ListViewItem();
-                item.Text = _pair.ComparativeResult.isAccepted().ToString();
-                item.Tag = _pair.PairID;
-
-                // Add sub-items: source0, source1, hash0, hash1, match
-                item.SubItems.Add(Path.GetFileName(_pair.Source0.FilePath));
-                item.SubItems.Add(Path.GetFileName(_pair.Source1.FilePath));
-                item.SubItems.Add(_pair.Source0.getHashDataForTechnique(_pair.ComparatorTechnique.ID).convertToString());
-                item.SubItems.Add(_pair.Source1.getHashDataForTechnique(_pair.ComparatorTechnique.ID).convertToString());
-                item.SubItems.Add(((int)(match * 100)).ToString());
-
                 // Add to list
-                m_listResults.Items.Add(item);
+                m_listResults.Items.AddRange(items);
             });
         }
 
         #region Events: Controls
+        // Event List::onColumnClick
+        void onColumnClick(object _sender, ColumnClickEventArgs _e)
+        {
+            // Same column
+            if (_e.Column == m_listResultsSorter.ColumnIndex)
+            {
+                // Reverse the current sort direction for this column.
+                if (m_listResultsSorter.SortOrder == SortOrder.Ascending)
+                    m_listResultsSorter.SortOrder = SortOrder.Descending;
+                else
+                    m_listResultsSorter.SortOrder = SortOrder.Ascending;
+            }
+            else
+            {
+                // Set the column index (default to ascending)
+                m_listResultsSorter.ColumnIndex = _e.Column;
+                m_listResultsSorter.SortOrder = SortOrder.Ascending;
+            }
+
+            // Sort list
+            m_listResults.Sort();
+        }
+
         // Event List::onItemSelectionChanged
         void onItemSelectionChanged(object _sender, ListViewItemSelectionChangedEventArgs _e)
         {

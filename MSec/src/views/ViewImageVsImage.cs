@@ -145,23 +145,25 @@ namespace MSec
             m_controlImageSourceSelection1.setInstructionText(STATE_COMPUTING_HASH);
 
             // Create job
-            jg = new Job<ComparativeData>((object[] _params) =>
+            jg = new Job<ComparativeData>((JobParameter<ComparativeData> _params) =>
             {
                 // Local variables
                 ComparativeData result = null;
                 Job<HashData> j0 = null, j1 = null;
 
                 // Create jobs: computing hashes
-                j0 = Job<HashData>.createJobComputeHash(m_controlImageSourceSelection0.Source, CurrentTechnique, (HashData _r, Exception _error) =>
+                j0 = Job<HashData>.createJobComputeHash(m_controlImageSourceSelection0.Source, CurrentTechnique,
+                    (JobParameter<HashData> _r) =>
                     {
                         // Display hash
-                        m_controlImageSourceSelection0.setInstructionText(_r.convertToString());
+                        m_controlImageSourceSelection0.setInstructionText(_r.Result.convertToString());
                     },
                     true, false);
-                j1 = Job<HashData>.createJobComputeHash(m_controlImageSourceSelection1.Source, CurrentTechnique, (HashData _r, Exception _error) =>
+                j1 = Job<HashData>.createJobComputeHash(m_controlImageSourceSelection1.Source, CurrentTechnique,
+                    (JobParameter<HashData> _r) =>
                     {
                         // Display hash
-                        m_controlImageSourceSelection1.setInstructionText(_r.convertToString());
+                        m_controlImageSourceSelection1.setInstructionText(_r.Result.convertToString());
                     },
                     true, false);
 
@@ -178,21 +180,21 @@ namespace MSec
 
                 return result;
             },
-            (ComparativeData _r, Exception _error) =>
+            (JobParameter<ComparativeData> _r) =>
             {
                 // Run in GUI thread
                 Utility.invokeInGuiThread(m_tabPage, delegate
                 {
                     // Set result or error
-                    if (_error != null)
-                        m_controlLabelResult.Text = _error.Message;
+                    if (_r.Error != null)
+                        m_controlLabelResult.Text = _r.Error.Message;
                     else if (_r == null)
                         m_controlLabelResult.Text = MSG_ERROR_COMPUTATION;
                     else
-                        m_controlLabelResult.Text = _r.convertToString();
+                        m_controlLabelResult.Text = _r.Result.convertToString();
 
                     // Accepted?
-                    if (_r.isAccepted() == true)
+                    if (_r.Result.isAccepted() == true)
                         m_controlLabelResult.ForeColor = System.Drawing.Color.DarkGreen;
                     else
                         m_controlLabelResult.ForeColor = System.Drawing.Color.DarkRed;
