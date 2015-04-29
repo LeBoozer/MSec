@@ -2,12 +2,13 @@
 	File	:	ViewCrossComparison.cs
 	Project	:	MSec
 	Author	:	Byron Worms
-    Links   :   http://www.codeproject.com/Articles/17502/Simple-Popup-Control
+    Links   :   http://www.codeproject.com/Articles/17502/Simple-Popup-Control, http://dynamiclinq.azurewebsites.net/GettingStarted
 *******************************************************************************************************************************************************************/
 using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -42,6 +43,7 @@ namespace MSec
         private static readonly string  CUSTOM_ACTION_PROCESS_DATA  = "Post-processing data...";
 
         private static readonly string  STRING_FORMAT_NUM_SOURCES   = "Image source count: {0}";
+        private static readonly string  STRING_FORMAT_NUM_RESULTS   = "Result count: {0}";
 
         private static readonly Color   COLOR_RESULT_ACCEPTED       = Color.FromArgb(46, 176, 51);
         private static readonly Color   COLOR_RESULT_DENIED         = Color.FromArgb(255, 51, 51);
@@ -177,10 +179,12 @@ namespace MSec
         // Controls
         private ListView                m_listResults = null;
         private TextBox                 m_textReferenceFolder = null;
+        private TextBox                 m_textFilter = null;
         private Button                  m_buttonReferenceFolderSelect = null;
         private Button                  m_buttonReferenceFolderDelete = null;
         private Button                  m_buttonReferenceFolderStart = null;
         private Label                   m_labelReferenceFolderNumImageSources = null;
+        private Label                   m_labelResultCount = null;
         private ToolStripDropDownButton m_toolStripDropDown = null;
         private ToolStripLabel          m_labelAction = null;
         private ToolStripProgressBar    m_progressBar = null;
@@ -252,14 +256,19 @@ namespace MSec
             // Extract controls
             m_listResults = _tabPage.Controls.Find("CC_List_Results", true)[0] as ListView;
             m_textReferenceFolder = _tabPage.Controls.Find("CC_Text_ReferenceFolder_Path", true)[0] as TextBox;
+            m_textFilter = _tabPage.Controls.Find("CC_Text_Filter", true)[0] as TextBox;
             m_buttonReferenceFolderSelect = _tabPage.Controls.Find("CC_Button_ReferenceFolder_Select", true)[0] as Button;
             m_buttonReferenceFolderDelete = _tabPage.Controls.Find("CC_Button_ReferenceFolder_Delete", true)[0] as Button;
             m_buttonReferenceFolderStart = _tabPage.Controls.Find("CC_Button_ReferenceFolder_Start", true)[0] as Button;
             m_labelReferenceFolderNumImageSources = _tabPage.Controls.Find("CC_Label_ReferenceFolder_NumSources", true)[0] as Label;
             m_toolStripDropDown = (_tabPage.Controls.Find("CC_ToolStrip", true)[0] as ToolStrip).Items.Find("CC_ToolStrip_DropDown", true)[0] as ToolStripDropDownButton;
             m_labelAction = (_tabPage.Controls.Find("CC_ToolStrip", true)[0] as ToolStrip).Items.Find("CC_ToolStrip_Label_Action", true)[0] as ToolStripLabel;
+            m_labelResultCount = _tabPage.Controls.Find("CC_Label_ResultCount", true)[0] as Label;
             m_progressBar = (_tabPage.Controls.Find("CC_ToolStrip", true)[0] as ToolStrip).Items.Find("CC_ToolStrip_Progress", true)[0] as ToolStripProgressBar;
             m_toolStripItemShowColors = m_toolStripDropDown.DropDownItems.Find("CC_ToolStrip_DropDown_ShowColors", true)[0] as ToolStripMenuItem;
+
+            // Add events to: text boxes
+            m_textFilter.KeyDown += onFilterKeyDown;
 
             // Add events to: list of results
             m_listResults.RetrieveVirtualItem += onRetrieveVirtualItem;
@@ -365,6 +374,7 @@ namespace MSec
                         m_buttonReferenceFolderDelete.Enabled = false;
                         m_buttonReferenceFolderStart.Enabled = false;
                         m_listResults.Enabled = false;
+                        m_textFilter.Enabled = false;
                         m_toolStripDropDown.Enabled = false;
                         lockTechniqueSelection();
                     };
@@ -376,6 +386,7 @@ namespace MSec
                         m_buttonReferenceFolderDelete.Enabled = true;
                         m_buttonReferenceFolderStart.Enabled = true;
                         m_listResults.Enabled = true;
+                        m_textFilter.Enabled = true;
                         m_toolStripDropDown.Enabled = true;
                         unlockTechniqueSelection();
                     };
@@ -514,6 +525,7 @@ namespace MSec
                 // Reset list-view
                 m_listResults.VirtualListSize = 0;
                 m_listResults.Update();
+                updateLabelResultCount();
 
                 // Reset data structures
                 m_listComparisonItems = m_listDisplayComparisonItems = null;
@@ -705,6 +717,7 @@ namespace MSec
                     Utility.invokeInGuiThread(m_listResults, delegate
                     {
                         m_listResults.VirtualListSize = m_listDisplayComparisonItems.Count;
+                        updateLabelResultCount();
                     });
 
                     // Set used technique
@@ -787,6 +800,23 @@ namespace MSec
             }
 
             return result;
+        }
+
+        // Updates the label: result count
+        private void updateLabelResultCount()
+        {
+            // Local variables
+            int count = 0;
+
+            // Check parameter
+            if (m_listDisplayComparisonItems != null && m_listDisplayComparisonItems.Count != 0)
+                count = m_listDisplayComparisonItems.Count;
+
+            // Run in GUI thread
+            Utility.invokeInGuiThread(m_labelResultCount, delegate
+            {
+                m_labelResultCount.Text = String.Format(STRING_FORMAT_NUM_RESULTS, count);
+            });
         }
 
         // Generates the midpoint color values for the result list
@@ -982,6 +1012,56 @@ namespace MSec
             if (MessageBox.Show("Do you want to start the cross comparison of the selected image sources? This may take a while...",
                 "Start the comparison?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 startComparisonHashing();
+        }
+
+        // Event TextBox::onFilterKeyDown
+        void onFilterKeyDown(object _sender, KeyEventArgs _e)
+        {
+            // Local variables
+            string text = m_textFilter.Text;
+            IQueryable<ComparisonPair> result = null;
+            Action zeroList = delegate
+            {
+                m_listResults.VirtualListSize = 0;
+                m_listResults.Update();
+                updateLabelResultCount();
+            };
+            Action updateList = delegate
+            {
+                m_listResults.VirtualListSize = m_listDisplayComparisonItems.Count;
+                m_listResults.Update();
+                updateLabelResultCount();
+            };
+
+            // Check parameter
+            if (_e.KeyCode != Keys.Enter && _e.KeyCode != Keys.Return)
+                return;
+
+            // Empty?
+            if(text == null || text.Length == 0)
+            {
+                zeroList();
+                m_listDisplayComparisonItems = m_listComparisonItems;
+                updateList();
+
+                return;
+            }
+
+            // Execute query
+            try
+            {
+                result = m_listComparisonItems.AsQueryable().Where(text);
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Query failed or is invalid!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Update list-view
+            zeroList();
+            m_listDisplayComparisonItems = result.ToList();
+            updateList();
         }
 
         #region Events: ToolStrip

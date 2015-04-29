@@ -117,6 +117,7 @@
     <Compile Include="src\technique\HashData.cs" />
     <Compile Include="src\technique\ImageSource.cs" />
     <Compile Include="src\technique\Technique.cs" />
+    <Compile Include="src\utility\Dynamic.cs" />
     <Compile Include="src\utility\ListViewFlickerFree.cs">
       <SubType>Component</SubType>
     </Compile>

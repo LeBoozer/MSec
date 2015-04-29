@@ -67,6 +67,22 @@ namespace MSec
             }
         }
 
+        #region Wrapper for DLinq
+        // Wrapper for the match rate
+        public double MatchRate
+        {
+            get { return m_compData.getMatchRate().Value; }
+            private set { }
+        }
+
+        // Wrapper for the match rate
+        public bool IsAccepted
+        {
+            get { return m_compData.isAccepted(); }
+            private set { }
+        }
+        #endregion Wrapper for DLinq
+
         // Constructor
         public ComparisonPair(ImageSource _source0, ImageSource _source1, Technique _technique)
         {

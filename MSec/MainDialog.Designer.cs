@@ -39,6 +39,7 @@
             this.Selection_ImageSource1 = new ImageSourceSelection();
             this.Selection_ImageSource0 = new ImageSourceSelection();
             this.pageCrossComparison = new System.Windows.Forms.TabPage();
+            this.CC_Text_Filter = new System.Windows.Forms.TextBox();
             this.CC_ToolStrip = new System.Windows.Forms.StatusStrip();
             this.CC_ToolStrip_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.CC_ToolStrip_DropDown_ShowColors = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,6 +74,8 @@
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.label4 = new System.Windows.Forms.Label();
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
+            this.CC_Label_ResultCount = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.MainDialog_MainTab.SuspendLayout();
             this.pageImageVsImage.SuspendLayout();
             this.pageCrossComparison.SuspendLayout();
@@ -169,6 +172,9 @@
             // 
             // pageCrossComparison
             // 
+            this.pageCrossComparison.Controls.Add(this.label5);
+            this.pageCrossComparison.Controls.Add(this.CC_Label_ResultCount);
+            this.pageCrossComparison.Controls.Add(this.CC_Text_Filter);
             this.pageCrossComparison.Controls.Add(this.CC_ToolStrip);
             this.pageCrossComparison.Controls.Add(this.CC_List_Results);
             this.pageCrossComparison.Controls.Add(this.CC_Group_SourceLocation);
@@ -180,6 +186,13 @@
             this.pageCrossComparison.TabIndex = 2;
             this.pageCrossComparison.Text = "Cross Comparison";
             this.pageCrossComparison.UseVisualStyleBackColor = true;
+            // 
+            // CC_Text_Filter
+            // 
+            this.CC_Text_Filter.Location = new System.Drawing.Point(78, 449);
+            this.CC_Text_Filter.Name = "CC_Text_Filter";
+            this.CC_Text_Filter.Size = new System.Drawing.Size(499, 20);
+            this.CC_Text_Filter.TabIndex = 4;
             // 
             // CC_ToolStrip
             // 
@@ -241,7 +254,7 @@
             this.CC_List_Results.Location = new System.Drawing.Point(3, 147);
             this.CC_List_Results.MultiSelect = false;
             this.CC_List_Results.Name = "CC_List_Results";
-            this.CC_List_Results.Size = new System.Drawing.Size(690, 311);
+            this.CC_List_Results.Size = new System.Drawing.Size(690, 298);
             this.CC_List_Results.SmallImageList = this.ImageList_CC_List_Results;
             this.CC_List_Results.TabIndex = 2;
             this.ToolTip.SetToolTip(this.CC_List_Results, "Contains an brief overview of the hashed/compared\r\nimage sources.");
@@ -491,6 +504,24 @@
             this.linkLabel4.Text = "Luminous library";
             this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel4_LinkClicked);
             // 
+            // CC_Label_ResultCount
+            // 
+            this.CC_Label_ResultCount.Location = new System.Drawing.Point(583, 453);
+            this.CC_Label_ResultCount.Name = "CC_Label_ResultCount";
+            this.CC_Label_ResultCount.Size = new System.Drawing.Size(110, 13);
+            this.CC_Label_ResultCount.TabIndex = 11;
+            this.CC_Label_ResultCount.Text = "Result count: 0";
+            this.CC_Label_ResultCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 453);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(69, 13);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Filter (DLinq):";
+            // 
             // MainDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -576,6 +607,9 @@
         private System.Windows.Forms.LinkLabel linkLabel4;
         private System.Windows.Forms.ToolStripDropDownButton CC_ToolStrip_DropDown;
         private System.Windows.Forms.ToolStripMenuItem CC_ToolStrip_DropDown_ShowColors;
+        private System.Windows.Forms.TextBox CC_Text_Filter;
+        private System.Windows.Forms.Label CC_Label_ResultCount;
+        private System.Windows.Forms.Label label5;
     }
 }
 
