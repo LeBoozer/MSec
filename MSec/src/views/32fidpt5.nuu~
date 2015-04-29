@@ -24,13 +24,9 @@ namespace MSec
     public class ViewCrossComparison : ViewWithTechniqueSelection
     {
         // Constants
-        private static readonly int     LIST_RESULTS_COLUMN_COUNT           = 6;
-        private static readonly int     LIST_RESULTS_COLUMN_ACCEPTED        = 0;
-        private static readonly int     LIST_RESULTS_COLUMN_SOURCE0_PATH    = 1;
-        private static readonly int     LIST_RESULTS_COLUMN_SOURCE1_PATH    = 2;
-        private static readonly int     LIST_RESULTS_COLUMN_SOURCE0_HASH    = 3;
-        private static readonly int     LIST_RESULTS_COLUMN_SOURCE1_HASH    = 4;
-        private static readonly int     LIST_RESULTS_COLUMN_MATCH_RATE      = 5;
+        private static readonly int     LIST_RESULTS_COLUMN_COUNT       = 6;
+        private static readonly int     LIST_RESULTS_COLUMN_ACCEPTED    = 0;
+        private static readonly int     LIST_RESULTS_COLUMN_MATCH_RATE  = 5;
 
         private static readonly string  ACTION_IDLE                 = "Waiting for user input...";
         private static readonly string  ACTION_LOADING_FILES        = "Loading & analysing files...";
@@ -46,10 +42,6 @@ namespace MSec
         private static readonly Color   COLOR_RESULT_ACCEPTED       = Color.FromArgb(46, 176, 51);
         private static readonly Color   COLOR_RESULT_DENIED         = Color.FromArgb(255, 51, 51);
         private static readonly int     NUM_MIDPOINTS_COLOR_RESULT  = 10;
-
-        // Delegate declarations
-        private delegate IEnumerable<ComparisonPair>    delegate_sorter_func(int _index);
-        private delegate object                         delegate_sorter_element_selecter_func(ComparisonPair _pair);
 
         // All possible states
         private enum eState
@@ -157,9 +149,11 @@ namespace MSec
         private List<ComparisonPair>    m_listDisplayComparisonItems = null;
 
         // The sorter stuff for the list-view (results)
-        private delegate_sorter_element_selecter_func[] m_listResultsSorterFuncs = null;
-        private int                                     m_listResultsSortColumnIndex = -1;
-        private SortOrder                               m_listResultsSortOrder = SortOrder.None;
+        private Comparison<ComparisonPair>[] m_listResultsSorterFuncs = null;
+        private int                     m_listResultsSortColumnIndex = -1;
+        private SortOrder               m_listResultsSortOrder = SortOrder.None;
+
+        private ListViewColumnSorter    m_listResultsSorter = null;
 
         // Configurations
         private bool                    m_isShowResultColors = true;
@@ -193,54 +187,47 @@ namespace MSec
             // Local variables
             int x = 0;
             int y = 0;
-            delegate_sorter_element_selecter_func funcTemp = null;
+            Comparison<ComparisonPair> funcTemp = null;
             
-            #region List-view sorter: element selecter (result list)
+            #region List-view sorter (result list)
             // Create list
-            m_listResultsSorterFuncs = new delegate_sorter_element_selecter_func[LIST_RESULTS_COLUMN_COUNT];
+            m_listResultsSorterFuncs = new Comparison<ComparisonPair>[LIST_RESULTS_COLUMN_COUNT];
 
             // Register function: sorting based on image indicies
-            funcTemp = (ComparisonPair _pair) =>
+            funcTemp = (ComparisonPair _p0, ComparisonPair _p1) =>
             {
-                return _pair.ComparativeResult.isAccepted();
+                return _p0.ComparativeResult.isAccepted().CompareTo(_p1.ComparativeResult.isAccepted());
             };
             m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_ACCEPTED] = funcTemp;
 
             // Register function: sorting based on the match rate
-            funcTemp = (ComparisonPair _pair) =>
+            funcTemp = (ComparisonPair _p0, ComparisonPair _p1) =>
             {
-                return _pair.ComparativeResult.getMatchRate().Value;
+                return _p0.ComparativeResult.getMatchRate().Value.CompareTo(_p1.ComparativeResult.getMatchRate().Value);
             };
             m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_MATCH_RATE] = funcTemp;
 
-            // Register function: sorting based on text level (image source0 path)
-            funcTemp = (ComparisonPair _pair) =>
+            // Comparison function for image index based compares
+            ListViewColumnSorter.delegate_compare_item funcImageIndexCompare = (ListViewItem _x, ListViewItem _y) =>
             {
-                return _pair.Source0.FilePath;
+                return _x.ImageIndex.CompareTo(_y.ImageIndex);
             };
-            m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_SOURCE0_PATH] = funcTemp;
 
-            // Register function: sorting based on text level (image source1 path)
-            funcTemp = (ComparisonPair _pair) =>
+            // Comparison function for text based compares
+            ListViewColumnSorter.delegate_compare funcTextCompare = (ListViewItem.ListViewSubItem _x, ListViewItem.ListViewSubItem _y) =>
             {
-                return _pair.Source1.FilePath;
+                return _x.Text.CompareTo(_y.Text);
             };
-            m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_SOURCE1_PATH] = funcTemp;
 
-            // Register function: sorting based on text level (image source0 hash)
-            funcTemp = (ComparisonPair _pair) =>
+            // Comparison function for double based compares
+            ListViewColumnSorter.delegate_compare funcDoubleCompare = (ListViewItem.ListViewSubItem _x, ListViewItem.ListViewSubItem _y) =>
             {
-                return _pair.Source0.getHashDataForTechnique(_pair.ComparatorTechnique.ID).convertToString();
+                return double.Parse(_x.Text).CompareTo(double.Parse(_y.Text));
             };
-            m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_SOURCE0_HASH] = funcTemp;
 
-            // Register function: sorting based on text level (image source1 hash)
-            funcTemp = (ComparisonPair _pair) =>
-            {
-                return _pair.Source1.getHashDataForTechnique(_pair.ComparatorTechnique.ID).convertToString();
-            };
-            m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_SOURCE1_HASH] = funcTemp;
-            #endregion List-view sorter: element selecter (result list)
+            // Create list-view sorter
+            m_listResultsSorter = new ListViewColumnSorter(funcImageIndexCompare, funcTextCompare, funcTextCompare, funcTextCompare, funcTextCompare, funcDoubleCompare);
+            #endregion List-view sorter (result list)
 
             // Create pop-up window
             m_comparatorDetails = new CC_ComparisonDetails();
@@ -262,6 +249,7 @@ namespace MSec
             m_toolStripItemShowColors = m_toolStripDropDown.DropDownItems.Find("CC_ToolStrip_DropDown_ShowColors", true)[0] as ToolStripMenuItem;
 
             // Add events to: list of results
+            m_listResults.ListViewItemSorter = m_listResultsSorter;
             m_listResults.RetrieveVirtualItem += onRetrieveVirtualItem;
             m_listResults.ItemSelectionChanged += onItemSelectionChanged;
             m_listResults.ColumnClick += onColumnClick;
@@ -892,9 +880,6 @@ namespace MSec
         // Event List::onColumnClick
         void onColumnClick(object _sender, ColumnClickEventArgs _e)
         {
-            // Local variables
-            delegate_sorter_func sorterFunc = null;
-
             // Same column
             if (m_listResultsSortColumnIndex == _e.Column)
             {
@@ -911,28 +896,12 @@ namespace MSec
                 m_listResultsSortOrder = SortOrder.Ascending;
             }
 
-            // Define sorter function
-            if(m_listResultsSortOrder == SortOrder.Ascending)
-            {
-                sorterFunc = (int _index) =>
-                {
-                    return from item in m_listDisplayComparisonItems
-                           orderby m_listResultsSorterFuncs[_index](item)
-                           select item;
-                };
-            }
-            else
-            {
-                sorterFunc = (int _index) =>
-                {
-                    return from item in m_listDisplayComparisonItems
-                           orderby m_listResultsSorterFuncs[_index](item) descending
-                           select item;
-                };
-            }
+            IEnumerable<ComparisonPair> test = from w in m_listDisplayComparisonItems
+                                       orderby w.ComparativeResult.
 
             // Sort list
-            m_listDisplayComparisonItems = sorterFunc(_e.Column).ToList();
+            //m_listDisplayComparisonItems.OrderBy(m_listResultsSorterFuncs[m_listResultsSortColumnIndex]);
+            m_listDisplayComparisonItems.Sort(m_listResultsSorterFuncs[m_listResultsSortColumnIndex]);
 
             // Update list-view
             m_listResults.RedrawItems(0, m_listDisplayComparisonItems.Count - 1, true);

@@ -40,6 +40,8 @@
             this.Selection_ImageSource0 = new ImageSourceSelection();
             this.pageCrossComparison = new System.Windows.Forms.TabPage();
             this.CC_ToolStrip = new System.Windows.Forms.StatusStrip();
+            this.CC_ToolStrip_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.CC_ToolStrip_DropDown_ShowColors = new System.Windows.Forms.ToolStripMenuItem();
             this.CC_ToolStrip_Label_Action = new System.Windows.Forms.ToolStripStatusLabel();
             this.CC_ToolStrip_Progress = new System.Windows.Forms.ToolStripProgressBar();
             this.CC_List_Results = new ListViewFlickerFree();
@@ -182,6 +184,7 @@
             // CC_ToolStrip
             // 
             this.CC_ToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CC_ToolStrip_DropDown,
             this.CC_ToolStrip_Label_Action,
             this.CC_ToolStrip_Progress});
             this.CC_ToolStrip.Location = new System.Drawing.Point(0, 474);
@@ -189,6 +192,25 @@
             this.CC_ToolStrip.Size = new System.Drawing.Size(697, 22);
             this.CC_ToolStrip.TabIndex = 3;
             this.CC_ToolStrip.Text = "statusStrip1";
+            // 
+            // CC_ToolStrip_DropDown
+            // 
+            this.CC_ToolStrip_DropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.CC_ToolStrip_DropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CC_ToolStrip_DropDown_ShowColors});
+            this.CC_ToolStrip_DropDown.Image = global::MSec.Properties.Resources.gear;
+            this.CC_ToolStrip_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CC_ToolStrip_DropDown.Name = "CC_ToolStrip_DropDown";
+            this.CC_ToolStrip_DropDown.Size = new System.Drawing.Size(29, 20);
+            // 
+            // CC_ToolStrip_DropDown_ShowColors
+            // 
+            this.CC_ToolStrip_DropDown_ShowColors.Checked = true;
+            this.CC_ToolStrip_DropDown_ShowColors.CheckOnClick = true;
+            this.CC_ToolStrip_DropDown_ShowColors.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CC_ToolStrip_DropDown_ShowColors.Name = "CC_ToolStrip_DropDown_ShowColors";
+            this.CC_ToolStrip_DropDown_ShowColors.Size = new System.Drawing.Size(138, 22);
+            this.CC_ToolStrip_DropDown_ShowColors.Text = "Show colors";
             // 
             // CC_ToolStrip_Label_Action
             // 
@@ -225,6 +247,7 @@
             this.ToolTip.SetToolTip(this.CC_List_Results, "Contains an brief overview of the hashed/compared\r\nimage sources.");
             this.CC_List_Results.UseCompatibleStateImageBehavior = false;
             this.CC_List_Results.View = System.Windows.Forms.View.Details;
+            this.CC_List_Results.VirtualMode = true;
             // 
             // columnAccepted
             // 
@@ -551,6 +574,8 @@
         private System.Windows.Forms.Label CC_Label_ReferenceFolder_NumSources;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.LinkLabel linkLabel4;
+        private System.Windows.Forms.ToolStripDropDownButton CC_ToolStrip_DropDown;
+        private System.Windows.Forms.ToolStripMenuItem CC_ToolStrip_DropDown_ShowColors;
     }
 }
 
