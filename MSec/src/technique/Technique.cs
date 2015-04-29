@@ -273,7 +273,7 @@ namespace MSec
                     },
                     (double _d) =>
                     {
-                        return _d;
+                        return (1.0f - _d);
                     });
                     return result;
                 }

@@ -40,5 +40,11 @@ namespace MSec
             // Open link
             MSec.Instance.onOpenLinkInBrowser("http://www.phash.org/");
         }
+
+        private void linkLabel4_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Open link
+            MSec.Instance.onOpenLinkInBrowser("http://luminous.codeplex.com/");
+        }
     }
 }

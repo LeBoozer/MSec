@@ -69,6 +69,8 @@
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.label3 = new System.Windows.Forms.Label();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.linkLabel4 = new System.Windows.Forms.LinkLabel();
             this.MainDialog_MainTab.SuspendLayout();
             this.pageImageVsImage.SuspendLayout();
             this.pageCrossComparison.SuspendLayout();
@@ -232,22 +234,22 @@
             // columnImageSource0
             // 
             this.columnImageSource0.Text = "Image source 0";
-            this.columnImageSource0.Width = 150;
+            this.columnImageSource0.Width = 155;
             // 
             // columnImageSource1
             // 
             this.columnImageSource1.Text = "Image source 1";
-            this.columnImageSource1.Width = 150;
+            this.columnImageSource1.Width = 155;
             // 
             // columnHash0
             // 
             this.columnHash0.Text = "Hash 0";
-            this.columnHash0.Width = 120;
+            this.columnHash0.Width = 130;
             // 
             // columnHash1
             // 
             this.columnHash1.Text = "Hash 1";
-            this.columnHash1.Width = 120;
+            this.columnHash1.Width = 130;
             // 
             // columnMatch
             // 
@@ -446,12 +448,34 @@
             this.linkLabel3.Text = "pHash library";
             this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(136, 553);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(25, 13);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "and";
+            // 
+            // linkLabel4
+            // 
+            this.linkLabel4.AutoSize = true;
+            this.linkLabel4.Location = new System.Drawing.Point(156, 553);
+            this.linkLabel4.Name = "linkLabel4";
+            this.linkLabel4.Size = new System.Drawing.Size(82, 13);
+            this.linkLabel4.TabIndex = 15;
+            this.linkLabel4.TabStop = true;
+            this.linkLabel4.Text = "Luminous library";
+            this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel4_LinkClicked);
+            // 
             // MainDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(726, 572);
+            this.Controls.Add(this.linkLabel4);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.linkLabel3);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.linkLabel2);
@@ -525,6 +549,8 @@
         private System.Windows.Forms.Button CC_Button_ReferenceFolder_Start;
         private System.Windows.Forms.ImageList ImageList_CC_List_Results;
         private System.Windows.Forms.Label CC_Label_ReferenceFolder_NumSources;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.LinkLabel linkLabel4;
     }
 }
 
