@@ -158,14 +158,14 @@ namespace MSec
                         // Display hash
                         m_controlImageSourceSelection0.setInstructionText(_r.Result.convertToString());
                     },
-                    true, false);
+                    false);
                 j1 = Job<HashData>.createJobComputeHash(m_controlImageSourceSelection1.Source, CurrentTechnique,
                     (JobParameter<HashData> _r) =>
                     {
                         // Display hash
                         m_controlImageSourceSelection1.setInstructionText(_r.Result.convertToString());
                     },
-                    true, false);
+                    false);
 
                 // Start jobs
                 Job<HashData>.enqueue(j0);

@@ -24,6 +24,14 @@ namespace MSec
             private set { }
         }
 
+        // The pair's tag (can be used differently and can also be null!)
+        private object m_tag = null;
+        public object Tag
+        {
+            get { return m_tag; }
+            set { m_tag = value; }
+        }
+
         // The data lock
         private object m_dataLock = new object();
 
@@ -67,11 +75,11 @@ namespace MSec
             }
         }
 
-        #region Wrapper for DLinq
+        #region Wrapper for the object-list-view and DLinq
         // Wrapper for the match rate
-        public double MatchRate
+        public int MatchRate
         {
-            get { return m_compData.getMatchRate().Value; }
+            get { return (int)(m_compData.getMatchRate().Value * 100); }
             private set { }
         }
 

@@ -264,15 +264,13 @@ namespace MSec
         }
 
         // Creates a job for computing the percuptual hash for a certain image source by means of a defined technique
-        public static Job<HashData> createJobComputeHash(ImageSource _src, Technique _technique,
-            bool _recompute = false, bool _autoStart = true)
+        public static Job<HashData> createJobComputeHash(ImageSource _src, Technique _technique, bool _autoStart = true)
         {
-            return createJobComputeHash(_src, _technique, null, _recompute, _autoStart);
+            return createJobComputeHash(_src, _technique, null, _autoStart);
         }
 
         // Creates a job for computing the percuptual hash for a certain image source by means of a defined technique
-        public static Job<HashData> createJobComputeHash(ImageSource _src, Technique _technique, Job<HashData>.delegate_job_done _jobDoneFunc,
-            bool _recompute = false, bool _autoStart = true)
+        public static Job<HashData> createJobComputeHash(ImageSource _src, Technique _technique, Job<HashData>.delegate_job_done _jobDoneFunc, bool _autoStart = true)
         {
             // Local variables
             Job<HashData> job = null;
@@ -285,7 +283,7 @@ namespace MSec
             job = new Job<HashData>((JobParameter<HashData> _params) =>
             {
                 // Calculate hash
-                return _technique.computeHash(_src, _recompute);
+                return _technique.computeHash(_src);
             },
             (JobParameter<HashData> _params) =>
             {

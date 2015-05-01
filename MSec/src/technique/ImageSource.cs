@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.IO;
 
 /*******************************************************************************************************************************************************************
 	Class: ImageSource
@@ -33,8 +34,32 @@ namespace MSec
             private set { }
         }
 
+        // The file's name (with its extension)
+        public string FileName
+        {
+            get { return Path.GetFileName(m_filePath); }
+        }
+
+        // Returns the name of the directory
+        public string Dir
+        {
+            get { return Path.GetDirectoryName(m_filePath); }
+        }
+
         // The hash data
-        private HashData[] m_hashData = new HashData[(int)TechniqueID.COUNT];
+        private HashData m_hashData = null;
+        public HashData HashData
+        {
+            get { return m_hashData; }
+            set { m_hashData = value; }
+        }
+
+        // Wrapper for the hash
+        public string Hash
+        {
+            get { return m_hashData.convertToString(); }
+            private set { }
+        }
 
         // Constructor
         public ImageSource(string _path)
@@ -44,31 +69,6 @@ namespace MSec
 
             // Calcualte image's ID
             m_imageID = m_filePath.GetHashCode();
-
-            // Create hash data 
-            m_hashData[(int)TechniqueID.DCT] = Technique.createHashDataDCT();
-            m_hashData[(int)TechniqueID.RADISH] = Technique.createHashDataRADISH();
-            m_hashData[(int)TechniqueID.WAVELET] = Technique.createHashDataWavelet();
-        }
-
-        // Returns the hash data for a certain technique (can be invalid!)
-        public HashData getHashDataForTechnique(TechniqueID _id)
-        {
-            return m_hashData[(int)_id];
-        }
-
-        // Sets the hash data for a certain technique (fails silently!)
-        public void setHashDataForTechnique(TechniqueID _id, HashData _data)
-        {
-            // Local variables
-            HashData data = m_hashData[(int)_id];
-
-            // Compare types
-            if (data.getDataType() != _data.getDataType())
-                return;
-
-            // Set data
-            m_hashData[(int)_id] = _data;
         }
 
         // Creates a system image (System.Drawing)

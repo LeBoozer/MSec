@@ -39,20 +39,22 @@
             this.Selection_ImageSource1 = new ImageSourceSelection();
             this.Selection_ImageSource0 = new ImageSourceSelection();
             this.pageCrossComparison = new System.Windows.Forms.TabPage();
-            this.CC_Text_Filter = new System.Windows.Forms.TextBox();
+            this.CC_List_Results_2 = new BrightIdeasSoftware.FastObjectListView();
+            this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn5 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn6 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.ImageList_CC_List_Results = new System.Windows.Forms.ImageList(this.components);
+            this.label5 = new System.Windows.Forms.Label();
+            this.CC_Label_ResultCount = new System.Windows.Forms.Label();
+            this.CC_Text_Filter = new System.Windows.Forms.ComboBox();
             this.CC_ToolStrip = new System.Windows.Forms.StatusStrip();
             this.CC_ToolStrip_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.CC_ToolStrip_DropDown_ShowColors = new System.Windows.Forms.ToolStripMenuItem();
             this.CC_ToolStrip_Label_Action = new System.Windows.Forms.ToolStripStatusLabel();
             this.CC_ToolStrip_Progress = new System.Windows.Forms.ToolStripProgressBar();
-            this.CC_List_Results = new ListViewFlickerFree();
-            this.columnAccepted = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnImageSource0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnImageSource1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHash0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHash1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnMatch = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ImageList_CC_List_Results = new System.Windows.Forms.ImageList(this.components);
             this.CC_Group_SourceLocation = new System.Windows.Forms.GroupBox();
             this.CC_Label_ReferenceFolder_NumSources = new System.Windows.Forms.Label();
             this.CC_Button_ReferenceFolder_Start = new System.Windows.Forms.Button();
@@ -74,11 +76,10 @@
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.label4 = new System.Windows.Forms.Label();
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
-            this.CC_Label_ResultCount = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.MainDialog_MainTab.SuspendLayout();
             this.pageImageVsImage.SuspendLayout();
             this.pageCrossComparison.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CC_List_Results_2)).BeginInit();
             this.CC_ToolStrip.SuspendLayout();
             this.CC_Group_SourceLocation.SuspendLayout();
             this.Menu_Main.SuspendLayout();
@@ -172,11 +173,11 @@
             // 
             // pageCrossComparison
             // 
+            this.pageCrossComparison.Controls.Add(this.CC_List_Results_2);
             this.pageCrossComparison.Controls.Add(this.label5);
             this.pageCrossComparison.Controls.Add(this.CC_Label_ResultCount);
             this.pageCrossComparison.Controls.Add(this.CC_Text_Filter);
             this.pageCrossComparison.Controls.Add(this.CC_ToolStrip);
-            this.pageCrossComparison.Controls.Add(this.CC_List_Results);
             this.pageCrossComparison.Controls.Add(this.CC_Group_SourceLocation);
             this.pageCrossComparison.Controls.Add(this.CC_Selection_Technique);
             this.pageCrossComparison.ImageIndex = 1;
@@ -187,11 +188,107 @@
             this.pageCrossComparison.Text = "Cross Comparison";
             this.pageCrossComparison.UseVisualStyleBackColor = true;
             // 
+            // CC_List_Results_2
+            // 
+            this.CC_List_Results_2.AllColumns.Add(this.olvColumn1);
+            this.CC_List_Results_2.AllColumns.Add(this.olvColumn2);
+            this.CC_List_Results_2.AllColumns.Add(this.olvColumn5);
+            this.CC_List_Results_2.AllColumns.Add(this.olvColumn3);
+            this.CC_List_Results_2.AllColumns.Add(this.olvColumn6);
+            this.CC_List_Results_2.AllColumns.Add(this.olvColumn4);
+            this.CC_List_Results_2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumn1,
+            this.olvColumn2,
+            this.olvColumn5,
+            this.olvColumn3,
+            this.olvColumn6,
+            this.olvColumn4});
+            this.CC_List_Results_2.FullRowSelect = true;
+            this.CC_List_Results_2.GridLines = true;
+            this.CC_List_Results_2.HideSelection = false;
+            this.CC_List_Results_2.Location = new System.Drawing.Point(3, 146);
+            this.CC_List_Results_2.MultiSelect = false;
+            this.CC_List_Results_2.Name = "CC_List_Results_2";
+            this.CC_List_Results_2.ShowGroups = false;
+            this.CC_List_Results_2.Size = new System.Drawing.Size(690, 298);
+            this.CC_List_Results_2.SmallImageList = this.ImageList_CC_List_Results;
+            this.CC_List_Results_2.TabIndex = 13;
+            this.CC_List_Results_2.UseCompatibleStateImageBehavior = false;
+            this.CC_List_Results_2.View = System.Windows.Forms.View.Details;
+            this.CC_List_Results_2.VirtualMode = true;
+            // 
+            // olvColumn1
+            // 
+            this.olvColumn1.AspectName = "";
+            this.olvColumn1.Sortable = false;
+            this.olvColumn1.Text = "";
+            this.olvColumn1.Width = 26;
+            // 
+            // olvColumn2
+            // 
+            this.olvColumn2.AspectName = "Source0.FileName";
+            this.olvColumn2.Sortable = false;
+            this.olvColumn2.Text = "Image source 0";
+            this.olvColumn2.Width = 155;
+            // 
+            // olvColumn5
+            // 
+            this.olvColumn5.AspectName = "Source0.Hash";
+            this.olvColumn5.Sortable = false;
+            this.olvColumn5.Text = "Image hash 0";
+            this.olvColumn5.Width = 130;
+            // 
+            // olvColumn3
+            // 
+            this.olvColumn3.AspectName = "Source1.FileName";
+            this.olvColumn3.Sortable = false;
+            this.olvColumn3.Text = "Image source 1";
+            this.olvColumn3.Width = 155;
+            // 
+            // olvColumn6
+            // 
+            this.olvColumn6.AspectName = "Source1.Hash";
+            this.olvColumn6.Sortable = false;
+            this.olvColumn6.Text = "Image hash 1";
+            this.olvColumn6.Width = 130;
+            // 
+            // olvColumn4
+            // 
+            this.olvColumn4.AspectName = "MatchRate";
+            this.olvColumn4.Sortable = false;
+            this.olvColumn4.Text = "Match (%)";
+            this.olvColumn4.Width = 70;
+            // 
+            // ImageList_CC_List_Results
+            // 
+            this.ImageList_CC_List_Results.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList_CC_List_Results.ImageStream")));
+            this.ImageList_CC_List_Results.TransparentColor = System.Drawing.Color.Transparent;
+            this.ImageList_CC_List_Results.Images.SetKeyName(0, "checkmark.png");
+            this.ImageList_CC_List_Results.Images.SetKeyName(1, "cross.png");
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 453);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(69, 13);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Filter (DLinq):";
+            // 
+            // CC_Label_ResultCount
+            // 
+            this.CC_Label_ResultCount.Location = new System.Drawing.Point(583, 453);
+            this.CC_Label_ResultCount.Name = "CC_Label_ResultCount";
+            this.CC_Label_ResultCount.Size = new System.Drawing.Size(110, 13);
+            this.CC_Label_ResultCount.TabIndex = 11;
+            this.CC_Label_ResultCount.Text = "Result count: 0";
+            this.CC_Label_ResultCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // CC_Text_Filter
             // 
             this.CC_Text_Filter.Location = new System.Drawing.Point(78, 449);
             this.CC_Text_Filter.Name = "CC_Text_Filter";
-            this.CC_Text_Filter.Size = new System.Drawing.Size(499, 20);
+            this.CC_Text_Filter.Size = new System.Drawing.Size(499, 21);
             this.CC_Text_Filter.TabIndex = 4;
             // 
             // CC_ToolStrip
@@ -238,66 +335,6 @@
             this.CC_ToolStrip_Progress.Size = new System.Drawing.Size(400, 16);
             this.CC_ToolStrip_Progress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.CC_ToolStrip_Progress.Visible = false;
-            // 
-            // CC_List_Results
-            // 
-            this.CC_List_Results.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnAccepted,
-            this.columnImageSource0,
-            this.columnImageSource1,
-            this.columnHash0,
-            this.columnHash1,
-            this.columnMatch});
-            this.CC_List_Results.FullRowSelect = true;
-            this.CC_List_Results.GridLines = true;
-            this.CC_List_Results.HideSelection = false;
-            this.CC_List_Results.Location = new System.Drawing.Point(3, 147);
-            this.CC_List_Results.MultiSelect = false;
-            this.CC_List_Results.Name = "CC_List_Results";
-            this.CC_List_Results.Size = new System.Drawing.Size(690, 298);
-            this.CC_List_Results.SmallImageList = this.ImageList_CC_List_Results;
-            this.CC_List_Results.TabIndex = 2;
-            this.ToolTip.SetToolTip(this.CC_List_Results, "Contains an brief overview of the hashed/compared\r\nimage sources.");
-            this.CC_List_Results.UseCompatibleStateImageBehavior = false;
-            this.CC_List_Results.View = System.Windows.Forms.View.Details;
-            this.CC_List_Results.VirtualMode = true;
-            // 
-            // columnAccepted
-            // 
-            this.columnAccepted.Text = "";
-            this.columnAccepted.Width = 26;
-            // 
-            // columnImageSource0
-            // 
-            this.columnImageSource0.Text = "Image source 0";
-            this.columnImageSource0.Width = 155;
-            // 
-            // columnImageSource1
-            // 
-            this.columnImageSource1.Text = "Image source 1";
-            this.columnImageSource1.Width = 155;
-            // 
-            // columnHash0
-            // 
-            this.columnHash0.Text = "Hash 0";
-            this.columnHash0.Width = 130;
-            // 
-            // columnHash1
-            // 
-            this.columnHash1.Text = "Hash 1";
-            this.columnHash1.Width = 130;
-            // 
-            // columnMatch
-            // 
-            this.columnMatch.Text = "Match (%)";
-            this.columnMatch.Width = 70;
-            // 
-            // ImageList_CC_List_Results
-            // 
-            this.ImageList_CC_List_Results.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList_CC_List_Results.ImageStream")));
-            this.ImageList_CC_List_Results.TransparentColor = System.Drawing.Color.Transparent;
-            this.ImageList_CC_List_Results.Images.SetKeyName(0, "checkmark.png");
-            this.ImageList_CC_List_Results.Images.SetKeyName(1, "cross.png");
             // 
             // CC_Group_SourceLocation
             // 
@@ -504,24 +541,6 @@
             this.linkLabel4.Text = "Luminous library";
             this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel4_LinkClicked);
             // 
-            // CC_Label_ResultCount
-            // 
-            this.CC_Label_ResultCount.Location = new System.Drawing.Point(583, 453);
-            this.CC_Label_ResultCount.Name = "CC_Label_ResultCount";
-            this.CC_Label_ResultCount.Size = new System.Drawing.Size(110, 13);
-            this.CC_Label_ResultCount.TabIndex = 11;
-            this.CC_Label_ResultCount.Text = "Result count: 0";
-            this.CC_Label_ResultCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 453);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(69, 13);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "Filter (DLinq):";
-            // 
             // MainDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -551,6 +570,7 @@
             this.pageImageVsImage.ResumeLayout(false);
             this.pageCrossComparison.ResumeLayout(false);
             this.pageCrossComparison.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CC_List_Results_2)).EndInit();
             this.CC_ToolStrip.ResumeLayout(false);
             this.CC_ToolStrip.PerformLayout();
             this.CC_Group_SourceLocation.ResumeLayout(false);
@@ -586,13 +606,6 @@
         private System.Windows.Forms.TabPage pageCrossComparison;
         private TechniqueSelection CC_Selection_Technique;
         private System.Windows.Forms.GroupBox CC_Group_SourceLocation;
-        private ListViewFlickerFree CC_List_Results;
-        private System.Windows.Forms.ColumnHeader columnAccepted;
-        private System.Windows.Forms.ColumnHeader columnImageSource0;
-        private System.Windows.Forms.ColumnHeader columnImageSource1;
-        private System.Windows.Forms.ColumnHeader columnHash0;
-        private System.Windows.Forms.ColumnHeader columnHash1;
-        private System.Windows.Forms.ColumnHeader columnMatch;
         private System.Windows.Forms.Label CC_Label_ReferenceFolder;
         private System.Windows.Forms.TextBox CC_Text_ReferenceFolder_Path;
         private System.Windows.Forms.Button CC_Button_ReferenceFolder_Select;
@@ -607,9 +620,16 @@
         private System.Windows.Forms.LinkLabel linkLabel4;
         private System.Windows.Forms.ToolStripDropDownButton CC_ToolStrip_DropDown;
         private System.Windows.Forms.ToolStripMenuItem CC_ToolStrip_DropDown_ShowColors;
-        private System.Windows.Forms.TextBox CC_Text_Filter;
+        private System.Windows.Forms.ComboBox CC_Text_Filter;
         private System.Windows.Forms.Label CC_Label_ResultCount;
         private System.Windows.Forms.Label label5;
+        private BrightIdeasSoftware.FastObjectListView CC_List_Results_2;
+        private BrightIdeasSoftware.OLVColumn olvColumn1;
+        private BrightIdeasSoftware.OLVColumn olvColumn2;
+        private BrightIdeasSoftware.OLVColumn olvColumn3;
+        private BrightIdeasSoftware.OLVColumn olvColumn4;
+        private BrightIdeasSoftware.OLVColumn olvColumn5;
+        private BrightIdeasSoftware.OLVColumn olvColumn6;
     }
 }
 

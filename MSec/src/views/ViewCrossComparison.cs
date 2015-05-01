@@ -2,7 +2,8 @@
 	File	:	ViewCrossComparison.cs
 	Project	:	MSec
 	Author	:	Byron Worms
-    Links   :   http://www.codeproject.com/Articles/17502/Simple-Popup-Control, http://dynamiclinq.azurewebsites.net/GettingStarted
+    Links   :   http://www.codeproject.com/Articles/17502/Simple-Popup-Control, http://dynamiclinq.azurewebsites.net/GettingStarted,
+                http://www.codeproject.com/Articles/35197/Undocumented-List-View-Features#virtualgroups
 *******************************************************************************************************************************************************************/
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,9 @@ using System.Drawing;
 using System.IO;
 using System.Threading;
 using Luminous.Windows.Forms;
+using BrightIdeasSoftware;
+using System.Text.RegularExpressions;
+using System.Runtime.Remoting;
 
 /*******************************************************************************************************************************************************************
 	Class: ViewImageVsImage
@@ -48,6 +52,9 @@ namespace MSec
         private static readonly Color   COLOR_RESULT_ACCEPTED       = Color.FromArgb(46, 176, 51);
         private static readonly Color   COLOR_RESULT_DENIED         = Color.FromArgb(255, 51, 51);
         private static readonly int     NUM_MIDPOINTS_COLOR_RESULT  = 10;
+
+        private static readonly string  FILTER_NAME_GROUPBY_DIR     = "Group items by their folder names";
+        private static readonly string  FILTER_GROUPBY_DIR          = "groupby Source0.Dir where Source0.Dir == Source1.Dir";
 
         // Delegate declarations
         private delegate IEnumerable<ComparisonPair>    delegate_sorter_func(int _index);
@@ -147,6 +154,48 @@ namespace MSec
             }
         }
 
+        // A simple class for holding pre-defined filter
+        private class PredefinedFilter
+        {
+            // True to auto-execute the filter on selection
+            private bool m_autoExecute = false;
+            public bool AutoExecute
+            {
+                get { return m_autoExecute; }
+                private set { }
+            }
+
+            // Name of the filter
+            private string m_name = "";
+            public string Name
+            {
+                get { return m_name; }
+                private set { }
+            }
+
+            // The command of the filter
+            private string m_command;
+            public string Command
+            {
+                get { return m_command; }
+                private set { }
+            }
+        
+            // Constructor
+            public PredefinedFilter(string _name, string _command, bool _autoExecute)
+            {
+                m_name = _name;
+                m_command = _command;
+                m_autoExecute = _autoExecute;
+            }
+
+            // Override: ToString
+            public override string ToString()
+            {
+                return m_name;
+            }
+        }
+
         // The data lock
         private object                  m_dataLock = new object();
 
@@ -160,8 +209,8 @@ namespace MSec
 
         // The sorter stuff for the list-view (results)
         private delegate_sorter_element_selecter_func[] m_listResultsSorterFuncs = null;
-        private int                                     m_listResultsSortColumnIndex = -1;
-        private SortOrder                               m_listResultsSortOrder = SortOrder.None;
+        private int                     m_listResultsSortColumnIndex = -1;
+        private SortOrder               m_listResultsSortOrder = SortOrder.None;
 
         // Configurations
         private bool                    m_isShowResultColors = true;
@@ -176,10 +225,13 @@ namespace MSec
         private Popup                   m_popupWindow = null;
         private Rectangle               m_popupPosition;
 
+        // Misc. stuff
+        private Color[]                 m_colorListMidpoints = null;
+
         // Controls
-        private ListView                m_listResults = null;
+        private FastObjectListView      m_listResults = null;
         private TextBox                 m_textReferenceFolder = null;
-        private TextBox                 m_textFilter = null;
+        private System.Windows.Forms.ComboBox m_textFilter = null;
         private Button                  m_buttonReferenceFolderSelect = null;
         private Button                  m_buttonReferenceFolderDelete = null;
         private Button                  m_buttonReferenceFolderStart = null;
@@ -198,7 +250,7 @@ namespace MSec
             int x = 0;
             int y = 0;
             delegate_sorter_element_selecter_func funcTemp = null;
-            
+
             #region List-view sorter: element selecter (result list)
             // Create list
             m_listResultsSorterFuncs = new delegate_sorter_element_selecter_func[LIST_RESULTS_COLUMN_COUNT];
@@ -234,14 +286,14 @@ namespace MSec
             // Register function: sorting based on text level (image source0 hash)
             funcTemp = (ComparisonPair _pair) =>
             {
-                return _pair.Source0.getHashDataForTechnique(_pair.ComparatorTechnique.ID).convertToString();
+                return _pair.Source0.Hash;
             };
             m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_SOURCE0_HASH] = funcTemp;
 
             // Register function: sorting based on text level (image source1 hash)
             funcTemp = (ComparisonPair _pair) =>
             {
-                return _pair.Source1.getHashDataForTechnique(_pair.ComparatorTechnique.ID).convertToString();
+                return _pair.Source1.Hash;
             };
             m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_SOURCE1_HASH] = funcTemp;
             #endregion List-view sorter: element selecter (result list)
@@ -254,9 +306,10 @@ namespace MSec
             m_popupWindow.FocusOnOpen = false;
 
             // Extract controls
-            m_listResults = _tabPage.Controls.Find("CC_List_Results", true)[0] as ListView;
+           // m_listResults = _tabPage.Controls.Find("CC_List_Results", true)[0] as ListView;
+            m_listResults = _tabPage.Parent.Controls.Find("CC_List_Results_2", true)[0] as FastObjectListView;
             m_textReferenceFolder = _tabPage.Controls.Find("CC_Text_ReferenceFolder_Path", true)[0] as TextBox;
-            m_textFilter = _tabPage.Controls.Find("CC_Text_Filter", true)[0] as TextBox;
+            m_textFilter = _tabPage.Controls.Find("CC_Text_Filter", true)[0] as System.Windows.Forms.ComboBox;
             m_buttonReferenceFolderSelect = _tabPage.Controls.Find("CC_Button_ReferenceFolder_Select", true)[0] as Button;
             m_buttonReferenceFolderDelete = _tabPage.Controls.Find("CC_Button_ReferenceFolder_Delete", true)[0] as Button;
             m_buttonReferenceFolderStart = _tabPage.Controls.Find("CC_Button_ReferenceFolder_Start", true)[0] as Button;
@@ -268,11 +321,15 @@ namespace MSec
             m_toolStripItemShowColors = m_toolStripDropDown.DropDownItems.Find("CC_ToolStrip_DropDown_ShowColors", true)[0] as ToolStripMenuItem;
 
             // Add events to: text boxes
+            m_textFilter.Items.Add(new PredefinedFilter(FILTER_NAME_GROUPBY_DIR, FILTER_GROUPBY_DIR, true));
             m_textFilter.KeyDown += onFilterKeyDown;
+            m_textFilter.SelectionChangeCommitted += onFilterSelectionChangeComitted;
 
             // Add events to: list of results
-            m_listResults.RetrieveVirtualItem += onRetrieveVirtualItem;
+            (m_listResults.Columns[LIST_RESULTS_COLUMN_ACCEPTED] as OLVColumn).ImageGetter += onListResultsAcceptedImageGetter;
+            (m_listResults.Columns[LIST_RESULTS_COLUMN_ACCEPTED] as OLVColumn).GroupKeyGetter += onListResultsGroupKeyGetter;
             m_listResults.ItemSelectionChanged += onItemSelectionChanged;
+            m_listResults.FormatRow += onListResultsFormatRow;
             m_listResults.ColumnClick += onColumnClick;
             m_listResults.ColumnWidthChanging += onColumnWidthChanging;
 
@@ -288,6 +345,9 @@ namespace MSec
             x = m_listResults.Width;
             y = (m_listResults.Height / 2) - (m_comparatorDetails.Height / 2);
             m_popupPosition = new Rectangle(x, y, 1, 1);
+
+            // Generate midpoint colors
+            m_colorListMidpoints = generateResultMidpointColors(COLOR_RESULT_ACCEPTED, COLOR_RESULT_DENIED, NUM_MIDPOINTS_COLOR_RESULT);
 
             // Set start state: idle
             setNextState(eState.STATE_IDLE);
@@ -373,6 +433,7 @@ namespace MSec
                         m_buttonReferenceFolderSelect.Enabled = false;
                         m_buttonReferenceFolderDelete.Enabled = false;
                         m_buttonReferenceFolderStart.Enabled = false;
+                       // m_listResults.Enabled = false;
                         m_listResults.Enabled = false;
                         m_textFilter.Enabled = false;
                         m_toolStripDropDown.Enabled = false;
@@ -385,6 +446,7 @@ namespace MSec
                         m_buttonReferenceFolderSelect.Enabled = true;
                         m_buttonReferenceFolderDelete.Enabled = true;
                         m_buttonReferenceFolderStart.Enabled = true;
+                        //m_listResults.Enabled = true;
                         m_listResults.Enabled = true;
                         m_textFilter.Enabled = true;
                         m_toolStripDropDown.Enabled = true;
@@ -522,19 +584,15 @@ namespace MSec
             // Reset comparison data
             lock(m_dataLock)
             {
-                // Reset list-view
-                m_listResults.VirtualListSize = 0;
-                m_listResults.Update();
-                updateLabelResultCount();
-
                 // Reset data structures
                 m_listComparisonItems = m_listDisplayComparisonItems = null;
+                updateLabelResultCount();
             }
 
             // Clear list view
             Utility.invokeInGuiThread(m_listResults, delegate
             {
-                m_listResults.Items.Clear();
+                m_listResults.ClearObjects();
             });
            
             // Spawn watch job
@@ -573,7 +631,7 @@ namespace MSec
                         while (sourceQueue.TryDequeue(out src) == true)
                         {
                             // Compute
-                            if (CurrentTechnique.computeHash(src, true) == null)
+                            if (CurrentTechnique.computeHash(src) == null)
                                 return false;
 
                             // Update GUI
@@ -711,17 +769,17 @@ namespace MSec
                     // Set status
                     setCustomActionText(CUSTOM_ACTION_PROCESS_DATA);
 
+                    // Set used technique
+                    m_comparisonTechnique = CurrentTechnique;
+
                     // Save computed pairs and update list-view
                     m_listComparisonItems = pairs;
                     m_listDisplayComparisonItems = pairs;
                     Utility.invokeInGuiThread(m_listResults, delegate
                     {
-                        m_listResults.VirtualListSize = m_listDisplayComparisonItems.Count;
+                        m_listResults.SetObjects(m_listDisplayComparisonItems);
                         updateLabelResultCount();
                     });
-
-                    // Set used technique
-                    m_comparisonTechnique = CurrentTechnique;
                 }
 
                 // Reset action text
@@ -860,63 +918,178 @@ namespace MSec
             return (int)Math.Floor((1.0 - ratio) * _midPointCount);
         }
 
-        #region Events: Controls
-        // Event List::onColumnWidthChanging
-        void onRetrieveVirtualItem(object _sender, RetrieveVirtualItemEventArgs _e)
+        // Parses and executes the defined filter
+        private bool executeFilter(string _filter)
         {
             // Local variables
-            ListViewItem item = null;
-            ComparisonPair pair = null;
+            string[] sections = null;
+            IQueryable queryable = null;
+            bool isGrouped = false;
+            List<ComparisonPair> displayList = new List<ComparisonPair>();
+
+            // Check parameter
+            if (m_listDisplayComparisonItems == null || m_listDisplayComparisonItems.Count == 0)
+                return false;
+
+            // Empty?
+            if (_filter == null || _filter.Length == 0)
+            {
+                m_listResults.ShowGroups = false;
+                m_listDisplayComparisonItems = m_listComparisonItems;
+                m_listResults.SetObjects(m_listDisplayComparisonItems);
+                updateLabelResultCount();
+                return true;
+            }
+
+            // Execute query
+            try
+            {
+                // Split string into sections
+                sections = Regex.Split(_filter, @"\s(?=(?:WHERE|GROUPBY|ORDERBY|TAKE|SKIP)[^)]*?)", RegexOptions.IgnoreCase);
+                if (sections == null || sections.Length == 0)
+                    return false;
+                sections = sections.Reverse().ToArray();
+
+                // Get queryable from list
+                queryable = m_listComparisonItems.AsQueryable();
+                foreach (string s in sections)
+                {
+                    // Get keyword and command
+                    string keyword = s.Substring(0, s.IndexOf(' ')).ToLower();
+                    string command = s.Substring(s.IndexOf(' '));
+
+                    // Where clause?
+                    if (keyword == "where")
+                    {
+                        // Execute query
+                        queryable = queryable.Where(command);
+                    }
+
+                    // Group by clause?
+                    else if (keyword == "groupby")
+                    {
+                        if (isGrouped == true)
+                            throw new Exception("The data can be grouped just one time!\nSeveral \"groupby\" keywords are not supported yet.");
+                        queryable = queryable.GroupBy(command, "it").Select("new (it.Key as Key, it as Pairs)");
+                        isGrouped = true;
+                    }
+
+                    // Order-by clause?
+                    else if (keyword == "orderby")
+                    {
+                        // Execute query
+                        queryable = queryable.OrderBy(command);
+                    }
+
+                    // Take clause?
+                    else if (keyword == "take")
+                    {
+                        // Execute query
+                        queryable = queryable.Take(int.Parse(command));
+                    }
+
+                    // Skip clause?
+                    else if (keyword == "skip")
+                    {
+                        // Execute query
+                        queryable = queryable.Skip(int.Parse(command));
+                    }
+                }
+
+                // Group clause?
+                if (isGrouped)
+                {
+                    // Assign groups to the pairs
+                    foreach (dynamic g in queryable)
+                    {
+                        foreach (dynamic item in g.Pairs)
+                        {
+                            // Set item's tag
+                            item.Tag = g.Key;
+
+                            // Add to display list
+                            displayList.Add(item);
+                        }
+                    }
+
+                    // Assign to list-view's list
+                    m_listDisplayComparisonItems = displayList;
+                }
+
+                // List clause!
+                else
+                    m_listDisplayComparisonItems = (queryable as IQueryable<ComparisonPair>).ToList();
+
+                // Configure list-view
+                m_listResults.ShowGroups = isGrouped;
+                m_listResults.SetObjects(m_listDisplayComparisonItems);
+                updateLabelResultCount();
+            }
+            catch (Exception _ex)
+            {
+                MessageBox.Show(_ex.Message, "Query failed or is invalid!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
+        }
+
+        #region Events: Controls
+        // Event List::onColumnWidthChanging
+        object onListResultsAcceptedImageGetter(object _sender)
+        {
+            // Local variables
+            ComparisonPair pair = _sender as ComparisonPair;
+
+            return pair.IsAccepted == true ? 0 : 1;
+        }
+
+        // Event List::onColumnWidthChanging
+        object onListResultsGroupKeyGetter(object _sender)
+        {
+            // Local variables
+            ComparisonPair pair = _sender as ComparisonPair;
+
+            return pair.Tag;
+        }
+
+        // Event List::onColumnWidthChanging
+        void onListResultsFormatRow(object _sender, FormatRowEventArgs _e)
+        {
+            // Local variables
+            ComparisonPair pair = _e.Model as ComparisonPair;
+            Color background = Color.White;
             double match = 0.0;
             double threshold = 0.0;
             decimal tempDecimal = 0.0m;
-            Color backgroundColor = Color.White;
-            Color[] midpointColors = null;
+            int index = 0;
 
-            // Find pair
-            if (_e.ItemIndex >= m_listDisplayComparisonItems.Count)
-                throw new ArgumentException("Index of the virtual list's item is invalid!");
-            pair = m_listDisplayComparisonItems[_e.ItemIndex];
-
-            // Get match rate
-            if (pair.ComparativeResult.getMatchRate() != null)
-                match = (double)pair.ComparativeResult.getMatchRate();
-
-            // Show colors?
-            if (m_isShowResultColors == true)
+            // Color background activated?
+            if(m_isShowResultColors == true)
             {
                 // Get technique (all pairs were generated by the same technique)
                 m_comparisonTechnique.getAttribute<decimal>(Technique.ATT_GENERAL_THRESHOLD, out tempDecimal);
                 threshold = Convert.ToSingle(tempDecimal) / 100.0;
 
-                // Generate midpoint colors
-                midpointColors = generateResultMidpointColors(COLOR_RESULT_ACCEPTED, COLOR_RESULT_DENIED, NUM_MIDPOINTS_COLOR_RESULT);
+                // Get match rate
+                if (pair.ComparativeResult.getMatchRate() != null)
+                    match = (double)pair.ComparativeResult.getMatchRate();
 
-                // Set background color
-                backgroundColor = midpointColors[calculateMidpointColorIndex(threshold, match, NUM_MIDPOINTS_COLOR_RESULT)];
+                // Set color
+                try
+                {
+                    index = calculateMidpointColorIndex(threshold, match, NUM_MIDPOINTS_COLOR_RESULT);
+                    background = m_colorListMidpoints[index];
+                }
+                catch(Exception _ex)
+                {
+                    MessageBox.Show("index: " + index + " match: " + match);
+                    throw _ex;
+                }
             }
 
-            // Create item
-            item = new ListViewItem();
-            item.ImageIndex = pair.ComparativeResult.isAccepted() == true ? 0 : 1;
-            item.BackColor = backgroundColor;
-
-            // Add sub-items: source0, source1, hash0, hash1, match
-            item.SubItems.Add(Path.GetFileName(pair.Source0.FilePath));
-            item.SubItems.Add(Path.GetFileName(pair.Source1.FilePath));
-            item.SubItems.Add(pair.Source0.getHashDataForTechnique(pair.ComparatorTechnique.ID).convertToString());
-            item.SubItems.Add(pair.Source1.getHashDataForTechnique(pair.ComparatorTechnique.ID).convertToString());
-            item.SubItems.Add(((int)(match * 100)).ToString());
-
-            // Copy item
-            _e.Item = item;
-        }
-
-        // Event List::onColumnWidthChanging
-        void onColumnWidthChanging(object _sender, ColumnWidthChangingEventArgs _e)
-        {
-            _e.NewWidth = m_listResults.Columns[_e.ColumnIndex].Width;
-            _e.Cancel = true;
+            // Set color to item
+            _e.Item.BackColor = background;
         }
 
         // Event List::onColumnClick
@@ -924,6 +1097,10 @@ namespace MSec
         {
             // Local variables
             delegate_sorter_func sorterFunc = null;
+
+            // Check
+            if (m_listDisplayComparisonItems == null || m_listDisplayComparisonItems.Count == 0)
+                return;
 
             // Same column
             if (m_listResultsSortColumnIndex == _e.Column)
@@ -942,7 +1119,7 @@ namespace MSec
             }
 
             // Define sorter function
-            if(m_listResultsSortOrder == SortOrder.Ascending)
+            if (m_listResultsSortOrder == SortOrder.Ascending)
             {
                 sorterFunc = (int _index) =>
                 {
@@ -965,7 +1142,16 @@ namespace MSec
             m_listDisplayComparisonItems = sorterFunc(_e.Column).ToList();
 
             // Update list-view
+            m_listResults.ClearObjects();
+            m_listResults.SetObjects(m_listDisplayComparisonItems);
             m_listResults.RedrawItems(0, m_listDisplayComparisonItems.Count - 1, true);
+        }
+
+        // Event List::onColumnWidthChanging
+        void onColumnWidthChanging(object _sender, ColumnWidthChangingEventArgs _e)
+        {
+            _e.NewWidth = m_listResults.Columns[_e.ColumnIndex].Width;
+            _e.Cancel = true;
         }
 
         // Event List::onItemSelectionChanged
@@ -1017,51 +1203,26 @@ namespace MSec
         // Event TextBox::onFilterKeyDown
         void onFilterKeyDown(object _sender, KeyEventArgs _e)
         {
-            // Local variables
-            string text = m_textFilter.Text;
-            IQueryable<ComparisonPair> result = null;
-            Action zeroList = delegate
-            {
-                m_listResults.VirtualListSize = 0;
-                m_listResults.Update();
-                updateLabelResultCount();
-            };
-            Action updateList = delegate
-            {
-                m_listResults.VirtualListSize = m_listDisplayComparisonItems.Count;
-                m_listResults.Update();
-                updateLabelResultCount();
-            };
-
             // Check parameter
             if (_e.KeyCode != Keys.Enter && _e.KeyCode != Keys.Return)
                 return;
 
-            // Empty?
-            if(text == null || text.Length == 0)
-            {
-                zeroList();
-                m_listDisplayComparisonItems = m_listComparisonItems;
-                updateList();
+            // Execute filter
+            executeFilter(m_textFilter.Text);
+        }
 
-                return;
-            }
+        // Event TextBox::onFilterSelectedValueChanged
+        void onFilterSelectionChangeComitted(object _sender, EventArgs _e)
+        {
+            // Get filter
+            PredefinedFilter filter = m_textFilter.SelectedItem as PredefinedFilter;
+
+            // Update text
+            m_textFilter.BeginInvoke((MethodInvoker)delegate { this.m_textFilter.Text = filter.Command; });
 
             // Execute query
-            try
-            {
-                result = m_listComparisonItems.AsQueryable().Where(text);
-            }
-            catch(Exception)
-            {
-                MessageBox.Show("Query failed or is invalid!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // Update list-view
-            zeroList();
-            m_listDisplayComparisonItems = result.ToList();
-            updateList();
+            if (filter.AutoExecute == true)
+                executeFilter(filter.Command);
         }
 
         #region Events: ToolStrip
@@ -1073,7 +1234,7 @@ namespace MSec
 
             // Update list-view
             if(m_listDisplayComparisonItems != null && m_listDisplayComparisonItems.Count > 0)
-                m_listResults.RedrawItems(0, m_listDisplayComparisonItems.Count - 1, true);            
+                m_listResults.RedrawItems(0, m_listDisplayComparisonItems.Count - 1, true);      
         }
         #endregion Events: ToolStrip
         #endregion Events: Controls

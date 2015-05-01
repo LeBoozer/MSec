@@ -138,7 +138,7 @@ namespace MSec
         public abstract bool containsComparativeDataDefaultValue(ComparativeData _data);
 
         // Computes the hash for a given image
-        public abstract HashData computeHash(ImageSource _image, bool _recompute = false);
+        public abstract HashData computeHash(ImageSource _image);
 
         // Compares two hash data structures (return null if the hast data's format is invalid!)
         public abstract ComparativeData compareHashData(HashData _data0, HashData _data1);
@@ -351,24 +351,6 @@ namespace MSec
 
             return t;
         }
-
-        // Creates the default hash data for the DCT algorithm
-        public static HashData<UInt64> createHashDataDCT()
-        {
-            return new HashData<UInt64>(default(UInt64));
-        }
-
-        // Creates the default hash data for the RADISH algorithm
-        public static HashData<Digest> createHashDataRADISH()
-        {
-            return new HashData<Digest>(default(Digest));
-        }
-
-        // Creates the default hash data for the RADISH algorithm
-        public static HashData<WaveletHash> createHashDataWavelet()
-        {
-            return new HashData<WaveletHash>(default(WaveletHash));
-        }
     }
 }
 
@@ -451,28 +433,20 @@ namespace MSec
         }
 
         // Override: HashData::computeHash
-        public override HashData computeHash(ImageSource _image, bool _recompute = false)
+        public override HashData computeHash(ImageSource _image)
         {
             // Local variables
             HashData data = null;
-            HashData<_HR> typedData = null;
 
             // Check parameter
             if (_image == null)
                 return null;
 
-            // Recompute?
-            if(_recompute == false)
-            {
-                if (containsHashDataDefaultValue(_image.getHashDataForTechnique(m_techniqueID)) == false)
-                    return typedData;
-            }
-
             // Compute hash
             data = m_funcHash(this, _image);
 
             // Assign result to image
-            _image.setHashDataForTechnique(m_techniqueID, data);
+            _image.HashData = data;
 
             return data;
         }
@@ -502,7 +476,7 @@ namespace MSec
             if (_source0 == null || _source1 == null)
                 return null;
 
-            return compareHashData(_source0.getHashDataForTechnique(ID), _source1.getHashDataForTechnique(ID));
+            return compareHashData(_source0.HashData, _source1.HashData);
         }
     }
 }
