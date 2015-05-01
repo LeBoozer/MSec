@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Xml.Linq;
 
 /*******************************************************************************************************************************************************************
 	Class: MSec
@@ -19,6 +20,9 @@ namespace MSec
 {
     public sealed class MSec
     {
+        // Constants
+        private static readonly string APP_CONFIG_FILE = "config.cfg";
+
         // Singleton stuff
         private static MSec m_singleton = null;
         public static MSec Instance
@@ -56,6 +60,9 @@ namespace MSec
             private set { }
         }
 
+        // Configuration stuff
+        private XDocument m_xmlDocument = null;
+
         // Initializes MSec
         public bool initialize(MainDialog _handle)
         {
@@ -64,6 +71,17 @@ namespace MSec
 
             // Copy parameters
             m_mainDialog = _handle;
+
+            // Try to load app configuration
+            try
+            {
+                m_xmlDocument = XDocument.Load(APP_CONFIG_FILE);
+            }
+            catch(Exception _ex)
+            {
+                m_xmlDocument = null;
+                MessageBox.Show(_ex.Message, "Error while parsin application configuration!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             // Get tab control handle
             tabCtrl = m_mainDialog.Controls.Find("MainDialog_MainTab", true)[0] as TabControl;
@@ -81,19 +99,12 @@ namespace MSec
             return true;
         }
 
-        // Starts a new job (process dialog is modal!)
-        public void startJob(Action _job, string _jobDesc)
+        // Returns a list with all elements which can be found under the specified type (can be null!)
+        public IEnumerable<XElement> getXmlElementsByType(string _type)
         {
-            // Local variables
-            ProcessDialog d = null;
-
-            // Check parameter
-            if (_job == null)
-                return;
-
-            // Create dialog
-            d = new ProcessDialog(_jobDesc, _job);
-            d.ShowDialog();
+            if (m_xmlDocument == null)
+                return null;
+            return m_xmlDocument.Root.Descendants(_type);
         }
 
         // Opens a link with the standard browser

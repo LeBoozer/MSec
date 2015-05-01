@@ -20,6 +20,7 @@ using Luminous.Windows.Forms;
 using BrightIdeasSoftware;
 using System.Text.RegularExpressions;
 using System.Runtime.Remoting;
+using System.Xml.Linq;
 
 /*******************************************************************************************************************************************************************
 	Class: ViewImageVsImage
@@ -38,7 +39,7 @@ namespace MSec
         private static readonly int     LIST_RESULTS_COLUMN_MATCH_RATE      = 5;
 
         private static readonly string  ACTION_IDLE                 = "Waiting for user input...";
-        private static readonly string  ACTION_LOADING_FILES        = "Loading & analysing files...";
+        private static readonly string  ACTION_LOADING_FILES        = "Loading and analysing files...";
         private static readonly string  ACTION_READY                = "Ready for the comparison...";
         private static readonly string  ACTION_EXECUTION            = "The comparison is being executed...";
 
@@ -52,9 +53,6 @@ namespace MSec
         private static readonly Color   COLOR_RESULT_ACCEPTED       = Color.FromArgb(46, 176, 51);
         private static readonly Color   COLOR_RESULT_DENIED         = Color.FromArgb(255, 51, 51);
         private static readonly int     NUM_MIDPOINTS_COLOR_RESULT  = 10;
-
-        private static readonly string  FILTER_NAME_GROUPBY_DIR     = "Group items by their folder names";
-        private static readonly string  FILTER_GROUPBY_DIR          = "groupby Source0.Dir where Source0.Dir == Source1.Dir";
 
         // Delegate declarations
         private delegate IEnumerable<ComparisonPair>    delegate_sorter_func(int _index);
@@ -250,6 +248,32 @@ namespace MSec
             int x = 0;
             int y = 0;
             delegate_sorter_element_selecter_func funcTemp = null;
+            IEnumerable<XElement> xmlElements = null;
+            List<PredefinedFilter> filterList = new List<PredefinedFilter>();
+
+            #region App config
+            // Get all filters from app config
+            xmlElements = MSec.Instance.getXmlElementsByType("filter");
+            if (xmlElements != null && xmlElements.Count() > 0)
+            {
+                // Local variables
+                bool autoExecute = false;
+                string desc = "";
+                string command = "";
+
+                // Process all filter
+                foreach(var e in xmlElements)
+                {
+                    // Get desc
+                    autoExecute = bool.Parse(e.Attribute("autoexecute").Value);
+                    desc = e.Element("desc").Value;
+                    command = e.Element("command").Value;
+
+                    // Create filter
+                    filterList.Add(new PredefinedFilter(desc, command, autoExecute));
+                }
+            }
+            #endregion App config
 
             #region List-view sorter: element selecter (result list)
             // Create list
@@ -321,7 +345,8 @@ namespace MSec
             m_toolStripItemShowColors = m_toolStripDropDown.DropDownItems.Find("CC_ToolStrip_DropDown_ShowColors", true)[0] as ToolStripMenuItem;
 
             // Add events to: text boxes
-            m_textFilter.Items.Add(new PredefinedFilter(FILTER_NAME_GROUPBY_DIR, FILTER_GROUPBY_DIR, true));
+            m_textFilter.Items.AddRange(filterList.ToArray());
+            m_textFilter.MouseWheel += onFilterMouseWheel;
             m_textFilter.KeyDown += onFilterKeyDown;
             m_textFilter.SelectionChangeCommitted += onFilterSelectionChangeComitted;
 
@@ -1198,6 +1223,13 @@ namespace MSec
             if (MessageBox.Show("Do you want to start the cross comparison of the selected image sources? This may take a while...",
                 "Start the comparison?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 startComparisonHashing();
+        }
+
+        // Event TextBox::onFilterMouseWheel
+        void onFilterMouseWheel(object _sender, MouseEventArgs _e)
+        {
+            // Mark as handled
+            ((HandledMouseEventArgs)_e).Handled = true;
         }
 
         // Event TextBox::onFilterKeyDown

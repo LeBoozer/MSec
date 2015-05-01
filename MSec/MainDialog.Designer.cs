@@ -290,6 +290,9 @@
             this.CC_Text_Filter.Name = "CC_Text_Filter";
             this.CC_Text_Filter.Size = new System.Drawing.Size(499, 21);
             this.CC_Text_Filter.TabIndex = 4;
+            this.ToolTip.SetToolTip(this.CC_Text_Filter, "Filters can be used to select just a subset\r\nof results from the cross comparison" +
+        ".\r\nFor further informations about the syntax\r\nof the expression language see the" +
+        " attached\r\nfile: Filter.txt");
             // 
             // CC_ToolStrip
             // 
@@ -457,7 +460,7 @@
             // 
             this.aboutToolStripMenuItem1.Image = global::MSec.Properties.Resources.information;
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
-            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem1.Text = "About";
             this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem1_Click);
             // 

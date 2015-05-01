@@ -1,0 +1,34 @@
+﻿The filter mechanism can be used to select just a subset of the results created by the cross comparison.
+Informations and examples of the syntax and the expression language being used can be found on the following
+web page: http://dynamiclinq.azurewebsites.net/GettingStarted
+
+Due to the nature of the dynamic version of "Linq" and the internal structure of the program, just a
+subset of "Linq" clauses can be applied via the filter mechanism. 
+The following clauses can be used:
+	- where
+	- groupby	(creates a tuple of two: (Key,Pairs))
+	- take
+	- skip
+	- orderby
+
+The are a few restrictions regarding the use of these clauses:
+	- groupby: This clause can be used just once (due to the representation of the data in a list structure)
+	- orderby: Groups cannot be (re-)orderd at this time. The following construct fulfills the syntax but 
+			   does not affect of the groups' ordering:
+					orderby [...] groupby [...]
+
+
+The dynamic "Linq" expression language can access all public attributes of the data (access to custom methods
+is not supported yet!). The following list gives a brief overview about the accessible attributes of the
+list content (standard objects are not mentioned here, please see link above!):
+	- IsAccepted						(boolean value)
+	- MatchRate							(integer value, range [0-100])
+	- SourceX							(image source X, values for X [0,1])
+		- SourceX.ImageID				(integer value)
+		- SourceX.FilePath				(string)
+		- SourceX.FileName				(string)
+		- SourceX.Dir					(string)
+		- SourceX.Hash					(string)
+
+
+New or existing pre-defined filter can be added/edited in the application configuration: config.cfg
