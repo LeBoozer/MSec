@@ -935,6 +935,8 @@ namespace MSec
         {
             // Get the ratio between the match rate and the threshold
             double ratio = _matchRate / _threshold;
+            if (_matchRate == 0.0)
+                ratio = 0.001;
 
             // Limit it to 100% (if the match rate exceeds the threshold, the ratio will be higher than 100%!)
             if (ratio > 1.0) ratio = 1.0;
@@ -1101,16 +1103,8 @@ namespace MSec
                     match = (double)pair.ComparativeResult.getMatchRate();
 
                 // Set color
-                try
-                {
-                    index = calculateMidpointColorIndex(threshold, match, NUM_MIDPOINTS_COLOR_RESULT);
-                    background = m_colorListMidpoints[index];
-                }
-                catch(Exception _ex)
-                {
-                    MessageBox.Show("index: " + index + " match: " + match);
-                    throw _ex;
-                }
+                index = calculateMidpointColorIndex(threshold, match, NUM_MIDPOINTS_COLOR_RESULT);
+                background = m_colorListMidpoints[index];
             }
 
             // Set color to item
