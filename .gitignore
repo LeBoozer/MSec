@@ -1,7 +1,9 @@
 Output/Debug/MSec.exe
 Output/Debug/*.txt
+Output/Debug/*.pdf
 Output/Release/MSec.exe
 Output/Release/*.txt
+Output/Release/*.pdf
 External/pHash/Debug
 External/pHash/Release
 MSec/obj

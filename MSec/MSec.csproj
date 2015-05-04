@@ -223,6 +223,9 @@
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)Output\$(ConfigurationName)"
 copy "$(ProjectDir)\Resources\Filter.txt" "$(SolutionDir)Output\$(ConfigurationName)"
+copy "$(ProjectDir)\Resources\Licence - pHash, ObjectListView.pdf" "$(SolutionDir)Output\$(ConfigurationName)"
+copy "$(ProjectDir)\Resources\License - Dynamic Linq.pdf" "$(SolutionDir)Output\$(ConfigurationName)"
+copy "$(ProjectDir)\Resources\License - Luminous.pdf" "$(SolutionDir)Output\$(ConfigurationName)"
 copy "$(ProjectDir)\config.cfg" "$(SolutionDir)Output\$(ConfigurationName)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
