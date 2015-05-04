@@ -80,6 +80,16 @@ namespace MSec
         }
         #endregion Values::Wavelet
 
+        #region Values::BMB
+        // Radish: gamma
+        private int m_bmbMethod = 0;
+        public int BMBMethod
+        {
+            get { return m_bmbMethod; }
+            private set { }
+        }
+        #endregion Values::BMB
+
         #region Controls::General
         private NumericUpDown m_numberGeneralThreshold = null;
         #endregion Controls::General
@@ -106,6 +116,12 @@ namespace MSec
         private NumericUpDown m_numberWaveletLevel = null;
         #endregion Controls::Technique::Wavelet
 
+        #region Controls::Technique::BMB
+        private RadioButton m_radioTechniqueBMB = null;
+        private Label m_labelBMBMethod = null;
+        private ComboBox m_comboBMBMethod = null;
+        #endregion Controls::Technique::BMB
+
         // Delegate functions
         public delegate void delegate_onTechniqueChanged(TechniqueID _nextTechnique);
         public delegate void delegate_onAttributeChanged();
@@ -115,6 +131,7 @@ namespace MSec
         public delegate void delegate_onRadishNumberOfAnglesChanged(decimal _v);
         public delegate void delegate_onWaveletAlphaChanged(decimal _v);
         public delegate void delegate_onWaveletLevelChanged(decimal _v);
+        public delegate void delegate_onBMBMethodChanged(int _v);
 
         // Events
         public event delegate_onTechniqueChanged OnTechniqueChanged = delegate { };
@@ -125,6 +142,7 @@ namespace MSec
         public event delegate_onRadishNumberOfAnglesChanged OnRadishNumberOfAnglesChanged = delegate { };
         public event delegate_onWaveletAlphaChanged OnWaveletAlphaChanged = delegate { };
         public event delegate_onWaveletLevelChanged OnWaveletLevelChanged = delegate { };
+        public event delegate_onBMBMethodChanged OnBMBMethodChanged = delegate { };
 
         // Constructor
         public TechniqueSelection()
@@ -181,24 +199,45 @@ namespace MSec
             m_waveletLevel = m_numberWaveletLevel.Value;
             #endregion Technique::Wavelet    
 
+            #region Technique::BMB
+            // Get controls
+            m_radioTechniqueBMB = this.Radio_Technique_BMB;
+            m_labelBMBMethod = this.Label_Technique_BMB_Method;
+            m_comboBMBMethod = this.Combo_Technique_BMB_Method;
+
+            // Extract default values
+            m_comboBMBMethod.SelectedIndex = 0;
+            m_bmbMethod = int.Parse(m_comboBMBMethod.Text);
+            #endregion Technique::BMB
+
             // Set start technique ID
             if (m_radioTechniqueDCT.Checked == true)
             {
                 m_currentTechniqueID = TechniqueID.DCT;
                 techniqueControlsEnabled(TechniqueID.RADISH, false);
                 techniqueControlsEnabled(TechniqueID.WAVELET, false);
+                techniqueControlsEnabled(TechniqueID.BMB, false);
             }
             else if (m_radioTechniqueWavelet.Checked == true)
             {
                 m_currentTechniqueID = TechniqueID.WAVELET;
                 techniqueControlsEnabled(TechniqueID.DCT, false);
                 techniqueControlsEnabled(TechniqueID.RADISH, false);
+                techniqueControlsEnabled(TechniqueID.BMB, false);
             }
-            else
+            else if(m_radioTechniqueRadish.Checked == true)
             {
                 m_currentTechniqueID = TechniqueID.RADISH;
                 techniqueControlsEnabled(TechniqueID.DCT, false);
                 techniqueControlsEnabled(TechniqueID.WAVELET, false);
+                techniqueControlsEnabled(TechniqueID.BMB, false);
+            }
+            else
+            {
+                m_currentTechniqueID = TechniqueID.BMB;
+                techniqueControlsEnabled(TechniqueID.DCT, false);
+                techniqueControlsEnabled(TechniqueID.WAVELET, false);
+                techniqueControlsEnabled(TechniqueID.RADISH, false);
             }
         }
 
@@ -236,13 +275,20 @@ namespace MSec
                 m_numberRadishAngles.Enabled = _yesNo;
             }
 
-            // Wavelet=
+            // Wavelet?
             else if(_technique == TechniqueID.WAVELET)
             {
                 m_labelWaveletAlpha.Enabled = _yesNo;
                 m_labelWaveletLevel.Enabled = _yesNo;
                 m_numberWaveletAlpha.Enabled = _yesNo;
                 m_numberWaveletLevel.Enabled = _yesNo;
+            }
+
+            // BMB
+            else if(_technique == TechniqueID.BMB)
+            {
+                m_labelBMBMethod.Enabled = _yesNo;
+                m_comboBMBMethod.Enabled = _yesNo;
             }
         }
 
@@ -266,6 +312,13 @@ namespace MSec
             RadioButton button = sender as RadioButton;
             if (button.Checked == true)
                 _onTechniqueChanged(TechniqueID.WAVELET);
+        }
+
+        private void Radio_Technique_BMB_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton button = sender as RadioButton;
+            if (button.Checked == true)
+                _onTechniqueChanged(TechniqueID.BMB);
         }
         #endregion Events: Radio::CheckedChanged
 
@@ -312,6 +365,16 @@ namespace MSec
             OnAttributeChanged();
         }
         #endregion Events: Technique: Wavelet
+
+        #region Events: Technique: BMB
+        private void Combo_Technique_BMB_Method_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            // Set value and notify
+            m_bmbMethod = int.Parse(m_comboBMBMethod.Text);
+            OnBMBMethodChanged(m_bmbMethod);
+            OnAttributeChanged();
+        }
+        #endregion Events: Technique: BMB
 
         #region Events: General
         private void Number_General_Threshold_ValueChanged(object sender, EventArgs e)

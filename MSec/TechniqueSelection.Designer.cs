@@ -30,6 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.Group_Configuration = new System.Windows.Forms.GroupBox();
+            this.Combo_Technique_BMB_Method = new System.Windows.Forms.ComboBox();
+            this.Label_Technique_BMB_Method = new System.Windows.Forms.Label();
+            this.Radio_Technique_BMB = new System.Windows.Forms.RadioButton();
             this.Label_Technique_Wavelet_Level = new System.Windows.Forms.Label();
             this.Number_Technique_Wavelet_Level = new System.Windows.Forms.NumericUpDown();
             this.Label_Technique_Wavelet_Alpha = new System.Windows.Forms.Label();
@@ -44,21 +47,24 @@
             this.Radio_Technique_DCT = new System.Windows.Forms.RadioButton();
             this.Radio_Technique_Radish = new System.Windows.Forms.RadioButton();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.Number_General_Threshold = new System.Windows.Forms.NumericUpDown();
             this.Label_General_Threshold = new System.Windows.Forms.Label();
             this.Group_General = new System.Windows.Forms.GroupBox();
-            this.Number_General_Threshold = new System.Windows.Forms.NumericUpDown();
             this.Group_Configuration.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Level)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Alpha)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Angles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Sigma)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Gamma)).BeginInit();
-            this.Group_General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Number_General_Threshold)).BeginInit();
+            this.Group_General.SuspendLayout();
             this.SuspendLayout();
             // 
             // Group_Configuration
             // 
+            this.Group_Configuration.Controls.Add(this.Combo_Technique_BMB_Method);
+            this.Group_Configuration.Controls.Add(this.Label_Technique_BMB_Method);
+            this.Group_Configuration.Controls.Add(this.Radio_Technique_BMB);
             this.Group_Configuration.Controls.Add(this.Label_Technique_Wavelet_Level);
             this.Group_Configuration.Controls.Add(this.Number_Technique_Wavelet_Level);
             this.Group_Configuration.Controls.Add(this.Label_Technique_Wavelet_Alpha);
@@ -74,15 +80,50 @@
             this.Group_Configuration.Controls.Add(this.Radio_Technique_Radish);
             this.Group_Configuration.Location = new System.Drawing.Point(3, 3);
             this.Group_Configuration.Name = "Group_Configuration";
-            this.Group_Configuration.Size = new System.Drawing.Size(604, 92);
+            this.Group_Configuration.Size = new System.Drawing.Size(604, 110);
             this.Group_Configuration.TabIndex = 0;
             this.Group_Configuration.TabStop = false;
             this.Group_Configuration.Text = "Configuration";
             // 
+            // Combo_Technique_BMB_Method
+            // 
+            this.Combo_Technique_BMB_Method.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Combo_Technique_BMB_Method.FormattingEnabled = true;
+            this.Combo_Technique_BMB_Method.Items.AddRange(new object[] {
+            "1",
+            "2"});
+            this.Combo_Technique_BMB_Method.Location = new System.Drawing.Point(224, 86);
+            this.Combo_Technique_BMB_Method.Name = "Combo_Technique_BMB_Method";
+            this.Combo_Technique_BMB_Method.Size = new System.Drawing.Size(45, 21);
+            this.Combo_Technique_BMB_Method.TabIndex = 21;
+            this.ToolTip.SetToolTip(this.Combo_Technique_BMB_Method, "1: No overlapping blocks\r\n2: Overlapping blocks (degree: half the block size)");
+            this.Combo_Technique_BMB_Method.SelectionChangeCommitted += new System.EventHandler(this.Combo_Technique_BMB_Method_SelectionChangeCommitted);
+            // 
+            // Label_Technique_BMB_Method
+            // 
+            this.Label_Technique_BMB_Method.AutoSize = true;
+            this.Label_Technique_BMB_Method.Location = new System.Drawing.Point(172, 90);
+            this.Label_Technique_BMB_Method.Name = "Label_Technique_BMB_Method";
+            this.Label_Technique_BMB_Method.Size = new System.Drawing.Size(46, 13);
+            this.Label_Technique_BMB_Method.TabIndex = 20;
+            this.Label_Technique_BMB_Method.Text = "Method:";
+            // 
+            // Radio_Technique_BMB
+            // 
+            this.Radio_Technique_BMB.AutoSize = true;
+            this.Radio_Technique_BMB.Location = new System.Drawing.Point(17, 88);
+            this.Radio_Technique_BMB.Name = "Radio_Technique_BMB";
+            this.Radio_Technique_BMB.Size = new System.Drawing.Size(76, 17);
+            this.Radio_Technique_BMB.TabIndex = 19;
+            this.Radio_Technique_BMB.Text = "BMB Hash";
+            this.ToolTip.SetToolTip(this.Radio_Technique_BMB, "Hashing technique: Block Mean Value Based Hash");
+            this.Radio_Technique_BMB.UseVisualStyleBackColor = true;
+            this.Radio_Technique_BMB.CheckedChanged += new System.EventHandler(this.Radio_Technique_BMB_CheckedChanged);
+            // 
             // Label_Technique_Wavelet_Level
             // 
             this.Label_Technique_Wavelet_Level.AutoSize = true;
-            this.Label_Technique_Wavelet_Level.Location = new System.Drawing.Point(307, 65);
+            this.Label_Technique_Wavelet_Level.Location = new System.Drawing.Point(307, 67);
             this.Label_Technique_Wavelet_Level.Name = "Label_Technique_Wavelet_Level";
             this.Label_Technique_Wavelet_Level.Size = new System.Drawing.Size(36, 13);
             this.Label_Technique_Wavelet_Level.TabIndex = 18;
@@ -96,7 +137,7 @@
             0,
             0,
             65536});
-            this.Number_Technique_Wavelet_Level.Location = new System.Drawing.Point(352, 61);
+            this.Number_Technique_Wavelet_Level.Location = new System.Drawing.Point(352, 63);
             this.Number_Technique_Wavelet_Level.Name = "Number_Technique_Wavelet_Level";
             this.Number_Technique_Wavelet_Level.Size = new System.Drawing.Size(45, 20);
             this.Number_Technique_Wavelet_Level.TabIndex = 17;
@@ -112,7 +153,7 @@
             // Label_Technique_Wavelet_Alpha
             // 
             this.Label_Technique_Wavelet_Alpha.AutoSize = true;
-            this.Label_Technique_Wavelet_Alpha.Location = new System.Drawing.Point(172, 65);
+            this.Label_Technique_Wavelet_Alpha.Location = new System.Drawing.Point(172, 67);
             this.Label_Technique_Wavelet_Alpha.Name = "Label_Technique_Wavelet_Alpha";
             this.Label_Technique_Wavelet_Alpha.Size = new System.Drawing.Size(37, 13);
             this.Label_Technique_Wavelet_Alpha.TabIndex = 16;
@@ -126,7 +167,7 @@
             0,
             0,
             65536});
-            this.Number_Technique_Wavelet_Alpha.Location = new System.Drawing.Point(224, 61);
+            this.Number_Technique_Wavelet_Alpha.Location = new System.Drawing.Point(224, 63);
             this.Number_Technique_Wavelet_Alpha.Name = "Number_Technique_Wavelet_Alpha";
             this.Number_Technique_Wavelet_Alpha.Size = new System.Drawing.Size(45, 20);
             this.Number_Technique_Wavelet_Alpha.TabIndex = 15;
@@ -270,26 +311,6 @@
             this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.ToolTip.ToolTipTitle = "Information";
             // 
-            // Label_General_Threshold
-            // 
-            this.Label_General_Threshold.AutoSize = true;
-            this.Label_General_Threshold.Location = new System.Drawing.Point(9, 21);
-            this.Label_General_Threshold.Name = "Label_General_Threshold";
-            this.Label_General_Threshold.Size = new System.Drawing.Size(57, 13);
-            this.Label_General_Threshold.TabIndex = 1;
-            this.Label_General_Threshold.Text = "Threshold:";
-            // 
-            // Group_General
-            // 
-            this.Group_General.Controls.Add(this.Number_General_Threshold);
-            this.Group_General.Controls.Add(this.Label_General_Threshold);
-            this.Group_General.Location = new System.Drawing.Point(613, 3);
-            this.Group_General.Name = "Group_General";
-            this.Group_General.Size = new System.Drawing.Size(74, 92);
-            this.Group_General.TabIndex = 2;
-            this.Group_General.TabStop = false;
-            this.Group_General.Text = "General";
-            // 
             // Number_General_Threshold
             // 
             this.Number_General_Threshold.Location = new System.Drawing.Point(9, 40);
@@ -310,6 +331,26 @@
             0});
             this.Number_General_Threshold.ValueChanged += new System.EventHandler(this.Number_General_Threshold_ValueChanged);
             // 
+            // Label_General_Threshold
+            // 
+            this.Label_General_Threshold.AutoSize = true;
+            this.Label_General_Threshold.Location = new System.Drawing.Point(9, 21);
+            this.Label_General_Threshold.Name = "Label_General_Threshold";
+            this.Label_General_Threshold.Size = new System.Drawing.Size(57, 13);
+            this.Label_General_Threshold.TabIndex = 1;
+            this.Label_General_Threshold.Text = "Threshold:";
+            // 
+            // Group_General
+            // 
+            this.Group_General.Controls.Add(this.Number_General_Threshold);
+            this.Group_General.Controls.Add(this.Label_General_Threshold);
+            this.Group_General.Location = new System.Drawing.Point(613, 3);
+            this.Group_General.Name = "Group_General";
+            this.Group_General.Size = new System.Drawing.Size(74, 110);
+            this.Group_General.TabIndex = 2;
+            this.Group_General.TabStop = false;
+            this.Group_General.Text = "General";
+            // 
             // TechniqueSelection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -317,7 +358,7 @@
             this.Controls.Add(this.Group_General);
             this.Controls.Add(this.Group_Configuration);
             this.Name = "TechniqueSelection";
-            this.Size = new System.Drawing.Size(690, 100);
+            this.Size = new System.Drawing.Size(690, 116);
             this.Group_Configuration.ResumeLayout(false);
             this.Group_Configuration.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Level)).EndInit();
@@ -325,9 +366,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Angles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Sigma)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Radish_Gamma)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Number_General_Threshold)).EndInit();
             this.Group_General.ResumeLayout(false);
             this.Group_General.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Number_General_Threshold)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -352,5 +393,8 @@
         private System.Windows.Forms.Label Label_General_Threshold;
         private System.Windows.Forms.GroupBox Group_General;
         private System.Windows.Forms.NumericUpDown Number_General_Threshold;
+        private System.Windows.Forms.RadioButton Radio_Technique_BMB;
+        private System.Windows.Forms.Label Label_Technique_BMB_Method;
+        private System.Windows.Forms.ComboBox Combo_Technique_BMB_Method;
     }
 }

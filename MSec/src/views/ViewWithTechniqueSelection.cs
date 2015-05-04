@@ -35,6 +35,7 @@ namespace MSec
         protected Technique m_techniqueRadish = null;
         protected Technique m_techniqueDCT = null;
         protected Technique m_techniqueWavelet = null;
+        protected Technique m_techniqueBMB = null;
 
         // Constructor
         protected ViewWithTechniqueSelection(TabPage _tabPage, string _nameControlTechniqueSelection) :
@@ -47,11 +48,13 @@ namespace MSec
             m_techniqueRadish = Technique.createTechniqueRadish();
             m_techniqueDCT = Technique.createTechniqueDCT();
             m_techniqueWavelet = Technique.createTechniqueWavelet();
+            m_techniqueBMB = Technique.createTechniqueBMB();
 
             // Set default values for: general
             m_techniqueDCT.addAttribute(Technique.ATT_GENERAL_THRESHOLD, m_controlTechniqueSelection.Threshold);
             m_techniqueRadish.addAttribute(Technique.ATT_GENERAL_THRESHOLD, m_controlTechniqueSelection.Threshold);
             m_techniqueWavelet.addAttribute(Technique.ATT_GENERAL_THRESHOLD, m_controlTechniqueSelection.Threshold);
+            m_techniqueBMB.addAttribute(Technique.ATT_GENERAL_THRESHOLD, m_controlTechniqueSelection.Threshold);
 
             // Set default values for: RADISH
             m_techniqueRadish.addAttribute(Technique.ATT_RADISH_GAMMA, m_controlTechniqueSelection.RadishGamma);
@@ -62,13 +65,18 @@ namespace MSec
             m_techniqueWavelet.addAttribute(Technique.ATT_WAVELET_ALPHA, m_controlTechniqueSelection.WaveletAlpha);
             m_techniqueWavelet.addAttribute(Technique.ATT_WAVELET_LEVEL, m_controlTechniqueSelection.WaveletLevel);
 
+            // Set default values for: BMB
+            m_techniqueBMB.addAttribute(Technique.ATT_BMB_METHOD, m_controlTechniqueSelection.BMBMethod);
+
             // Set current technique
             if (m_controlTechniqueSelection.CurrentTechniqueID == TechniqueID.RADISH)
                 m_currentTechnique = m_techniqueRadish;
             else if (m_controlTechniqueSelection.CurrentTechniqueID == TechniqueID.WAVELET)
                 m_currentTechnique = m_techniqueWavelet;
-            else
+            else if (m_controlTechniqueSelection.CurrentTechniqueID == TechniqueID.DCT)
                 m_currentTechnique = m_techniqueDCT;
+            else
+                m_currentTechnique = m_techniqueBMB;
 
             // Set attribute events
             m_controlTechniqueSelection.OnTechniqueChanged += (TechniqueID _id) =>
@@ -77,8 +85,10 @@ namespace MSec
                         m_currentTechnique = m_techniqueRadish;
                     else if (_id == TechniqueID.WAVELET)
                         m_currentTechnique = m_techniqueWavelet;
-                    else
+                    else if (_id == TechniqueID.DCT)
                         m_currentTechnique = m_techniqueDCT;
+                    else
+                        m_currentTechnique = m_techniqueBMB;
                 };
 
             m_controlTechniqueSelection.OnGeneralThresholdChanged += (decimal _v) =>
@@ -86,6 +96,7 @@ namespace MSec
                     m_techniqueDCT.addAttribute(Technique.ATT_GENERAL_THRESHOLD, m_controlTechniqueSelection.Threshold);
                     m_techniqueRadish.addAttribute(Technique.ATT_GENERAL_THRESHOLD, m_controlTechniqueSelection.Threshold);
                     m_techniqueWavelet.addAttribute(Technique.ATT_GENERAL_THRESHOLD, m_controlTechniqueSelection.Threshold);
+                    m_techniqueBMB.addAttribute(Technique.ATT_GENERAL_THRESHOLD, m_controlTechniqueSelection.Threshold);
                 };
 
             m_controlTechniqueSelection.OnRadishGammaChanged += (decimal _v) =>
@@ -99,6 +110,9 @@ namespace MSec
                 { m_techniqueWavelet.addAttribute(Technique.ATT_WAVELET_ALPHA, m_controlTechniqueSelection.WaveletAlpha); };
             m_controlTechniqueSelection.OnWaveletLevelChanged += (decimal _v) =>
                 { m_techniqueWavelet.addAttribute(Technique.ATT_WAVELET_LEVEL, m_controlTechniqueSelection.WaveletLevel); };
+
+            m_controlTechniqueSelection.OnBMBMethodChanged += (int _v) =>
+                { m_techniqueBMB.addAttribute(Technique.ATT_BMB_METHOD, m_controlTechniqueSelection.BMBMethod); };
         }
 
         // Locks the technique selection control

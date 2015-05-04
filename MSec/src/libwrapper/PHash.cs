@@ -29,6 +29,10 @@ namespace MSec
         [DllImport(@"pHash.dll", EntryPoint = "ph_mh_imagehash", CallingConvention = CallingConvention.Cdecl, CharSet=CharSet.Ansi)]
         public static extern IntPtr computeWaveletHash(string _file, ref int _hashLength, float _alpha, float _level);
 
+        // Dll function: import -> ph_bmb_imagehash (BMB hashing)
+        [DllImport(@"pHash.dll", EntryPoint = "ph_bmb_imagehash", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern int computeBMBHash(string _file, int _method, out IntPtr _hash);
+
         // Dll function: import -> ph_crosscorr (cross correlation)
         [DllImport(@"pHash.dll", EntryPoint = "ph_crosscorr", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern int computeCrossCorrelation(IntPtr _d0, IntPtr _d1, ref double _peak, double _threshold = 0.90);

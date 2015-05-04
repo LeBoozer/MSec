@@ -188,16 +188,19 @@ namespace MSec
                     // Set result or error
                     if (_r.Error != null)
                         m_controlLabelResult.Text = _r.Error.Message;
-                    else if (_r == null)
+                    else if (_r == null || _r.Result == null)
                         m_controlLabelResult.Text = MSG_ERROR_COMPUTATION;
                     else
                         m_controlLabelResult.Text = _r.Result.convertToString();
 
                     // Accepted?
-                    if (_r.Result.isAccepted() == true)
-                        m_controlLabelResult.ForeColor = System.Drawing.Color.DarkGreen;
-                    else
-                        m_controlLabelResult.ForeColor = System.Drawing.Color.DarkRed;
+                    if (_r != null && _r.Result != null)
+                    {
+                        if (_r.Result.isAccepted() == true)
+                            m_controlLabelResult.ForeColor = System.Drawing.Color.DarkGreen;
+                        else
+                            m_controlLabelResult.ForeColor = System.Drawing.Color.DarkRed;
+                    }
 
                     // Undo the preparations 
                     m_controlButtonCompute.Enabled = true;

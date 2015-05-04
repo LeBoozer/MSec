@@ -93,7 +93,7 @@
             this.MainDialog_MainTab.Location = new System.Drawing.Point(12, 27);
             this.MainDialog_MainTab.Name = "MainDialog_MainTab";
             this.MainDialog_MainTab.SelectedIndex = 0;
-            this.MainDialog_MainTab.Size = new System.Drawing.Size(705, 523);
+            this.MainDialog_MainTab.Size = new System.Drawing.Size(705, 568);
             this.MainDialog_MainTab.TabIndex = 0;
             // 
             // pageImageVsImage
@@ -107,7 +107,7 @@
             this.pageImageVsImage.ImageIndex = 0;
             this.pageImageVsImage.Location = new System.Drawing.Point(4, 23);
             this.pageImageVsImage.Name = "pageImageVsImage";
-            this.pageImageVsImage.Size = new System.Drawing.Size(697, 496);
+            this.pageImageVsImage.Size = new System.Drawing.Size(697, 541);
             this.pageImageVsImage.TabIndex = 1;
             this.pageImageVsImage.Text = "Image vs. Image";
             this.pageImageVsImage.UseVisualStyleBackColor = true;
@@ -116,13 +116,13 @@
             // 
             this.Selection_Technique.Location = new System.Drawing.Point(3, 0);
             this.Selection_Technique.Name = "Selection_Technique";
-            this.Selection_Technique.Size = new System.Drawing.Size(690, 100);
+            this.Selection_Technique.Size = new System.Drawing.Size(690, 117);
             this.Selection_Technique.TabIndex = 8;
             // 
             // Progress_ImageVsImage
             // 
             this.Progress_ImageVsImage.Enabled = false;
-            this.Progress_ImageVsImage.Location = new System.Drawing.Point(3, 480);
+            this.Progress_ImageVsImage.Location = new System.Drawing.Point(3, 528);
             this.Progress_ImageVsImage.MarqueeAnimationSpeed = 20;
             this.Progress_ImageVsImage.Name = "Progress_ImageVsImage";
             this.Progress_ImageVsImage.Size = new System.Drawing.Size(690, 10);
@@ -134,7 +134,7 @@
             // Label_ImageVsImage_Result
             // 
             this.Label_ImageVsImage_Result.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_ImageVsImage_Result.Location = new System.Drawing.Point(4, 445);
+            this.Label_ImageVsImage_Result.Location = new System.Drawing.Point(4, 474);
             this.Label_ImageVsImage_Result.Name = "Label_ImageVsImage_Result";
             this.Label_ImageVsImage_Result.Size = new System.Drawing.Size(690, 32);
             this.Label_ImageVsImage_Result.TabIndex = 6;
@@ -148,7 +148,7 @@
             this.Button_ImageVsImage_Compute.BackgroundImage = global::MSec.Properties.Resources.compare;
             this.Button_ImageVsImage_Compute.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Button_ImageVsImage_Compute.Enabled = false;
-            this.Button_ImageVsImage_Compute.Location = new System.Drawing.Point(326, 236);
+            this.Button_ImageVsImage_Compute.Location = new System.Drawing.Point(326, 246);
             this.Button_ImageVsImage_Compute.Name = "Button_ImageVsImage_Compute";
             this.Button_ImageVsImage_Compute.Size = new System.Drawing.Size(45, 40);
             this.Button_ImageVsImage_Compute.TabIndex = 5;
@@ -158,7 +158,7 @@
             // Selection_ImageSource1
             // 
             this.Selection_ImageSource1.AllowDrop = true;
-            this.Selection_ImageSource1.Location = new System.Drawing.Point(376, 106);
+            this.Selection_ImageSource1.Location = new System.Drawing.Point(376, 116);
             this.Selection_ImageSource1.Name = "Selection_ImageSource1";
             this.Selection_ImageSource1.Size = new System.Drawing.Size(317, 336);
             this.Selection_ImageSource1.TabIndex = 4;
@@ -166,7 +166,7 @@
             // Selection_ImageSource0
             // 
             this.Selection_ImageSource0.AllowDrop = true;
-            this.Selection_ImageSource0.Location = new System.Drawing.Point(3, 106);
+            this.Selection_ImageSource0.Location = new System.Drawing.Point(3, 116);
             this.Selection_ImageSource0.Name = "Selection_ImageSource0";
             this.Selection_ImageSource0.Size = new System.Drawing.Size(317, 336);
             this.Selection_ImageSource0.TabIndex = 3;
@@ -183,7 +183,7 @@
             this.pageCrossComparison.ImageIndex = 1;
             this.pageCrossComparison.Location = new System.Drawing.Point(4, 23);
             this.pageCrossComparison.Name = "pageCrossComparison";
-            this.pageCrossComparison.Size = new System.Drawing.Size(697, 496);
+            this.pageCrossComparison.Size = new System.Drawing.Size(697, 541);
             this.pageCrossComparison.TabIndex = 2;
             this.pageCrossComparison.Text = "Cross Comparison";
             this.pageCrossComparison.UseVisualStyleBackColor = true;
@@ -206,11 +206,11 @@
             this.CC_List_Results_2.FullRowSelect = true;
             this.CC_List_Results_2.GridLines = true;
             this.CC_List_Results_2.HideSelection = false;
-            this.CC_List_Results_2.Location = new System.Drawing.Point(3, 146);
+            this.CC_List_Results_2.Location = new System.Drawing.Point(3, 167);
             this.CC_List_Results_2.MultiSelect = false;
             this.CC_List_Results_2.Name = "CC_List_Results_2";
             this.CC_List_Results_2.ShowGroups = false;
-            this.CC_List_Results_2.Size = new System.Drawing.Size(690, 298);
+            this.CC_List_Results_2.Size = new System.Drawing.Size(690, 319);
             this.CC_List_Results_2.SmallImageList = this.ImageList_CC_List_Results;
             this.CC_List_Results_2.TabIndex = 13;
             this.CC_List_Results_2.UseCompatibleStateImageBehavior = false;
@@ -269,7 +269,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 453);
+            this.label5.Location = new System.Drawing.Point(3, 496);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(69, 13);
             this.label5.TabIndex = 12;
@@ -277,7 +277,7 @@
             // 
             // CC_Label_ResultCount
             // 
-            this.CC_Label_ResultCount.Location = new System.Drawing.Point(583, 453);
+            this.CC_Label_ResultCount.Location = new System.Drawing.Point(583, 496);
             this.CC_Label_ResultCount.Name = "CC_Label_ResultCount";
             this.CC_Label_ResultCount.Size = new System.Drawing.Size(110, 13);
             this.CC_Label_ResultCount.TabIndex = 11;
@@ -286,7 +286,7 @@
             // 
             // CC_Text_Filter
             // 
-            this.CC_Text_Filter.Location = new System.Drawing.Point(78, 449);
+            this.CC_Text_Filter.Location = new System.Drawing.Point(78, 492);
             this.CC_Text_Filter.Name = "CC_Text_Filter";
             this.CC_Text_Filter.Size = new System.Drawing.Size(499, 21);
             this.CC_Text_Filter.TabIndex = 4;
@@ -300,7 +300,7 @@
             this.CC_ToolStrip_DropDown,
             this.CC_ToolStrip_Label_Action,
             this.CC_ToolStrip_Progress});
-            this.CC_ToolStrip.Location = new System.Drawing.Point(0, 474);
+            this.CC_ToolStrip.Location = new System.Drawing.Point(0, 519);
             this.CC_ToolStrip.Name = "CC_ToolStrip";
             this.CC_ToolStrip.Size = new System.Drawing.Size(697, 22);
             this.CC_ToolStrip.TabIndex = 3;
@@ -347,7 +347,7 @@
             this.CC_Group_SourceLocation.Controls.Add(this.CC_Button_ReferenceFolder_Select);
             this.CC_Group_SourceLocation.Controls.Add(this.CC_Label_ReferenceFolder);
             this.CC_Group_SourceLocation.Controls.Add(this.CC_Text_ReferenceFolder_Path);
-            this.CC_Group_SourceLocation.Location = new System.Drawing.Point(3, 97);
+            this.CC_Group_SourceLocation.Location = new System.Drawing.Point(3, 117);
             this.CC_Group_SourceLocation.Name = "CC_Group_SourceLocation";
             this.CC_Group_SourceLocation.Size = new System.Drawing.Size(690, 44);
             this.CC_Group_SourceLocation.TabIndex = 1;
@@ -420,7 +420,7 @@
             // 
             this.CC_Selection_Technique.Location = new System.Drawing.Point(3, 0);
             this.CC_Selection_Technique.Name = "CC_Selection_Technique";
-            this.CC_Selection_Technique.Size = new System.Drawing.Size(690, 100);
+            this.CC_Selection_Technique.Size = new System.Drawing.Size(690, 116);
             this.CC_Selection_Technique.TabIndex = 0;
             // 
             // ImageList_MainTab
@@ -460,14 +460,14 @@
             // 
             this.aboutToolStripMenuItem1.Image = global::MSec.Properties.Resources.information;
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
-            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem1.Text = "About";
             this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem1_Click);
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(560, 553);
+            this.linkLabel1.Location = new System.Drawing.Point(560, 599);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(42, 13);
             this.linkLabel1.TabIndex = 2;
@@ -478,7 +478,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(487, 553);
+            this.label1.Location = new System.Drawing.Point(487, 599);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(76, 13);
             this.label1.TabIndex = 9;
@@ -487,7 +487,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(599, 553);
+            this.label2.Location = new System.Drawing.Point(599, 599);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(27, 13);
             this.label2.TabIndex = 10;
@@ -496,7 +496,7 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(622, 553);
+            this.linkLabel2.Location = new System.Drawing.Point(622, 599);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(94, 13);
             this.linkLabel2.TabIndex = 11;
@@ -507,7 +507,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 553);
+            this.label3.Location = new System.Drawing.Point(12, 599);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 12;
@@ -516,7 +516,7 @@
             // linkLabel3
             // 
             this.linkLabel3.AutoSize = true;
-            this.linkLabel3.Location = new System.Drawing.Point(72, 553);
+            this.linkLabel3.Location = new System.Drawing.Point(72, 599);
             this.linkLabel3.Name = "linkLabel3";
             this.linkLabel3.Size = new System.Drawing.Size(68, 13);
             this.linkLabel3.TabIndex = 13;
@@ -527,7 +527,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(136, 553);
+            this.label4.Location = new System.Drawing.Point(136, 599);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(25, 13);
             this.label4.TabIndex = 14;
@@ -536,7 +536,7 @@
             // linkLabel4
             // 
             this.linkLabel4.AutoSize = true;
-            this.linkLabel4.Location = new System.Drawing.Point(156, 553);
+            this.linkLabel4.Location = new System.Drawing.Point(156, 599);
             this.linkLabel4.Name = "linkLabel4";
             this.linkLabel4.Size = new System.Drawing.Size(82, 13);
             this.linkLabel4.TabIndex = 15;
@@ -549,7 +549,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(726, 572);
+            this.ClientSize = new System.Drawing.Size(726, 617);
             this.Controls.Add(this.linkLabel4);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.linkLabel3);
@@ -563,7 +563,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Menu_Main;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(742, 611);
+            this.MaximumSize = new System.Drawing.Size(742, 656);
             this.MinimizeBox = false;
             this.Name = "MainDialog";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;

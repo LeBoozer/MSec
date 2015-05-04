@@ -57,13 +57,14 @@ namespace MSec
         }
 
         // Converts an unmanaged representation of a simple! C# structure back to a managed representation
-        public static void convertUnmanagedPtrToSimpleStructure<_T>(IntPtr _src, ref _T _dst)
+        public static void convertUnmanagedPtrToSimpleStructure<_T>(IntPtr _src, ref _T _dst, bool _autoFreeMem = true)
         {
             // Convert
             Marshal.PtrToStructure(_src, _dst);
 
             // Free unmanaged memory
-            clearUnmanagedPtr<_T>(_src);
+            if(_autoFreeMem == true)
+                clearUnmanagedPtr<_T>(_src);
         }
 
         // Free the memory owned by an unmanaged pointer

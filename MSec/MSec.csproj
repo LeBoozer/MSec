@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="src\jobs\Job.cs" />
     <Compile Include="src\jobs\JobParameter.cs" />
+    <Compile Include="src\libwrapper\BMBHash.cs" />
     <Compile Include="src\libwrapper\PHash.cs" />
     <Compile Include="src\libwrapper\RadishComparativeData.cs" />
     <Compile Include="src\libwrapper\WaveletHash.cs" />

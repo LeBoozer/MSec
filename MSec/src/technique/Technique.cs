@@ -20,8 +20,9 @@ namespace MSec
         RADISH = 0,
         DCT = 1,
         WAVELET = 2,
+        BMB = 3,
 
-        COUNT = 3
+        COUNT = 4
     }
 }
 
@@ -39,6 +40,7 @@ namespace MSec
         public static readonly string ATT_RADISH_NUM_ANGLES = "radish_num_angles";
         public static readonly string ATT_WAVELET_ALPHA = "wavelet_alpha";
         public static readonly string ATT_WAVELET_LEVEL = "wavelet_level";
+        public static readonly string ATT_BMB_METHOD = "bmb_method";
 
         // The technique's ID
         protected TechniqueID m_techniqueID;
@@ -345,6 +347,74 @@ namespace MSec
                     {
                         return 1.0 - _d;
                     });
+                    return result;
+                }
+            );
+
+            return t;
+        }
+
+        // Create the default technique instance for the algorithm: BMB
+        public static Technique<BMBHash, double> createTechniqueBMB()
+        {
+            // Local variables
+            Technique<BMBHash, double> t = null;
+
+            // Create technique
+            t = new Technique<BMBHash, double>(TechniqueID.RADISH,
+                (Technique _t, ImageSource _image) =>
+                {
+                    // Local variables
+                    BMBHash hash = new BMBHash();
+                    IntPtr hashUnmanaged = IntPtr.Zero;
+                    HashData<BMBHash> result = null;
+                    int attMethod = 1;
+
+                    // Extract attributes
+                    if (_t.isAttributeAvailable(Technique.ATT_BMB_METHOD) == true)
+                        _t.getAttribute<int>(Technique.ATT_BMB_METHOD, out attMethod);
+
+                    // Comnpute hash
+                    PHash.computeBMBHash(_image.FilePath, attMethod, out hashUnmanaged);
+
+                    // Convert unmanaged to managed
+                    Utility.convertUnmanagedPtrToSimpleStructure<BMBHash>(hashUnmanaged, ref hash, false);
+
+                    // Store result
+                    result = new HashData<BMBHash>(hash, (BMBHash _data) =>
+                    {
+                        return Utility.toHexString(_data.m_data, _data.m_dataLength);
+                    });
+                    return result;
+                },
+                (Technique _t, HashData<BMBHash> _h0, HashData<BMBHash> _h1) =>
+                {
+                    // Local variables
+                    double dis = 0;
+                    decimal threshold = 90m;
+                    bool isSame = false;
+                    ComparativeData<double> result = null;
+
+                    // Extract attributes
+                    if (_t.isAttributeAvailable(Technique.ATT_GENERAL_THRESHOLD) == true)
+                        _t.getAttribute<decimal>(Technique.ATT_GENERAL_THRESHOLD, out threshold);
+
+                    // Compute distance
+                    dis = PHash.computeHammingDistance(_h0.Data.m_data, _h0.Data.m_dataLength, _h1.Data.m_data, _h1.Data.m_dataLength);
+
+                    // Is accepted?
+                    isSame = (1.0 - dis) >= Convert.ToSingle(threshold) / 100.0;
+
+                    // Store result
+                    result = new ComparativeData<double>(dis, isSame, (double _d) =>
+                    {
+                        return "Match rate: " + (1.0 - _d).ToString("#0.0000");
+                    },
+                    (double _d) =>
+                    {
+                        return 1.0 - _d;
+                    });
+
                     return result;
                 }
             );
