@@ -63,6 +63,7 @@
             this.CC_Label_ReferenceFolder = new System.Windows.Forms.Label();
             this.CC_Text_ReferenceFolder_Path = new System.Windows.Forms.TextBox();
             this.CC_Selection_Technique = new TechniqueSelection();
+            this.pageTechniqueComparison = new System.Windows.Forms.TabPage();
             this.ImageList_MainTab = new System.Windows.Forms.ImageList(this.components);
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.Menu_Main = new System.Windows.Forms.MenuStrip();
@@ -89,6 +90,7 @@
             // 
             this.MainDialog_MainTab.Controls.Add(this.pageImageVsImage);
             this.MainDialog_MainTab.Controls.Add(this.pageCrossComparison);
+            this.MainDialog_MainTab.Controls.Add(this.pageTechniqueComparison);
             this.MainDialog_MainTab.ImageList = this.ImageList_MainTab;
             this.MainDialog_MainTab.Location = new System.Drawing.Point(12, 27);
             this.MainDialog_MainTab.Name = "MainDialog_MainTab";
@@ -116,6 +118,7 @@
             // 
             this.Selection_Technique.Location = new System.Drawing.Point(3, 0);
             this.Selection_Technique.Name = "Selection_Technique";
+            this.Selection_Technique.OperationMode = TechniqueSelection.eMode.SINGLE;
             this.Selection_Technique.Size = new System.Drawing.Size(690, 117);
             this.Selection_Technique.TabIndex = 8;
             // 
@@ -420,8 +423,19 @@
             // 
             this.CC_Selection_Technique.Location = new System.Drawing.Point(3, 0);
             this.CC_Selection_Technique.Name = "CC_Selection_Technique";
+            this.CC_Selection_Technique.OperationMode = TechniqueSelection.eMode.SINGLE;
             this.CC_Selection_Technique.Size = new System.Drawing.Size(690, 116);
             this.CC_Selection_Technique.TabIndex = 0;
+            // 
+            // pageTechniqueComparison
+            // 
+            this.pageTechniqueComparison.ImageIndex = 2;
+            this.pageTechniqueComparison.Location = new System.Drawing.Point(4, 23);
+            this.pageTechniqueComparison.Name = "pageTechniqueComparison";
+            this.pageTechniqueComparison.Size = new System.Drawing.Size(697, 541);
+            this.pageTechniqueComparison.TabIndex = 3;
+            this.pageTechniqueComparison.Text = "Technique Comparison";
+            this.pageTechniqueComparison.UseVisualStyleBackColor = true;
             // 
             // ImageList_MainTab
             // 
@@ -429,6 +443,7 @@
             this.ImageList_MainTab.TransparentColor = System.Drawing.Color.Transparent;
             this.ImageList_MainTab.Images.SetKeyName(0, "compare.png");
             this.ImageList_MainTab.Images.SetKeyName(1, "arrows.png");
+            this.ImageList_MainTab.Images.SetKeyName(2, "scale.png");
             // 
             // ToolTip
             // 
@@ -633,6 +648,7 @@
         private BrightIdeasSoftware.OLVColumn olvColumn4;
         private BrightIdeasSoftware.OLVColumn olvColumn5;
         private BrightIdeasSoftware.OLVColumn olvColumn6;
+        private System.Windows.Forms.TabPage pageTechniqueComparison;
     }
 }
 

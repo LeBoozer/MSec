@@ -26,10 +26,21 @@ namespace MSec
         }
 
         // Techniques
-        protected Technique m_currentTechnique = null;
-        public Technique CurrentTechnique
+        protected Technique         m_singleTechnique = null;
+        protected List<Technique>   m_multipleTechniques = new List<Technique>();
+        public TechniqueSelection.eMode OperatorMode
         {
-            get { return m_currentTechnique; }
+            get { return m_controlTechniqueSelection.OperationMode; }
+            private set { }
+        }
+        public Technique SingleModeTechnique
+        {
+            get { return m_singleTechnique; }
+            private set { }
+        }
+        public List<Technique> MultipleModeTechniques
+        {
+            get { return m_multipleTechniques; }
             private set { }
         }
         protected Technique m_techniqueRadish = null;
@@ -69,26 +80,41 @@ namespace MSec
             m_techniqueBMB.addAttribute(Technique.ATT_BMB_METHOD, m_controlTechniqueSelection.BMBMethod);
 
             // Set current technique
-            if (m_controlTechniqueSelection.CurrentTechniqueID == TechniqueID.RADISH)
-                m_currentTechnique = m_techniqueRadish;
-            else if (m_controlTechniqueSelection.CurrentTechniqueID == TechniqueID.WAVELET)
-                m_currentTechnique = m_techniqueWavelet;
-            else if (m_controlTechniqueSelection.CurrentTechniqueID == TechniqueID.DCT)
-                m_currentTechnique = m_techniqueDCT;
+            if (m_controlTechniqueSelection.CurrentTechniqueIDs == TechniqueID.RADISH)
+                m_singleTechnique = m_techniqueRadish;
+            else if (m_controlTechniqueSelection.CurrentTechniqueIDs == TechniqueID.WAVELET)
+                m_singleTechnique = m_techniqueWavelet;
+            else if (m_controlTechniqueSelection.CurrentTechniqueIDs == TechniqueID.DCT)
+                m_singleTechnique = m_techniqueDCT;
             else
-                m_currentTechnique = m_techniqueBMB;
+                m_singleTechnique = m_techniqueBMB;
 
             // Set attribute events
-            m_controlTechniqueSelection.OnTechniqueChanged += (TechniqueID _id) =>
+            m_controlTechniqueSelection.OnTechniqueIDsChanged += (TechniqueID _id) =>
                 {
-                    if (_id == TechniqueID.RADISH)
-                        m_currentTechnique = m_techniqueRadish;
-                    else if (_id == TechniqueID.WAVELET)
-                        m_currentTechnique = m_techniqueWavelet;
-                    else if (_id == TechniqueID.DCT)
-                        m_currentTechnique = m_techniqueDCT;
+                    if (m_controlTechniqueSelection.OperationMode == TechniqueSelection.eMode.SINGLE)
+                    {
+                        if (_id == TechniqueID.RADISH)
+                            m_singleTechnique = m_techniqueRadish;
+                        else if (_id == TechniqueID.WAVELET)
+                            m_singleTechnique = m_techniqueWavelet;
+                        else if (_id == TechniqueID.DCT)
+                            m_singleTechnique = m_techniqueDCT;
+                        else
+                            m_singleTechnique = m_techniqueBMB;
+                    }
                     else
-                        m_currentTechnique = m_techniqueBMB;
+                    {
+                        m_multipleTechniques.Clear();
+                        if ((_id & TechniqueID.DCT) == TechniqueID.DCT)
+                            m_multipleTechniques.Add(m_techniqueDCT);
+                        if ((_id & TechniqueID.RADISH) == TechniqueID.RADISH)
+                            m_multipleTechniques.Add(m_techniqueRadish);
+                        if ((_id & TechniqueID.WAVELET) == TechniqueID.WAVELET)
+                            m_multipleTechniques.Add(m_techniqueWavelet);
+                        if ((_id & TechniqueID.BMB) == TechniqueID.BMB)
+                            m_multipleTechniques.Add(m_techniqueBMB);
+                    }
                 };
 
             m_controlTechniqueSelection.OnGeneralThresholdChanged += (decimal _v) =>

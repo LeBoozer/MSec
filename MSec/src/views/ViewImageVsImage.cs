@@ -48,7 +48,7 @@ namespace MSec
 
             // Add event handler to technique selction control
             ControlTechniqueSel.OnAttributeChanged += onTechniqueAttributeChanged;
-            ControlTechniqueSel.OnTechniqueChanged += (TechniqueID _nextTechnique) => { onTechniqueAttributeChanged(); };
+            ControlTechniqueSel.OnTechniqueIDsChanged += (TechniqueID _nextTechnique) => { onTechniqueAttributeChanged(); };
 
             // Add event handler to source selection controls
             m_controlImageSourceSelection0.OnImageSourceChanged += OnImageSourceChanged;
@@ -152,14 +152,14 @@ namespace MSec
                 Job<HashData> j0 = null, j1 = null;
 
                 // Create jobs: computing hashes
-                j0 = Job<HashData>.createJobComputeHash(m_controlImageSourceSelection0.Source, CurrentTechnique,
+                j0 = Job<HashData>.createJobComputeHash(m_controlImageSourceSelection0.Source, SingleModeTechnique,
                     (JobParameter<HashData> _r) =>
                     {
                         // Display hash
                         m_controlImageSourceSelection0.setInstructionText(_r.Result.convertToString());
                     },
                     false);
-                j1 = Job<HashData>.createJobComputeHash(m_controlImageSourceSelection1.Source, CurrentTechnique,
+                j1 = Job<HashData>.createJobComputeHash(m_controlImageSourceSelection1.Source, SingleModeTechnique,
                     (JobParameter<HashData> _r) =>
                     {
                         // Display hash
@@ -176,7 +176,7 @@ namespace MSec
                 j1.waitForDone();
 
                 // Compare hashes
-                result = CurrentTechnique.compareHashData(m_controlImageSourceSelection0.Source, m_controlImageSourceSelection1.Source);
+                result = SingleModeTechnique.compareHashData(m_controlImageSourceSelection0.Source, m_controlImageSourceSelection1.Source);
 
                 return result;
             },

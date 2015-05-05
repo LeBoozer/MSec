@@ -32,7 +32,6 @@
             this.Group_Configuration = new System.Windows.Forms.GroupBox();
             this.Combo_Technique_BMB_Method = new System.Windows.Forms.ComboBox();
             this.Label_Technique_BMB_Method = new System.Windows.Forms.Label();
-            this.Radio_Technique_BMB = new System.Windows.Forms.RadioButton();
             this.Label_Technique_Wavelet_Level = new System.Windows.Forms.Label();
             this.Number_Technique_Wavelet_Level = new System.Windows.Forms.NumericUpDown();
             this.Label_Technique_Wavelet_Alpha = new System.Windows.Forms.Label();
@@ -43,13 +42,14 @@
             this.Number_Technique_Radish_Angles = new System.Windows.Forms.NumericUpDown();
             this.Number_Technique_Radish_Sigma = new System.Windows.Forms.NumericUpDown();
             this.Number_Technique_Radish_Gamma = new System.Windows.Forms.NumericUpDown();
-            this.Radio_Technique_Wavelet = new System.Windows.Forms.RadioButton();
-            this.Radio_Technique_DCT = new System.Windows.Forms.RadioButton();
-            this.Radio_Technique_Radish = new System.Windows.Forms.RadioButton();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.Number_General_Threshold = new System.Windows.Forms.NumericUpDown();
             this.Label_General_Threshold = new System.Windows.Forms.Label();
             this.Group_General = new System.Windows.Forms.GroupBox();
+            this.Check_Technique_Radish = new System.Windows.Forms.CheckBox();
+            this.Check_Technique_DCT = new System.Windows.Forms.CheckBox();
+            this.Check_Technique_Wavelet = new System.Windows.Forms.CheckBox();
+            this.Check_Technique_BMB = new System.Windows.Forms.CheckBox();
             this.Group_Configuration.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Level)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Number_Technique_Wavelet_Alpha)).BeginInit();
@@ -62,9 +62,12 @@
             // 
             // Group_Configuration
             // 
+            this.Group_Configuration.Controls.Add(this.Check_Technique_BMB);
+            this.Group_Configuration.Controls.Add(this.Check_Technique_Wavelet);
+            this.Group_Configuration.Controls.Add(this.Check_Technique_DCT);
+            this.Group_Configuration.Controls.Add(this.Check_Technique_Radish);
             this.Group_Configuration.Controls.Add(this.Combo_Technique_BMB_Method);
             this.Group_Configuration.Controls.Add(this.Label_Technique_BMB_Method);
-            this.Group_Configuration.Controls.Add(this.Radio_Technique_BMB);
             this.Group_Configuration.Controls.Add(this.Label_Technique_Wavelet_Level);
             this.Group_Configuration.Controls.Add(this.Number_Technique_Wavelet_Level);
             this.Group_Configuration.Controls.Add(this.Label_Technique_Wavelet_Alpha);
@@ -75,9 +78,6 @@
             this.Group_Configuration.Controls.Add(this.Number_Technique_Radish_Angles);
             this.Group_Configuration.Controls.Add(this.Number_Technique_Radish_Sigma);
             this.Group_Configuration.Controls.Add(this.Number_Technique_Radish_Gamma);
-            this.Group_Configuration.Controls.Add(this.Radio_Technique_Wavelet);
-            this.Group_Configuration.Controls.Add(this.Radio_Technique_DCT);
-            this.Group_Configuration.Controls.Add(this.Radio_Technique_Radish);
             this.Group_Configuration.Location = new System.Drawing.Point(3, 3);
             this.Group_Configuration.Name = "Group_Configuration";
             this.Group_Configuration.Size = new System.Drawing.Size(604, 110);
@@ -107,18 +107,6 @@
             this.Label_Technique_BMB_Method.Size = new System.Drawing.Size(46, 13);
             this.Label_Technique_BMB_Method.TabIndex = 20;
             this.Label_Technique_BMB_Method.Text = "Method:";
-            // 
-            // Radio_Technique_BMB
-            // 
-            this.Radio_Technique_BMB.AutoSize = true;
-            this.Radio_Technique_BMB.Location = new System.Drawing.Point(17, 88);
-            this.Radio_Technique_BMB.Name = "Radio_Technique_BMB";
-            this.Radio_Technique_BMB.Size = new System.Drawing.Size(76, 17);
-            this.Radio_Technique_BMB.TabIndex = 19;
-            this.Radio_Technique_BMB.Text = "BMB Hash";
-            this.ToolTip.SetToolTip(this.Radio_Technique_BMB, "Hashing technique: Block Mean Value Based Hash");
-            this.Radio_Technique_BMB.UseVisualStyleBackColor = true;
-            this.Radio_Technique_BMB.CheckedChanged += new System.EventHandler(this.Radio_Technique_BMB_CheckedChanged);
             // 
             // Label_Technique_Wavelet_Level
             // 
@@ -268,44 +256,6 @@
             0});
             this.Number_Technique_Radish_Gamma.ValueChanged += new System.EventHandler(this.Number_Technique_Radish_Gamma_ValueChanged);
             // 
-            // Radio_Technique_Wavelet
-            // 
-            this.Radio_Technique_Wavelet.AutoSize = true;
-            this.Radio_Technique_Wavelet.Location = new System.Drawing.Point(17, 65);
-            this.Radio_Technique_Wavelet.Name = "Radio_Technique_Wavelet";
-            this.Radio_Technique_Wavelet.Size = new System.Drawing.Size(149, 17);
-            this.Radio_Technique_Wavelet.TabIndex = 5;
-            this.Radio_Technique_Wavelet.Text = "Marr/Mexican hat wavelet";
-            this.ToolTip.SetToolTip(this.Radio_Technique_Wavelet, "Hashing technique: Wavelet");
-            this.Radio_Technique_Wavelet.UseVisualStyleBackColor = true;
-            this.Radio_Technique_Wavelet.CheckedChanged += new System.EventHandler(this.Radio_Technique_Wavelet_CheckedChanged);
-            // 
-            // Radio_Technique_DCT
-            // 
-            this.Radio_Technique_DCT.AutoSize = true;
-            this.Radio_Technique_DCT.Location = new System.Drawing.Point(17, 42);
-            this.Radio_Technique_DCT.Name = "Radio_Technique_DCT";
-            this.Radio_Technique_DCT.Size = new System.Drawing.Size(73, 17);
-            this.Radio_Technique_DCT.TabIndex = 4;
-            this.Radio_Technique_DCT.Text = "DCT hash";
-            this.ToolTip.SetToolTip(this.Radio_Technique_DCT, "Hashing technique: DCT (Discrete Cosine Tranform)");
-            this.Radio_Technique_DCT.UseVisualStyleBackColor = true;
-            this.Radio_Technique_DCT.CheckedChanged += new System.EventHandler(this.Radio_Technique_DCT_CheckedChanged);
-            // 
-            // Radio_Technique_Radish
-            // 
-            this.Radio_Technique_Radish.AutoSize = true;
-            this.Radio_Technique_Radish.Checked = true;
-            this.Radio_Technique_Radish.Location = new System.Drawing.Point(17, 19);
-            this.Radio_Technique_Radish.Name = "Radio_Technique_Radish";
-            this.Radio_Technique_Radish.Size = new System.Drawing.Size(131, 17);
-            this.Radio_Technique_Radish.TabIndex = 3;
-            this.Radio_Technique_Radish.TabStop = true;
-            this.Radio_Technique_Radish.Text = "Radial hash (RADISH)";
-            this.ToolTip.SetToolTip(this.Radio_Technique_Radish, "Hashing technique: RADISH");
-            this.Radio_Technique_Radish.UseVisualStyleBackColor = true;
-            this.Radio_Technique_Radish.CheckedChanged += new System.EventHandler(this.Radio_Technique_Radish_CheckedChanged);
-            // 
             // ToolTip
             // 
             this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
@@ -351,6 +301,56 @@
             this.Group_General.TabStop = false;
             this.Group_General.Text = "General";
             // 
+            // Check_Technique_Radish
+            // 
+            this.Check_Technique_Radish.AutoCheck = false;
+            this.Check_Technique_Radish.AutoSize = true;
+            this.Check_Technique_Radish.Checked = true;
+            this.Check_Technique_Radish.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.Check_Technique_Radish.Location = new System.Drawing.Point(17, 19);
+            this.Check_Technique_Radish.Name = "Check_Technique_Radish";
+            this.Check_Technique_Radish.Size = new System.Drawing.Size(132, 17);
+            this.Check_Technique_Radish.TabIndex = 22;
+            this.Check_Technique_Radish.Text = "Radial hash (RADISH)";
+            this.Check_Technique_Radish.UseVisualStyleBackColor = true;
+            this.Check_Technique_Radish.Click += new System.EventHandler(this.Check_Technique_Radish_Click);
+            // 
+            // Check_Technique_DCT
+            // 
+            this.Check_Technique_DCT.AutoCheck = false;
+            this.Check_Technique_DCT.AutoSize = true;
+            this.Check_Technique_DCT.Location = new System.Drawing.Point(17, 42);
+            this.Check_Technique_DCT.Name = "Check_Technique_DCT";
+            this.Check_Technique_DCT.Size = new System.Drawing.Size(76, 17);
+            this.Check_Technique_DCT.TabIndex = 23;
+            this.Check_Technique_DCT.Text = "DCT Hash";
+            this.Check_Technique_DCT.UseVisualStyleBackColor = true;
+            this.Check_Technique_DCT.Click += new System.EventHandler(this.Check_Technique_DCT_Click);
+            // 
+            // Check_Technique_Wavelet
+            // 
+            this.Check_Technique_Wavelet.AutoCheck = false;
+            this.Check_Technique_Wavelet.AutoSize = true;
+            this.Check_Technique_Wavelet.Location = new System.Drawing.Point(17, 65);
+            this.Check_Technique_Wavelet.Name = "Check_Technique_Wavelet";
+            this.Check_Technique_Wavelet.Size = new System.Drawing.Size(150, 17);
+            this.Check_Technique_Wavelet.TabIndex = 24;
+            this.Check_Technique_Wavelet.Text = "Marr/Mexican hat wavelet";
+            this.Check_Technique_Wavelet.UseVisualStyleBackColor = true;
+            this.Check_Technique_Wavelet.Click += new System.EventHandler(this.Check_Technique_Wavelet_Click);
+            // 
+            // Check_Technique_BMB
+            // 
+            this.Check_Technique_BMB.AutoCheck = false;
+            this.Check_Technique_BMB.AutoSize = true;
+            this.Check_Technique_BMB.Location = new System.Drawing.Point(17, 88);
+            this.Check_Technique_BMB.Name = "Check_Technique_BMB";
+            this.Check_Technique_BMB.Size = new System.Drawing.Size(77, 17);
+            this.Check_Technique_BMB.TabIndex = 25;
+            this.Check_Technique_BMB.Text = "BMB Hash";
+            this.Check_Technique_BMB.UseVisualStyleBackColor = true;
+            this.Check_Technique_BMB.Click += new System.EventHandler(this.Check_Technique_BMB_Click);
+            // 
             // TechniqueSelection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -376,9 +376,6 @@
         #endregion
 
         private System.Windows.Forms.GroupBox Group_Configuration;
-        private System.Windows.Forms.RadioButton Radio_Technique_Wavelet;
-        private System.Windows.Forms.RadioButton Radio_Technique_DCT;
-        private System.Windows.Forms.RadioButton Radio_Technique_Radish;
         private System.Windows.Forms.Label Label_Technique_Radish_Angles;
         private System.Windows.Forms.Label Label_Technique_Radish_Sigma;
         private System.Windows.Forms.Label Label_Technique_Radish_Gamma;
@@ -393,8 +390,11 @@
         private System.Windows.Forms.Label Label_General_Threshold;
         private System.Windows.Forms.GroupBox Group_General;
         private System.Windows.Forms.NumericUpDown Number_General_Threshold;
-        private System.Windows.Forms.RadioButton Radio_Technique_BMB;
         private System.Windows.Forms.Label Label_Technique_BMB_Method;
         private System.Windows.Forms.ComboBox Combo_Technique_BMB_Method;
+        private System.Windows.Forms.CheckBox Check_Technique_Radish;
+        private System.Windows.Forms.CheckBox Check_Technique_BMB;
+        private System.Windows.Forms.CheckBox Check_Technique_Wavelet;
+        private System.Windows.Forms.CheckBox Check_Technique_DCT;
     }
 }

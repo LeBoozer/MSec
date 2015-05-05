@@ -26,6 +26,14 @@ namespace MSec
             private set { }
         }
 
+        // The ID of the image source's path (hash of the path!)
+        public int m_pathID = 0;
+        public int PathID
+        {
+            get { return m_pathID; }
+            private set { }
+        }
+
         // The file path of the image
         private string m_filePath = "";
         public string FilePath
@@ -69,6 +77,7 @@ namespace MSec
 
             // Calcualte image's ID
             m_imageID = m_filePath.GetHashCode();
+            m_pathID = Dir.GetHashCode();
         }
 
         // Creates a system image (System.Drawing)

@@ -15,14 +15,13 @@ using System.Windows.Forms;
 *******************************************************************************************************************************************************************/
 namespace MSec
 {
+    [Flags]
     public enum TechniqueID
     {
-        RADISH = 0,
-        DCT = 1,
-        WAVELET = 2,
-        BMB = 3,
-
-        COUNT = 4
+        RADISH  = 1,
+        DCT     = 2,
+        WAVELET = 4,
+        BMB     = 8
     }
 }
 
