@@ -656,7 +656,7 @@ namespace MSec
                         while (sourceQueue.TryDequeue(out src) == true)
                         {
                             // Compute
-                            if (CurrentTechnique.computeHash(src) == null)
+                            if (SingleModeTechnique.computeHash(src) == null)
                                 return false;
 
                             // Update GUI
@@ -738,7 +738,7 @@ namespace MSec
                     for (int j = i; j < _sourceList.Length; ++j)
                     {
                         // Create pair
-                        var pair = new ComparisonPair(_sourceList[i], _sourceList[j], CurrentTechnique);
+                        var pair = new ComparisonPair(_sourceList[i], _sourceList[j], SingleModeTechnique);
                         pairs.Add(pair);
                     }
                 }
@@ -795,7 +795,7 @@ namespace MSec
                     setCustomActionText(CUSTOM_ACTION_PROCESS_DATA);
 
                     // Set used technique
-                    m_comparisonTechnique = CurrentTechnique;
+                    m_comparisonTechnique = SingleModeTechnique;
 
                     // Save computed pairs and update list-view
                     m_listComparisonItems = pairs;
