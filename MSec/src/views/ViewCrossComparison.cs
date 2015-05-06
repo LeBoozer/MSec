@@ -31,12 +31,12 @@ namespace MSec
     {
         // Constants
         private static readonly int     LIST_RESULTS_COLUMN_COUNT           = 6;
-        private static readonly int     LIST_RESULTS_COLUMN_ACCEPTED        = 0;
-        private static readonly int     LIST_RESULTS_COLUMN_SOURCE0_PATH    = 1;
-        private static readonly int     LIST_RESULTS_COLUMN_SOURCE1_PATH    = 2;
-        private static readonly int     LIST_RESULTS_COLUMN_SOURCE0_HASH    = 3;
-        private static readonly int     LIST_RESULTS_COLUMN_SOURCE1_HASH    = 4;
-        private static readonly int     LIST_RESULTS_COLUMN_MATCH_RATE      = 5;
+        private static readonly int     LIST_RESULTS_COLUMN_SOURCE0_PATH    = 0;
+        private static readonly int     LIST_RESULTS_COLUMN_SOURCE1_PATH    = 1;
+        private static readonly int     LIST_RESULTS_COLUMN_MR_RADISH       = 2;
+        private static readonly int     LIST_RESULTS_COLUMN_MR_DCT          = 3;
+        private static readonly int     LIST_RESULTS_COLUMN_MR_WAVELET      = 4;
+        private static readonly int     LIST_RESULTS_COLUMN_MR_BMB          = 5;
 
         private static readonly string  ACTION_IDLE                 = "Waiting for user input...";
         private static readonly string  ACTION_LOADING_FILES        = "Loading and analysing files...";
@@ -55,8 +55,8 @@ namespace MSec
         private static readonly int     NUM_MIDPOINTS_COLOR_RESULT  = 10;
 
         // Delegate declarations
-        private delegate IEnumerable<ComparisonPair>    delegate_sorter_func(int _index);
-        private delegate object                         delegate_sorter_element_selecter_func(ComparisonPair _pair);
+        private delegate IEnumerable<UnfoldedBindingComparisonPair>     delegate_sorter_func(int _index);
+        private delegate object                                         delegate_sorter_element_selecter_func(UnfoldedBindingComparisonPair _pair);
 
         // All possible states
         private enum eState
@@ -201,9 +201,8 @@ namespace MSec
         private TreeNode                m_loadedData = null;
 
         // The comparison data
-        private Technique               m_comparisonTechnique = null;
-        private List<ComparisonPair>    m_listComparisonItems = null;
-        private List<ComparisonPair>    m_listDisplayComparisonItems = null;
+        private List<UnfoldedBindingComparisonPair> m_listUnfoldedComparisonItems = null;
+        private List<UnfoldedBindingComparisonPair> m_listUnfoldedDisplayComparisonItems = null;
 
         // The sorter stuff for the list-view (results)
         private delegate_sorter_element_selecter_func[] m_listResultsSorterFuncs = null;
@@ -279,47 +278,47 @@ namespace MSec
             // Create list
             m_listResultsSorterFuncs = new delegate_sorter_element_selecter_func[LIST_RESULTS_COLUMN_COUNT];
 
-            // Register function: sorting based on image indicies
-            funcTemp = (ComparisonPair _pair) =>
-            {
-                return _pair.ComparativeResult.isAccepted();
-            };
-            m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_ACCEPTED] = funcTemp;
-
-            // Register function: sorting based on the match rate
-            funcTemp = (ComparisonPair _pair) =>
-            {
-                return _pair.ComparativeResult.getMatchRate().Value;
-            };
-            m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_MATCH_RATE] = funcTemp;
-
             // Register function: sorting based on text level (image source0 path)
-            funcTemp = (ComparisonPair _pair) =>
+            funcTemp = (UnfoldedBindingComparisonPair _pair) =>
             {
                 return _pair.Source0.FilePath;
             };
             m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_SOURCE0_PATH] = funcTemp;
 
             // Register function: sorting based on text level (image source1 path)
-            funcTemp = (ComparisonPair _pair) =>
+            funcTemp = (UnfoldedBindingComparisonPair _pair) =>
             {
                 return _pair.Source1.FilePath;
             };
             m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_SOURCE1_PATH] = funcTemp;
 
-            // Register function: sorting based on text level (image source0 hash)
-            funcTemp = (ComparisonPair _pair) =>
+            // Register function: sorting based on the match rate (RADISH)
+            funcTemp = (UnfoldedBindingComparisonPair _pair) =>
             {
-                return _pair.Source0.Hash;
+                return _pair.MatchRateRADISH;
             };
-            m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_SOURCE0_HASH] = funcTemp;
+            m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_MR_RADISH] = funcTemp;
 
-            // Register function: sorting based on text level (image source1 hash)
-            funcTemp = (ComparisonPair _pair) =>
+            // Register function: sorting based on the match rate (DCT)
+            funcTemp = (UnfoldedBindingComparisonPair _pair) =>
             {
-                return _pair.Source1.Hash;
+                return _pair.MatchRateDCT;
             };
-            m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_SOURCE1_HASH] = funcTemp;
+            m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_MR_DCT] = funcTemp;
+
+            // Register function: sorting based on the match rate (BMB)
+            funcTemp = (UnfoldedBindingComparisonPair _pair) =>
+            {
+                return _pair.MatchRateBMB;
+            };
+            m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_MR_BMB] = funcTemp;
+
+            // Register function: sorting based on the match rate (Wavelet)
+            funcTemp = (UnfoldedBindingComparisonPair _pair) =>
+            {
+                return _pair.MatchRateWavelet;
+            };
+            m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_MR_WAVELET] = funcTemp;
             #endregion List-view sorter: element selecter (result list)
 
             // Create pop-up window
@@ -351,10 +350,9 @@ namespace MSec
             m_textFilter.SelectionChangeCommitted += onFilterSelectionChangeComitted;
 
             // Add events to: list of results
-            (m_listResults.Columns[LIST_RESULTS_COLUMN_ACCEPTED] as OLVColumn).ImageGetter += onListResultsAcceptedImageGetter;
-            (m_listResults.Columns[LIST_RESULTS_COLUMN_ACCEPTED] as OLVColumn).GroupKeyGetter += onListResultsGroupKeyGetter;
+            (m_listResults.Columns[LIST_RESULTS_COLUMN_SOURCE0_PATH] as OLVColumn).GroupKeyGetter += onListResultsGroupKeyGetter;
             m_listResults.ItemSelectionChanged += onItemSelectionChanged;
-            m_listResults.FormatRow += onListResultsFormatRow;
+            //m_listResults.FormatRow += onListResultsFormatRow;
             m_listResults.ColumnClick += onColumnClick;
             m_listResults.ColumnWidthChanging += onColumnWidthChanging;
 
@@ -596,21 +594,21 @@ namespace MSec
             return node;
         }
 
-        // Starts the comparison (hashing)
-        private void startComparisonHashing()
+        // Starts computing the image hashes for the selected techniques
+        private void startHashing()
         {
             // Local variables
-            ImageSource[] sources = null;
-            ConcurrentQueue<ImageSource> sourceQueue = null;
+            ImageSourceBinding[] bindings = null;
+            ConcurrentQueue<ImageSourceBinding> bindingQueue = null;
 
             // Set state
             setNextState(eState.STATE_EXECUTING);
 
             // Reset comparison data
-            lock(m_dataLock)
+            lock (m_dataLock)
             {
                 // Reset data structures
-                m_listComparisonItems = m_listDisplayComparisonItems = null;
+                m_listUnfoldedComparisonItems = m_listUnfoldedDisplayComparisonItems = null;
                 updateLabelResultCount();
             }
 
@@ -619,12 +617,12 @@ namespace MSec
             {
                 m_listResults.ClearObjects();
             });
-           
+
             // Spawn watch job
             new Job<bool?>((JobParameter<bool?> _params) =>
             {
-                #region Watch job
                 // Local variables
+                ImageSource[] sources = null;
                 Job<bool?>[] jobList = null;
                 int jobCount = 0;
                 bool result = true;
@@ -635,13 +633,19 @@ namespace MSec
                 sources = extractImageSourcesFromNode(m_loadedData, true);
                 if (sources == null || sources.Length == 0)
                     return false;
-                sourceQueue = new ConcurrentQueue<ImageSource>(sources);
+
+                // Create bindings
+                bindings = new ImageSourceBinding[sources.Length];
+                for (int i = 0; i < sources.Length; ++i)
+                    bindings[i] = new ImageSourceBinding(sources[i]);
+                bindingQueue = new ConcurrentQueue<ImageSourceBinding>(bindings);
+                sources = null;
 
                 // Get current action text
-                oldActionText = setCustomActionText(String.Format(CUSTOM_ACTION_HASHING, numImageHashesComputed, sources.Length));
+                oldActionText = setCustomActionText(String.Format(CUSTOM_ACTION_HASHING, numImageHashesComputed, bindings.Length));
 
                 // Spawn woker jobs
-                jobCount = Math.Min(sources.Length, Environment.ProcessorCount);
+                jobCount = Math.Min(bindings.Length, Environment.ProcessorCount);
                 jobList = new Job<bool?>[jobCount];
                 for (int i = 0; i < jobCount; ++i)
                 {
@@ -650,23 +654,35 @@ namespace MSec
                     jobList[i] = new Job<bool?>((JobParameter<bool?> _data) =>
                     {
                         // Local variables
-                        ImageSource src = null;
+                        ImageSource cpy = null;
+                        ImageSourceBinding bin = null;
 
-                        // Get source
-                        while (sourceQueue.TryDequeue(out src) == true)
+ 
+                            // Get source
+                        while (bindingQueue.TryDequeue(out bin) == true)
                         {
-                            // Compute
-                            if (SingleModeTechnique.computeHash(src) == null)
-                                return false;
+                            // Loop through all selected techniques
+                            foreach (Technique t in MultipleModeTechniques)
+                            {
+                                // Copy image source
+                                cpy = new ImageSource(bin.SourceReference.FilePath);
+
+                                // Compute hash
+                                if (t.computeHash(cpy) == null)
+                                    return false;
+
+                                // Update binding
+                                bin.setComparisonDataFor(t.ID, cpy);
+                            }
 
                             // Update GUI
-                            lock(m_dataLock)
+                            lock (m_dataLock)
                             {
                                 // Increment counter
                                 ++numImageHashesComputed;
 
                                 // Set text
-                                setCustomActionText(String.Format(CUSTOM_ACTION_HASHING, numImageHashesComputed, sources.Length));
+                                setCustomActionText(String.Format(CUSTOM_ACTION_HASHING, numImageHashesComputed, bindings.Length));
                             }
                         }
 
@@ -692,40 +708,38 @@ namespace MSec
                 setCustomActionText(oldActionText);
 
                 return result;
-                #endregion Watch job
             },
             (JobParameter<bool?> _params) =>
             {
                 // Failed?
-                if(_params.Result == null || _params.Result == false)
+                if (_params.Error != null)
+                {
+                    setNextState(eState.STATE_READY);
+                    MessageBox.Show(_params.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else if (_params.Result == null || _params.Result == false)
                 {
                     setNextState(eState.STATE_READY);
                     MessageBox.Show("Hash computation for the selected image sources failed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                else if(_params.Error != null)
-                {
-                    setNextState(eState.STATE_READY);
-                    MessageBox.Show("An unknown error occurred during the computation of the image hashes!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
 
-                // Continue comparison
-                continueComparison(sources);
+                // Start comparison
+                startComparison(bindings);
             });
         }
 
-        // Continues the comparison step (hashing was before!)
-        private void continueComparison(ImageSource[] _sourceList)
+        // Starts the comparison of the computed image hashes
+        private void startComparison(ImageSourceBinding[] _bindings)
         {
             // Local variables
-            List<ComparisonPair> pairs = new List<ComparisonPair>();
-            ConcurrentQueue<ComparisonPair> pairQueue = null;
+            List<ComparisonPairForBindings> pairs = new List<ComparisonPairForBindings>();
+            ConcurrentQueue<ComparisonPairForBindings> pairQueue = null;
 
             // Spawn watch job
             new Job<bool?>((JobParameter<bool?> _params) =>
             {
-                #region Watch job
                 // Local variables
                 Job<bool?>[] jobList = null;
                 int jobCount = 0;
@@ -733,16 +747,17 @@ namespace MSec
                 string oldActionText = "";
 
                 // Create pairs
-                for (int i = 0; i < _sourceList.Length; ++i)
+                for (int i = 0; i < _bindings.Length; ++i)
                 {
-                    for (int j = i; j < _sourceList.Length; ++j)
+                    for (int j = i; j < _bindings.Length; ++j)
                     {
                         // Create pair
-                        var pair = new ComparisonPair(_sourceList[i], _sourceList[j], SingleModeTechnique);
+                        var pair = new ComparisonPairForBindings(_bindings[i], _bindings[j]);
                         pairs.Add(pair);
                     }
                 }
-                pairQueue = new ConcurrentQueue<ComparisonPair>(pairs);
+                pairQueue = new ConcurrentQueue<ComparisonPairForBindings>(pairs);
+                _bindings = null;
 
                 // Get current action text
                 oldActionText = setCustomActionText(CUSTOM_ACTION_COMPARISON);
@@ -758,16 +773,22 @@ namespace MSec
                     {
                         // Local variables
                         ComparativeData compResult = null;
-                        ComparisonPair pair = null;
+                        ComparisonPairForBindings pair = null;
 
                         // Get source
                         while (pairQueue.TryDequeue(out pair) == true)
                         {
-                            // Compute
-                            compResult = pair.ComparatorTechnique.compareHashData(pair.Source0, pair.Source1);
-                            if (compResult == null)
-                                return false;
-                            pair.ComparativeResult = compResult;
+                            // Loop through all techniques
+                            foreach(Technique t in MultipleModeTechniques)
+                            {
+                                // Compare data
+                                compResult = t.compareHashData(pair.Binding0.getComparisonDataFor(t.ID), pair.Binding1.getComparisonDataFor(t.ID));
+                                if(compResult == null)
+                                    return false;
+
+                                // Set data
+                                pair.setComparisonDataFor(t.ID, compResult);
+                            }
                         }
 
                         return true;
@@ -788,44 +809,84 @@ namespace MSec
                         result = false;
                 }
 
+                // Reset action text
+                setCustomActionText(oldActionText);
+
+                return result;
+            },
+            (JobParameter<bool?> _params) =>
+            {
+                // Failed?
+                if (_params.Error != null)
+                {
+                    MessageBox.Show(_params.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else if (_params.Result == null || _params.Result == false)
+                {
+                    MessageBox.Show("Hash comparison for the selected image sources failed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Start unfolding
+                startUnfolding(pairs.ToArray());
+            });
+        }
+
+        // Starts the unfolding of the compared image hashes
+        private void startUnfolding(ComparisonPairForBindings[] _pairs)
+        {
+            // Spawn job
+            new Job<bool?>((JobParameter<bool?> _params) =>
+            {
+                // Local variables
+                List<UnfoldedBindingComparisonPair> unfoldedPairs = new List<UnfoldedBindingComparisonPair>(_pairs.Length);
+                Technique technique = MultipleModeTechniques[0];
+                decimal threshold = 0;
+
+                // Set status
+                setCustomActionText(CUSTOM_ACTION_PROCESS_DATA);
+
+                // Get threshold
+                technique.getAttribute<decimal>(Technique.ATT_GENERAL_THRESHOLD, out threshold);
+
+                // Unfold pairs
+                foreach(ComparisonPairForBindings cp in _pairs)
+                {
+                    unfoldedPairs.Add(new UnfoldedBindingComparisonPair(Convert.ToInt32(threshold), cp.Binding0.SourceReference, cp.Binding1.SourceReference, 
+                        cp.getComparisonDataFor(TechniqueID.RADISH), cp.getComparisonDataFor(TechniqueID.DCT),
+                        cp.getComparisonDataFor(TechniqueID.WAVELET), cp.getComparisonDataFor(TechniqueID.BMB)));
+                }
+
                 // Add all pairs to the list view
                 lock (m_dataLock)
                 {
                     // Set status
                     setCustomActionText(CUSTOM_ACTION_PROCESS_DATA);
 
-                    // Set used technique
-                    m_comparisonTechnique = SingleModeTechnique;
-
                     // Save computed pairs and update list-view
-                    m_listComparisonItems = pairs;
-                    m_listDisplayComparisonItems = pairs;
+                    m_listUnfoldedComparisonItems = unfoldedPairs;
+                    m_listUnfoldedDisplayComparisonItems = unfoldedPairs;
                     Utility.invokeInGuiThread(m_listResults, delegate
                     {
-                        m_listResults.SetObjects(m_listDisplayComparisonItems);
+                        m_listResults.SetObjects(m_listUnfoldedDisplayComparisonItems);
                         updateLabelResultCount();
                     });
                 }
 
-                // Reset action text
-                setCustomActionText(oldActionText);
-
-                return result;
-                #endregion Watch job
+                return true;
             },
             (JobParameter<bool?> _params) =>
             {
                 // Failed?
-                if (_params.Result == null || _params.Result == false)
+                if (_params.Error != null)
                 {
-                    setNextState(eState.STATE_READY);
-                    MessageBox.Show("Hash comparison for the selected image sources failed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(_params.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                else if (_params.Error != null)
+                else if (_params.Result == null || _params.Result == false)
                 {
-                    setNextState(eState.STATE_READY);
-                    MessageBox.Show("An unknown error occurred during the comparison of the image hashes!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Hash comparison for the selected image sources failed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -892,8 +953,8 @@ namespace MSec
             int count = 0;
 
             // Check parameter
-            if (m_listDisplayComparisonItems != null && m_listDisplayComparisonItems.Count != 0)
-                count = m_listDisplayComparisonItems.Count;
+            if (m_listUnfoldedDisplayComparisonItems != null && m_listUnfoldedDisplayComparisonItems.Count != 0)
+                count = m_listUnfoldedDisplayComparisonItems.Count;
 
             // Run in GUI thread
             Utility.invokeInGuiThread(m_labelResultCount, delegate
@@ -952,18 +1013,18 @@ namespace MSec
             string[] sections = null;
             IQueryable queryable = null;
             bool isGrouped = false;
-            List<ComparisonPair> displayList = new List<ComparisonPair>();
+            List<UnfoldedBindingComparisonPair> displayList = new List<UnfoldedBindingComparisonPair>();
 
             // Check parameter
-            if (m_listDisplayComparisonItems == null || m_listDisplayComparisonItems.Count == 0)
+            if (m_listUnfoldedDisplayComparisonItems == null || m_listUnfoldedDisplayComparisonItems.Count == 0)
                 return false;
 
             // Empty?
             if (_filter == null || _filter.Length == 0)
             {
                 m_listResults.ShowGroups = false;
-                m_listDisplayComparisonItems = m_listComparisonItems;
-                m_listResults.SetObjects(m_listDisplayComparisonItems);
+                m_listUnfoldedDisplayComparisonItems = m_listUnfoldedComparisonItems;
+                m_listResults.SetObjects(m_listUnfoldedDisplayComparisonItems);
                 updateLabelResultCount();
                 return true;
             }
@@ -978,7 +1039,7 @@ namespace MSec
                 sections = sections.Reverse().ToArray();
 
                 // Get queryable from list
-                queryable = m_listComparisonItems.AsQueryable();
+                queryable = m_listUnfoldedComparisonItems.AsQueryable();
                 foreach (string s in sections)
                 {
                     // Get keyword and command
@@ -1040,16 +1101,16 @@ namespace MSec
                     }
 
                     // Assign to list-view's list
-                    m_listDisplayComparisonItems = displayList;
+                    m_listUnfoldedDisplayComparisonItems = displayList;
                 }
 
                 // List clause!
                 else
-                    m_listDisplayComparisonItems = (queryable as IQueryable<ComparisonPair>).ToList();
+                    m_listUnfoldedDisplayComparisonItems = (queryable as IQueryable<UnfoldedBindingComparisonPair>).ToList();
 
                 // Configure list-view
                 m_listResults.ShowGroups = isGrouped;
-                m_listResults.SetObjects(m_listDisplayComparisonItems);
+                m_listResults.SetObjects(m_listUnfoldedDisplayComparisonItems);
                 updateLabelResultCount();
             }
             catch (Exception _ex)
@@ -1063,19 +1124,10 @@ namespace MSec
 
         #region Events: Controls
         // Event List::onColumnWidthChanging
-        object onListResultsAcceptedImageGetter(object _sender)
-        {
-            // Local variables
-            ComparisonPair pair = _sender as ComparisonPair;
-
-            return pair.IsAccepted == true ? 0 : 1;
-        }
-
-        // Event List::onColumnWidthChanging
         object onListResultsGroupKeyGetter(object _sender)
         {
             // Local variables
-            ComparisonPair pair = _sender as ComparisonPair;
+            UnfoldedBindingComparisonPair pair = _sender as UnfoldedBindingComparisonPair;
 
             return pair.Tag;
         }
@@ -1083,7 +1135,7 @@ namespace MSec
         // Event List::onColumnWidthChanging
         void onListResultsFormatRow(object _sender, FormatRowEventArgs _e)
         {
-            // Local variables
+            /*/ Local variables
             ComparisonPair pair = _e.Model as ComparisonPair;
             Color background = Color.White;
             double match = 0.0;
@@ -1108,7 +1160,7 @@ namespace MSec
             }
 
             // Set color to item
-            _e.Item.BackColor = background;
+            _e.Item.BackColor = background;*/
         }
 
         // Event List::onColumnClick
@@ -1118,7 +1170,7 @@ namespace MSec
             delegate_sorter_func sorterFunc = null;
 
             // Check
-            if (m_listDisplayComparisonItems == null || m_listDisplayComparisonItems.Count == 0)
+            if (m_listUnfoldedDisplayComparisonItems == null || m_listUnfoldedDisplayComparisonItems.Count == 0)
                 return;
 
             // Same column
@@ -1142,7 +1194,7 @@ namespace MSec
             {
                 sorterFunc = (int _index) =>
                 {
-                    return from item in m_listDisplayComparisonItems
+                    return from item in m_listUnfoldedDisplayComparisonItems
                            orderby m_listResultsSorterFuncs[_index](item)
                            select item;
                 };
@@ -1151,19 +1203,19 @@ namespace MSec
             {
                 sorterFunc = (int _index) =>
                 {
-                    return from item in m_listDisplayComparisonItems
+                    return from item in m_listUnfoldedDisplayComparisonItems
                            orderby m_listResultsSorterFuncs[_index](item) descending
                            select item;
                 };
             }
 
             // Sort list
-            m_listDisplayComparisonItems = sorterFunc(_e.Column).ToList();
+            m_listUnfoldedDisplayComparisonItems = sorterFunc(_e.Column).ToList();
 
             // Update list-view
             m_listResults.ClearObjects();
-            m_listResults.SetObjects(m_listDisplayComparisonItems);
-            m_listResults.RedrawItems(0, m_listDisplayComparisonItems.Count - 1, true);
+            m_listResults.SetObjects(m_listUnfoldedDisplayComparisonItems);
+            m_listResults.RedrawItems(0, m_listUnfoldedDisplayComparisonItems.Count - 1, true);
         }
 
         // Event List::onColumnWidthChanging
@@ -1177,7 +1229,7 @@ namespace MSec
         void onItemSelectionChanged(object _sender, ListViewItemSelectionChangedEventArgs _e)
         {
             // Contains pair's ID
-            if(_e.ItemIndex >= m_listDisplayComparisonItems.Count)
+            if(_e.ItemIndex >= m_listUnfoldedDisplayComparisonItems.Count)
             {
                 m_popupWindow.Hide();
                 return;
@@ -1187,7 +1239,7 @@ namespace MSec
             m_popupWindow.Show(m_listResults, m_popupPosition);
 
             // Set data
-            m_comparatorDetails.setComparisonPair(m_listDisplayComparisonItems[_e.ItemIndex]);
+            m_comparatorDetails.setComparisonPair(m_listUnfoldedDisplayComparisonItems[_e.ItemIndex]);
         }
 
         // Event Button::onButtonReferenceFolderSelect_Click
@@ -1216,7 +1268,7 @@ namespace MSec
             // Start comparison
             if (MessageBox.Show("Do you want to start the cross comparison of the selected image sources? This may take a while...",
                 "Start the comparison?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                startComparisonHashing();
+                startHashing();//startComparisonHashing();
         }
 
         // Event TextBox::onFilterMouseWheel
@@ -1255,12 +1307,12 @@ namespace MSec
         // Event List::onColumnClick
         void onToolStripItemShowColorsClick(Object _sender, EventArgs _e)
         {
-            // Invert attribute
+            /*/ Invert attribute
             m_isShowResultColors = !m_isShowResultColors;
 
             // Update list-view
             if(m_listDisplayComparisonItems != null && m_listDisplayComparisonItems.Count > 0)
-                m_listResults.RedrawItems(0, m_listDisplayComparisonItems.Count - 1, true);      
+                m_listResults.RedrawItems(0, m_listDisplayComparisonItems.Count - 1, true);    */  
         }
         #endregion Events: ToolStrip
         #endregion Events: Controls

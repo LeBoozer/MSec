@@ -80,14 +80,29 @@ namespace MSec
             m_techniqueBMB.addAttribute(Technique.ATT_BMB_METHOD, m_controlTechniqueSelection.BMBMethod);
 
             // Set current technique
-            if (m_controlTechniqueSelection.CurrentTechniqueIDs == TechniqueID.RADISH)
-                m_singleTechnique = m_techniqueRadish;
-            else if (m_controlTechniqueSelection.CurrentTechniqueIDs == TechniqueID.WAVELET)
-                m_singleTechnique = m_techniqueWavelet;
-            else if (m_controlTechniqueSelection.CurrentTechniqueIDs == TechniqueID.DCT)
-                m_singleTechnique = m_techniqueDCT;
+            if (m_controlTechniqueSelection.OperationMode == TechniqueSelection.eMode.SINGLE)
+            {
+                if (m_controlTechniqueSelection.CurrentTechniqueIDs == TechniqueID.RADISH)
+                    m_singleTechnique = m_techniqueRadish;
+                else if (m_controlTechniqueSelection.CurrentTechniqueIDs == TechniqueID.WAVELET)
+                    m_singleTechnique = m_techniqueWavelet;
+                else if (m_controlTechniqueSelection.CurrentTechniqueIDs == TechniqueID.DCT)
+                    m_singleTechnique = m_techniqueDCT;
+                else
+                    m_singleTechnique = m_techniqueBMB;
+            }
             else
-                m_singleTechnique = m_techniqueBMB;
+            {
+                m_multipleTechniques.Clear();
+                if ((m_controlTechniqueSelection.CurrentTechniqueIDs & TechniqueID.DCT) == TechniqueID.DCT)
+                    m_multipleTechniques.Add(m_techniqueDCT);
+                if ((m_controlTechniqueSelection.CurrentTechniqueIDs & TechniqueID.RADISH) == TechniqueID.RADISH)
+                    m_multipleTechniques.Add(m_techniqueRadish);
+                if ((m_controlTechniqueSelection.CurrentTechniqueIDs & TechniqueID.WAVELET) == TechniqueID.WAVELET)
+                    m_multipleTechniques.Add(m_techniqueWavelet);
+                if ((m_controlTechniqueSelection.CurrentTechniqueIDs & TechniqueID.BMB) == TechniqueID.BMB)
+                    m_multipleTechniques.Add(m_techniqueBMB);
+            }
 
             // Set attribute events
             m_controlTechniqueSelection.OnTechniqueIDsChanged += (TechniqueID _id) =>

@@ -360,7 +360,7 @@ namespace MSec
             Technique<BMBHash, double> t = null;
 
             // Create technique
-            t = new Technique<BMBHash, double>(TechniqueID.RADISH,
+            t = new Technique<BMBHash, double>(TechniqueID.BMB,
                 (Technique _t, ImageSource _image) =>
                 {
                     // Local variables

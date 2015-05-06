@@ -40,13 +40,12 @@
             this.Selection_ImageSource0 = new ImageSourceSelection();
             this.pageCrossComparison = new System.Windows.Forms.TabPage();
             this.CC_List_Results_2 = new BrightIdeasSoftware.FastObjectListView();
-            this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumn5 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn6 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.ImageList_CC_List_Results = new System.Windows.Forms.ImageList(this.components);
+            this.olvColumn7 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn8 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.label5 = new System.Windows.Forms.Label();
             this.CC_Label_ResultCount = new System.Windows.Forms.Label();
             this.CC_Text_Filter = new System.Windows.Forms.ComboBox();
@@ -63,7 +62,6 @@
             this.CC_Label_ReferenceFolder = new System.Windows.Forms.Label();
             this.CC_Text_ReferenceFolder_Path = new System.Windows.Forms.TextBox();
             this.CC_Selection_Technique = new TechniqueSelection();
-            this.pageTechniqueComparison = new System.Windows.Forms.TabPage();
             this.ImageList_MainTab = new System.Windows.Forms.ImageList(this.components);
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.Menu_Main = new System.Windows.Forms.MenuStrip();
@@ -90,7 +88,6 @@
             // 
             this.MainDialog_MainTab.Controls.Add(this.pageImageVsImage);
             this.MainDialog_MainTab.Controls.Add(this.pageCrossComparison);
-            this.MainDialog_MainTab.Controls.Add(this.pageTechniqueComparison);
             this.MainDialog_MainTab.ImageList = this.ImageList_MainTab;
             this.MainDialog_MainTab.Location = new System.Drawing.Point(12, 27);
             this.MainDialog_MainTab.Name = "MainDialog_MainTab";
@@ -193,19 +190,19 @@
             // 
             // CC_List_Results_2
             // 
-            this.CC_List_Results_2.AllColumns.Add(this.olvColumn1);
             this.CC_List_Results_2.AllColumns.Add(this.olvColumn2);
-            this.CC_List_Results_2.AllColumns.Add(this.olvColumn5);
             this.CC_List_Results_2.AllColumns.Add(this.olvColumn3);
             this.CC_List_Results_2.AllColumns.Add(this.olvColumn6);
             this.CC_List_Results_2.AllColumns.Add(this.olvColumn4);
+            this.CC_List_Results_2.AllColumns.Add(this.olvColumn7);
+            this.CC_List_Results_2.AllColumns.Add(this.olvColumn8);
             this.CC_List_Results_2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.olvColumn1,
             this.olvColumn2,
-            this.olvColumn5,
             this.olvColumn3,
             this.olvColumn6,
-            this.olvColumn4});
+            this.olvColumn4,
+            this.olvColumn7,
+            this.olvColumn8});
             this.CC_List_Results_2.FullRowSelect = true;
             this.CC_List_Results_2.GridLines = true;
             this.CC_List_Results_2.HideSelection = false;
@@ -214,60 +211,62 @@
             this.CC_List_Results_2.Name = "CC_List_Results_2";
             this.CC_List_Results_2.ShowGroups = false;
             this.CC_List_Results_2.Size = new System.Drawing.Size(690, 319);
-            this.CC_List_Results_2.SmallImageList = this.ImageList_CC_List_Results;
             this.CC_List_Results_2.TabIndex = 13;
             this.CC_List_Results_2.UseCompatibleStateImageBehavior = false;
             this.CC_List_Results_2.View = System.Windows.Forms.View.Details;
             this.CC_List_Results_2.VirtualMode = true;
             // 
-            // olvColumn1
-            // 
-            this.olvColumn1.AspectName = "";
-            this.olvColumn1.Sortable = false;
-            this.olvColumn1.Text = "";
-            this.olvColumn1.Width = 26;
-            // 
             // olvColumn2
             // 
             this.olvColumn2.AspectName = "Source0.FileName";
+            this.olvColumn2.Hideable = false;
             this.olvColumn2.Sortable = false;
             this.olvColumn2.Text = "Image source 0";
-            this.olvColumn2.Width = 155;
-            // 
-            // olvColumn5
-            // 
-            this.olvColumn5.AspectName = "Source0.Hash";
-            this.olvColumn5.Sortable = false;
-            this.olvColumn5.Text = "Image hash 0";
-            this.olvColumn5.Width = 130;
+            this.olvColumn2.Width = 150;
             // 
             // olvColumn3
             // 
             this.olvColumn3.AspectName = "Source1.FileName";
+            this.olvColumn3.Hideable = false;
             this.olvColumn3.Sortable = false;
             this.olvColumn3.Text = "Image source 1";
-            this.olvColumn3.Width = 155;
+            this.olvColumn3.Width = 150;
             // 
             // olvColumn6
             // 
-            this.olvColumn6.AspectName = "Source1.Hash";
+            this.olvColumn6.AspectName = "MatchRateRADISH";
+            this.olvColumn6.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.olvColumn6.Sortable = false;
-            this.olvColumn6.Text = "Image hash 1";
-            this.olvColumn6.Width = 130;
+            this.olvColumn6.Text = "RADISH (%)";
+            this.olvColumn6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColumn6.Width = 90;
             // 
             // olvColumn4
             // 
-            this.olvColumn4.AspectName = "MatchRate";
+            this.olvColumn4.AspectName = "MatchRateDCT";
+            this.olvColumn4.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.olvColumn4.Sortable = false;
-            this.olvColumn4.Text = "Match (%)";
-            this.olvColumn4.Width = 70;
+            this.olvColumn4.Text = "DCT (%)";
+            this.olvColumn4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColumn4.Width = 90;
             // 
-            // ImageList_CC_List_Results
+            // olvColumn7
             // 
-            this.ImageList_CC_List_Results.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList_CC_List_Results.ImageStream")));
-            this.ImageList_CC_List_Results.TransparentColor = System.Drawing.Color.Transparent;
-            this.ImageList_CC_List_Results.Images.SetKeyName(0, "checkmark.png");
-            this.ImageList_CC_List_Results.Images.SetKeyName(1, "cross.png");
+            this.olvColumn7.AspectName = "MatchRateWavelet";
+            this.olvColumn7.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColumn7.Sortable = false;
+            this.olvColumn7.Text = "Wavelet (%)";
+            this.olvColumn7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColumn7.Width = 90;
+            // 
+            // olvColumn8
+            // 
+            this.olvColumn8.AspectName = "MatchRateBMB";
+            this.olvColumn8.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColumn8.Sortable = false;
+            this.olvColumn8.Text = "BMB (%)";
+            this.olvColumn8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColumn8.Width = 90;
             // 
             // label5
             // 
@@ -423,19 +422,9 @@
             // 
             this.CC_Selection_Technique.Location = new System.Drawing.Point(3, 0);
             this.CC_Selection_Technique.Name = "CC_Selection_Technique";
-            this.CC_Selection_Technique.OperationMode = TechniqueSelection.eMode.SINGLE;
+            this.CC_Selection_Technique.OperationMode = TechniqueSelection.eMode.MULTIPLE;
             this.CC_Selection_Technique.Size = new System.Drawing.Size(690, 116);
             this.CC_Selection_Technique.TabIndex = 0;
-            // 
-            // pageTechniqueComparison
-            // 
-            this.pageTechniqueComparison.ImageIndex = 2;
-            this.pageTechniqueComparison.Location = new System.Drawing.Point(4, 23);
-            this.pageTechniqueComparison.Name = "pageTechniqueComparison";
-            this.pageTechniqueComparison.Size = new System.Drawing.Size(697, 541);
-            this.pageTechniqueComparison.TabIndex = 3;
-            this.pageTechniqueComparison.Text = "Technique Comparison";
-            this.pageTechniqueComparison.UseVisualStyleBackColor = true;
             // 
             // ImageList_MainTab
             // 
@@ -443,7 +432,6 @@
             this.ImageList_MainTab.TransparentColor = System.Drawing.Color.Transparent;
             this.ImageList_MainTab.Images.SetKeyName(0, "compare.png");
             this.ImageList_MainTab.Images.SetKeyName(1, "arrows.png");
-            this.ImageList_MainTab.Images.SetKeyName(2, "scale.png");
             // 
             // ToolTip
             // 
@@ -632,7 +620,6 @@
         private System.Windows.Forms.ToolStripStatusLabel CC_ToolStrip_Label_Action;
         private System.Windows.Forms.ToolStripProgressBar CC_ToolStrip_Progress;
         private System.Windows.Forms.Button CC_Button_ReferenceFolder_Start;
-        private System.Windows.Forms.ImageList ImageList_CC_List_Results;
         private System.Windows.Forms.Label CC_Label_ReferenceFolder_NumSources;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.LinkLabel linkLabel4;
@@ -642,13 +629,12 @@
         private System.Windows.Forms.Label CC_Label_ResultCount;
         private System.Windows.Forms.Label label5;
         private BrightIdeasSoftware.FastObjectListView CC_List_Results_2;
-        private BrightIdeasSoftware.OLVColumn olvColumn1;
         private BrightIdeasSoftware.OLVColumn olvColumn2;
         private BrightIdeasSoftware.OLVColumn olvColumn3;
         private BrightIdeasSoftware.OLVColumn olvColumn4;
-        private BrightIdeasSoftware.OLVColumn olvColumn5;
         private BrightIdeasSoftware.OLVColumn olvColumn6;
-        private System.Windows.Forms.TabPage pageTechniqueComparison;
+        private BrightIdeasSoftware.OLVColumn olvColumn7;
+        private BrightIdeasSoftware.OLVColumn olvColumn8;
     }
 }
 

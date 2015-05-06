@@ -27,8 +27,8 @@ namespace MSec
         private object m_dataLock = new object();
 
         // The current set comparison pair
-        private ComparisonPair m_pair = null;
-        public ComparisonPair CurrentPair
+        private UnfoldedBindingComparisonPair m_pair = null;
+        public UnfoldedBindingComparisonPair CurrentPair
         {
             get { return m_pair; }
             private set { }
@@ -58,7 +58,7 @@ namespace MSec
         }
 
         // Updates the control's content with a comparison pair (null to delete content)
-        public void setComparisonPair(ComparisonPair _pair)
+        public void setComparisonPair(UnfoldedBindingComparisonPair _pair)
         {
             // Local variables
             Job<Image>.delegate_job func = null;

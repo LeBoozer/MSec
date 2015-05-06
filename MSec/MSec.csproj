@@ -115,10 +115,13 @@
     <Compile Include="src\technique\HashData.cs" />
     <Compile Include="src\technique\ImageSource.cs" />
     <Compile Include="src\technique\Technique.cs" />
+    <Compile Include="src\utility\ComparisonPairForBindings.cs" />
     <Compile Include="src\utility\Dynamic.cs" />
+    <Compile Include="src\utility\ImageSourceBinding.cs" />
     <Compile Include="src\utility\ListViewFlickerFree.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="src\utility\UnfoldedBindingComparisonPair.cs" />
     <Compile Include="src\utility\Utility.cs" />
     <Compile Include="src\views\View.cs" />
     <Compile Include="src\views\ViewCrossComparison.cs" />

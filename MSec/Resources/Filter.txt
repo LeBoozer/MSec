@@ -21,15 +21,14 @@ The are a few restrictions regarding the use of these clauses:
 The dynamic "Linq" expression language can access all public attributes of the data (access to custom methods
 is not supported yet!). The following list gives a brief overview about the accessible attributes of the
 list content (standard objects are not mentioned here, please see link above!):
-	- IsAccepted						(boolean value)
-	- MatchRate							(integer value, range [0-100])
+	- Threshold							(integer value, range [0-100])
+	- MatchRateX						(integer value, range [0-100], values for X [RADISH, DCT, Wavelet, BMB])
 	- SourceX							(image source X, values for X [0,1])
 		- SourceX.ImageID				(integer value)
 		- SourceX.PathID				(integer value)
 		- SourceX.FilePath				(string)
 		- SourceX.FileName				(string)
 		- SourceX.Dir					(string)
-		- SourceX.Hash					(string)
 
 
 New or existing pre-defined filter can be added/edited in the application configuration: config.cfg
