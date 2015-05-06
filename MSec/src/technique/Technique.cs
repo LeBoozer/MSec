@@ -374,7 +374,8 @@ namespace MSec
                         _t.getAttribute<int>(Technique.ATT_BMB_METHOD, out attMethod);
 
                     // Comnpute hash
-                    PHash.computeBMBHash(_image.FilePath, attMethod, out hashUnmanaged);
+                    if (PHash.computeBMBHash(_image.FilePath, attMethod, out hashUnmanaged) == -1)
+                        return null;
 
                     // Convert unmanaged to managed
                     Utility.convertUnmanagedPtrToSimpleStructure<BMBHash>(hashUnmanaged, ref hash, false);
@@ -384,6 +385,7 @@ namespace MSec
                     {
                         return Utility.toHexString(_data.m_data, _data.m_dataLength);
                     });
+
                     return result;
                 },
                 (Technique _t, HashData<BMBHash> _h0, HashData<BMBHash> _h1) =>

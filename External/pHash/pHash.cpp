@@ -418,7 +418,13 @@ int ph_bmb_imagehash(const char *file, uint8_t method, BinHash **ret_hash)
     case 3: // from RGB
         img.RGBtoYCbCr().channel(0);
         break;
+	case 1:
+		img.channel(0);
+		break;
     default:
+		std::stringstream a;
+		a << img.spectrum();
+		MessageBox(0, a.str().c_str(), "", MB_OK);
         *ret_hash = NULL;
         free(block);
         return -1;

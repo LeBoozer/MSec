@@ -210,8 +210,10 @@
             this.CC_List_Results_2.MultiSelect = false;
             this.CC_List_Results_2.Name = "CC_List_Results_2";
             this.CC_List_Results_2.ShowGroups = false;
+            this.CC_List_Results_2.ShowItemCountOnGroups = true;
             this.CC_List_Results_2.Size = new System.Drawing.Size(690, 319);
             this.CC_List_Results_2.TabIndex = 13;
+            this.CC_List_Results_2.UseCellFormatEvents = true;
             this.CC_List_Results_2.UseCompatibleStateImageBehavior = false;
             this.CC_List_Results_2.View = System.Windows.Forms.View.Details;
             this.CC_List_Results_2.VirtualMode = true;

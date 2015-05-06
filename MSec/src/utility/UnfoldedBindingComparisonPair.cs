@@ -82,6 +82,39 @@ namespace MSec
 
         #region Definitions for DLinQ und object-list-view
 
+        // Average match rate
+        public int MatchRateAVG
+        {
+            get
+            {
+                // Local variables
+                int avg = 0;
+                int counter = 0;
+
+                if(MatchRateRADISH > -1)
+                {
+                    avg += MatchRateRADISH;
+                    ++counter;
+                }
+                if (MatchRateDCT > -1)
+                {
+                    avg += MatchRateDCT;
+                    ++counter;
+                }
+                if (MatchRateWavelet > -1)
+                {
+                    avg += MatchRateWavelet;
+                    ++counter;
+                }
+                if (MatchRateBMB > -1)
+                {
+                    avg += MatchRateBMB;
+                    ++counter;
+                }
+                return avg / counter;
+            }
+        }
+
         // Match rate: RADISH
         public int MatchRateRADISH
         {

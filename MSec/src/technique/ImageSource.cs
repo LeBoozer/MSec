@@ -65,7 +65,7 @@ namespace MSec
         // Wrapper for the hash
         public string Hash
         {
-            get { return m_hashData.convertToString(); }
+            get { if(m_hashData == null) return ""; else return m_hashData.convertToString(); }
             private set { }
         }
 
