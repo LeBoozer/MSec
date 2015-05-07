@@ -30,13 +30,20 @@ namespace MSec
     public class ViewCrossComparison : ViewWithTechniqueSelection
     {
         // Constants
-        private static readonly int     LIST_RESULTS_COLUMN_COUNT           = 6;
+        private static readonly int     LIST_RESULTS_COLUMN_COUNT           = 7;
         private static readonly int     LIST_RESULTS_COLUMN_SOURCE0_PATH    = 0;
         private static readonly int     LIST_RESULTS_COLUMN_SOURCE1_PATH    = 1;
         private static readonly int     LIST_RESULTS_COLUMN_MR_RADISH       = 2;
         private static readonly int     LIST_RESULTS_COLUMN_MR_DCT          = 3;
         private static readonly int     LIST_RESULTS_COLUMN_MR_WAVELET      = 4;
         private static readonly int     LIST_RESULTS_COLUMN_MR_BMB          = 5;
+        private static readonly int     LIST_RESULTS_COLUMN_MR_AVG          = 6;
+
+        private static readonly string  LIST_RESULTS_COLUMN_TAG_MR_RADISH   = "MatchRateRADISH";
+        private static readonly string  LIST_RESULTS_COLUMN_TAG_MR_DCT      = "MatchRateDCT";
+        private static readonly string  LIST_RESULTS_COLUMN_TAG_MR_WAVELET  = "MatchRateWavelet";
+        private static readonly string  LIST_RESULTS_COLUMN_TAG_MR_BMB      = "MatchRateBMB";
+        private static readonly string  LIST_RESULTS_COLUMN_TAG_MR_AVG      = "MatchRateAverage";
 
         private static readonly string  ACTION_IDLE                 = "Waiting for user input...";
         private static readonly string  ACTION_LOADING_FILES        = "Loading and analysing files...";
@@ -239,6 +246,13 @@ namespace MSec
         private ToolStripProgressBar    m_progressBar = null;
         private ToolStripMenuItem       m_toolStripItemShowColors = null;
 
+        // List-view-column (result list)
+        private OLVColumn               m_listResultColumnMRRadish = null;
+        private OLVColumn               m_listResultColumnMRDCT = null;
+        private OLVColumn               m_listResultColumnMRWavelet = null;
+        private OLVColumn               m_listResultColumnMRBMB = null;
+        private OLVColumn               m_listResultColumnMRAVG = null;
+
         // Constructor
         public ViewCrossComparison(TabPage _tabPage) :
             base(_tabPage, "CC_Selection_Technique")
@@ -319,6 +333,13 @@ namespace MSec
                 return _pair.MatchRateWavelet;
             };
             m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_MR_WAVELET] = funcTemp;
+
+            // Register function: sorting based on the match rate (Average)
+            funcTemp = (UnfoldedBindingComparisonPair _pair) =>
+            {
+                return _pair.MatchRateAVG;
+            };
+            m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_MR_AVG] = funcTemp;
             #endregion List-view sorter: element selecter (result list)
 
             // Create pop-up window
@@ -329,8 +350,7 @@ namespace MSec
             m_popupWindow.FocusOnOpen = false;
 
             // Extract controls
-           // m_listResults = _tabPage.Controls.Find("CC_List_Results", true)[0] as ListView;
-            m_listResults = _tabPage.Parent.Controls.Find("CC_List_Results_2", true)[0] as FastObjectListView;
+            m_listResults = _tabPage.Parent.Controls.Find("CC_List_Results", true)[0] as FastObjectListView;
             m_textReferenceFolder = _tabPage.Controls.Find("CC_Text_ReferenceFolder_Path", true)[0] as TextBox;
             m_textFilter = _tabPage.Controls.Find("CC_Text_Filter", true)[0] as System.Windows.Forms.ComboBox;
             m_buttonReferenceFolderSelect = _tabPage.Controls.Find("CC_Button_ReferenceFolder_Select", true)[0] as Button;
@@ -343,6 +363,9 @@ namespace MSec
             m_progressBar = (_tabPage.Controls.Find("CC_ToolStrip", true)[0] as ToolStrip).Items.Find("CC_ToolStrip_Progress", true)[0] as ToolStripProgressBar;
             m_toolStripItemShowColors = m_toolStripDropDown.DropDownItems.Find("CC_ToolStrip_DropDown_ShowColors", true)[0] as ToolStripMenuItem;
 
+            // Add events to: technique selection
+            ControlTechniqueSel.OnTechniqueIDsChanged += onTechniqueSelectionIDsChanged;
+
             // Add events to: text boxes
             m_textFilter.Items.AddRange(filterList.ToArray());
             m_textFilter.MouseWheel += onFilterMouseWheel;
@@ -350,6 +373,7 @@ namespace MSec
             m_textFilter.SelectionChangeCommitted += onFilterSelectionChangeComitted;
 
             // Add events to: list of results
+            extractColumnsByTag();
             (m_listResults.Columns[LIST_RESULTS_COLUMN_SOURCE0_PATH] as OLVColumn).GroupKeyGetter += onListResultsGroupKeyGetter;
             m_listResults.ItemSelectionChanged += onItemSelectionChanged;
             m_listResults.FormatCell += onListResultsFormatCell;
@@ -370,10 +394,54 @@ namespace MSec
             m_popupPosition = new Rectangle(x, y, 1, 1);
 
             // Generate midpoint colors
-            m_colorListMidpoints = generateResultMidpointColors(COLOR_RESULT_ACCEPTED, COLOR_RESULT_DENIED, NUM_MIDPOINTS_COLOR_RESULT);
+            m_colorListMidpoints = Utility.generateMidpointColors(COLOR_RESULT_ACCEPTED, COLOR_RESULT_DENIED, NUM_MIDPOINTS_COLOR_RESULT);
+
+            // Determine columns's visibility
+            showColumnsByTechniqueIDs(ControlTechniqueSel.CurrentTechniqueIDs);
 
             // Set start state: idle
             setNextState(eState.STATE_IDLE);
+        }
+
+        // Extracts the list-view columns by their tags
+        private void extractColumnsByTag()
+        {
+            // Loop through all columns
+            foreach(OLVColumn c in m_listResults.AllColumns)
+            {
+                if ((c.Tag as string) == LIST_RESULTS_COLUMN_TAG_MR_RADISH)
+                    m_listResultColumnMRRadish = c;
+                else if ((c.Tag as string) == LIST_RESULTS_COLUMN_TAG_MR_DCT)
+                    m_listResultColumnMRWavelet = c;
+                else if ((c.Tag as string) == LIST_RESULTS_COLUMN_TAG_MR_WAVELET)
+                    m_listResultColumnMRDCT = c;
+                else if ((c.Tag as string) == LIST_RESULTS_COLUMN_TAG_MR_BMB)
+                    m_listResultColumnMRBMB = c;
+                else if ((c.Tag as string) == LIST_RESULTS_COLUMN_TAG_MR_AVG)
+                    m_listResultColumnMRAVG = c;
+            }
+        }
+
+        // Shows/hides the columns based on the selected techniques
+        private void showColumnsByTechniqueIDs(TechniqueID _ids)
+        {
+            // Local variables
+            bool radish = (_ids & TechniqueID.RADISH) == TechniqueID.RADISH;
+            bool dct = (_ids & TechniqueID.DCT) == TechniqueID.DCT;
+            bool wavelet = (_ids & TechniqueID.WAVELET) == TechniqueID.WAVELET;
+            bool bmb = (_ids & TechniqueID.BMB) == TechniqueID.BMB;
+
+            // Update visibility
+            m_listResultColumnMRRadish.IsVisible = radish;
+            m_listResultColumnMRDCT.IsVisible = dct;
+            m_listResultColumnMRWavelet.IsVisible = wavelet;
+            m_listResultColumnMRBMB.IsVisible = bmb;
+
+            // Notify list-view
+            m_listResults.RebuildColumns();
+
+            // The average column is always the last one!
+            m_listResultColumnMRAVG.DisplayIndex = m_listResults.Columns.Count - 1;
         }
 
         // Sets a new state
@@ -964,49 +1032,6 @@ namespace MSec
             });
         }
 
-        // Generates the midpoint color values for the result list
-        private Color[] generateResultMidpointColors(Color _start, Color _end, int _midPointCount)
-        {
-            // Local variables
-            Color[] result = new Color[_midPointCount];
-            int stepR = (_end.R - _start.R) / _midPointCount;
-            int stepG = (_end.G - _start.G) / _midPointCount;
-            int stepB = (_end.B - _start.B) / _midPointCount;
-            int curR = _start.R;
-            int curG = _start.G;
-            int curB = _start.B;
-
-            // Generate values
-            for (int i = 0; i < _midPointCount; ++i)
-            {
-                // Save current color
-                result[i] = Color.FromArgb(curR, curG, curB);
-
-                // Increase color value by the step size
-                curR += stepR;
-                curG += stepG;
-                curB += stepB;
-            }
-
-            return result;
-        }
-
-        // Calculates the index for the midpoint color from the threshold and the match-rate
-        // 0 -> accepted, n -> denied
-        private int calculateMidpointColorIndex(double _threshold, double _matchRate, int _midPointCount)
-        {
-            // Get the ratio between the match rate and the threshold
-            double ratio = _matchRate / _threshold;
-            if (_matchRate == 0.0)
-                ratio = 0.001;
-
-            // Limit it to 100% (if the match rate exceeds the threshold, the ratio will be higher than 100%!)
-            if (ratio > 1.0) ratio = 1.0;
-
-            // Invert the ration and calculate the index (zero-based)
-            return (int)Math.Floor((1.0 - ratio) * _midPointCount);
-        }
-
         // Parses and executes the defined filter
         private bool executeFilter(string _filter)
         {
@@ -1124,6 +1149,13 @@ namespace MSec
         }
 
         #region Events: Controls
+        // Event TechniqueSelection::OnTechniqueIDsChanged
+        void onTechniqueSelectionIDsChanged(TechniqueID _ids)
+        {
+            // Update column visibility
+            showColumnsByTechniqueIDs(_ids);
+        }
+
         // Event List::onColumnWidthChanging
         object onListResultsGroupKeyGetter(object _sender)
         {
@@ -1143,20 +1175,23 @@ namespace MSec
             double threshold = 0.0;
             decimal tempDecimal = 0.0m;
             int index = 0;
+            string tag = m_listResults.Columns[_e.ColumnIndex].Tag as string;
 
             // Color background activated?
             if (m_isShowResultColors == false)
                 return;
 
             // Get match rate
-            if (_e.ColumnIndex == LIST_RESULTS_COLUMN_MR_RADISH)
+            if (tag == LIST_RESULTS_COLUMN_TAG_MR_RADISH)
                 match = pair.MatchRateRADISH / 100.0;
-            else if (_e.ColumnIndex == LIST_RESULTS_COLUMN_MR_DCT)
+            else if (tag == LIST_RESULTS_COLUMN_TAG_MR_DCT)
                 match = pair.MatchRateDCT / 100.0;
-            else if (_e.ColumnIndex == LIST_RESULTS_COLUMN_MR_WAVELET)
+            else if (tag == LIST_RESULTS_COLUMN_TAG_MR_WAVELET)
                 match = pair.MatchRateWavelet / 100.0;
-            else if (_e.ColumnIndex == LIST_RESULTS_COLUMN_MR_BMB)
+            else if (tag == LIST_RESULTS_COLUMN_TAG_MR_BMB)
                 match = pair.MatchRateBMB / 100.0;
+            else if (tag == LIST_RESULTS_COLUMN_TAG_MR_AVG)
+                match = pair.MatchRateAVG / 100;
             else
                 return;
             if (match < 0)
@@ -1167,7 +1202,7 @@ namespace MSec
             threshold = Convert.ToSingle(tempDecimal) / 100.0;
 
             // Set color
-            index = calculateMidpointColorIndex(threshold, match, NUM_MIDPOINTS_COLOR_RESULT);
+            index = Utility.calculateMidpointColorIndex(threshold, match, NUM_MIDPOINTS_COLOR_RESULT);
             background = m_colorListMidpoints[index];
 
             // Set color to sub-item

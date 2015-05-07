@@ -39,13 +39,14 @@
             this.Selection_ImageSource1 = new ImageSourceSelection();
             this.Selection_ImageSource0 = new ImageSourceSelection();
             this.pageCrossComparison = new System.Windows.Forms.TabPage();
-            this.CC_List_Results_2 = new BrightIdeasSoftware.FastObjectListView();
+            this.CC_List_Results = new BrightIdeasSoftware.FastObjectListView();
             this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn6 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn7 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn8 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.label5 = new System.Windows.Forms.Label();
             this.CC_Label_ResultCount = new System.Windows.Forms.Label();
             this.CC_Text_Filter = new System.Windows.Forms.ComboBox();
@@ -78,7 +79,7 @@
             this.MainDialog_MainTab.SuspendLayout();
             this.pageImageVsImage.SuspendLayout();
             this.pageCrossComparison.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CC_List_Results_2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CC_List_Results)).BeginInit();
             this.CC_ToolStrip.SuspendLayout();
             this.CC_Group_SourceLocation.SuspendLayout();
             this.Menu_Main.SuspendLayout();
@@ -173,7 +174,7 @@
             // 
             // pageCrossComparison
             // 
-            this.pageCrossComparison.Controls.Add(this.CC_List_Results_2);
+            this.pageCrossComparison.Controls.Add(this.CC_List_Results);
             this.pageCrossComparison.Controls.Add(this.label5);
             this.pageCrossComparison.Controls.Add(this.CC_Label_ResultCount);
             this.pageCrossComparison.Controls.Add(this.CC_Text_Filter);
@@ -188,35 +189,37 @@
             this.pageCrossComparison.Text = "Cross Comparison";
             this.pageCrossComparison.UseVisualStyleBackColor = true;
             // 
-            // CC_List_Results_2
+            // CC_List_Results
             // 
-            this.CC_List_Results_2.AllColumns.Add(this.olvColumn2);
-            this.CC_List_Results_2.AllColumns.Add(this.olvColumn3);
-            this.CC_List_Results_2.AllColumns.Add(this.olvColumn6);
-            this.CC_List_Results_2.AllColumns.Add(this.olvColumn4);
-            this.CC_List_Results_2.AllColumns.Add(this.olvColumn7);
-            this.CC_List_Results_2.AllColumns.Add(this.olvColumn8);
-            this.CC_List_Results_2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.CC_List_Results.AllColumns.Add(this.olvColumn2);
+            this.CC_List_Results.AllColumns.Add(this.olvColumn3);
+            this.CC_List_Results.AllColumns.Add(this.olvColumn6);
+            this.CC_List_Results.AllColumns.Add(this.olvColumn4);
+            this.CC_List_Results.AllColumns.Add(this.olvColumn7);
+            this.CC_List_Results.AllColumns.Add(this.olvColumn8);
+            this.CC_List_Results.AllColumns.Add(this.olvColumn1);
+            this.CC_List_Results.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn2,
             this.olvColumn3,
             this.olvColumn6,
             this.olvColumn4,
             this.olvColumn7,
-            this.olvColumn8});
-            this.CC_List_Results_2.FullRowSelect = true;
-            this.CC_List_Results_2.GridLines = true;
-            this.CC_List_Results_2.HideSelection = false;
-            this.CC_List_Results_2.Location = new System.Drawing.Point(3, 167);
-            this.CC_List_Results_2.MultiSelect = false;
-            this.CC_List_Results_2.Name = "CC_List_Results_2";
-            this.CC_List_Results_2.ShowGroups = false;
-            this.CC_List_Results_2.ShowItemCountOnGroups = true;
-            this.CC_List_Results_2.Size = new System.Drawing.Size(690, 319);
-            this.CC_List_Results_2.TabIndex = 13;
-            this.CC_List_Results_2.UseCellFormatEvents = true;
-            this.CC_List_Results_2.UseCompatibleStateImageBehavior = false;
-            this.CC_List_Results_2.View = System.Windows.Forms.View.Details;
-            this.CC_List_Results_2.VirtualMode = true;
+            this.olvColumn8,
+            this.olvColumn1});
+            this.CC_List_Results.FullRowSelect = true;
+            this.CC_List_Results.GridLines = true;
+            this.CC_List_Results.HideSelection = false;
+            this.CC_List_Results.Location = new System.Drawing.Point(3, 167);
+            this.CC_List_Results.MultiSelect = false;
+            this.CC_List_Results.Name = "CC_List_Results";
+            this.CC_List_Results.ShowGroups = false;
+            this.CC_List_Results.ShowItemCountOnGroups = true;
+            this.CC_List_Results.Size = new System.Drawing.Size(690, 319);
+            this.CC_List_Results.TabIndex = 13;
+            this.CC_List_Results.UseCellFormatEvents = true;
+            this.CC_List_Results.UseCompatibleStateImageBehavior = false;
+            this.CC_List_Results.View = System.Windows.Forms.View.Details;
+            this.CC_List_Results.VirtualMode = true;
             // 
             // olvColumn2
             // 
@@ -239,36 +242,51 @@
             this.olvColumn6.AspectName = "MatchRateRADISH";
             this.olvColumn6.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.olvColumn6.Sortable = false;
+            this.olvColumn6.Tag = "MatchRateRADISH";
             this.olvColumn6.Text = "RADISH (%)";
             this.olvColumn6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.olvColumn6.Width = 90;
+            this.olvColumn6.Width = 75;
             // 
             // olvColumn4
             // 
             this.olvColumn4.AspectName = "MatchRateDCT";
             this.olvColumn4.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.olvColumn4.Sortable = false;
+            this.olvColumn4.Tag = "MatchRateDCT";
             this.olvColumn4.Text = "DCT (%)";
             this.olvColumn4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.olvColumn4.Width = 90;
+            this.olvColumn4.Width = 70;
             // 
             // olvColumn7
             // 
             this.olvColumn7.AspectName = "MatchRateWavelet";
             this.olvColumn7.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.olvColumn7.Sortable = false;
+            this.olvColumn7.Tag = "MatchRateWavelet";
             this.olvColumn7.Text = "Wavelet (%)";
             this.olvColumn7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.olvColumn7.Width = 90;
+            this.olvColumn7.Width = 80;
             // 
             // olvColumn8
             // 
             this.olvColumn8.AspectName = "MatchRateBMB";
             this.olvColumn8.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.olvColumn8.Sortable = false;
+            this.olvColumn8.Tag = "MatchRateBMB";
             this.olvColumn8.Text = "BMB (%)";
             this.olvColumn8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.olvColumn8.Width = 90;
+            this.olvColumn8.Width = 70;
+            // 
+            // olvColumn1
+            // 
+            this.olvColumn1.AspectName = "MatchRateAVG";
+            this.olvColumn1.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColumn1.Hideable = false;
+            this.olvColumn1.Sortable = false;
+            this.olvColumn1.Tag = "MatchRateAverage";
+            this.olvColumn1.Text = "Average (%)";
+            this.olvColumn1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColumn1.Width = 80;
             // 
             // label5
             // 
@@ -578,7 +596,7 @@
             this.pageImageVsImage.ResumeLayout(false);
             this.pageCrossComparison.ResumeLayout(false);
             this.pageCrossComparison.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CC_List_Results_2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CC_List_Results)).EndInit();
             this.CC_ToolStrip.ResumeLayout(false);
             this.CC_ToolStrip.PerformLayout();
             this.CC_Group_SourceLocation.ResumeLayout(false);
@@ -630,13 +648,14 @@
         private System.Windows.Forms.ComboBox CC_Text_Filter;
         private System.Windows.Forms.Label CC_Label_ResultCount;
         private System.Windows.Forms.Label label5;
-        private BrightIdeasSoftware.FastObjectListView CC_List_Results_2;
+        private BrightIdeasSoftware.FastObjectListView CC_List_Results;
         private BrightIdeasSoftware.OLVColumn olvColumn2;
         private BrightIdeasSoftware.OLVColumn olvColumn3;
         private BrightIdeasSoftware.OLVColumn olvColumn4;
         private BrightIdeasSoftware.OLVColumn olvColumn6;
         private BrightIdeasSoftware.OLVColumn olvColumn7;
         private BrightIdeasSoftware.OLVColumn olvColumn8;
+        private BrightIdeasSoftware.OLVColumn olvColumn1;
     }
 }
 
