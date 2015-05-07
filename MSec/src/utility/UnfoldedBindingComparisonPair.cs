@@ -154,5 +154,12 @@ namespace MSec
             m_compDataWavelet = _wavelet;
             m_compDataBMB = _bmb;
         }
+
+        public UnfoldedBindingComparisonPair cloneWithNewTag(object _tag)
+        {
+            var item = new UnfoldedBindingComparisonPair(Threshold, Source0, Source1, DataRADISH, DataDCT, DataWavelet, DataBMB);
+            item.Tag = _tag;
+            return item;
+        }
     }
 }

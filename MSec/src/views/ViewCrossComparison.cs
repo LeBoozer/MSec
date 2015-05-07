@@ -49,6 +49,7 @@ namespace MSec
         private static readonly string  ACTION_LOADING_FILES        = "Loading and analysing files...";
         private static readonly string  ACTION_READY                = "Ready for the comparison...";
         private static readonly string  ACTION_EXECUTION            = "The comparison is being executed...";
+        private static readonly string  ACTION_FILTERING            = "Filtering is being executed...";
 
         private static readonly string  CUSTOM_ACTION_HASHING       = "Hashes are being computed: {0}/{1}";
         private static readonly string  CUSTOM_ACTION_COMPARISON    = "Hashes are being compared";
@@ -72,7 +73,8 @@ namespace MSec
             STATE_IDLE,
             STATE_LOADING_FILES,
             STATE_READY,
-            STATE_EXECUTING
+            STATE_EXECUTING,
+            STATE_FILTERING
         }
 
         // A simple node for listing files and directories
@@ -198,6 +200,51 @@ namespace MSec
             public override string ToString()
             {
                 return m_name;
+            }
+        }
+
+        // Stores data for the filter processing
+        private class FilterBinaryData
+        {
+            // The queryable interface
+            private IQueryable m_queryable = null;
+            public IQueryable Queryable
+            {
+                get { return m_queryable; }
+                set { m_queryable = value; }
+            }
+
+            // The instructions
+            private string m_code = "";
+            public string Code
+            {
+                get { return m_code; }
+                private set { }
+            }
+
+            // True if the queryable stores grouped data
+            private bool m_isGrouped;
+            public bool IsGrouped
+            {
+                get { return m_isGrouped; }
+                set { m_isGrouped = value; }
+            }
+
+            // The group key
+            private string m_groupKey = "";
+            public string GroupKey
+            {
+                get { return m_groupKey; }
+                private set { }
+            }
+
+            // Constructor
+            public FilterBinaryData(IQueryable _q, string _c, string _key = "")
+            {
+                // Copy
+                m_queryable = _q;
+                m_code = _c;
+                m_groupKey = _key;
             }
         }
 
@@ -377,7 +424,7 @@ namespace MSec
             (m_listResults.Columns[LIST_RESULTS_COLUMN_SOURCE0_PATH] as OLVColumn).GroupKeyGetter += onListResultsGroupKeyGetter;
             m_listResults.ItemSelectionChanged += onItemSelectionChanged;
             m_listResults.FormatCell += onListResultsFormatCell;
-            m_listResults.ColumnClick += onColumnClick;
+           // m_listResults.ColumnClick += onColumnClick;
             m_listResults.ColumnWidthChanging += onColumnWidthChanging;
 
             // Add events to: buttons
@@ -545,6 +592,36 @@ namespace MSec
                     };
                 }
                 #endregion State: Execution
+
+                #region State: Filtering
+                else if (m_currentState == eState.STATE_FILTERING)
+                {
+                    // Enter
+                    m_onStateEnter = delegate
+                    {
+                        m_labelAction.Text = ACTION_FILTERING;
+                        m_buttonReferenceFolderSelect.Enabled = false;
+                        m_buttonReferenceFolderDelete.Enabled = false;
+                        m_buttonReferenceFolderStart.Enabled = false;
+                        m_listResults.Enabled = false;
+                        m_textFilter.Enabled = false;
+                        m_toolStripDropDown.Enabled = false;
+                        lockTechniqueSelection();
+                    };
+
+                    // Exit
+                    m_onStateExit = delegate
+                    {
+                        m_buttonReferenceFolderSelect.Enabled = true;
+                        m_buttonReferenceFolderDelete.Enabled = true;
+                        m_buttonReferenceFolderStart.Enabled = true;
+                        m_listResults.Enabled = true;
+                        m_textFilter.Enabled = true;
+                        m_toolStripDropDown.Enabled = true;
+                        unlockTechniqueSelection();
+                    };
+                }
+                #endregion State: Filtering
 
                 // Execute state changes
                 Utility.invokeInGuiThread(m_tabPage, m_onStateEnter);
@@ -1033,6 +1110,200 @@ namespace MSec
         }
 
         // Parses and executes the defined filter
+        private bool executeFilter2(string _filter)
+        {
+            // Local variables
+            string[] groups = null;
+            string[] sections = null;
+            string[] groupKey = null;
+            string code = "";
+            bool isGrouped = false;
+            List<FilterBinaryData> groupList = new List<FilterBinaryData>();
+            List<UnfoldedBindingComparisonPair> displayList = new List<UnfoldedBindingComparisonPair>();
+
+            // Check parameter
+            if (m_listUnfoldedDisplayComparisonItems == null || m_listUnfoldedDisplayComparisonItems.Count == 0)
+                return false;
+
+            // Empty?
+            if (_filter == null || _filter.Length == 0)
+            {
+                m_listResults.ShowGroups = false;
+                m_listUnfoldedDisplayComparisonItems = m_listUnfoldedComparisonItems;
+                m_listResults.SetObjects(m_listUnfoldedDisplayComparisonItems);
+                updateLabelResultCount();
+                return true;
+            }
+
+            try
+            {
+                // Split string into groups starting with "[" and ending with "]"
+                groups = Regex.Split(_filter, @"\[(.*?)\]", RegexOptions.IgnoreCase);
+                if (groups != null && groups.Length > 0)
+                {
+                    // Loop through all groups
+                    foreach (string g in groups)
+                    {
+                        // Local variables
+                        string key = "";
+
+                        // Validate group
+                        if (g == null || g.Length == 0)
+                            continue;
+                        code = g;
+
+                        // Extract group key (if available)
+                        groupKey = Regex.Split(g, @"\@\(([^)]*)\)", RegexOptions.IgnoreCase);
+                        if (groupKey != null && groupKey.Length == 3)
+                        {
+                            key = groupKey[1];
+                            code = groupKey[2];
+                        }
+
+                        // Create new group
+                        groupList.Add(new FilterBinaryData(m_listUnfoldedComparisonItems.AsQueryable(), code.Trim(), key.Trim()));
+                    }
+                }
+                else
+                {
+                    // Create just one group
+                    groupList.Add(new FilterBinaryData(m_listUnfoldedComparisonItems.AsQueryable(), _filter));
+                }
+                if (groupList.Count == 0)
+                    return false;
+
+                #region Executing group
+                // Loop through all groups
+                foreach (var g in groupList)
+                {
+                    // Split string into sections
+                    sections = Regex.Split(g.Code, @"\s(?=(?:WHERE|GROUPBY|ORDERBY|TAKE|SKIP)[^)]*?)", RegexOptions.IgnoreCase);
+                    if (sections == null || sections.Length == 0)
+                        return false;
+                    sections = sections.Reverse().ToArray();
+
+                    // Get queryable
+                    foreach (string s in sections)
+                    {
+                        // Get keyword and command
+                        string keyword = s.Substring(0, s.IndexOf(' ')).ToLower();
+                        string command = s.Substring(s.IndexOf(' '));
+
+                        // Where clause?
+                        if (keyword == "where")
+                        {
+                            // Execute query
+                            g.Queryable = g.Queryable.Where(command);
+                        }
+
+                        // Group by clause?
+                        else if (keyword == "groupby")
+                        {
+                            // Query is grouped now!
+                            g.IsGrouped = true;
+
+                            // Execute query
+                            g.Queryable = g.Queryable.GroupBy(command, "it").Select("new (it.Key as Key, it as Pairs)");
+                        }
+
+                        // Order-by clause?
+                        else if (keyword == "orderby")
+                        {
+                            // Execute query
+                            g.Queryable = g.Queryable.OrderBy(command);
+                        }
+
+                        // Take clause?
+                        else if (keyword == "take")
+                        {
+                            // Execute query
+                            g.Queryable = g.Queryable.Take(int.Parse(command));
+                        }
+
+                        // Skip clause?
+                        else if (keyword == "skip")
+                        {
+                            // Execute query
+                            g.Queryable = g.Queryable.Skip(int.Parse(command));
+                        }
+                    }
+                }
+                #endregion Executing group
+
+                #region Merging data
+                // Loop through all groups
+                foreach (var g in groupList)
+                {
+                    // Grouped?
+                    if(g.IsGrouped == true)
+                    {
+                        // Assign groups to the pairs
+                        foreach (dynamic qg in g.Queryable)
+                        {
+                            foreach (dynamic item in qg.Pairs)
+                            {
+                                // Local variables
+                                object tag = qg.Key;
+
+                                // Generate tag
+                                if (g.GroupKey != null && g.GroupKey.Length > 0)
+                                    tag = g.GroupKey + " (" + qg.Key + ")";
+
+                                // Item in use?
+                                if (item.Tag == null)
+                                {
+                                    // Add to list
+                                    item.Tag = tag;
+                                    displayList.Add(item);
+                                }
+                                else
+                                {
+                                    // Clone with new tag and add to display list
+                                    displayList.Add(item.cloneWithNewTag(tag));
+                                }
+                            }
+                        }
+
+                        // Set flag
+                        isGrouped = true;
+                    }
+                    else
+                    {
+                        // Generate items for clauses without grouping
+                        var list = (g.Queryable as IQueryable<UnfoldedBindingComparisonPair>).ToList();
+                        foreach(var item in list)
+                        {
+                            // Local variables
+                            object tag = "Unkown";
+
+                            // Add custom group tag (if available)
+                            if (g.GroupKey != null && g.GroupKey.Length > 0)
+                                tag = g.GroupKey;
+
+                            // Add to list
+                            displayList.Add(item.cloneWithNewTag(tag));
+                        }
+                    }
+                }
+                #endregion Merging data
+
+                // Configure list-view
+                m_listResults.ShowGroups = isGrouped;
+                m_listUnfoldedDisplayComparisonItems = displayList;
+                m_listResults.SetObjects(m_listUnfoldedDisplayComparisonItems);
+                updateLabelResultCount();
+            }
+            catch(Exception _ex)
+            {
+                // Show error
+                MessageBox.Show(_ex.Message, "Query failed or is invalid!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
+        }
+
+        // Parses and executes the defined filter
         private bool executeFilter(string _filter)
         {
             // Local variables
@@ -1162,7 +1433,7 @@ namespace MSec
             // Local variables
             UnfoldedBindingComparisonPair pair = _sender as UnfoldedBindingComparisonPair;
 
-            return pair.Tag;
+            return pair.Tag.ToString();
         }
 
         // Event List::onListResultsFormatCell
@@ -1191,7 +1462,7 @@ namespace MSec
             else if (tag == LIST_RESULTS_COLUMN_TAG_MR_BMB)
                 match = pair.MatchRateBMB / 100.0;
             else if (tag == LIST_RESULTS_COLUMN_TAG_MR_AVG)
-                match = pair.MatchRateAVG / 100;
+                match = pair.MatchRateAVG / 100.0;
             else
                 return;
             if (match < 0)
@@ -1332,7 +1603,7 @@ namespace MSec
                 return;
 
             // Execute filter
-            executeFilter(m_textFilter.Text);
+            executeFilter2(m_textFilter.Text);
         }
 
         // Event TextBox::onFilterSelectedValueChanged
@@ -1346,7 +1617,7 @@ namespace MSec
 
             // Execute query
             if (filter.AutoExecute == true)
-                executeFilter(filter.Command);
+                executeFilter2(filter.Command);
         }
 
         #region Events: ToolStrip

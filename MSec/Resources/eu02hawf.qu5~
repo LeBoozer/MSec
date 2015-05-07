@@ -11,33 +11,16 @@ The following clauses can be used:
 	- skip
 	- orderby
 
--------------------------------------------------------------------------------------------------------------------------------------------
-
 Grouping can be done with the clause "groupby". It is NOT possible to use this command in a nested enviroment!
 However the grouping command can be used several times on the SAME level, separated by "[" and "]". Custom 
-naming for groups is also supported by prepending the following instruction "@(X)" to the actual command.
-"X" represents the new name of the group. Examples for grouping:
--	groupby MatchRateAVG > 30
--	[groupby MatchRateAVG > 30][groupby MatchRateDCT > 30 && MatchRateDCT < 90]
--	[@(AVG) groupby MatchRateAVG > 30]
--	[@(AVG) groupby MatchRateAVG > 30][@(DCT) groupby MatchRateDCT > 30 && MatchRateDCT < 90]
-
-Grouping can be combined with normal not-grouping clauses. All not-grouping clauses generate implicit groups,
-if they are being used with grouping clauses!
-Separation between explicit grouping commands and implizit grouping commands are done via "[" and "]".
--	[groupby MatchRateAVG > 30] where MatchRateDCT < 10
--	where Source0.PathID != Source1.PathID [@(AVG) groupby MatchRateAVG > 30] where MatchRateDCT < 10
-
-Implicit grouping commands can also be renamed by prepending the same instruction as before: "@(X)":
--	[@(XY) where Source0.PathID != Source1.PathID][@(AVG) groupby MatchRateAVG > 30][@(ABC) where MatchRateDCT < 10]
-
+naming for groups is also supported by prepending "@(X)" before the actual command.
 
 The are a few restrictions regarding the use of these clauses:
+	- groupby: This clause can be used just once (due to the representation of the data in a list structure)
 	- orderby: Groups cannot be (re-)orderd at this time. The following construct fulfills the syntax but 
 			   does not affect of the groups' ordering:
 					orderby [...] groupby [...]
 
--------------------------------------------------------------------------------------------------------------------------------------------
 
 The dynamic "Linq" expression language can access all public attributes of the data (access to custom methods
 is not supported yet!). The following list gives a brief overview about the accessible attributes of the
@@ -50,5 +33,6 @@ list content (standard objects are not mentioned here, please see link above!):
 		- SourceX.FilePath				(string)
 		- SourceX.FileName				(string)
 		- SourceX.Dir					(string)
+
 
 New or existing pre-defined filter can be added/edited in the application configuration: config.cfg
