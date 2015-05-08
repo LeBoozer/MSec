@@ -39,6 +39,9 @@
             this.Selection_ImageSource1 = new ImageSourceSelection();
             this.Selection_ImageSource0 = new ImageSourceSelection();
             this.pageCrossComparison = new System.Windows.Forms.TabPage();
+            this.CC_Group_Controls = new System.Windows.Forms.GroupBox();
+            this.CC_Button_Controls_CollapseGroups = new System.Windows.Forms.Button();
+            this.CC_Button_ReferenceFolder_Start = new System.Windows.Forms.Button();
             this.CC_List_Results = new BrightIdeasSoftware.FastObjectListView();
             this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -57,7 +60,6 @@
             this.CC_ToolStrip_Progress = new System.Windows.Forms.ToolStripProgressBar();
             this.CC_Group_SourceLocation = new System.Windows.Forms.GroupBox();
             this.CC_Label_ReferenceFolder_NumSources = new System.Windows.Forms.Label();
-            this.CC_Button_ReferenceFolder_Start = new System.Windows.Forms.Button();
             this.CC_Button_ReferenceFolder_Delete = new System.Windows.Forms.Button();
             this.CC_Button_ReferenceFolder_Select = new System.Windows.Forms.Button();
             this.CC_Label_ReferenceFolder = new System.Windows.Forms.Label();
@@ -79,6 +81,7 @@
             this.MainDialog_MainTab.SuspendLayout();
             this.pageImageVsImage.SuspendLayout();
             this.pageCrossComparison.SuspendLayout();
+            this.CC_Group_Controls.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CC_List_Results)).BeginInit();
             this.CC_ToolStrip.SuspendLayout();
             this.CC_Group_SourceLocation.SuspendLayout();
@@ -174,6 +177,7 @@
             // 
             // pageCrossComparison
             // 
+            this.pageCrossComparison.Controls.Add(this.CC_Group_Controls);
             this.pageCrossComparison.Controls.Add(this.CC_List_Results);
             this.pageCrossComparison.Controls.Add(this.label5);
             this.pageCrossComparison.Controls.Add(this.CC_Label_ResultCount);
@@ -188,6 +192,41 @@
             this.pageCrossComparison.TabIndex = 2;
             this.pageCrossComparison.Text = "Cross Comparison";
             this.pageCrossComparison.UseVisualStyleBackColor = true;
+            // 
+            // CC_Group_Controls
+            // 
+            this.CC_Group_Controls.Controls.Add(this.CC_Button_Controls_CollapseGroups);
+            this.CC_Group_Controls.Controls.Add(this.CC_Button_ReferenceFolder_Start);
+            this.CC_Group_Controls.Location = new System.Drawing.Point(490, 117);
+            this.CC_Group_Controls.Name = "CC_Group_Controls";
+            this.CC_Group_Controls.Size = new System.Drawing.Size(203, 44);
+            this.CC_Group_Controls.TabIndex = 14;
+            this.CC_Group_Controls.TabStop = false;
+            this.CC_Group_Controls.Text = "Controls";
+            // 
+            // CC_Button_Controls_CollapseGroups
+            // 
+            this.CC_Button_Controls_CollapseGroups.BackgroundImage = global::MSec.Properties.Resources.collapse1;
+            this.CC_Button_Controls_CollapseGroups.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CC_Button_Controls_CollapseGroups.Enabled = false;
+            this.CC_Button_Controls_CollapseGroups.Location = new System.Drawing.Point(49, 16);
+            this.CC_Button_Controls_CollapseGroups.Name = "CC_Button_Controls_CollapseGroups";
+            this.CC_Button_Controls_CollapseGroups.Size = new System.Drawing.Size(23, 23);
+            this.CC_Button_Controls_CollapseGroups.TabIndex = 10;
+            this.ToolTip.SetToolTip(this.CC_Button_Controls_CollapseGroups, "Collapses all visible groups.");
+            this.CC_Button_Controls_CollapseGroups.UseVisualStyleBackColor = true;
+            // 
+            // CC_Button_ReferenceFolder_Start
+            // 
+            this.CC_Button_ReferenceFolder_Start.BackgroundImage = global::MSec.Properties.Resources.play;
+            this.CC_Button_ReferenceFolder_Start.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CC_Button_ReferenceFolder_Start.Enabled = false;
+            this.CC_Button_ReferenceFolder_Start.Location = new System.Drawing.Point(20, 16);
+            this.CC_Button_ReferenceFolder_Start.Name = "CC_Button_ReferenceFolder_Start";
+            this.CC_Button_ReferenceFolder_Start.Size = new System.Drawing.Size(23, 23);
+            this.CC_Button_ReferenceFolder_Start.TabIndex = 9;
+            this.ToolTip.SetToolTip(this.CC_Button_ReferenceFolder_Start, "Executes the hashing and the subsequent\r\ncomparison of those hashes.");
+            this.CC_Button_ReferenceFolder_Start.UseVisualStyleBackColor = true;
             // 
             // CC_List_Results
             // 
@@ -208,6 +247,7 @@
             this.olvColumn1});
             this.CC_List_Results.FullRowSelect = true;
             this.CC_List_Results.GridLines = true;
+            this.CC_List_Results.HeaderUsesThemes = true;
             this.CC_List_Results.HideSelection = false;
             this.CC_List_Results.Location = new System.Drawing.Point(3, 167);
             this.CC_List_Results.MultiSelect = false;
@@ -227,7 +267,7 @@
             this.olvColumn2.Hideable = false;
             this.olvColumn2.Sortable = false;
             this.olvColumn2.Text = "Image source 0";
-            this.olvColumn2.Width = 150;
+            this.olvColumn2.Width = 140;
             // 
             // olvColumn3
             // 
@@ -235,7 +275,7 @@
             this.olvColumn3.Hideable = false;
             this.olvColumn3.Sortable = false;
             this.olvColumn3.Text = "Image source 1";
-            this.olvColumn3.Width = 150;
+            this.olvColumn3.Width = 140;
             // 
             // olvColumn6
             // 
@@ -364,38 +404,25 @@
             // CC_Group_SourceLocation
             // 
             this.CC_Group_SourceLocation.Controls.Add(this.CC_Label_ReferenceFolder_NumSources);
-            this.CC_Group_SourceLocation.Controls.Add(this.CC_Button_ReferenceFolder_Start);
             this.CC_Group_SourceLocation.Controls.Add(this.CC_Button_ReferenceFolder_Delete);
             this.CC_Group_SourceLocation.Controls.Add(this.CC_Button_ReferenceFolder_Select);
             this.CC_Group_SourceLocation.Controls.Add(this.CC_Label_ReferenceFolder);
             this.CC_Group_SourceLocation.Controls.Add(this.CC_Text_ReferenceFolder_Path);
             this.CC_Group_SourceLocation.Location = new System.Drawing.Point(3, 117);
             this.CC_Group_SourceLocation.Name = "CC_Group_SourceLocation";
-            this.CC_Group_SourceLocation.Size = new System.Drawing.Size(690, 44);
+            this.CC_Group_SourceLocation.Size = new System.Drawing.Size(481, 44);
             this.CC_Group_SourceLocation.TabIndex = 1;
             this.CC_Group_SourceLocation.TabStop = false;
             this.CC_Group_SourceLocation.Text = "Reference folder";
             // 
             // CC_Label_ReferenceFolder_NumSources
             // 
-            this.CC_Label_ReferenceFolder_NumSources.Location = new System.Drawing.Point(547, 21);
+            this.CC_Label_ReferenceFolder_NumSources.Location = new System.Drawing.Point(337, 21);
             this.CC_Label_ReferenceFolder_NumSources.Name = "CC_Label_ReferenceFolder_NumSources";
             this.CC_Label_ReferenceFolder_NumSources.Size = new System.Drawing.Size(137, 13);
             this.CC_Label_ReferenceFolder_NumSources.TabIndex = 10;
             this.CC_Label_ReferenceFolder_NumSources.Text = "Image source count: 0";
             this.CC_Label_ReferenceFolder_NumSources.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // CC_Button_ReferenceFolder_Start
-            // 
-            this.CC_Button_ReferenceFolder_Start.BackgroundImage = global::MSec.Properties.Resources.play;
-            this.CC_Button_ReferenceFolder_Start.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.CC_Button_ReferenceFolder_Start.Enabled = false;
-            this.CC_Button_ReferenceFolder_Start.Location = new System.Drawing.Point(337, 16);
-            this.CC_Button_ReferenceFolder_Start.Name = "CC_Button_ReferenceFolder_Start";
-            this.CC_Button_ReferenceFolder_Start.Size = new System.Drawing.Size(23, 23);
-            this.CC_Button_ReferenceFolder_Start.TabIndex = 9;
-            this.ToolTip.SetToolTip(this.CC_Button_ReferenceFolder_Start, "Executes the hashing and the subsequent\r\ncomparison of those hashes.");
-            this.CC_Button_ReferenceFolder_Start.UseVisualStyleBackColor = true;
             // 
             // CC_Button_ReferenceFolder_Delete
             // 
@@ -596,6 +623,7 @@
             this.pageImageVsImage.ResumeLayout(false);
             this.pageCrossComparison.ResumeLayout(false);
             this.pageCrossComparison.PerformLayout();
+            this.CC_Group_Controls.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.CC_List_Results)).EndInit();
             this.CC_ToolStrip.ResumeLayout(false);
             this.CC_ToolStrip.PerformLayout();
@@ -656,6 +684,8 @@
         private BrightIdeasSoftware.OLVColumn olvColumn7;
         private BrightIdeasSoftware.OLVColumn olvColumn8;
         private BrightIdeasSoftware.OLVColumn olvColumn1;
+        private System.Windows.Forms.GroupBox CC_Group_Controls;
+        private System.Windows.Forms.Button CC_Button_Controls_CollapseGroups;
     }
 }
 
