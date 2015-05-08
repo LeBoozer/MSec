@@ -46,5 +46,17 @@ namespace MSec
             // Open link
             MSec.Instance.onOpenLinkInBrowser("http://luminous.codeplex.com/");
         }
+
+        private void linkLabel5_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Open link
+            MSec.Instance.onOpenLinkInBrowser("https://msdn.microsoft.com/en-us/vstudio/bb894665.aspx");
+        }
+
+        private void linkLabel5_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Open link
+            MSec.Instance.onOpenLinkInBrowser("http://objectlistview.sourceforge.net/cs/index.html");
+        }
     }
 }

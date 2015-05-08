@@ -78,6 +78,10 @@
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.label4 = new System.Windows.Forms.Label();
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.Test = new System.Windows.Forms.LinkLabel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.linkLabel5 = new System.Windows.Forms.LinkLabel();
             this.MainDialog_MainTab.SuspendLayout();
             this.pageImageVsImage.SuspendLayout();
             this.pageCrossComparison.SuspendLayout();
@@ -579,14 +583,14 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(136, 599);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(25, 13);
+            this.label4.Size = new System.Drawing.Size(10, 13);
             this.label4.TabIndex = 14;
-            this.label4.Text = "and";
+            this.label4.Text = ",";
             // 
             // linkLabel4
             // 
             this.linkLabel4.AutoSize = true;
-            this.linkLabel4.Location = new System.Drawing.Point(156, 599);
+            this.linkLabel4.Location = new System.Drawing.Point(141, 599);
             this.linkLabel4.Name = "linkLabel4";
             this.linkLabel4.Size = new System.Drawing.Size(82, 13);
             this.linkLabel4.TabIndex = 15;
@@ -594,12 +598,57 @@
             this.linkLabel4.Text = "Luminous library";
             this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel4_LinkClicked);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Location = new System.Drawing.Point(219, 599);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(10, 13);
+            this.label6.TabIndex = 16;
+            this.label6.Text = ",";
+            // 
+            // Test
+            // 
+            this.Test.AutoSize = true;
+            this.Test.Location = new System.Drawing.Point(224, 599);
+            this.Test.Name = "Test";
+            this.Test.Size = new System.Drawing.Size(35, 13);
+            this.Test.TabIndex = 17;
+            this.Test.TabStop = true;
+            this.Test.Text = "DLinq";
+            this.Test.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel5_LinkClicked);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(254, 599);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(10, 13);
+            this.label7.TabIndex = 18;
+            this.label7.Text = ",";
+            // 
+            // linkLabel5
+            // 
+            this.linkLabel5.AutoSize = true;
+            this.linkLabel5.Location = new System.Drawing.Point(259, 599);
+            this.linkLabel5.Name = "linkLabel5";
+            this.linkLabel5.Size = new System.Drawing.Size(77, 13);
+            this.linkLabel5.TabIndex = 19;
+            this.linkLabel5.TabStop = true;
+            this.linkLabel5.Text = "ObjectListView";
+            this.linkLabel5.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel5_LinkClicked_1);
+            // 
             // MainDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(726, 617);
+            this.Controls.Add(this.linkLabel5);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.Test);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.linkLabel4);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.linkLabel3);
@@ -686,6 +735,10 @@
         private BrightIdeasSoftware.OLVColumn olvColumn1;
         private System.Windows.Forms.GroupBox CC_Group_Controls;
         private System.Windows.Forms.Button CC_Button_Controls_CollapseGroups;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.LinkLabel Test;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.LinkLabel linkLabel5;
     }
 }
 

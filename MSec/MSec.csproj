@@ -221,6 +221,8 @@
     <None Include="Resources\gear.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\collapse.png" />
+    <None Include="Resources\collapse1.png" />
     <Content Include="Resources\Filter.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
