@@ -809,9 +809,8 @@ namespace MSec
                         // Local variables
                         ImageSource cpy = null;
                         ImageSourceBinding bin = null;
-
  
-                            // Get source
+                        // Get source
                         while (bindingQueue.TryDequeue(out bin) == true)
                         {
                             // Loop through all selected techniques
@@ -853,7 +852,9 @@ namespace MSec
                 foreach (var j in jobList)
                 {
                     j.waitForDone();
-                    if (j.Result == null || j.Result == false)
+                    if (j.Error != null)
+                        throw j.Error;
+                    else if (j.Result == null || j.Result == false)
                         result = false;
                 }
 
@@ -958,7 +959,9 @@ namespace MSec
                 foreach (var j in jobList)
                 {
                     j.waitForDone();
-                    if (j.Result == null || j.Result == false)
+                    if (j.Error != null)
+                        throw j.Error;
+                    else if (j.Result == null || j.Result == false)
                         result = false;
                 }
 
@@ -1215,7 +1218,9 @@ namespace MSec
                 foreach (var j in jobList)
                 {
                     j.waitForDone();
-                    if (j.Result == null || j.Result == false)
+                    if (j.Error != null)
+                        throw j.Error;
+                    else if (j.Result == null || j.Result == false)
                         result = false;
                 }
                 if (result == false)

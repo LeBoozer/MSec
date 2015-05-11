@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Windows.Forms;
 
 /*******************************************************************************************************************************************************************
 	Class: Job
@@ -225,7 +226,7 @@ namespace MSec
                 catch(Exception _e)
                 {
                     // Copy error
-                    if (_e is TaskCanceledException == false && _e is OperationCanceledException == false)
+                    if (_e.GetType().Equals(typeof(TaskCanceledException)) == false && _e.GetType().Equals(typeof(OperationCanceledException)) == false)
                         error = _e;
                 }
 
@@ -243,7 +244,7 @@ namespace MSec
                 catch(Exception _e)
                 {
                     // Copy error
-                    if (_e is TaskCanceledException == false && _e is OperationCanceledException == false)
+                    if (_e.GetType().Equals(typeof(TaskCanceledException)) == false && _e.GetType().Equals(typeof(OperationCanceledException)) == false)
                         error = _e;
                 }
 

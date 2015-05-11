@@ -1,0 +1,4 @@
+﻿
+# Technique selection: The change from the operation mode "multiple" to the operation mode "single" does not ensure that only one technique is selected
+
+# CC: The filter clause "orderby" cannot be applied to groups
