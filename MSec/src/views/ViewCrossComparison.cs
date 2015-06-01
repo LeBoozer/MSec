@@ -273,7 +273,9 @@ namespace MSec
 
         // Comparison details stuff
         private CC_ComparisonDetails    m_comparatorDetails = null;
+        private CC_MultiSelectionStats  m_multiSelectionStats = null;
         private Popup                   m_popupWindow = null;
+        private Popup                   m_popupWindowStats = null;
         private Rectangle               m_popupPosition;
 
         // Misc. stuff
@@ -390,12 +392,19 @@ namespace MSec
             m_listResultsSorterFuncs[LIST_RESULTS_COLUMN_MR_AVG] = funcTemp;
             #endregion List-view sorter: element selecter (result list)
 
-            // Create pop-up window
+            // Create pop-up window (comparison details)
             m_comparatorDetails = new CC_ComparisonDetails();
             m_popupWindow = new Popup(m_comparatorDetails);
             m_popupWindow.HidingAnimation = PopupAnimations.None;
             m_popupWindow.ShowingAnimation = PopupAnimations.None;
             m_popupWindow.FocusOnOpen = false;
+
+            // Create pop-up window (multi-selection stats)
+            m_multiSelectionStats = new CC_MultiSelectionStats();
+            m_popupWindowStats = new Popup(m_multiSelectionStats);
+            m_popupWindowStats.HidingAnimation = PopupAnimations.None;
+            m_popupWindowStats.ShowingAnimation = PopupAnimations.None;
+            m_popupWindowStats.FocusOnOpen = false;
 
             // Extract controls
             m_listResults = _tabPage.Parent.Controls.Find("CC_List_Results", true)[0] as FastObjectListView;
@@ -424,7 +433,8 @@ namespace MSec
             // Add events to: list of results
             extractColumnsByTag();
             (m_listResults.Columns[LIST_RESULTS_COLUMN_SOURCE0_PATH] as OLVColumn).GroupKeyGetter += onListResultsGroupKeyGetter;
-            m_listResults.ItemSelectionChanged += onItemSelectionChanged;
+           // m_listResults.ItemSelectionChanged += onItemSelectionChanged;
+            m_listResults.SelectionChanged += onSelectionChanged;
             m_listResults.FormatCell += onListResultsFormatCell;
            // m_listResults.ColumnClick += onColumnClick;
             m_listResults.ColumnWidthChanging += onColumnWidthChanging;
@@ -1625,21 +1635,46 @@ namespace MSec
             _e.Cancel = true;
         }
 
-        // Event List::onItemSelectionChanged
-        void onItemSelectionChanged(object _sender, ListViewItemSelectionChangedEventArgs _e)
+        // Event List::onSelectionChanged
+        void onSelectionChanged(object _sender, EventArgs _e)
         {
-            // Contains pair's ID
-            if(_e.ItemIndex >= m_listUnfoldedDisplayComparisonItems.Count)
+            try
             {
-                m_popupWindow.Hide();
-                return;
+                // Get list with selected items
+                var list = m_listResults.SelectedObjects;
+
+                // None selected?
+                if (list == null || list.Count == 0)
+                {
+                    // Hide windows
+                    m_popupWindowStats.Hide();
+                    m_popupWindow.Hide();
+                }
+
+                // Just one selected?
+                else if (list.Count == 1)
+                {
+                    // Show pop-up window
+                    m_popupWindowStats.Hide();
+                    m_popupWindow.Show(m_listResults, m_popupPosition);
+
+                    // Set data
+                    m_comparatorDetails.setComparisonPair(list[0] as UnfoldedBindingComparisonPair);
+                }
+                else
+                {
+                    // Show pop-up window
+                    m_popupWindow.Hide();
+                    m_popupWindowStats.Show(m_listResults, m_popupPosition);
+
+                    // Set data
+                    m_multiSelectionStats.setSelectedItems(list.OfType<UnfoldedBindingComparisonPair>());
+                }
             }
-
-            // Show pip-up window
-            m_popupWindow.Show(m_listResults, m_popupPosition);
-
-            // Set data
-            m_comparatorDetails.setComparisonPair(m_listUnfoldedDisplayComparisonItems[_e.ItemIndex]);
+            catch(Exception _ex)
+            {
+                MessageBox.Show(_ex.Message);
+            }
         }
 
         // Event Button::onButtonReferenceFolderSelect_Click

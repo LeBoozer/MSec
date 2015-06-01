@@ -254,7 +254,6 @@
             this.CC_List_Results.HeaderUsesThemes = true;
             this.CC_List_Results.HideSelection = false;
             this.CC_List_Results.Location = new System.Drawing.Point(3, 167);
-            this.CC_List_Results.MultiSelect = false;
             this.CC_List_Results.Name = "CC_List_Results";
             this.CC_List_Results.ShowGroups = false;
             this.CC_List_Results.ShowItemCountOnGroups = true;
