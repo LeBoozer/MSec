@@ -1083,8 +1083,8 @@ namespace MSec
             List<UnfoldedBindingComparisonPair> displayList = new List<UnfoldedBindingComparisonPair>();
 
             // Check parameter
-            if (m_listUnfoldedDisplayComparisonItems == null || m_listUnfoldedDisplayComparisonItems.Count == 0)
-                return false;
+           // if (m_listUnfoldedDisplayComparisonItems == null || m_listUnfoldedDisplayComparisonItems.Count == 0)
+             //   return false;
 
             // Empty?
             if (_filter == null || _filter.Length == 0)
@@ -1319,10 +1319,20 @@ namespace MSec
                 // Run in GUI thread
                 Utility.invokeInGuiThread(m_listResults, delegate
                 {
-                    // Configure list-view
-                    m_listResults.ShowGroups = isGrouped;
+                    // Copy data
                     m_listUnfoldedDisplayComparisonItems = displayList;
-                    m_listResults.SetObjects(m_listUnfoldedDisplayComparisonItems);
+
+                    // Configure list-view
+                    if (m_listUnfoldedDisplayComparisonItems == null || m_listUnfoldedDisplayComparisonItems.Count == 0)
+                    {
+                        m_listResults.ShowGroups = false;
+                        m_listResults.ClearObjects();
+                    }
+                    else
+                    {
+                        m_listResults.ShowGroups = isGrouped;
+                        m_listResults.SetObjects(m_listUnfoldedDisplayComparisonItems);
+                    }
                     updateLabelResultCount();
                 });
 
@@ -1399,122 +1409,6 @@ namespace MSec
             {
                 m_labelResultCount.Text = String.Format(STRING_FORMAT_NUM_RESULTS, count);
             });
-        }
-
-        // Parses and executes the defined filter
-        private bool executeFilter(string _filter)
-        {
-            // Local variables
-            string[] sections = null;
-            IQueryable queryable = null;
-            bool isGrouped = false;
-            List<UnfoldedBindingComparisonPair> displayList = new List<UnfoldedBindingComparisonPair>();
-
-            // Check parameter
-            if (m_listUnfoldedDisplayComparisonItems == null || m_listUnfoldedDisplayComparisonItems.Count == 0)
-                return false;
-
-            // Empty?
-            if (_filter == null || _filter.Length == 0)
-            {
-                m_listResults.ShowGroups = false;
-                m_listUnfoldedDisplayComparisonItems = m_listUnfoldedComparisonItems;
-                m_listResults.SetObjects(m_listUnfoldedDisplayComparisonItems);
-                updateLabelResultCount();
-                return true;
-            }
-
-            // Execute query
-            try
-            {
-                // Split string into sections
-                sections = Regex.Split(_filter, @"\s(?=(?:WHERE|GROUPBY|ORDERBY|TAKE|SKIP)[^)]*?)", RegexOptions.IgnoreCase);
-                if (sections == null || sections.Length == 0)
-                    return false;
-                sections = sections.Reverse().ToArray();
-
-                // Get queryable from list
-                queryable = m_listUnfoldedComparisonItems.AsQueryable();
-                foreach (string s in sections)
-                {
-                    // Get keyword and command
-                    string keyword = s.Substring(0, s.IndexOf(' ')).ToLower();
-                    string command = s.Substring(s.IndexOf(' '));
-
-                    // Where clause?
-                    if (keyword == "where")
-                    {
-                        // Execute query
-                        queryable = queryable.Where(command);
-                    }
-
-                    // Group by clause?
-                    else if (keyword == "groupby")
-                    {
-                        if (isGrouped == true)
-                            throw new Exception("The data can be grouped just one time!\nSeveral \"groupby\" keywords are not supported yet.");
-                        queryable = queryable.GroupBy(command, "it").Select("new (it.Key as Key, it as Pairs)");
-                        isGrouped = true;
-                    }
-
-                    // Order-by clause?
-                    else if (keyword == "orderby")
-                    {
-                        // Execute query
-                        queryable = queryable.OrderBy(command);
-                    }
-
-                    // Take clause?
-                    else if (keyword == "take")
-                    {
-                        // Execute query
-                        queryable = queryable.Take(int.Parse(command));
-                    }
-
-                    // Skip clause?
-                    else if (keyword == "skip")
-                    {
-                        // Execute query
-                        queryable = queryable.Skip(int.Parse(command));
-                    }
-                }
-
-                // Group clause?
-                if (isGrouped)
-                {
-                    // Assign groups to the pairs
-                    foreach (dynamic g in queryable)
-                    {
-                        foreach (dynamic item in g.Pairs)
-                        {
-                            // Set item's tag
-                            item.Tag = g.Key;
-
-                            // Add to display list
-                            displayList.Add(item);
-                        }
-                    }
-
-                    // Assign to list-view's list
-                    m_listUnfoldedDisplayComparisonItems = displayList;
-                }
-
-                // List clause!
-                else
-                    m_listUnfoldedDisplayComparisonItems = (queryable as IQueryable<UnfoldedBindingComparisonPair>).ToList();
-
-                // Configure list-view
-                m_listResults.ShowGroups = isGrouped;
-                m_listResults.SetObjects(m_listUnfoldedDisplayComparisonItems);
-                updateLabelResultCount();
-            }
-            catch (Exception _ex)
-            {
-                MessageBox.Show(_ex.Message, "Query failed or is invalid!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            return true;
         }
 
         // Dumps the step-by-step images for the selected comparison pair to disk
@@ -1743,8 +1637,14 @@ namespace MSec
                 return;
 
             // Loop through all groups
-            foreach (OLVGroup g in m_listResults.OLVGroups)
-                g.Collapsed = true;
+            if (m_listResults.OLVGroups != null && m_listResults.OLVGroups.Count > 0)
+            {
+                foreach (OLVGroup g in m_listResults.OLVGroups)
+                {
+                    if (g != null)
+                        g.Collapsed = true;
+                }
+            }
         }
 
         // Event TextBox::onFilterMouseWheel

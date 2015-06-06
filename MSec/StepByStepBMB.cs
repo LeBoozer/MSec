@@ -16,7 +16,7 @@ namespace MSec
         // Constant values
         private static readonly string LABEL_LOADING            = "Image data is being computed...";
         private static readonly string LABEL_ORIGINAL           = "Original image";
-        private static readonly string LABEL_RESIZED            = "1. Resize image to 256x256";
+        private static readonly string LABEL_RESIZED            = "1. Grayscale and resize image";
         private static readonly string LABEL_BLOCK_MEDIANS      = "2. Compute blocks' medians";
 
         private StepByStepLargerImage   m_largerImageView = null;
