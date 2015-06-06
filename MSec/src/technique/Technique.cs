@@ -141,6 +141,9 @@ namespace MSec
         // Computes the hash for a given image
         public abstract HashData computeHash(ImageSource _image);
 
+        // Computes the hash for a given image and dumps the intermediate results to disk
+        public abstract bool dumpIntermediateResultsToDisk(ImageSource _image, params string[] _pathes);
+
         // Compares two hash data structures (return null if the hast data's format is invalid!)
         public abstract ComparativeData compareHashData(HashData _data0, HashData _data1);
 
@@ -155,7 +158,7 @@ namespace MSec
 
             // Create technique
             t = new Technique<Digest, RadishComparativeData>(TechniqueID.RADISH,
-                (Technique _t, ImageSource _image) =>
+                (Technique _t, ImageSource _image, string[] _dumpToDiskPathes) =>
                 {
                     // Local variables
                     Digest hash = new Digest();
@@ -173,21 +176,32 @@ namespace MSec
                     if (_t.isAttributeAvailable(Technique.ATT_RADISH_NUM_ANGLES) == true)
                         _t.getAttribute<decimal>(Technique.ATT_RADISH_NUM_ANGLES, out attAngles);
 
-                    // Convert managed to unmanaged
-                    hashUnmanaged = Utility.convertSimpleStructureToUnmanagedPtr<Digest>(hash);
-
-                    // Comnpute hash
-                    PHash.computeRadialHash(_image.FilePath, Convert.ToSingle(attSigma), Convert.ToSingle(attGamma), hashUnmanaged, (int)(Convert.ToSingle(attAngles)));
-
-                    // Convert unmanaged to managed
-                    Utility.convertUnmanagedPtrToSimpleStructure<Digest>(hashUnmanaged, ref hash);
-
-                    // Store result
-                    result = new HashData<Digest>(hash, (Digest _data) =>
+                    // Dump to disk?
+                    if (_dumpToDiskPathes != null && _dumpToDiskPathes.Length == DumpTechniqueStepsToDisk.RADISH_PATH_COUNT)
                     {
-                        return Utility.toHexString(_data.m_coeffs, _data.m_size);
-                    });
-                    return result;
+                        if (PHash.dumpRadialHashToDisk(_image.FilePath, Convert.ToSingle(attSigma), Convert.ToSingle(attGamma), (int)(Convert.ToSingle(attAngles)),
+                            _dumpToDiskPathes[0], _dumpToDiskPathes[1], _dumpToDiskPathes[2], _dumpToDiskPathes[3], _dumpToDiskPathes[4]) != 0)
+                            return null;
+                        return new HashData<Digest>(null, null);
+                    }
+                    else
+                    {
+                        // Convert managed to unmanaged
+                        hashUnmanaged = Utility.convertSimpleStructureToUnmanagedPtr<Digest>(hash);
+
+                        // Comnpute hash
+                        PHash.computeRadialHash(_image.FilePath, Convert.ToSingle(attSigma), Convert.ToSingle(attGamma), hashUnmanaged, (int)(Convert.ToSingle(attAngles)));
+
+                        // Convert unmanaged to managed
+                        Utility.convertUnmanagedPtrToSimpleStructure<Digest>(hashUnmanaged, ref hash);
+
+                        // Store result
+                        result = new HashData<Digest>(hash, (Digest _data) =>
+                        {
+                            return Utility.toHexString(_data.m_coeffs, _data.m_size);
+                        });
+                        return result;
+                    }
                 },
                 (Technique _t, HashData<Digest> _h0, HashData<Digest> _h1) =>
                 {
@@ -235,18 +249,29 @@ namespace MSec
 
             // Create technique
             t = new Technique<UInt64, double>(TechniqueID.DCT,
-                (Technique _t, ImageSource _image) =>
+                (Technique _t, ImageSource _image, string[] _dumpToDiskPathes) =>
                 {
                     // Local variables
                     UInt64 hash = 0;
                     HashData<UInt64> result = null;
 
-                    // Compute hast
-                    PHash.computeDCTHash(_image.FilePath, ref hash);
+                    // Dump to disk?
+                    if (_dumpToDiskPathes != null && _dumpToDiskPathes.Length == DumpTechniqueStepsToDisk.DCT_PATH_COUNT)
+                    {
+                        if (PHash.dumpDCTHashToDisk(_image.FilePath, _dumpToDiskPathes[0], _dumpToDiskPathes[1], _dumpToDiskPathes[2],
+                            _dumpToDiskPathes[3], _dumpToDiskPathes[4], _dumpToDiskPathes[5]) != 0)
+                            return null;
+                        return new HashData<ulong>(0);
+                    }
+                    else
+                    {
+                        // Compute hast
+                        PHash.computeDCTHash(_image.FilePath, ref hash);
 
-                    // Store result
-                    result = new HashData<UInt64>(hash);
-                    return result;
+                        // Store result
+                        result = new HashData<UInt64>(hash);
+                        return result;
+                    }
                 },
                 (Technique _t, HashData<UInt64> _h0, HashData<UInt64> _h1) =>
                 {
@@ -291,7 +316,7 @@ namespace MSec
 
             // Create technique
             t = new Technique<WaveletHash, double>(TechniqueID.WAVELET,
-                (Technique _t, ImageSource _image) =>
+                (Technique _t, ImageSource _image, string[] _dumpToDiskPathes) =>
                 {
                     // Local variables
                     int len = 0;
@@ -307,17 +332,29 @@ namespace MSec
                     if (_t.isAttributeAvailable(Technique.ATT_WAVELET_LEVEL) == true)
                         _t.getAttribute<decimal>(Technique.ATT_WAVELET_LEVEL, out attLevel);
 
-                    // Compute hast
-                    hash = PHash.computeWaveletHash(_image.FilePath, ref len, Convert.ToSingle(attAlpha), Convert.ToSingle(attLevel));
-
-                    // Store result
-                    data.m_data = hash;
-                    data.m_dataLength = len;
-                    result = new HashData<WaveletHash>(data, (WaveletHash _data) =>
+                    // Dump to disk?
+                    if (_dumpToDiskPathes != null && _dumpToDiskPathes.Length == DumpTechniqueStepsToDisk.WAVELET_PATH_COUNT)
                     {
-                        return Utility.toHexString(_data.m_data, _data.m_dataLength);
-                    });
-                    return result;
+                        if (PHash.dumpWaveletHashToDisk(_image.FilePath, Convert.ToSingle(attAlpha), Convert.ToSingle(attLevel),
+                            _dumpToDiskPathes[0], _dumpToDiskPathes[1], _dumpToDiskPathes[2],
+                            _dumpToDiskPathes[3]) != 0)
+                            return null;
+                        return new HashData<WaveletHash>(null);
+                    }
+                    else
+                    {
+                        // Compute hast
+                        hash = PHash.computeWaveletHash(_image.FilePath, ref len, Convert.ToSingle(attAlpha), Convert.ToSingle(attLevel));
+
+                        // Store result
+                        data.m_data = hash;
+                        data.m_dataLength = len;
+                        result = new HashData<WaveletHash>(data, (WaveletHash _data) =>
+                        {
+                            return Utility.toHexString(_data.m_data, _data.m_dataLength);
+                        });
+                        return result;
+                    }
                 },
                 (Technique _t, HashData<WaveletHash> _h0, HashData<WaveletHash> _h1) =>
                 {
@@ -361,7 +398,7 @@ namespace MSec
 
             // Create technique
             t = new Technique<BMBHash, double>(TechniqueID.BMB,
-                (Technique _t, ImageSource _image) =>
+                (Technique _t, ImageSource _image, string[] _dumpToDiskPathes) =>
                 {
                     // Local variables
                     BMBHash hash = new BMBHash();
@@ -373,20 +410,30 @@ namespace MSec
                     if (_t.isAttributeAvailable(Technique.ATT_BMB_METHOD) == true)
                         _t.getAttribute<int>(Technique.ATT_BMB_METHOD, out attMethod);
 
-                    // Comnpute hash
-                    if (PHash.computeBMBHash(_image.FilePath, attMethod, out hashUnmanaged) == -1)
-                        return null;
-
-                    // Convert unmanaged to managed
-                    Utility.convertUnmanagedPtrToSimpleStructure<BMBHash>(hashUnmanaged, ref hash, false);
-
-                    // Store result
-                    result = new HashData<BMBHash>(hash, (BMBHash _data) =>
+                    // Dump to disk?
+                    if (_dumpToDiskPathes != null && _dumpToDiskPathes.Length == DumpTechniqueStepsToDisk.BMB_PATH_COUNT)
                     {
-                        return Utility.toHexString(_data.m_data, _data.m_dataLength);
-                    });
+                        if (PHash.dumpBMBHashToDisk(_image.FilePath, attMethod, _dumpToDiskPathes[0], _dumpToDiskPathes[1]) != 0)
+                            return null;
+                        return new HashData<BMBHash>(null);
+                    }
+                    else
+                    {
+                        // Comnpute hash
+                        if (PHash.computeBMBHash(_image.FilePath, attMethod, out hashUnmanaged) == -1)
+                            return null;
 
-                    return result;
+                        // Convert unmanaged to managed
+                        Utility.convertUnmanagedPtrToSimpleStructure<BMBHash>(hashUnmanaged, ref hash, false);
+
+                        // Store result
+                        result = new HashData<BMBHash>(hash, (BMBHash _data) =>
+                        {
+                            return Utility.toHexString(_data.m_data, _data.m_dataLength);
+                        });
+
+                        return result;
+                    }
                 },
                 (Technique _t, HashData<BMBHash> _h0, HashData<BMBHash> _h1) =>
                 {
@@ -435,7 +482,7 @@ namespace MSec
         where _CR : new()
     {
         // Delegate for the hashing function
-        public delegate HashData<_HR> delegate_hash(Technique _t, ImageSource _image);
+        public delegate HashData<_HR> delegate_hash(Technique _t, ImageSource _image, params string[] _dumpToDiskPathes);
 
         // Delegate for the comparator function
         public delegate ComparativeData<_CR> delegate_comp(Technique _t, HashData<_HR> _hash0, HashData<_HR> _hash1);
@@ -514,12 +561,26 @@ namespace MSec
                 return null;
 
             // Compute hash
-            data = m_funcHash(this, _image);
+            data = m_funcHash(this, _image, null);
 
             // Assign result to image
             _image.HashData = data;
 
             return data;
+        }
+
+        // Override: HashData::dumpIntermediateResultsToDisk
+        public override bool dumpIntermediateResultsToDisk(ImageSource _image, params string[] _pathes)
+        {
+            // Check parameter
+            if (_image == null)
+                return false;
+
+            // Compute hash
+            if (m_funcHash(this, _image, _pathes) == null)
+                return false;
+
+            return true;
         }
 
         // Override: HashData::compareHashData

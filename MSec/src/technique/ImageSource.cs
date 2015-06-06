@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 
 /*******************************************************************************************************************************************************************
 	Class: ImageSource
@@ -31,6 +32,14 @@ namespace MSec
         public int PathID
         {
             get { return m_pathID; }
+            private set { }
+        }
+
+        // The ID of the image file (hash of the file name!)
+        private int m_fileID = 0;
+        public int FileID
+        {
+            get { return m_fileID; }
             private set { }
         }
 
@@ -78,6 +87,7 @@ namespace MSec
             // Calcualte image's ID
             m_imageID = m_filePath.GetHashCode();
             m_pathID = Dir.GetHashCode();
+            m_fileID = Path.GetFileName(m_filePath).GetHashCode();
         }
 
         // Creates a system image (System.Drawing)

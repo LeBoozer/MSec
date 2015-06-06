@@ -47,6 +47,7 @@ list content (standard objects are not mentioned here, please see link above!):
 	- SourceX							(image source X, values for X [0,1])
 		- SourceX.ImageID				(integer value)
 		- SourceX.PathID				(integer value)
+		- SourceX.FileID				(integer value)
 		- SourceX.FilePath				(string)
 		- SourceX.FileName				(string)
 		- SourceX.Dir					(string)

@@ -96,6 +96,9 @@ namespace MSec
         // Drops MSec
         public bool drop()
         {
+            // Clean folder "TempData"
+            DumpTechniqueStepsToDisk.cleanTargetFolder();
+
             return true;
         }
 

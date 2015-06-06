@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 /*******************************************************************************************************************************************************************
 	Class: CC_ComparisonDetails
@@ -25,6 +26,9 @@ namespace MSec
 
         // The data lock
         private object m_dataLock = new object();
+
+        // The host view
+        private ViewCrossComparison m_hostView = null;
 
         // The current set comparison pair
         private UnfoldedBindingComparisonPair m_pair = null;
@@ -58,11 +62,14 @@ namespace MSec
         }
 
         // Updates the control's content with a comparison pair (null to delete content)
-        public void setComparisonPair(UnfoldedBindingComparisonPair _pair)
+        public void setComparisonPair(ViewCrossComparison _hostView, UnfoldedBindingComparisonPair _pair)
         {
             // Local variables
             Job<Image>.delegate_job func = null;
             Job<Image>.delegate_job_done funcDone = null;
+
+            // Set host
+            m_hostView = _hostView;
 
             // Lock data
             lock(m_dataLock)
@@ -137,11 +144,14 @@ namespace MSec
                     // Run in GUI thread
                     Utility.invokeInGuiThread(this, delegate
                     {
+                        // Local variables
+                        DirectoryInfo dirInfo = new DirectoryInfo((_params.Data[0] as ImageSource).FilePath);
+
                         // Set image
                         (_params.Data[1] as PictureBox).Image = _params.Result;
 
                         // Set text
-                        (_params.Data[2] as TextBox).Text = (_params.Data[0] as ImageSource).FilePath;
+                        (_params.Data[2] as TextBox).Text = dirInfo.Parent.Name + "\\" + dirInfo.Name;
                     });
                 }
             };
@@ -163,6 +173,27 @@ namespace MSec
                                          Color.DimGray, 2, ButtonBorderStyle.Inset,
                                          Color.DimGray, 2, ButtonBorderStyle.Inset,
                                          Color.DimGray, 2, ButtonBorderStyle.Inset);
+            
+        }
+
+        private void CC_Button_StepByStep_RADISH_Click(object sender, EventArgs e)
+        {
+            m_hostView.dumpToDiskAndShowStepByStepFor(TechniqueID.RADISH, CurrentPair);
+        }
+
+        private void CC_Button_StepByStep_DCT_Click(object sender, EventArgs e)
+        {
+            m_hostView.dumpToDiskAndShowStepByStepFor(TechniqueID.DCT, CurrentPair);
+        }
+
+        private void CC_Button_StepByStep_Wavelet_Click(object sender, EventArgs e)
+        {
+            m_hostView.dumpToDiskAndShowStepByStepFor(TechniqueID.WAVELET, CurrentPair);
+        }
+
+        private void CC_Button_StepByStep_BMB_Click(object sender, EventArgs e)
+        {
+            m_hostView.dumpToDiskAndShowStepByStepFor(TechniqueID.BMB, CurrentPair);
         }
     }
 }

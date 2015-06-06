@@ -433,10 +433,9 @@ namespace MSec
             // Add events to: list of results
             extractColumnsByTag();
             (m_listResults.Columns[LIST_RESULTS_COLUMN_SOURCE0_PATH] as OLVColumn).GroupKeyGetter += onListResultsGroupKeyGetter;
-           // m_listResults.ItemSelectionChanged += onItemSelectionChanged;
             m_listResults.SelectionChanged += onSelectionChanged;
             m_listResults.FormatCell += onListResultsFormatCell;
-           // m_listResults.ColumnClick += onColumnClick;
+            m_listResults.KeyDown += onKeyDown;
             m_listResults.ColumnWidthChanging += onColumnWidthChanging;
 
             // Add events to: buttons
@@ -472,9 +471,9 @@ namespace MSec
                 if ((c.Tag as string) == LIST_RESULTS_COLUMN_TAG_MR_RADISH)
                     m_listResultColumnMRRadish = c;
                 else if ((c.Tag as string) == LIST_RESULTS_COLUMN_TAG_MR_DCT)
-                    m_listResultColumnMRWavelet = c;
-                else if ((c.Tag as string) == LIST_RESULTS_COLUMN_TAG_MR_WAVELET)
                     m_listResultColumnMRDCT = c;
+                else if ((c.Tag as string) == LIST_RESULTS_COLUMN_TAG_MR_WAVELET)
+                    m_listResultColumnMRWavelet = c;
                 else if ((c.Tag as string) == LIST_RESULTS_COLUMN_TAG_MR_BMB)
                     m_listResultColumnMRBMB = c;
                 else if ((c.Tag as string) == LIST_RESULTS_COLUMN_TAG_MR_AVG)
@@ -779,6 +778,12 @@ namespace MSec
             {
                 m_listResults.ClearObjects();
                 m_listResults.ShowGroups = false;
+            });
+
+            // Reset filter
+            Utility.invokeInGuiThread(m_textFilter, delegate
+            {
+                m_textFilter.Text = "";
             });
 
             // Spawn watch job
@@ -1512,6 +1517,20 @@ namespace MSec
             return true;
         }
 
+        // Dumps the step-by-step images for the selected comparison pair to disk
+        public void dumpToDiskAndShowStepByStepFor(TechniqueID _id, UnfoldedBindingComparisonPair _pair)
+        {
+            // Choose technique
+            if (_id == TechniqueID.RADISH)
+                new StepByStepRADISH(_pair).ShowDialog();
+            else if (_id == TechniqueID.DCT)
+                new StepByStepDCT(_pair).ShowDialog();
+            else if (_id == TechniqueID.WAVELET)
+                new StepByStepWavelet(_pair).ShowDialog();
+            else
+                new StepByStepBMB(_pair).ShowDialog();
+        }
+
         #region Events: Controls
         // Event TechniqueSelection::OnTechniqueIDsChanged
         void onTechniqueSelectionIDsChanged(TechniqueID _ids)
@@ -1659,7 +1678,7 @@ namespace MSec
                     m_popupWindow.Show(m_listResults, m_popupPosition);
 
                     // Set data
-                    m_comparatorDetails.setComparisonPair(list[0] as UnfoldedBindingComparisonPair);
+                    m_comparatorDetails.setComparisonPair(this, list[0] as UnfoldedBindingComparisonPair);
                 }
                 else
                 {
@@ -1674,6 +1693,16 @@ namespace MSec
             catch(Exception _ex)
             {
                 MessageBox.Show(_ex.Message);
+            }
+        }
+
+        // Event List::onKeyDown
+        void onKeyDown(object _sender, KeyEventArgs _e)
+        {
+            // CTRL + A pressed?
+            if(_e.KeyCode == Keys.A && _e.Control == true)
+            {
+                m_listResults.SelectAll();
             }
         }
 

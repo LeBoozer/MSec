@@ -112,6 +112,7 @@ int ph_radon_projections(const CImg<uint8_t> &img,int N,Projections &projs){
             }
         }
     }
+
     int j= 0;
     for (int k=3*N/4;k<N;k++){
         double theta = k*cimg::PI/N;
@@ -164,6 +165,7 @@ int ph_feature_vector(const Projections &projs, Features &fv)
         sum += feat_v[k];
         sum_sqd += feat_v[k]*feat_v[k];
     }
+
     double mean = sum/N;
     double var  = sqrt((sum_sqd/N) - (sum*sum)/(N*N));
 
@@ -273,21 +275,45 @@ int _ph_image_digest(const CImg<uint8_t> &img,double sigma, double gamma,Digest 
         return result;
     }
 
+	// TEMP: SAVE TO FILE
+	//graysc.save_jpeg("1. radish - grayscale.jpeg");
 
     graysc.blur((float)sigma);
 
     (graysc/graysc.max()).pow(gamma);
 
-    Projections projs;
+	// TEMP: SAVE TO FILE
+	//graysc.save_jpeg("2. radish - blurred.jpeg");
+
+	Projections projs;
     if (ph_radon_projections(graysc,N,projs) < 0)
         goto cleanup;
+	else
+	{
+		// TEMP: SAVE TO FILE
+		//projs.R->save_jpeg("3. radish - radon_map.jpeg");
+	}
 
-    Features features;
+	Features features;
     if (ph_feature_vector(projs,features) < 0)
         goto cleanup;
+	else
+	{
+		/*/ TEMP: SAVE TO FILE
+		CImg<double> featureVector(features.features, features.size);
+		featureVector.normalize(0.0, 255.0);
+		featureVector.save_jpeg("4. radish - feature_vector.jpeg");*/
+	}
 
     if (ph_dct(features,digest) < 0)
         goto cleanup;
+	else
+	{
+		/*/ TEMP: SAVE TO FILE
+		CImg<uint8_t> dct(digest.coeffs, digest.size);
+		dct.normalize(0, 255);
+		dct.save_jpeg("5. radish - dct.jpeg");*/
+	}
 
     result = EXIT_SUCCESS;
 
@@ -297,6 +323,70 @@ cleanup:
 
     delete projs.R;
     return result;
+}
+int _ph_image_digest_dump_to_file(const CImg<uint8_t> &img, double sigma, double gamma, int N,
+	const char *fileGrayscale, const char *fileBlurred, const char* fileRadon, const char* fileFeature, const char* fileDCT){
+
+	Digest hashResult;
+	int result = EXIT_FAILURE;
+	CImg<uint8_t> graysc;
+	if (img.spectrum() >= 3){
+		graysc = img.get_RGBtoYCbCr().channel(0);
+	}
+	else if (img.spectrum() == 1){
+		graysc = img;
+	}
+	else {
+		return result;
+	}
+
+	// TEMP: SAVE TO FILE
+	graysc.save_jpeg(fileGrayscale);
+
+	graysc.blur((float)sigma);
+	(graysc / graysc.max()).pow(gamma);
+
+	// TEMP: SAVE TO FILE
+	graysc.save_jpeg(fileBlurred);
+
+	Projections projs;
+	if (ph_radon_projections(graysc, N, projs) < 0)
+		goto cleanup;
+	else
+	{
+		// TEMP: SAVE TO FILE
+		projs.R->save_jpeg(fileRadon);
+	}
+
+	Features features;
+	if (ph_feature_vector(projs, features) < 0)
+		goto cleanup;
+	else
+	{
+		// TEMP: SAVE TO FILE
+		CImg<double> featureVector(features.features, features.size);
+		featureVector.normalize(0.0, 255.0);
+		featureVector.save_jpeg(fileFeature);
+	}
+
+	if (ph_dct(features, hashResult) < 0)
+		goto cleanup;
+	else
+	{
+		// TEMP: SAVE TO FILE
+		CImg<uint8_t> dct(hashResult.coeffs, hashResult.size);
+		dct.normalize(0, 255);
+		dct.save_jpeg(fileDCT);
+	}
+
+	result = EXIT_SUCCESS;
+
+cleanup:
+	free(projs.nb_pix_perline);
+	free(features.features);
+
+	delete projs.R;
+	return result;
 }
 
 #define max(a,b) (((a)>(b))?(a):(b))
@@ -312,6 +402,19 @@ int ph_image_digest(const char *file, double sigma, double gamma, Digest &digest
         res = result;
     }
     return res;
+}
+int ph_image_digest_dump_to_file(const char *file, double sigma, double gamma, int N,
+	const char *fileGrayscale, const char *fileBlurred, const char* fileRadon, const char* fileFeature, const char* fileDCT){
+
+	CImg<uint8_t> *src = new CImg<uint8_t>(file);
+	int res = -1;
+	if (src)
+	{
+		int result = _ph_image_digest_dump_to_file(*src, sigma, gamma, N, fileGrayscale, fileBlurred, fileRadon, fileFeature, fileDCT);
+		delete src;
+		res = result;
+	}
+	return res;
 }
 
 int _ph_compare_images(const CImg<uint8_t> &imA,const CImg<uint8_t> &imB,double &pcc, double sigma, double gamma,int N,double threshold){
@@ -519,6 +622,135 @@ int ph_bmb_imagehash(const char *file, uint8_t method, BinHash **ret_hash)
     free(block);
     return 0;
 }
+int ph_bmb_imagehash_dump_to_file(const char *file, uint8_t method, const char* fileResized, const char* fileBlockMedians)
+{
+	CImg<uint8_t> img;
+	const uint8_t *ptrsrc;  // source pointer (img)
+	uint8_t *block;
+	int pcol;  // "pointer" to pixel col (x)
+	int prow;  // "pointer" to pixel row (y)
+	int blockidx = 0;  //current idx of block begin processed.
+	double median;  // median value of mean_vals
+	const int preset_size_x = 256;
+	const int preset_size_y = 256;
+	const int blk_size_x = 16;
+	const int blk_size_y = 16;
+	int pixcolstep = blk_size_x;
+	int pixrowstep = blk_size_y;
+
+	int number_of_blocks;
+	uint32_t bitsize;
+	// number of bytes needed to store bitsize bits.
+	uint32_t bytesize;
+
+	if (!file){
+		return -1;
+	}
+	try {
+		img.load(file);
+	}
+	catch (CImgIOException ex){
+		return -1;
+	}
+
+	const int blk_size = blk_size_x * blk_size_y;
+	block = (uint8_t*)malloc(sizeof(uint8_t) * blk_size);
+
+	if (!block)
+		return -1;
+
+	switch (img.spectrum()) {
+	case 3: // from RGB
+		img.RGBtoYCbCr().channel(0);
+		break;
+	case 1:
+		img.channel(0);
+		break;
+	default:
+		std::stringstream a;
+		a << img.spectrum();
+		MessageBox(0, a.str().c_str(), "", MB_OK);
+		free(block);
+		return -1;
+	}
+
+	img.resize(preset_size_x, preset_size_y);
+
+	// TEMP: SAVE TO FILE
+	img.save_jpeg(fileResized);
+
+	// ~step b
+	ptrsrc = img.data();  // set pointer to beginning of pixel buffer
+
+	if (method == 2)
+	{
+		pixcolstep /= 2;
+		pixrowstep /= 2;
+
+		number_of_blocks =
+			((preset_size_x / blk_size_x) * 2 - 1) *
+			((preset_size_y / blk_size_y) * 2 - 1);
+	}
+	else {
+		number_of_blocks =
+			preset_size_x / blk_size_x *
+			preset_size_y / blk_size_y;
+	}
+
+	bitsize = number_of_blocks;
+	bytesize = bitsize / 8;
+
+	double *mean_vals = new double[number_of_blocks];
+
+	/*
+	* pixel row < block < block row < image
+	*
+	* The pixel rows of a block are copied consecutively
+	* into the block buffer (using memcpy). When a block is
+	* finished, the next block in the block row is processed.
+	* After finishing a block row, the processing of the next
+	* block row is started. An image consists of an arbitrary
+	* number of block rows.
+	*/
+
+	/* image (multiple rows of blocks) */
+	for (prow = 0; prow <= preset_size_y - blk_size_y; prow += pixrowstep)
+	{
+
+		/* block row */
+		for (pcol = 0; pcol <= preset_size_x - blk_size_x; pcol += pixcolstep)
+		{
+
+			// idx for array holding one block.
+			int blockpos = 0;
+
+			/* block */
+
+			// i is used to address the different 
+			// pixel rows of a block
+			for (int i = 0; i < blk_size_y; i++)
+			{
+				ptrsrc = img.data(pcol, prow + i);
+				memcpy(block + blockpos, ptrsrc, blk_size_x);
+				blockpos += blk_size_x;
+			}
+
+			mean_vals[blockidx] = CImg<uint8_t>(block, blk_size).mean();
+			blockidx++;
+
+		}
+	}
+
+	// TEMP: SAVE TO FILE
+	CImg<double> mediansImage(mean_vals, number_of_blocks);
+	mediansImage.normalize(0.0, 255.0);
+	mediansImage.save_jpeg(fileBlockMedians);
+
+	/* calculate the median */
+	median = CImg<double>(mean_vals, number_of_blocks).median();
+
+	return 0;
+}
 
 int ph_dct_imagehash(const char* file,ulong64 &hash){
 
@@ -545,12 +777,13 @@ int ph_dct_imagehash(const char* file,ulong64 &hash){
     }
 
     img.resize(32,32);
+
     CImg<float> *C  = ph_dct_matrix(32);
     CImg<float> Ctransp = C->get_transpose();
 
     CImg<float> dctImage = (*C)*img*Ctransp;
 
-    CImg<float> subsec = dctImage.crop(1,1,8,8).unroll('x');;
+    CImg<float> subsec = dctImage.crop(1,1,8,8).unroll('x');
 
     float median = subsec.median();
     ulong64 one = 0x0000000000000001;
@@ -565,6 +798,73 @@ int ph_dct_imagehash(const char* file,ulong64 &hash){
     delete C;
 
     return 0;
+}
+
+int ph_dct_imagehash_dump_to_file(const char* file,
+	const char* fileMeanFilter, const char* fileResized, const char* fileDCTMatrix, const char* fileDCTImage, const char* fileDCTImageSubsec, const char* fileMedian){
+
+	if (!file){
+		return -1;
+	}
+	CImg<uint8_t> src;
+	try {
+		src.load(file);
+	} catch (CImgIOException ex){
+		return -1;
+	}
+	CImg<float> meanfilter(7,7,1,1,1);
+	CImg<float> img;
+	if (src.spectrum() == 3){
+		img = src.RGBtoYCbCr().channel(0).get_convolve(meanfilter);
+	} else if (src.spectrum() == 4){
+		int width = img.width();
+		int height = img.height();
+		int depth = img.depth();
+		img = src.crop(0,0,0,0,width-1,height-1,depth-1,2).RGBtoYCbCr().channel(0).get_convolve(meanfilter);
+	} else {
+		img = src.channel(0).get_convolve(meanfilter);
+	}
+
+	// TEMP: SAVE TO FILE
+	img.save_jpeg(fileMeanFilter);
+
+	img.resize(32,32);
+
+	// TEMP: SAVE TO FILE
+	img.save_jpeg(fileResized);
+
+	CImg<float> *C  = ph_dct_matrix(32);
+	CImg<float> Ctransp = C->get_transpose();
+
+	// TEMP: SAVE TO FILE
+	CImg<float> dctMatrix = *C;
+	dctMatrix.normalize(0.0f, 255.0f);
+	dctMatrix.save_jpeg(fileDCTMatrix);
+
+	CImg<float> dctImage = (*C)*img*Ctransp;
+
+	// TEMP: SAVE TO FILE
+	CImg<float> myDctImage = dctImage;
+	myDctImage.normalize(0.0f, 255.0f);
+	myDctImage.save_jpeg(fileDCTImage);
+
+	CImg<float> subsec = dctImage.crop(1,1,8,8).unroll('x');
+
+	// TEMP: SAVE TO FILE
+	CImg<float> dctImageSubSec = subsec;
+	dctImageSubSec.normalize(0.0f, 255.0f);
+	dctImageSubSec.save_jpeg(fileDCTImageSubsec);
+
+	float median = subsec.median();
+
+	// TEMP: SAVE TO FILE
+	CImg<float> medianImage(100, 100);
+	medianImage.fill(median * 255.0f);
+	medianImage.save_jpeg(fileMedian);
+
+	delete C;
+
+	return 0;
 }
 
 #ifdef HAVE_PTHREAD
@@ -1032,7 +1332,7 @@ return hashlist;
 */
 CImg<float>* GetMHKernel(float alpha, float level){
     int sigma = (int)(4*pow((float)alpha,(float)level));
-    static CImg<float> *pkernel = NULL;
+    CImg<float> *pkernel = NULL;
     float xpos, ypos, A;
     if (!pkernel){
         pkernel = new CImg<float>(2*sigma+1,2*sigma+1,1,1,0);
@@ -1057,14 +1357,16 @@ uint8_t* ph_mh_imagehash(const char *filename, int &N,float alpha, float lvl){
     CImg<uint8_t> img;
 
     if (src.spectrum() == 3){
-        img = src.get_RGBtoYCbCr().channel(0).blur(1.0).resize(512,512,1,1,5).get_equalize(256);
+		img = src.get_RGBtoYCbCr().channel(0).blur(1.0).resize(512, 512, 1, 1, 5).get_equalize(256);
     } else{
-        img = src.channel(0).get_blur(1.0).resize(512,512,1,1,5).get_equalize(256);
+		img = src.channel(0).get_blur(1.0).resize(512, 512, 1, 1, 5).get_equalize(256);
     }
     src.clear();
 
     CImg<float> *pkernel = GetMHKernel(alpha,lvl);
+
     CImg<float> fresp =  img.get_correlate(*pkernel);
+
     img.clear();
     fresp.normalize(0,1.0);
     CImg<float> blocks(31,31,1,1,0);
@@ -1073,9 +1375,10 @@ uint8_t* ph_mh_imagehash(const char *filename, int &N,float alpha, float lvl){
             blocks(rindex,cindex) = (float)fresp.get_crop(rindex*16,cindex*16,rindex*16+16-1,cindex*16+16-1).sum();
         }
     }
+
     int hash_index;
     int nb_ones = 0, nb_zeros = 0;
-    int bit_index = 0;
+    int bit_index = 0;	
     unsigned char hashbyte = 0;
     for (int rindex=0;rindex < 31-2;rindex+=4){
         CImg<float> subsec;
@@ -1101,6 +1404,88 @@ uint8_t* ph_mh_imagehash(const char *filename, int &N,float alpha, float lvl){
     }
 
     return hash;
+}
+
+int ph_mh_imagehash_dump_to_file(const char *filename, float alpha, float lvl, const char* fileBlurred, const char* fileKernel, const char* fileEdges, const char* fileBlocks){
+	if (filename == NULL){
+		return -1;
+	}
+	uint8_t *hash = (unsigned char*)malloc(72 * sizeof(uint8_t));
+
+	CImg<uint8_t> src(filename);
+	CImg<uint8_t> img;
+
+	if (src.spectrum() == 3){
+		img = src.get_RGBtoYCbCr().channel(0).blur(1.0).resize(512, 512, 1, 1, 5).get_equalize(256);
+	}
+	else{
+		img = src.channel(0).get_blur(1.0).resize(512, 512, 1, 1, 5).get_equalize(256);
+	}
+	src.clear();
+
+	// TEMP: SAVE TO FILE
+	img.save_jpeg(fileBlurred);
+
+	CImg<float> *pkernel = GetMHKernel(alpha, lvl);
+
+	// TEMP: SAVE TO FILE
+	CImg<float> kernelImage = *pkernel;
+	kernelImage.normalize(0.0f, 255.0f);
+	kernelImage.save_jpeg(fileKernel);
+
+	CImg<float> fresp = img.get_correlate(*pkernel);
+
+	// TEMP: SAVE TO FILE
+	CImg<float> frespImage = fresp;
+	frespImage.normalize(0.0f, 255.0f);
+	frespImage.save_jpeg(fileEdges);
+
+	img.clear();
+	fresp.normalize(0, 1.0);
+	CImg<float> blocks(31, 31, 1, 1, 0);
+	for (int rindex = 0; rindex < 31; rindex++){
+		for (int cindex = 0; cindex < 31; cindex++){
+			blocks(rindex, cindex) = (float)fresp.get_crop(rindex * 16, cindex * 16, rindex * 16 + 16 - 1, cindex * 16 + 16 - 1).sum();
+		}
+	}
+
+	// TEMP: SAVE TO FILE
+	CImg<float> blocksImage = blocks;
+	blocksImage.normalize(0.0f, 255.0f);
+	blocksImage.save_jpeg(fileBlocks);
+
+	int hash_index;
+	int nb_ones = 0, nb_zeros = 0;
+	int bit_index = 0;
+	unsigned char hashbyte = 0;
+	for (int rindex = 0; rindex < 31 - 2; rindex += 4){
+		CImg<float> subsec;
+		for (int cindex = 0; cindex < 31 - 2; cindex += 4){
+			subsec = blocks.get_crop(cindex, rindex, cindex + 2, rindex + 2).unroll('x');
+			float ave = (float)subsec.mean();
+			cimg_forX(subsec, I){
+				hashbyte <<= 1;
+				if (subsec(I) > ave){
+					hashbyte |= 0x01;
+					nb_ones++;
+				}
+				else {
+					nb_zeros++;
+				}
+				bit_index++;
+				if ((bit_index % 8) == 0){
+					hash_index = (int)(bit_index / 8) - 1;
+					hash[hash_index] = hashbyte;
+					hashbyte = 0x00;
+				}
+			}
+		}
+	}
+
+	free(hash);
+	hash = nullptr;
+
+	return 0;
 }
 #endif
 

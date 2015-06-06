@@ -51,18 +51,23 @@ namespace MSec
             int avgRADISH = -1;
             int minRADISH = int.MaxValue;
             int maxRADISH = int.MinValue;
+            int numBelowThresholdRADISH = 0;
             int avgDCT = -1;
             int minDCT = int.MaxValue;
             int maxDCT = int.MinValue;
+            int numBelowThresholdDCT = 0;
             int avgWavelet = -1;
             int minWavelet = int.MaxValue;
             int maxWavelet = int.MinValue;
+            int numBelowThresholdWavelet = 0;
             int avgBMB = -1;
             int minBMB = int.MaxValue;
             int maxBMB = int.MinValue;
+            int numBelowThresholdBMB = 0;
             int avgAVG = -1;
             int minAVG = int.MaxValue;
             int maxAVG = int.MinValue;
+            int numBelowThresholdAVG = 0;
 
             // Loop through all items
             foreach(var item in _pairs)
@@ -73,6 +78,8 @@ namespace MSec
                     minRADISH = item.MatchRateRADISH;
                 if (maxRADISH < item.MatchRateRADISH)
                     maxRADISH = item.MatchRateRADISH;
+                if (item.MatchRateRADISH < item.Threshold)
+                    ++numBelowThresholdRADISH;
 
                 // DCT
                 avgDCT += item.MatchRateDCT;
@@ -80,6 +87,8 @@ namespace MSec
                     minDCT = item.MatchRateDCT;
                 if (maxDCT < item.MatchRateDCT)
                     maxDCT = item.MatchRateDCT;
+                if (item.MatchRateDCT < item.Threshold)
+                    ++numBelowThresholdDCT;
 
                 // Wavelet
                 avgWavelet += item.MatchRateWavelet;
@@ -87,6 +96,8 @@ namespace MSec
                     minWavelet = item.MatchRateWavelet;
                 if (maxWavelet < item.MatchRateWavelet)
                     maxWavelet = item.MatchRateWavelet;
+                if (item.MatchRateWavelet < item.Threshold)
+                    ++numBelowThresholdWavelet;
 
                 // BMB
                 avgBMB += item.MatchRateBMB;
@@ -94,6 +105,8 @@ namespace MSec
                     minBMB = item.MatchRateBMB;
                 if (maxBMB < item.MatchRateBMB)
                     maxBMB = item.MatchRateBMB;
+                if (item.MatchRateBMB < item.Threshold)
+                    ++numBelowThresholdBMB;
 
                 // AVG
                 avgAVG += item.MatchRateAVG;
@@ -101,6 +114,8 @@ namespace MSec
                     minAVG = item.MatchRateAVG;
                 if (maxAVG < item.MatchRateAVG)
                     maxAVG = item.MatchRateAVG;
+                if (item.MatchRateAVG < item.Threshold)
+                    ++numBelowThresholdAVG;
 
                 // Increase counter
                 ++count;
@@ -115,11 +130,11 @@ namespace MSec
 
             // Set stats
             m_textNumberOfItems.Text = count.ToString();
-            m_textAVGMatchRateRADISH.Text = String.Format("{0} / {1} / {2}", minRADISH, avgRADISH, maxRADISH);
-            m_textAVGMatchRateDCT.Text = String.Format("{0} / {1} / {2}", minDCT, avgDCT, maxDCT);
-            m_textAVGMatchRateWavelet.Text = String.Format("{0} / {1} / {2}", minWavelet, avgWavelet, maxWavelet);
-            m_textAVGMatchRateBMB.Text = String.Format("{0} / {1} / {2}", minBMB, avgBMB, maxBMB);
-            m_textAVGMatchRateAVG.Text = String.Format("{0} / {1} / {2}", minAVG, avgAVG, maxAVG);
+            m_textAVGMatchRateRADISH.Text = String.Format("{0} / {1} / {2}\t({3} < t, {4} >= t)", minRADISH, avgRADISH, maxRADISH, numBelowThresholdRADISH, count - numBelowThresholdRADISH);
+            m_textAVGMatchRateDCT.Text = String.Format("{0} / {1} / {2}\t({3} < t, {4} >= t)", minDCT, avgDCT, maxDCT, numBelowThresholdDCT, count - numBelowThresholdDCT);
+            m_textAVGMatchRateWavelet.Text = String.Format("{0} / {1} / {2}\t({3} < t, {4} >= t)", minWavelet, avgWavelet, maxWavelet, numBelowThresholdWavelet, count - numBelowThresholdWavelet);
+            m_textAVGMatchRateBMB.Text = String.Format("{0} / {1} / {2}\t({3} < t, {4} >= t)", minBMB, avgBMB, maxBMB, numBelowThresholdBMB, count - numBelowThresholdBMB);
+            m_textAVGMatchRateAVG.Text = String.Format("{0} / {1} / {2}\t({3} < t, {4} >= t)", minAVG, avgAVG, maxAVG, numBelowThresholdAVG, count - numBelowThresholdAVG);
         }
 
         // Override: UserControl::OnPaint

@@ -662,7 +662,6 @@
             this.MainMenuStrip = this.Menu_Main;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(742, 656);
-            this.MinimizeBox = false;
             this.Name = "MainDialog";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

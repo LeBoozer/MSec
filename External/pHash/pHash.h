@@ -256,6 +256,8 @@ __declspec(dllexport) int __cdecl ph_crosscorr(const Digest &x,const Digest &y,d
  *  /return       - less than 0 for error
  */
 int _ph_image_digest(const CImg<uint8_t> &img,double sigma, double gamma,Digest &digest,int N=180);
+int _ph_image_digest_dump_to_file(const CImg<uint8_t> &img, double sigma, double gamma, int N,
+	const char *fileGrayscale, const char *fileBlurred, const char* fileRadon, const char* fileFeature, const char* fileDCT);
 
 /*! /brief image digest
  *  Compute the image digest given the file name.
@@ -266,6 +268,8 @@ int _ph_image_digest(const CImg<uint8_t> &img,double sigma, double gamma,Digest 
  *  /param N      - int value for number of angles to consider
  */
 __declspec(dllexport) int __cdecl ph_image_digest(const char *file, double sigma, double gamma, Digest &digest,int N=180);
+__declspec(dllexport) int __cdecl ph_image_digest_dump_to_file(const char *file, double sigma, double gamma, int N, 
+	const char *fileGrayscale, const char *fileBlurred, const char* fileRadon, const char* fileFeature, const char* fileDCT);
 
 
 /*! /brief compare 2 images
@@ -305,8 +309,11 @@ static CImg<float>* ph_dct_matrix(const int N);
  *  /return int value - -1 for failure, 1 for success
  */
 __declspec(dllexport) int __cdecl ph_dct_imagehash(const char* file,ulong64 &hash);
+__declspec(dllexport) int __cdecl ph_dct_imagehash_dump_to_file(const char* file,
+	const char* fileMeanFilter, const char* fileResized, const char* fileDCTMatrix, const char* fileDCTImage, const char* fileDCTImageSubsec, const char* fileMedian);
 
 __declspec(dllexport) int __cdecl ph_bmb_imagehash(const char *file, uint8_t method, BinHash **ret_hash);
+__declspec(dllexport) int __cdecl ph_bmb_imagehash_dump_to_file(const char *file, uint8_t method, const char* fileResized, const char* fileBlockMedians);
 #endif
 
 #ifdef HAVE_PTHREAD
@@ -349,6 +356,9 @@ DP** ph_read_imagehashes(const char *dirname,int capacity, int &count);
 *   /return uint8_t array
 **/
 __declspec(dllexport) uint8_t* __cdecl ph_mh_imagehash(const char *filename, int &N, float alpha=2.0f, float lvl = 1.0f);
+__declspec(dllexport) int __cdecl ph_mh_imagehash_dump_to_file(const char *filename, float alpha, float lvl,
+	const char* fileBlurred, const char* fileKernel, const char* fileEdges, const char* fileBlocks);
+
 #endif
 /** /brief count number bits set in given byte
 *   /param val - uint8_t byte value

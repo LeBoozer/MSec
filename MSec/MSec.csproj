@@ -122,6 +122,7 @@
     <Compile Include="src\technique\ImageSource.cs" />
     <Compile Include="src\technique\Technique.cs" />
     <Compile Include="src\utility\ComparisonPairForBindings.cs" />
+    <Compile Include="src\utility\DumpTechniqueStepsToDisk.cs" />
     <Compile Include="src\utility\Dynamic.cs" />
     <Compile Include="src\utility\ImageSourceBinding.cs" />
     <Compile Include="src\utility\ListViewFlickerFree.cs">
@@ -133,6 +134,36 @@
     <Compile Include="src\views\ViewCrossComparison.cs" />
     <Compile Include="src\views\ViewImageVsImage.cs" />
     <Compile Include="src\views\ViewWithTechniqueSelection.cs" />
+    <Compile Include="StepByStepBMB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StepByStepBMB.Designer.cs">
+      <DependentUpon>StepByStepBMB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StepByStepDCT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StepByStepDCT.Designer.cs">
+      <DependentUpon>StepByStepDCT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StepByStepLargerImage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StepByStepLargerImage.Designer.cs">
+      <DependentUpon>StepByStepLargerImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StepByStepRADISH.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StepByStepRADISH.Designer.cs">
+      <DependentUpon>StepByStepRADISH.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StepByStepWavelet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StepByStepWavelet.Designer.cs">
+      <DependentUpon>StepByStepWavelet.cs</DependentUpon>
+    </Compile>
     <Compile Include="TechniqueSelection.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -158,6 +189,21 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StepByStepBMB.resx">
+      <DependentUpon>StepByStepBMB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StepByStepDCT.resx">
+      <DependentUpon>StepByStepDCT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StepByStepLargerImage.resx">
+      <DependentUpon>StepByStepLargerImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StepByStepRADISH.resx">
+      <DependentUpon>StepByStepRADISH.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StepByStepWavelet.resx">
+      <DependentUpon>StepByStepWavelet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TechniqueSelection.resx">
       <DependentUpon>TechniqueSelection.cs</DependentUpon>
