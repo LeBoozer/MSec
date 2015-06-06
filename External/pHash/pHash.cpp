@@ -622,7 +622,7 @@ int ph_bmb_imagehash(const char *file, uint8_t method, BinHash **ret_hash)
     free(block);
     return 0;
 }
-int ph_bmb_imagehash_dump_to_file(const char *file, uint8_t method, const char* fileResized, const char* fileBlockMedians)
+int ph_bmb_imagehash_dump_to_file(const char *file, uint8_t method, const char* fileResized, const char* fileBlockMedians, const char* fileMedian)
 {
 	CImg<uint8_t> img;
 	const uint8_t *ptrsrc;  // source pointer (img)
@@ -748,6 +748,11 @@ int ph_bmb_imagehash_dump_to_file(const char *file, uint8_t method, const char* 
 
 	/* calculate the median */
 	median = CImg<double>(mean_vals, number_of_blocks).median();
+
+	// TEMP: SAVE TO FILE
+	CImg<float> medianImage(100, 100);
+	medianImage.fill(median);
+	medianImage.save_jpeg(fileMedian);
 
 	return 0;
 }

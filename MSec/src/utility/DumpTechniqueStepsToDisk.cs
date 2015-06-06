@@ -42,9 +42,10 @@ namespace MSec
         public static readonly string   WAVELET_PATH_EDGES          = "wavelet_{0}_edges.jpeg";
         public static readonly string   WAVELET_PATH_BLOCKS         = "wavelet_{0}_blocks.jpeg";
 
-        public static readonly int      BMB_PATH_COUNT              = 2;
+        public static readonly int      BMB_PATH_COUNT              = 3;
         public static readonly string   BMB_PATH_RESIZED            = "bmb_{0}_resized.jpeg";
         public static readonly string   BMB_PATH_BLOCK_MEDIANS      = "bmb_{0}_blockmedians.jpeg";
+        public static readonly string   BMB_PATH_MEDIAN             = "bmb_{0}_median.jpeg";
 
         // Dumps a compairison pair for the technique "RADISH" to disk 
         public static bool dumpRadishStepsToDiskFor(UnfoldedBindingComparisonPair _pair)
@@ -213,9 +214,11 @@ namespace MSec
             // Create pathes
             pathesSource0[0] = TARGET_FOLDER + string.Format(BMB_PATH_RESIZED, 0);
             pathesSource0[1] = TARGET_FOLDER + string.Format(BMB_PATH_BLOCK_MEDIANS, 0);
+            pathesSource0[2] = TARGET_FOLDER + string.Format(BMB_PATH_MEDIAN, 0);
 
             pathesSource1[0] = TARGET_FOLDER + string.Format(BMB_PATH_RESIZED, 1);
             pathesSource1[1] = TARGET_FOLDER + string.Format(BMB_PATH_BLOCK_MEDIANS, 1);
+            pathesSource1[2] = TARGET_FOLDER + string.Format(BMB_PATH_MEDIAN, 1);
 
             // First source
             var j0 = new Job<bool?>((JobParameter<bool?> _params) =>

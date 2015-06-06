@@ -18,6 +18,7 @@ namespace MSec
         private static readonly string LABEL_ORIGINAL           = "Original image";
         private static readonly string LABEL_RESIZED            = "1. Grayscale and resize image";
         private static readonly string LABEL_BLOCK_MEDIANS      = "2. Compute blocks' medians";
+        private static readonly string LABEL_MEDIAN             = "3. Median of the blocks";
 
         private StepByStepLargerImage   m_largerImageView = null;
         private Popup                   m_popupWindow = null;
@@ -31,6 +32,7 @@ namespace MSec
             SS_Label_BMB_Original.Text      = LABEL_LOADING;
             SS_Label_BMB_Resized.Text       = LABEL_LOADING;
             SS_Label_BMB_BlockMedians.Text  = LABEL_LOADING;
+            SS_Label_BMB_Median.Text        = LABEL_LOADING;
 
             // Create pop-up window (larger view)
             m_largerImageView = new StepByStepLargerImage();
@@ -43,10 +45,12 @@ namespace MSec
             addLargerImageViewPopupTo(SS_Picture_BMB_Original_0);
             addLargerImageViewPopupTo(SS_Picture_BMB_Resized_0);
             addLargerImageViewPopupTo(SS_Picture_BMB_BlockMedians_0);
+            addLargerImageViewPopupTo(SS_Picture_BMB_Median_0);
 
             addLargerImageViewPopupTo(SS_Picture_BMB_Original_1);
             addLargerImageViewPopupTo(SS_Picture_BMB_Resized_1);
             addLargerImageViewPopupTo(SS_Picture_BMB_BlockMedians_1);
+            addLargerImageViewPopupTo(SS_Picture_BMB_Median_1);
 
             // Create job
             new Job<bool?>((JobParameter<bool?> _params) =>
@@ -78,16 +82,19 @@ namespace MSec
                     SS_Label_BMB_Original.Text      = LABEL_ORIGINAL;
                     SS_Label_BMB_Resized.Text       = LABEL_RESIZED;
                     SS_Label_BMB_BlockMedians.Text  = LABEL_BLOCK_MEDIANS;
+                    SS_Label_BMB_Median.Text        = LABEL_MEDIAN;
 
                     // Source 0
                     SS_Picture_BMB_Original_0.BackgroundImage = Image.FromFile(_pair.Source0.FilePath);
                     SS_Picture_BMB_Resized_0.BackgroundImage = Image.FromFile(DumpTechniqueStepsToDisk.TARGET_FOLDER + string.Format(DumpTechniqueStepsToDisk.BMB_PATH_RESIZED, 0));
                     SS_Picture_BMB_BlockMedians_0.BackgroundImage = Image.FromFile(DumpTechniqueStepsToDisk.TARGET_FOLDER + string.Format(DumpTechniqueStepsToDisk.BMB_PATH_BLOCK_MEDIANS, 0));
+                    SS_Picture_BMB_Median_0.BackgroundImage = Image.FromFile(DumpTechniqueStepsToDisk.TARGET_FOLDER + string.Format(DumpTechniqueStepsToDisk.BMB_PATH_MEDIAN, 0));
 
                     // Source 1
                     SS_Picture_BMB_Original_1.BackgroundImage = Image.FromFile(_pair.Source1.FilePath);
                     SS_Picture_BMB_Resized_1.BackgroundImage = Image.FromFile(DumpTechniqueStepsToDisk.TARGET_FOLDER + string.Format(DumpTechniqueStepsToDisk.BMB_PATH_RESIZED, 1));
                     SS_Picture_BMB_BlockMedians_1.BackgroundImage = Image.FromFile(DumpTechniqueStepsToDisk.TARGET_FOLDER + string.Format(DumpTechniqueStepsToDisk.BMB_PATH_BLOCK_MEDIANS, 1));
+                    SS_Picture_BMB_Median_1.BackgroundImage = Image.FromFile(DumpTechniqueStepsToDisk.TARGET_FOLDER + string.Format(DumpTechniqueStepsToDisk.BMB_PATH_MEDIAN, 1));
                 });
             });
         }
@@ -99,10 +106,12 @@ namespace MSec
             disposeBackgroundImageFrom(SS_Picture_BMB_Original_0);
             disposeBackgroundImageFrom(SS_Picture_BMB_Resized_0);
             disposeBackgroundImageFrom(SS_Picture_BMB_BlockMedians_0);
+            disposeBackgroundImageFrom(SS_Picture_BMB_Median_0);
 
             disposeBackgroundImageFrom(SS_Picture_BMB_Original_1);
             disposeBackgroundImageFrom(SS_Picture_BMB_Resized_1);
             disposeBackgroundImageFrom(SS_Picture_BMB_BlockMedians_1);
+            disposeBackgroundImageFrom(SS_Picture_BMB_Median_1);
         }
 
         // Add a click event to the target, to pop-up the larger image view 

@@ -50,7 +50,7 @@ namespace MSec
 
         // Dll function: import -> ph_bmb_imagehash_dump_to_file (BMB hashing)
         [DllImport(@"pHash.dll", EntryPoint = "ph_bmb_imagehash_dump_to_file", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern int dumpBMBHashToDisk(string _file, int _method, string _fileResized, string _fileBlockMedians);
+        public static extern int dumpBMBHashToDisk(string _file, int _method, string _fileResized, string _fileBlockMedians, string _fileMedian);
 
         // Dll function: import -> ph_crosscorr (cross correlation)
         [DllImport(@"pHash.dll", EntryPoint = "ph_crosscorr", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]

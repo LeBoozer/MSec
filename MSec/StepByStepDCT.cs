@@ -16,7 +16,7 @@ namespace MSec
         // Constant values
         private static readonly string LABEL_LOADING            = "Image data is being computed...";
         private static readonly string LABEL_MEAN_ORIGINAL      = "Original image";
-        private static readonly string LABEL_MEAN_FILTER        = "1. Grayscale and apply mean filter";
+        private static readonly string LABEL_MEAN_FILTER        = "1. Grayscale and mean filter";
         private static readonly string LABEL_RESIZED            = "2. Resize image to 32x32";
         private static readonly string LABEL_DCT_MATRIX         = "3. Generated DCT matrix";
         private static readonly string LABEL_DCT_IMAGE          = "4. Image frequencies";

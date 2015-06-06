@@ -313,7 +313,8 @@ __declspec(dllexport) int __cdecl ph_dct_imagehash_dump_to_file(const char* file
 	const char* fileMeanFilter, const char* fileResized, const char* fileDCTMatrix, const char* fileDCTImage, const char* fileDCTImageSubsec, const char* fileMedian);
 
 __declspec(dllexport) int __cdecl ph_bmb_imagehash(const char *file, uint8_t method, BinHash **ret_hash);
-__declspec(dllexport) int __cdecl ph_bmb_imagehash_dump_to_file(const char *file, uint8_t method, const char* fileResized, const char* fileBlockMedians);
+__declspec(dllexport) int __cdecl ph_bmb_imagehash_dump_to_file(const char *file, uint8_t method, const char* fileResized, const char* fileBlockMedians,
+	const char* fileMedian);
 #endif
 
 #ifdef HAVE_PTHREAD

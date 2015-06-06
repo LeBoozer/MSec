@@ -413,7 +413,7 @@ namespace MSec
                     // Dump to disk?
                     if (_dumpToDiskPathes != null && _dumpToDiskPathes.Length == DumpTechniqueStepsToDisk.BMB_PATH_COUNT)
                     {
-                        if (PHash.dumpBMBHashToDisk(_image.FilePath, attMethod, _dumpToDiskPathes[0], _dumpToDiskPathes[1]) != 0)
+                        if (PHash.dumpBMBHashToDisk(_image.FilePath, attMethod, _dumpToDiskPathes[0], _dumpToDiskPathes[1], _dumpToDiskPathes[2]) != 0)
                             return null;
                         return new HashData<BMBHash>(null);
                     }

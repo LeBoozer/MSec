@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.SS_Picture_BMB_Median_0 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_BMB_Original_0 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_BMB_Resized_0 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_BMB_BlockMedians_0 = new System.Windows.Forms.PictureBox();
@@ -36,14 +37,18 @@
             this.SS_Label_BMB_BlockMedians = new System.Windows.Forms.Label();
             this.SS_Label_BMB_Resized = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.SS_Picture_BMB_Median_1 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_BMB_Original_1 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_BMB_Resized_1 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_BMB_BlockMedians_1 = new System.Windows.Forms.PictureBox();
+            this.SS_Label_BMB_Median = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_Median_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_Original_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_Resized_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_BlockMedians_0)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_Median_1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_Original_1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_Resized_1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_BlockMedians_1)).BeginInit();
@@ -51,15 +56,27 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.SS_Picture_BMB_Median_0);
             this.groupBox1.Controls.Add(this.SS_Picture_BMB_Original_0);
             this.groupBox1.Controls.Add(this.SS_Picture_BMB_Resized_0);
             this.groupBox1.Controls.Add(this.SS_Picture_BMB_BlockMedians_0);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(567, 207);
+            this.groupBox1.Size = new System.Drawing.Size(752, 207);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Source 0";
+            // 
+            // SS_Picture_BMB_Median_0
+            // 
+            this.SS_Picture_BMB_Median_0.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.SS_Picture_BMB_Median_0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SS_Picture_BMB_Median_0.Location = new System.Drawing.Point(565, 19);
+            this.SS_Picture_BMB_Median_0.Name = "SS_Picture_BMB_Median_0";
+            this.SS_Picture_BMB_Median_0.Size = new System.Drawing.Size(180, 180);
+            this.SS_Picture_BMB_Median_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.SS_Picture_BMB_Median_0.TabIndex = 11;
+            this.SS_Picture_BMB_Median_0.TabStop = false;
             // 
             // SS_Picture_BMB_Original_0
             // 
@@ -123,15 +140,27 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.SS_Picture_BMB_Median_1);
             this.groupBox2.Controls.Add(this.SS_Picture_BMB_Original_1);
             this.groupBox2.Controls.Add(this.SS_Picture_BMB_Resized_1);
             this.groupBox2.Controls.Add(this.SS_Picture_BMB_BlockMedians_1);
             this.groupBox2.Location = new System.Drawing.Point(12, 243);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(567, 207);
+            this.groupBox2.Size = new System.Drawing.Size(752, 207);
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Source 0";
+            this.groupBox2.Text = "Source 1";
+            // 
+            // SS_Picture_BMB_Median_1
+            // 
+            this.SS_Picture_BMB_Median_1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.SS_Picture_BMB_Median_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SS_Picture_BMB_Median_1.Location = new System.Drawing.Point(565, 19);
+            this.SS_Picture_BMB_Median_1.Name = "SS_Picture_BMB_Median_1";
+            this.SS_Picture_BMB_Median_1.Size = new System.Drawing.Size(180, 180);
+            this.SS_Picture_BMB_Median_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.SS_Picture_BMB_Median_1.TabIndex = 11;
+            this.SS_Picture_BMB_Median_1.TabStop = false;
             // 
             // SS_Picture_BMB_Original_1
             // 
@@ -166,28 +195,40 @@
             this.SS_Picture_BMB_BlockMedians_1.TabIndex = 2;
             this.SS_Picture_BMB_BlockMedians_1.TabStop = false;
             // 
+            // SS_Label_BMB_Median
+            // 
+            this.SS_Label_BMB_Median.Location = new System.Drawing.Point(577, 222);
+            this.SS_Label_BMB_Median.Name = "SS_Label_BMB_Median";
+            this.SS_Label_BMB_Median.Size = new System.Drawing.Size(180, 18);
+            this.SS_Label_BMB_Median.TabIndex = 24;
+            this.SS_Label_BMB_Median.Text = "-";
+            this.SS_Label_BMB_Median.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // StepByStepBMB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(587, 459);
+            this.ClientSize = new System.Drawing.Size(773, 459);
+            this.Controls.Add(this.SS_Label_BMB_Median);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.SS_Label_BMB_Original);
             this.Controls.Add(this.SS_Label_BMB_BlockMedians);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.SS_Label_BMB_Resized);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(603, 498);
+            this.MaximumSize = new System.Drawing.Size(789, 498);
             this.MinimizeBox = false;
             this.Name = "StepByStepBMB";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BMB";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StepByStepBMB_FormClosing);
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_Median_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_Original_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_Resized_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_BlockMedians_0)).EndInit();
             this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_Median_1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_Original_1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_Resized_1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_BMB_BlockMedians_1)).EndInit();
@@ -208,5 +249,8 @@
         private System.Windows.Forms.PictureBox SS_Picture_BMB_Original_1;
         private System.Windows.Forms.PictureBox SS_Picture_BMB_Resized_1;
         private System.Windows.Forms.PictureBox SS_Picture_BMB_BlockMedians_1;
+        private System.Windows.Forms.PictureBox SS_Picture_BMB_Median_0;
+        private System.Windows.Forms.PictureBox SS_Picture_BMB_Median_1;
+        private System.Windows.Forms.Label SS_Label_BMB_Median;
     }
 }
