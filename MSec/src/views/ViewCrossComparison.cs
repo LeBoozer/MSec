@@ -45,22 +45,23 @@ namespace MSec
         private static readonly string  LIST_RESULTS_COLUMN_TAG_MR_BMB      = "MatchRateBMB";
         private static readonly string  LIST_RESULTS_COLUMN_TAG_MR_AVG      = "MatchRateAverage";
 
-        private static readonly string  ACTION_IDLE                 = "Waiting for user input...";
-        private static readonly string  ACTION_LOADING_FILES        = "Loading and analysing files...";
-        private static readonly string  ACTION_READY                = "Ready for the comparison...";
-        private static readonly string  ACTION_EXECUTION            = "The comparison is being executed...";
-        private static readonly string  ACTION_FILTERING            = "Filtering is being executed...";
+        private static readonly string  ACTION_IDLE                         = "Waiting for user input...";
+        private static readonly string  ACTION_LOADING_FILES                = "Loading and analysing files...";
+        private static readonly string  ACTION_READY                        = "Ready for the comparison...";
+        private static readonly string  ACTION_EXECUTION                    = "The comparison is being executed...";
+        private static readonly string  ACTION_FILTERING                    = "Filtering is being executed...";
 
-        private static readonly string  CUSTOM_ACTION_HASHING       = "Hashes are being computed: {0}/{1}";
-        private static readonly string  CUSTOM_ACTION_COMPARISON    = "Hashes are being compared";
-        private static readonly string  CUSTOM_ACTION_PROCESS_DATA  = "Post-processing data...";
+        private static readonly string  CUSTOM_ACTION_HASHING               = "Hashes are being computed: {0}/{1}";
+        private static readonly string  CUSTOM_ACTION_COMPARISON            = "Hashes are being compared";
+        private static readonly string  CUSTOM_ACTION_PROCESS_DATA          = "Post-processing data...";
+        private static readonly string  CUSTOM_ACTION_SELECTED_ITEMS        = "{0} items selected";
 
-        private static readonly string  STRING_FORMAT_NUM_SOURCES   = "Image source count: {0}";
-        private static readonly string  STRING_FORMAT_NUM_RESULTS   = "Result count: {0}";
+        private static readonly string  STRING_FORMAT_NUM_SOURCES           = "Image source count: {0}";
+        private static readonly string  STRING_FORMAT_NUM_RESULTS           = "Result count: {0}";
 
-        private static readonly Color   COLOR_RESULT_ACCEPTED       = Color.FromArgb(46, 176, 51);
-        private static readonly Color   COLOR_RESULT_DENIED         = Color.FromArgb(255, 51, 51);
-        private static readonly int     NUM_MIDPOINTS_COLOR_RESULT  = 10;
+        private static readonly Color   COLOR_RESULT_ACCEPTED               = Color.FromArgb(46, 176, 51);
+        private static readonly Color   COLOR_RESULT_DENIED                 = Color.FromArgb(255, 51, 51);
+        private static readonly int     NUM_MIDPOINTS_COLOR_RESULT          = 10;
 
         // Delegate declarations
         private delegate IEnumerable<UnfoldedBindingComparisonPair>     delegate_sorter_func(int _index);
@@ -289,12 +290,11 @@ namespace MSec
         private Button                  m_buttonReferenceFolderDelete = null;
         private Button                  m_buttonControlsStart = null;
         private Button                  m_buttonControlsCollapseGroups = null;
+        private Button                  m_buttonControlsSelectAll = null;
         private Label                   m_labelReferenceFolderNumImageSources = null;
         private Label                   m_labelResultCount = null;
-        private ToolStripDropDownButton m_toolStripDropDown = null;
         private ToolStripLabel          m_labelAction = null;
         private ToolStripProgressBar    m_progressBar = null;
-        private ToolStripMenuItem       m_toolStripItemShowColors = null;
 
         // List-view-column (result list)
         private OLVColumn               m_listResultColumnMRRadish = null;
@@ -414,12 +414,11 @@ namespace MSec
             m_buttonReferenceFolderDelete = _tabPage.Controls.Find("CC_Button_ReferenceFolder_Delete", true)[0] as Button;
             m_buttonControlsStart = _tabPage.Controls.Find("CC_Button_ReferenceFolder_Start", true)[0] as Button;
             m_buttonControlsCollapseGroups = _tabPage.Controls.Find("CC_Button_Controls_CollapseGroups", true)[0] as Button;
+            m_buttonControlsSelectAll = _tabPage.Controls.Find("CC_Button_Controls_SelectAll", true)[0] as Button;
             m_labelReferenceFolderNumImageSources = _tabPage.Controls.Find("CC_Label_ReferenceFolder_NumSources", true)[0] as Label;
-            m_toolStripDropDown = (_tabPage.Controls.Find("CC_ToolStrip", true)[0] as ToolStrip).Items.Find("CC_ToolStrip_DropDown", true)[0] as ToolStripDropDownButton;
             m_labelAction = (_tabPage.Controls.Find("CC_ToolStrip", true)[0] as ToolStrip).Items.Find("CC_ToolStrip_Label_Action", true)[0] as ToolStripLabel;
             m_labelResultCount = _tabPage.Controls.Find("CC_Label_ResultCount", true)[0] as Label;
             m_progressBar = (_tabPage.Controls.Find("CC_ToolStrip", true)[0] as ToolStrip).Items.Find("CC_ToolStrip_Progress", true)[0] as ToolStripProgressBar;
-            m_toolStripItemShowColors = m_toolStripDropDown.DropDownItems.Find("CC_ToolStrip_DropDown_ShowColors", true)[0] as ToolStripMenuItem;
 
             // Add events to: technique selection
             ControlTechniqueSel.OnTechniqueIDsChanged += onTechniqueSelectionIDsChanged;
@@ -443,9 +442,7 @@ namespace MSec
             m_buttonReferenceFolderDelete.Click += onButtonReferenceFolderDeleteClick;
             m_buttonControlsStart.Click += onButtonReferenceFolderStartClick;
             m_buttonControlsCollapseGroups.Click += onButtonControlCollapseGroupsClick;
-
-            // Add events to tool strip items
-            m_toolStripItemShowColors.CheckedChanged += onToolStripItemShowColorsClick;
+            m_buttonControlsSelectAll.Click += onButtonControlsSelectAllClick;
 
             // Define pop-up position
             x = m_listResults.Width;
@@ -564,6 +561,7 @@ namespace MSec
                         m_labelAction.Text = ACTION_READY;
                         m_buttonControlsStart.Enabled = true;
                         m_buttonControlsCollapseGroups.Enabled = true;
+                        m_buttonControlsSelectAll.Enabled = true;
                     };
 
                     // Exit
@@ -571,6 +569,7 @@ namespace MSec
                     {
                         m_buttonControlsStart.Enabled = false;
                         m_buttonControlsCollapseGroups.Enabled = false;
+                        m_buttonControlsSelectAll.Enabled = false;
                     };
                 }
                 #endregion State: Ready
@@ -586,9 +585,9 @@ namespace MSec
                         m_buttonReferenceFolderDelete.Enabled = false;
                         m_buttonControlsStart.Enabled = false;
                         m_buttonControlsCollapseGroups.Enabled = false;
+                        m_buttonControlsSelectAll.Enabled = false;
                         m_listResults.Enabled = false;
                         m_textFilter.Enabled = false;
-                        m_toolStripDropDown.Enabled = false;
                         lockTechniqueSelection();
                     };
 
@@ -599,9 +598,9 @@ namespace MSec
                         m_buttonReferenceFolderDelete.Enabled = true;
                         m_buttonControlsStart.Enabled = true;
                         m_buttonControlsCollapseGroups.Enabled = true;
+                        m_buttonControlsSelectAll.Enabled = true;
                         m_listResults.Enabled = true;
                         m_textFilter.Enabled = true;
-                        m_toolStripDropDown.Enabled = true;
                         unlockTechniqueSelection();
                     };
                 }
@@ -618,9 +617,9 @@ namespace MSec
                         m_buttonReferenceFolderDelete.Enabled = false;
                         m_buttonControlsStart.Enabled = false;
                         m_buttonControlsCollapseGroups.Enabled = false;
+                        m_buttonControlsSelectAll.Enabled = false;
                         m_listResults.Enabled = false;
                         m_textFilter.Enabled = false;
-                        m_toolStripDropDown.Enabled = false;
                         lockTechniqueSelection();
                     };
 
@@ -631,9 +630,9 @@ namespace MSec
                         m_buttonReferenceFolderDelete.Enabled = true;
                         m_buttonControlsStart.Enabled = true;
                         m_buttonControlsCollapseGroups.Enabled = true;
+                        m_buttonControlsSelectAll.Enabled = true;
                         m_listResults.Enabled = true;
                         m_textFilter.Enabled = true;
-                        m_toolStripDropDown.Enabled = true;
                         unlockTechniqueSelection();
                     };
                 }
@@ -753,6 +752,12 @@ namespace MSec
             }
 
             return node;
+        }
+
+        // Creates the action/status text for selected items
+        private string createStatusTextForSelectedItems(int _length)
+        {
+            return string.Format(CUSTOM_ACTION_SELECTED_ITEMS, _length);
         }
 
         // Starts computing the image hashes for the selected techniques
@@ -1562,10 +1567,14 @@ namespace MSec
                     // Hide windows
                     m_popupWindowStats.Hide();
                     m_popupWindow.Hide();
+
+                    // Reset status text
+                    m_labelAction.Text = ACTION_READY;
+                    return;
                 }
 
                 // Just one selected?
-                else if (list.Count == 1)
+                if (list.Count == 1)
                 {
                     // Show pop-up window
                     m_popupWindowStats.Hide();
@@ -1583,6 +1592,9 @@ namespace MSec
                     // Set data
                     m_multiSelectionStats.setSelectedItems(list.OfType<UnfoldedBindingComparisonPair>());
                 }
+
+                // Update status text
+                m_labelAction.Text = createStatusTextForSelectedItems(list.Count);
             }
             catch(Exception _ex)
             {
@@ -1647,6 +1659,13 @@ namespace MSec
             }
         }
 
+        // Event Button::onButtonControlsSelectAllClick
+        void onButtonControlsSelectAllClick(object sender, EventArgs e)
+        {
+            // Select all items
+            m_listResults.SelectAll();
+        }
+
         // Event TextBox::onFilterMouseWheel
         void onFilterMouseWheel(object _sender, MouseEventArgs _e)
         {
@@ -1679,18 +1698,6 @@ namespace MSec
                 executeFilter2(filter.Command);
         }
 
-        #region Events: ToolStrip
-        // Event List::onColumnClick
-        void onToolStripItemShowColorsClick(Object _sender, EventArgs _e)
-        {
-            /*/ Invert attribute
-            m_isShowResultColors = !m_isShowResultColors;
-
-            // Update list-view
-            if(m_listDisplayComparisonItems != null && m_listDisplayComparisonItems.Count > 0)
-                m_listResults.RedrawItems(0, m_listDisplayComparisonItems.Count - 1, true);    */  
-        }
-        #endregion Events: ToolStrip
         #endregion Events: Controls
     }
 }

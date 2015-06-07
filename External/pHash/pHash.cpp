@@ -341,13 +341,17 @@ int _ph_image_digest_dump_to_file(const CImg<uint8_t> &img, double sigma, double
 	}
 
 	// TEMP: SAVE TO FILE
-	graysc.save_jpeg(fileGrayscale);
+	CImg<uint8_t> imageGrayscale = graysc;
+	imageGrayscale.normalize(0, 255);
+	imageGrayscale.save_jpeg(fileGrayscale);
 
 	graysc.blur((float)sigma);
 	(graysc / graysc.max()).pow(gamma);
 
 	// TEMP: SAVE TO FILE
-	graysc.save_jpeg(fileBlurred);
+	CImg<uint8_t> imageBlur = graysc;
+	imageBlur.normalize(0, 255);
+	imageBlur.save_jpeg(fileBlurred);
 
 	Projections projs;
 	if (ph_radon_projections(graysc, N, projs) < 0)
@@ -355,7 +359,9 @@ int _ph_image_digest_dump_to_file(const CImg<uint8_t> &img, double sigma, double
 	else
 	{
 		// TEMP: SAVE TO FILE
-		projs.R->save_jpeg(fileRadon);
+		CImg<uint8_t> imageProjection = *projs.R;
+		imageProjection.normalize(0, 255);
+		imageProjection.save_jpeg(fileRadon);
 	}
 
 	Features features;
@@ -677,7 +683,9 @@ int ph_bmb_imagehash_dump_to_file(const char *file, uint8_t method, const char* 
 	img.resize(preset_size_x, preset_size_y);
 
 	// TEMP: SAVE TO FILE
-	img.save_jpeg(fileResized);
+	CImg<uint8_t> grayscaleImage = img;
+	grayscaleImage.normalize(0, 255);
+	grayscaleImage.save_jpeg(fileResized);
 
 	// ~step b
 	ptrsrc = img.data();  // set pointer to beginning of pixel buffer
@@ -831,12 +839,16 @@ int ph_dct_imagehash_dump_to_file(const char* file,
 	}
 
 	// TEMP: SAVE TO FILE
-	img.save_jpeg(fileMeanFilter);
+	CImg<uint8_t> imageMeanFilter = img;
+	imageMeanFilter.normalize(0, 255);
+	imageMeanFilter.save_jpeg(fileMeanFilter);
 
 	img.resize(32,32);
 
 	// TEMP: SAVE TO FILE
-	img.save_jpeg(fileResized);
+	CImg<uint8_t> imageResized = img;
+	imageResized.normalize(0, 255);
+	imageResized.save_jpeg(fileResized);
 
 	CImg<float> *C  = ph_dct_matrix(32);
 	CImg<float> Ctransp = C->get_transpose();
@@ -850,6 +862,7 @@ int ph_dct_imagehash_dump_to_file(const char* file,
 
 	// TEMP: SAVE TO FILE
 	CImg<float> myDctImage = dctImage;
+	myDctImage.invert(false);
 	myDctImage.normalize(0.0f, 255.0f);
 	myDctImage.save_jpeg(fileDCTImage);
 
@@ -860,11 +873,11 @@ int ph_dct_imagehash_dump_to_file(const char* file,
 	dctImageSubSec.normalize(0.0f, 255.0f);
 	dctImageSubSec.save_jpeg(fileDCTImageSubsec);
 
-	float median = subsec.median();
+	float median = dctImageSubSec.median();
 
 	// TEMP: SAVE TO FILE
 	CImg<float> medianImage(100, 100);
-	medianImage.fill(median * 255.0f);
+	medianImage.fill(median);
 	medianImage.save_jpeg(fileMedian);
 
 	delete C;
@@ -1429,7 +1442,9 @@ int ph_mh_imagehash_dump_to_file(const char *filename, float alpha, float lvl, c
 	src.clear();
 
 	// TEMP: SAVE TO FILE
-	img.save_jpeg(fileBlurred);
+	CImg<uint8_t> grayscaleImage = img;
+	grayscaleImage.normalize(0, 255);
+	grayscaleImage.save_jpeg(fileBlurred);
 
 	CImg<float> *pkernel = GetMHKernel(alpha, lvl);
 

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 /*******************************************************************************************************************************************************************
 	Interface: TechniqueID
@@ -555,16 +556,20 @@ namespace MSec
         {
             // Local variables
             HashData data = null;
+            Stopwatch sw = new Stopwatch();
 
             // Check parameter
             if (_image == null)
                 return null;
 
             // Compute hash
+            sw.Start();
             data = m_funcHash(this, _image, null);
+            sw.Stop();
 
             // Assign result to image
             _image.HashData = data;
+            _image.ComputationTime = sw.ElapsedMilliseconds / 1000;
 
             return data;
         }

@@ -71,6 +71,14 @@ namespace MSec
             set { m_hashData = value; }
         }
 
+        // The computation time for the hash calculation in seconds
+        private long m_hashComputationTimeSec = 0;
+        public long ComputationTime
+        {
+            get { return m_hashComputationTimeSec; }
+            set { m_hashComputationTimeSec = value; }
+        }
+
         // Wrapper for the hash
         public string Hash
         {

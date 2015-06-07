@@ -19,7 +19,7 @@ namespace MSec
         private static readonly string LABEL_MEAN_FILTER        = "1. Grayscale and mean filter";
         private static readonly string LABEL_RESIZED            = "2. Resize image to 32x32";
         private static readonly string LABEL_DCT_MATRIX         = "3. Generated DCT matrix";
-        private static readonly string LABEL_DCT_IMAGE          = "4. Image frequencies";
+        private static readonly string LABEL_DCT_IMAGE          = "4. Inverted! image frequencies";
         private static readonly string LABEL_DCT_IMAGE_SUBSEC   = "5. Low image frequencies";
         private static readonly string LABEL_MEDIAN             = "6. Median of low frequencies";
 

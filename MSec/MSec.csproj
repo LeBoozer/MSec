@@ -277,6 +277,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\KnownIssues.txt" />
+    <None Include="Resources\selectall.png" />
     <None Include="Resources\collapse.png" />
     <None Include="Resources\collapse1.png" />
     <Content Include="Resources\Filter.txt" />

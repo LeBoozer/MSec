@@ -40,6 +40,7 @@
             this.Selection_ImageSource0 = new ImageSourceSelection();
             this.pageCrossComparison = new System.Windows.Forms.TabPage();
             this.CC_Group_Controls = new System.Windows.Forms.GroupBox();
+            this.CC_Button_Controls_SelectAll = new System.Windows.Forms.Button();
             this.CC_Button_Controls_CollapseGroups = new System.Windows.Forms.Button();
             this.CC_Button_ReferenceFolder_Start = new System.Windows.Forms.Button();
             this.CC_List_Results = new BrightIdeasSoftware.FastObjectListView();
@@ -54,8 +55,6 @@
             this.CC_Label_ResultCount = new System.Windows.Forms.Label();
             this.CC_Text_Filter = new System.Windows.Forms.ComboBox();
             this.CC_ToolStrip = new System.Windows.Forms.StatusStrip();
-            this.CC_ToolStrip_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
-            this.CC_ToolStrip_DropDown_ShowColors = new System.Windows.Forms.ToolStripMenuItem();
             this.CC_ToolStrip_Label_Action = new System.Windows.Forms.ToolStripStatusLabel();
             this.CC_ToolStrip_Progress = new System.Windows.Forms.ToolStripProgressBar();
             this.CC_Group_SourceLocation = new System.Windows.Forms.GroupBox();
@@ -199,6 +198,7 @@
             // 
             // CC_Group_Controls
             // 
+            this.CC_Group_Controls.Controls.Add(this.CC_Button_Controls_SelectAll);
             this.CC_Group_Controls.Controls.Add(this.CC_Button_Controls_CollapseGroups);
             this.CC_Group_Controls.Controls.Add(this.CC_Button_ReferenceFolder_Start);
             this.CC_Group_Controls.Location = new System.Drawing.Point(490, 117);
@@ -207,6 +207,18 @@
             this.CC_Group_Controls.TabIndex = 14;
             this.CC_Group_Controls.TabStop = false;
             this.CC_Group_Controls.Text = "Controls";
+            // 
+            // CC_Button_Controls_SelectAll
+            // 
+            this.CC_Button_Controls_SelectAll.BackgroundImage = global::MSec.Properties.Resources.selectall;
+            this.CC_Button_Controls_SelectAll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CC_Button_Controls_SelectAll.Enabled = false;
+            this.CC_Button_Controls_SelectAll.Location = new System.Drawing.Point(78, 16);
+            this.CC_Button_Controls_SelectAll.Name = "CC_Button_Controls_SelectAll";
+            this.CC_Button_Controls_SelectAll.Size = new System.Drawing.Size(23, 23);
+            this.CC_Button_Controls_SelectAll.TabIndex = 11;
+            this.ToolTip.SetToolTip(this.CC_Button_Controls_SelectAll, "Select all items in the list");
+            this.CC_Button_Controls_SelectAll.UseVisualStyleBackColor = true;
             // 
             // CC_Button_Controls_CollapseGroups
             // 
@@ -362,7 +374,6 @@
             // CC_ToolStrip
             // 
             this.CC_ToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CC_ToolStrip_DropDown,
             this.CC_ToolStrip_Label_Action,
             this.CC_ToolStrip_Progress});
             this.CC_ToolStrip.Location = new System.Drawing.Point(0, 519);
@@ -370,25 +381,6 @@
             this.CC_ToolStrip.Size = new System.Drawing.Size(697, 22);
             this.CC_ToolStrip.TabIndex = 3;
             this.CC_ToolStrip.Text = "statusStrip1";
-            // 
-            // CC_ToolStrip_DropDown
-            // 
-            this.CC_ToolStrip_DropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.CC_ToolStrip_DropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CC_ToolStrip_DropDown_ShowColors});
-            this.CC_ToolStrip_DropDown.Image = global::MSec.Properties.Resources.gear;
-            this.CC_ToolStrip_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.CC_ToolStrip_DropDown.Name = "CC_ToolStrip_DropDown";
-            this.CC_ToolStrip_DropDown.Size = new System.Drawing.Size(29, 20);
-            // 
-            // CC_ToolStrip_DropDown_ShowColors
-            // 
-            this.CC_ToolStrip_DropDown_ShowColors.Checked = true;
-            this.CC_ToolStrip_DropDown_ShowColors.CheckOnClick = true;
-            this.CC_ToolStrip_DropDown_ShowColors.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CC_ToolStrip_DropDown_ShowColors.Name = "CC_ToolStrip_DropDown_ShowColors";
-            this.CC_ToolStrip_DropDown_ShowColors.Size = new System.Drawing.Size(138, 22);
-            this.CC_ToolStrip_DropDown_ShowColors.Text = "Show colors";
             // 
             // CC_ToolStrip_Label_Action
             // 
@@ -718,8 +710,6 @@
         private System.Windows.Forms.Label CC_Label_ReferenceFolder_NumSources;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.LinkLabel linkLabel4;
-        private System.Windows.Forms.ToolStripDropDownButton CC_ToolStrip_DropDown;
-        private System.Windows.Forms.ToolStripMenuItem CC_ToolStrip_DropDown_ShowColors;
         private System.Windows.Forms.ComboBox CC_Text_Filter;
         private System.Windows.Forms.Label CC_Label_ResultCount;
         private System.Windows.Forms.Label label5;
@@ -737,6 +727,7 @@
         private System.Windows.Forms.LinkLabel Test;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.LinkLabel linkLabel5;
+        private System.Windows.Forms.Button CC_Button_Controls_SelectAll;
     }
 }
 
