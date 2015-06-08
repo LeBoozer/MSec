@@ -1031,7 +1031,8 @@ namespace MSec
                 // Unfold pairs
                 foreach(ComparisonPairForBindings cp in _pairs)
                 {
-                    unfoldedPairs.Add(new UnfoldedBindingComparisonPair(Convert.ToInt32(threshold), cp.Binding0.SourceReference, cp.Binding1.SourceReference, 
+                    unfoldedPairs.Add(new UnfoldedBindingComparisonPair(Convert.ToInt32(threshold), cp.Binding0, cp.Binding1,
+                        cp.Binding0.SourceReference, cp.Binding1.SourceReference,
                         cp.getComparisonDataFor(TechniqueID.RADISH), cp.getComparisonDataFor(TechniqueID.DCT),
                         cp.getComparisonDataFor(TechniqueID.WAVELET), cp.getComparisonDataFor(TechniqueID.BMB)));
                 }

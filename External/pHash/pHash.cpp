@@ -261,9 +261,14 @@ int ph_crosscorr(const Digest &x,const Digest &y,double &pcc,double threshold){
 #undef max
 #endif
 
-int _ph_image_digest(const CImg<uint8_t> &img,double sigma, double gamma,Digest &digest, int N){
+int _ph_image_digest(const CImg<uint8_t> &img, double sigma, double gamma, Digest &digest, Timings& timings, int N){
 
     int result = EXIT_FAILURE;
+	LARGE_INTEGER frequency, start, end;
+
+	QueryPerformanceFrequency(&frequency);
+	QueryPerformanceCounter(&start);
+
     CImg<uint8_t> graysc;
     if (img.spectrum() >= 3){
         graysc = img.get_RGBtoYCbCr().channel(0);
@@ -275,45 +280,23 @@ int _ph_image_digest(const CImg<uint8_t> &img,double sigma, double gamma,Digest 
         return result;
     }
 
-	// TEMP: SAVE TO FILE
-	//graysc.save_jpeg("1. radish - grayscale.jpeg");
-
     graysc.blur((float)sigma);
 
     (graysc/graysc.max()).pow(gamma);
 
-	// TEMP: SAVE TO FILE
-	//graysc.save_jpeg("2. radish - blurred.jpeg");
-
 	Projections projs;
     if (ph_radon_projections(graysc,N,projs) < 0)
         goto cleanup;
-	else
-	{
-		// TEMP: SAVE TO FILE
-		//projs.R->save_jpeg("3. radish - radon_map.jpeg");
-	}
 
 	Features features;
     if (ph_feature_vector(projs,features) < 0)
         goto cleanup;
-	else
-	{
-		/*/ TEMP: SAVE TO FILE
-		CImg<double> featureVector(features.features, features.size);
-		featureVector.normalize(0.0, 255.0);
-		featureVector.save_jpeg("4. radish - feature_vector.jpeg");*/
-	}
 
     if (ph_dct(features,digest) < 0)
         goto cleanup;
-	else
-	{
-		/*/ TEMP: SAVE TO FILE
-		CImg<uint8_t> dct(digest.coeffs, digest.size);
-		dct.normalize(0, 255);
-		dct.save_jpeg("5. radish - dct.jpeg");*/
-	}
+
+	QueryPerformanceCounter(&end);
+	timings.hashComputationTimeMS = static_cast<double>(end.QuadPart - start.QuadPart) / frequency.QuadPart;
 
     result = EXIT_SUCCESS;
 
@@ -397,16 +380,26 @@ cleanup:
 
 #define max(a,b) (((a)>(b))?(a):(b))
 
-int ph_image_digest(const char *file, double sigma, double gamma, Digest &digest, int N){
+int ph_image_digest(const char *file, double sigma, double gamma, Digest &digest, Timings& timings, int N){
+
+	LARGE_INTEGER frequency, start, end;
+
+	QueryPerformanceFrequency(&frequency);
+	QueryPerformanceCounter(&start);
 
     CImg<uint8_t> *src = new CImg<uint8_t>(file);
+
+	QueryPerformanceCounter(&end);
+	timings.imageLoadingTimeMS = static_cast<double>(end.QuadPart - start.QuadPart) / frequency.QuadPart;
+
     int res = -1;
     if(src)
     {
-        int result = _ph_image_digest(*src,sigma,gamma,digest,N);
+		int result = _ph_image_digest(*src, sigma, gamma, digest, timings, N);
         delete src;
         res = result;
     }
+
     return res;
 }
 int ph_image_digest_dump_to_file(const char *file, double sigma, double gamma, int N,
@@ -427,11 +420,12 @@ int _ph_compare_images(const CImg<uint8_t> &imA,const CImg<uint8_t> &imB,double 
 
     int result = 0;
     Digest digestA;
-    if (_ph_image_digest(imA,sigma,gamma,digestA,N) < 0)
+	Timings timings;
+	if (_ph_image_digest(imA, sigma, gamma, digestA, timings, N) < 0)
         goto cleanup;
 
     Digest digestB;
-    if (_ph_image_digest(imB,sigma,gamma,digestB,N) < 0)
+	if (_ph_image_digest(imB, sigma, gamma, digestB, timings, N) < 0)
         goto cleanup;
 
     if (ph_crosscorr(digestA,digestB,pcc,threshold) < 0)
@@ -487,7 +481,7 @@ void ph_bmb_free(BinHash *bh)
         free(bh);
     }
 }
-int ph_bmb_imagehash(const char *file, uint8_t method, BinHash **ret_hash)
+int ph_bmb_imagehash(const char *file, uint8_t method, BinHash **ret_hash, Timings& timings)
 {
     CImg<uint8_t> img;
     const uint8_t *ptrsrc;  // source pointer (img)
@@ -507,6 +501,11 @@ int ph_bmb_imagehash(const char *file, uint8_t method, BinHash **ret_hash)
     uint32_t bitsize;
     // number of bytes needed to store bitsize bits.
     uint32_t bytesize;
+	int result = EXIT_FAILURE;
+	LARGE_INTEGER frequency, start, end;
+
+	QueryPerformanceFrequency(&frequency);
+	QueryPerformanceCounter(&start);
 
     if (!file || !ret_hash){
         return -1;
@@ -516,6 +515,10 @@ int ph_bmb_imagehash(const char *file, uint8_t method, BinHash **ret_hash)
     } catch (CImgIOException ex){
         return -1;
     }
+
+	QueryPerformanceCounter(&end);
+	timings.imageLoadingTimeMS = static_cast<double>(end.QuadPart - start.QuadPart) / frequency.QuadPart;
+	QueryPerformanceCounter(&start);
 
     const int blk_size = blk_size_x * blk_size_y;
     block = (uint8_t*)malloc(sizeof(uint8_t) * blk_size);
@@ -626,6 +629,10 @@ int ph_bmb_imagehash(const char *file, uint8_t method, BinHash **ret_hash)
     }	
     delete[] mean_vals;
     free(block);
+
+	QueryPerformanceCounter(&end);
+	timings.hashComputationTimeMS = static_cast<double>(end.QuadPart - start.QuadPart) / frequency.QuadPart;
+
     return 0;
 }
 int ph_bmb_imagehash_dump_to_file(const char *file, uint8_t method, const char* fileResized, const char* fileBlockMedians, const char* fileMedian)
@@ -765,7 +772,13 @@ int ph_bmb_imagehash_dump_to_file(const char *file, uint8_t method, const char* 
 	return 0;
 }
 
-int ph_dct_imagehash(const char* file,ulong64 &hash){
+int ph_dct_imagehash(const char* file,ulong64 &hash, Timings& timings){
+
+	int result = EXIT_FAILURE;
+	LARGE_INTEGER frequency, start, end;
+
+	QueryPerformanceFrequency(&frequency);
+	QueryPerformanceCounter(&start);
 
     if (!file){
         return -1;
@@ -776,6 +789,11 @@ int ph_dct_imagehash(const char* file,ulong64 &hash){
     } catch (CImgIOException ex){
         return -1;
     }
+
+	QueryPerformanceCounter(&end);
+	timings.imageLoadingTimeMS = static_cast<double>(end.QuadPart - start.QuadPart) / frequency.QuadPart;
+	QueryPerformanceCounter(&start);
+
     CImg<float> meanfilter(7,7,1,1,1);
     CImg<float> img;
     if (src.spectrum() == 3){
@@ -809,6 +827,9 @@ int ph_dct_imagehash(const char* file,ulong64 &hash){
     }
 
     delete C;
+
+	QueryPerformanceCounter(&end);
+	timings.hashComputationTimeMS = static_cast<double>(end.QuadPart - start.QuadPart) / frequency.QuadPart;
 
     return 0;
 }
@@ -1364,7 +1385,14 @@ CImg<float>* GetMHKernel(float alpha, float level){
     return pkernel;
 }
 
-uint8_t* ph_mh_imagehash(const char *filename, int &N,float alpha, float lvl){
+uint8_t* ph_mh_imagehash(const char *filename, int &N,Timings& timings,float alpha, float lvl){
+
+	int result = EXIT_FAILURE;
+	LARGE_INTEGER frequency, start, end;
+
+	QueryPerformanceFrequency(&frequency);
+	QueryPerformanceCounter(&start);
+
     if (filename == NULL){
         return NULL;
     }
@@ -1373,6 +1401,10 @@ uint8_t* ph_mh_imagehash(const char *filename, int &N,float alpha, float lvl){
 
     CImg<uint8_t> src(filename);
     CImg<uint8_t> img;
+
+	QueryPerformanceCounter(&end);
+	timings.imageLoadingTimeMS = static_cast<double>(end.QuadPart - start.QuadPart) / frequency.QuadPart;
+	QueryPerformanceCounter(&start);
 
     if (src.spectrum() == 3){
 		img = src.get_RGBtoYCbCr().channel(0).blur(1.0).resize(512, 512, 1, 1, 5).get_equalize(256);
@@ -1420,6 +1452,9 @@ uint8_t* ph_mh_imagehash(const char *filename, int &N,float alpha, float lvl){
             }
         }
     }
+
+	QueryPerformanceCounter(&end);
+	timings.hashComputationTimeMS = static_cast<double>(end.QuadPart - start.QuadPart) / frequency.QuadPart;
 
     return hash;
 }

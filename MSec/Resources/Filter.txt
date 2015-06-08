@@ -51,5 +51,9 @@ list content (standard objects are not mentioned here, please see link above!):
 		- SourceX.FilePath				(string)
 		- SourceX.FileName				(string)
 		- SourceX.Dir					(string)
+		- SourceXRADISH					(ImageSource)
+		- SourceXDCT					(ImageSource)
+		- SourceXWavelet				(ImageSource)
+		- SourceXBMB					(ImageSource)
 
 New or existing pre-defined filter can be added/edited in the application configuration: config.cfg

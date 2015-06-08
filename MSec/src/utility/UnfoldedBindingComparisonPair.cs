@@ -32,6 +32,22 @@ namespace MSec
             private set { }
         }
 
+        // The first binding
+        private ImageSourceBinding m_binding0 = null;
+        public ImageSourceBinding Binding0
+        {
+            get { return m_binding0; }
+            private set { }
+        }
+
+        // The second binding
+        private ImageSourceBinding m_binding1 = null;
+        public ImageSourceBinding Binding1
+        {
+            get { return m_binding1; }
+            private set { }
+        }
+
         // The first image source
         private ImageSource m_sourceBinding0 = null;
         public ImageSource Source0
@@ -81,6 +97,62 @@ namespace MSec
         }
 
         #region Definitions for DLinQ und object-list-view
+
+        // Image source 0: RADISH
+        public ImageSource Source0RADISH
+        {
+            get { return m_binding0.getComparisonDataFor(TechniqueID.RADISH); }
+            private set { }
+        }
+
+        // Image source 0: DCT
+        public ImageSource Source0DCT
+        {
+            get { return m_binding0.getComparisonDataFor(TechniqueID.DCT); }
+            private set { }
+        }
+
+        // Image source 0: Wavelet
+        public ImageSource Source0Wavelet
+        {
+            get { return m_binding0.getComparisonDataFor(TechniqueID.WAVELET); }
+            private set { }
+        }
+
+        // Image source 0: BMB
+        public ImageSource Source0BMB
+        {
+            get { return m_binding0.getComparisonDataFor(TechniqueID.BMB); }
+            private set { }
+        }
+
+        // Image source 1: RADISH
+        public ImageSource Source1RADISH
+        {
+            get { return m_binding1.getComparisonDataFor(TechniqueID.RADISH); }
+            private set { }
+        }
+
+        // Image source 1: DCT
+        public ImageSource Source1DCT
+        {
+            get { return m_binding1.getComparisonDataFor(TechniqueID.DCT); }
+            private set { }
+        }
+
+        // Image source 1: Wavelet
+        public ImageSource Source1Wavelet
+        {
+            get { return m_binding1.getComparisonDataFor(TechniqueID.WAVELET); }
+            private set { }
+        }
+
+        // Image source 1: BMB
+        public ImageSource Source1BMB
+        {
+            get { return m_binding1.getComparisonDataFor(TechniqueID.BMB); }
+            private set { }
+        }
 
         // Average match rate
         public int MatchRateAVG
@@ -142,11 +214,14 @@ namespace MSec
         #endregion Definitions for DLinQ und object-list-view
 
         // Constructor
-        public UnfoldedBindingComparisonPair(int _threshold, ImageSource _src0, ImageSource _src1, ComparativeData _radish,
+        public UnfoldedBindingComparisonPair(int _threshold, ImageSourceBinding _binding0, ImageSourceBinding _binding1, 
+            ImageSource _src0, ImageSource _src1, ComparativeData _radish,
             ComparativeData _dct, ComparativeData _wavelet, ComparativeData _bmb)
         {
             // Copy
             m_threshold = _threshold;
+            m_binding0 = _binding0;
+            m_binding1 = _binding1;
             m_sourceBinding0 = _src0;
             m_sourceBinding1 = _src1;
             m_compDataRADISH = _radish;
@@ -157,7 +232,7 @@ namespace MSec
 
         public UnfoldedBindingComparisonPair cloneWithNewTag(object _tag)
         {
-            var item = new UnfoldedBindingComparisonPair(Threshold, Source0, Source1, DataRADISH, DataDCT, DataWavelet, DataBMB);
+            var item = new UnfoldedBindingComparisonPair(Threshold, Binding0, Binding1, Source0, Source1, DataRADISH, DataDCT, DataWavelet, DataBMB);
             item.Tag = _tag;
             return item;
         }

@@ -163,6 +163,7 @@ namespace MSec
                 {
                     // Local variables
                     Digest hash = new Digest();
+                    HashComputationTimings timings = new HashComputationTimings();
                     IntPtr hashUnmanaged = IntPtr.Zero;
                     HashData<Digest> result = null;
                     decimal attGamma = 1.0m;
@@ -191,7 +192,7 @@ namespace MSec
                         hashUnmanaged = Utility.convertSimpleStructureToUnmanagedPtr<Digest>(hash);
 
                         // Comnpute hash
-                        PHash.computeRadialHash(_image.FilePath, Convert.ToSingle(attSigma), Convert.ToSingle(attGamma), hashUnmanaged, (int)(Convert.ToSingle(attAngles)));
+                        PHash.computeRadialHash(_image.FilePath, Convert.ToSingle(attSigma), Convert.ToSingle(attGamma), hashUnmanaged, timings, (int)(Convert.ToSingle(attAngles)));
 
                         // Convert unmanaged to managed
                         Utility.convertUnmanagedPtrToSimpleStructure<Digest>(hashUnmanaged, ref hash);
@@ -200,7 +201,8 @@ namespace MSec
                         result = new HashData<Digest>(hash, (Digest _data) =>
                         {
                             return Utility.toHexString(_data.m_coeffs, _data.m_size);
-                        });
+                        },
+                        new HashDataTimings(timings.m_imageLoadingTimeMS, timings.m_hashComputationTimeMS));
                         return result;
                     }
                 },
@@ -255,6 +257,7 @@ namespace MSec
                     // Local variables
                     UInt64 hash = 0;
                     HashData<UInt64> result = null;
+                    HashComputationTimings timings = new HashComputationTimings();
 
                     // Dump to disk?
                     if (_dumpToDiskPathes != null && _dumpToDiskPathes.Length == DumpTechniqueStepsToDisk.DCT_PATH_COUNT)
@@ -267,10 +270,10 @@ namespace MSec
                     else
                     {
                         // Compute hast
-                        PHash.computeDCTHash(_image.FilePath, ref hash);
+                        PHash.computeDCTHash(_image.FilePath, ref hash, timings);
 
                         // Store result
-                        result = new HashData<UInt64>(hash);
+                        result = new HashData<UInt64>(hash, null, new HashDataTimings(timings.m_imageLoadingTimeMS, timings.m_hashComputationTimeMS));
                         return result;
                     }
                 },
@@ -324,6 +327,7 @@ namespace MSec
                     IntPtr hash;
                     WaveletHash data = new WaveletHash();
                     HashData<WaveletHash> result = null;
+                    HashComputationTimings timings = new HashComputationTimings();
                     decimal attAlpha = 2m;
                     decimal attLevel = 1m;
 
@@ -345,7 +349,7 @@ namespace MSec
                     else
                     {
                         // Compute hast
-                        hash = PHash.computeWaveletHash(_image.FilePath, ref len, Convert.ToSingle(attAlpha), Convert.ToSingle(attLevel));
+                        hash = PHash.computeWaveletHash(_image.FilePath, ref len, timings, Convert.ToSingle(attAlpha), Convert.ToSingle(attLevel));
 
                         // Store result
                         data.m_data = hash;
@@ -353,7 +357,8 @@ namespace MSec
                         result = new HashData<WaveletHash>(data, (WaveletHash _data) =>
                         {
                             return Utility.toHexString(_data.m_data, _data.m_dataLength);
-                        });
+                        },
+                        new HashDataTimings(timings.m_imageLoadingTimeMS, timings.m_hashComputationTimeMS));
                         return result;
                     }
                 },
@@ -404,6 +409,7 @@ namespace MSec
                     // Local variables
                     BMBHash hash = new BMBHash();
                     IntPtr hashUnmanaged = IntPtr.Zero;
+                    HashComputationTimings timings = new HashComputationTimings();
                     HashData<BMBHash> result = null;
                     int attMethod = 1;
 
@@ -421,7 +427,7 @@ namespace MSec
                     else
                     {
                         // Comnpute hash
-                        if (PHash.computeBMBHash(_image.FilePath, attMethod, out hashUnmanaged) == -1)
+                        if (PHash.computeBMBHash(_image.FilePath, attMethod, out hashUnmanaged, timings) == -1)
                             return null;
 
                         // Convert unmanaged to managed
@@ -431,7 +437,8 @@ namespace MSec
                         result = new HashData<BMBHash>(hash, (BMBHash _data) =>
                         {
                             return Utility.toHexString(_data.m_data, _data.m_dataLength);
-                        });
+                        },
+                        new HashDataTimings(timings.m_imageLoadingTimeMS, timings.m_hashComputationTimeMS));
 
                         return result;
                     }
@@ -556,20 +563,16 @@ namespace MSec
         {
             // Local variables
             HashData data = null;
-            Stopwatch sw = new Stopwatch();
 
             // Check parameter
             if (_image == null)
                 return null;
 
             // Compute hash
-            sw.Start();
             data = m_funcHash(this, _image, null);
-            sw.Stop();
 
             // Assign result to image
             _image.HashData = data;
-            _image.ComputationTime = sw.ElapsedMilliseconds / 1000;
 
             return data;
         }

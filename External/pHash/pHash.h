@@ -171,6 +171,12 @@ typedef struct ph_digest {
 } Digest;
 
 
+typedef struct ph_timings
+{
+	double imageLoadingTimeMS;
+	double hashComputationTimeMS;
+}Timings;
+
 /* variables for textual hash */
 const int KgramLength = 50;
 const int WindowLength = 100;
@@ -255,7 +261,7 @@ __declspec(dllexport) int __cdecl ph_crosscorr(const Digest &x,const Digest &y,d
  *  /param N      - int value for the number of angles to consider. 
  *  /return       - less than 0 for error
  */
-int _ph_image_digest(const CImg<uint8_t> &img,double sigma, double gamma,Digest &digest,int N=180);
+int _ph_image_digest(const CImg<uint8_t> &img,double sigma, double gamma,Digest &digest,Timings& timings,int N=180);
 int _ph_image_digest_dump_to_file(const CImg<uint8_t> &img, double sigma, double gamma, int N,
 	const char *fileGrayscale, const char *fileBlurred, const char* fileRadon, const char* fileFeature, const char* fileDCT);
 
@@ -267,7 +273,7 @@ int _ph_image_digest_dump_to_file(const CImg<uint8_t> &img, double sigma, double
  *  /param digest - Digest struct
  *  /param N      - int value for number of angles to consider
  */
-__declspec(dllexport) int __cdecl ph_image_digest(const char *file, double sigma, double gamma, Digest &digest,int N=180);
+__declspec(dllexport) int __cdecl ph_image_digest(const char *file, double sigma, double gamma, Digest &digest,Timings& timings,int N = 180);
 __declspec(dllexport) int __cdecl ph_image_digest_dump_to_file(const char *file, double sigma, double gamma, int N, 
 	const char *fileGrayscale, const char *fileBlurred, const char* fileRadon, const char* fileFeature, const char* fileDCT);
 
@@ -308,11 +314,11 @@ static CImg<float>* ph_dct_matrix(const int N);
  *  /param hash of type ulong64 (must be 64-bit variable)
  *  /return int value - -1 for failure, 1 for success
  */
-__declspec(dllexport) int __cdecl ph_dct_imagehash(const char* file,ulong64 &hash);
+__declspec(dllexport) int __cdecl ph_dct_imagehash(const char* file,ulong64 &hash,Timings& timings);
 __declspec(dllexport) int __cdecl ph_dct_imagehash_dump_to_file(const char* file,
 	const char* fileMeanFilter, const char* fileResized, const char* fileDCTMatrix, const char* fileDCTImage, const char* fileDCTImageSubsec, const char* fileMedian);
 
-__declspec(dllexport) int __cdecl ph_bmb_imagehash(const char *file, uint8_t method, BinHash **ret_hash);
+__declspec(dllexport) int __cdecl ph_bmb_imagehash(const char *file, uint8_t method, BinHash **ret_hash, Timings& timings);
 __declspec(dllexport) int __cdecl ph_bmb_imagehash_dump_to_file(const char *file, uint8_t method, const char* fileResized, const char* fileBlockMedians,
 	const char* fileMedian);
 #endif
@@ -356,7 +362,7 @@ DP** ph_read_imagehashes(const char *dirname,int capacity, int &count);
 *   /param lvl   - int level of scale factor (default = 1)
 *   /return uint8_t array
 **/
-__declspec(dllexport) uint8_t* __cdecl ph_mh_imagehash(const char *filename, int &N, float alpha=2.0f, float lvl = 1.0f);
+__declspec(dllexport) uint8_t* __cdecl ph_mh_imagehash(const char *filename, int &N, Timings& timings, float alpha=2.0f, float lvl = 1.0f);
 __declspec(dllexport) int __cdecl ph_mh_imagehash_dump_to_file(const char *filename, float alpha, float lvl,
 	const char* fileBlurred, const char* fileKernel, const char* fileEdges, const char* fileBlocks);
 
