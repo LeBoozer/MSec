@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StepByStepRADISH));
             this.SS_Picture_Radish_Grayscale_0 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_Radish_Blurred_0 = new System.Windows.Forms.PictureBox();
             this.SS_Label_Radish_Grayscale = new System.Windows.Forms.Label();
@@ -293,6 +294,7 @@
             this.Controls.Add(this.SS_Label_Radish_FeatureVector);
             this.Controls.Add(this.SS_Label_Radish_Blurred);
             this.Controls.Add(this.SS_Label_Radish_Grayscale);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1160, 509);
             this.MinimizeBox = false;

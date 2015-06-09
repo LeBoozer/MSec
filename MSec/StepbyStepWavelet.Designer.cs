@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StepByStepWavelet));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.SS_Picture_Wavelet_Original_0 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_Wavelet_Blurred_0 = new System.Windows.Forms.PictureBox();
@@ -254,6 +255,7 @@
             this.Controls.Add(this.SS_Label_Wavelet_Kernel);
             this.Controls.Add(this.SS_Label_Wavelet_Blurred);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(972, 498);
             this.MinimizeBox = false;

@@ -379,6 +379,8 @@
             // 
             // CC_Text_Filter
             // 
+            this.CC_Text_Filter.DropDownHeight = 150;
+            this.CC_Text_Filter.DropDownWidth = 700;
             this.CC_Text_Filter.Location = new System.Drawing.Point(78, 492);
             this.CC_Text_Filter.Name = "CC_Text_Filter";
             this.CC_Text_Filter.Size = new System.Drawing.Size(499, 21);

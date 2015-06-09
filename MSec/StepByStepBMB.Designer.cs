@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StepByStepBMB));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.SS_Picture_BMB_Median_0 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_BMB_Original_0 = new System.Windows.Forms.PictureBox();
@@ -215,6 +216,7 @@
             this.Controls.Add(this.SS_Label_BMB_BlockMedians);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.SS_Label_BMB_Resized);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(789, 498);
             this.MinimizeBox = false;

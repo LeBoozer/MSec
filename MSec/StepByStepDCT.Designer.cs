@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StepByStepDCT));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.SS_Picture_DCT_Original_0 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_DCT_Median_0 = new System.Windows.Forms.PictureBox();
@@ -332,6 +333,7 @@
             this.Controls.Add(this.SS_Label_DCT_Resized);
             this.Controls.Add(this.SS_Label_DCT_MeanFilter);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1276, 496);
             this.MinimizeBox = false;

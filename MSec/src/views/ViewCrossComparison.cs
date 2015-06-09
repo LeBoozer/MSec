@@ -1691,7 +1691,8 @@ namespace MSec
         void onFilterMouseWheel(object _sender, MouseEventArgs _e)
         {
             // Mark as handled
-            ((HandledMouseEventArgs)_e).Handled = true;
+            if (m_textFilter.DroppedDown == false)
+                ((HandledMouseEventArgs)_e).Handled = true;
         }
 
         // Event TextBox::onFilterKeyDown
