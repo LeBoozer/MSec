@@ -89,6 +89,12 @@
     <Compile Include="CC_MultiSelectionStats.Designer.cs">
       <DependentUpon>CC_MultiSelectionStats.cs</DependentUpon>
     </Compile>
+    <Compile Include="HashingInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HashingInformation.Designer.cs">
+      <DependentUpon>HashingInformation.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImageSourceSelection.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -179,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CC_MultiSelectionStats.resx">
       <DependentUpon>CC_MultiSelectionStats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HashingInformation.resx">
+      <DependentUpon>HashingInformation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ImageSourceSelection.resx">
       <DependentUpon>ImageSourceSelection.cs</DependentUpon>
@@ -277,6 +286,7 @@
     <None Include="Resources\gear.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\information1.png" />
     <Content Include="Resources\KnownIssues.txt" />
     <None Include="Resources\selectall.png" />
     <None Include="Resources\collapse.png" />

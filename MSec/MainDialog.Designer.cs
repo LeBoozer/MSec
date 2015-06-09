@@ -40,6 +40,7 @@
             this.Selection_ImageSource0 = new ImageSourceSelection();
             this.pageCrossComparison = new System.Windows.Forms.TabPage();
             this.CC_Group_Controls = new System.Windows.Forms.GroupBox();
+            this.CC_Button_Controls_HashingInformation = new System.Windows.Forms.Button();
             this.CC_Button_Controls_SelectAll = new System.Windows.Forms.Button();
             this.CC_Button_Controls_CollapseGroups = new System.Windows.Forms.Button();
             this.CC_Button_ReferenceFolder_Start = new System.Windows.Forms.Button();
@@ -81,6 +82,8 @@
             this.Test = new System.Windows.Forms.LinkLabel();
             this.label7 = new System.Windows.Forms.Label();
             this.linkLabel5 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel6 = new System.Windows.Forms.LinkLabel();
+            this.label8 = new System.Windows.Forms.Label();
             this.MainDialog_MainTab.SuspendLayout();
             this.pageImageVsImage.SuspendLayout();
             this.pageCrossComparison.SuspendLayout();
@@ -198,6 +201,7 @@
             // 
             // CC_Group_Controls
             // 
+            this.CC_Group_Controls.Controls.Add(this.CC_Button_Controls_HashingInformation);
             this.CC_Group_Controls.Controls.Add(this.CC_Button_Controls_SelectAll);
             this.CC_Group_Controls.Controls.Add(this.CC_Button_Controls_CollapseGroups);
             this.CC_Group_Controls.Controls.Add(this.CC_Button_ReferenceFolder_Start);
@@ -207,6 +211,18 @@
             this.CC_Group_Controls.TabIndex = 14;
             this.CC_Group_Controls.TabStop = false;
             this.CC_Group_Controls.Text = "Controls";
+            // 
+            // CC_Button_Controls_HashingInformation
+            // 
+            this.CC_Button_Controls_HashingInformation.BackgroundImage = global::MSec.Properties.Resources.information1;
+            this.CC_Button_Controls_HashingInformation.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CC_Button_Controls_HashingInformation.Enabled = false;
+            this.CC_Button_Controls_HashingInformation.Location = new System.Drawing.Point(107, 16);
+            this.CC_Button_Controls_HashingInformation.Name = "CC_Button_Controls_HashingInformation";
+            this.CC_Button_Controls_HashingInformation.Size = new System.Drawing.Size(23, 23);
+            this.CC_Button_Controls_HashingInformation.TabIndex = 12;
+            this.ToolTip.SetToolTip(this.CC_Button_Controls_HashingInformation, "Queries information about the hashing process");
+            this.CC_Button_Controls_HashingInformation.UseVisualStyleBackColor = true;
             // 
             // CC_Button_Controls_SelectAll
             // 
@@ -523,7 +539,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(487, 599);
+            this.label1.Location = new System.Drawing.Point(446, 599);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(76, 13);
             this.label1.TabIndex = 9;
@@ -630,12 +646,34 @@
             this.linkLabel5.Text = "ObjectListView";
             this.linkLabel5.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel5_LinkClicked_1);
             // 
+            // linkLabel6
+            // 
+            this.linkLabel6.AutoSize = true;
+            this.linkLabel6.Location = new System.Drawing.Point(518, 599);
+            this.linkLabel6.Name = "linkLabel6";
+            this.linkLabel6.Size = new System.Drawing.Size(41, 13);
+            this.linkLabel6.TabIndex = 20;
+            this.linkLabel6.TabStop = true;
+            this.linkLabel6.Text = "Google";
+            this.linkLabel6.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel6_LinkClicked);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(554, 599);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(10, 13);
+            this.label8.TabIndex = 21;
+            this.label8.Text = ",";
+            // 
             // MainDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(726, 617);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.linkLabel6);
             this.Controls.Add(this.linkLabel5);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.Test);
@@ -728,6 +766,9 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.LinkLabel linkLabel5;
         private System.Windows.Forms.Button CC_Button_Controls_SelectAll;
+        private System.Windows.Forms.LinkLabel linkLabel6;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button CC_Button_Controls_HashingInformation;
     }
 }
 

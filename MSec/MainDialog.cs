@@ -58,5 +58,11 @@ namespace MSec
             // Open link
             MSec.Instance.onOpenLinkInBrowser("http://objectlistview.sourceforge.net/cs/index.html");
         }
+
+        private void linkLabel6_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Open link
+            MSec.Instance.onOpenLinkInBrowser("http://www.flaticon.com/authors/google");
+        }
     }
 }

@@ -281,6 +281,7 @@ namespace MSec
 
         // Misc. stuff
         private Color[]                 m_colorListMidpoints = null;
+        private HashingInformation      m_hashingInformation = new HashingInformation();
 
         // Controls
         private FastObjectListView      m_listResults = null;
@@ -291,6 +292,7 @@ namespace MSec
         private Button                  m_buttonControlsStart = null;
         private Button                  m_buttonControlsCollapseGroups = null;
         private Button                  m_buttonControlsSelectAll = null;
+        private Button                  m_buttonControlsHashingInformation = null;
         private Label                   m_labelReferenceFolderNumImageSources = null;
         private Label                   m_labelResultCount = null;
         private ToolStripLabel          m_labelAction = null;
@@ -415,6 +417,7 @@ namespace MSec
             m_buttonControlsStart = _tabPage.Controls.Find("CC_Button_ReferenceFolder_Start", true)[0] as Button;
             m_buttonControlsCollapseGroups = _tabPage.Controls.Find("CC_Button_Controls_CollapseGroups", true)[0] as Button;
             m_buttonControlsSelectAll = _tabPage.Controls.Find("CC_Button_Controls_SelectAll", true)[0] as Button;
+            m_buttonControlsHashingInformation = _tabPage.Controls.Find("CC_Button_Controls_HashingInformation", true)[0] as Button;
             m_labelReferenceFolderNumImageSources = _tabPage.Controls.Find("CC_Label_ReferenceFolder_NumSources", true)[0] as Label;
             m_labelAction = (_tabPage.Controls.Find("CC_ToolStrip", true)[0] as ToolStrip).Items.Find("CC_ToolStrip_Label_Action", true)[0] as ToolStripLabel;
             m_labelResultCount = _tabPage.Controls.Find("CC_Label_ResultCount", true)[0] as Label;
@@ -443,6 +446,7 @@ namespace MSec
             m_buttonControlsStart.Click += onButtonReferenceFolderStartClick;
             m_buttonControlsCollapseGroups.Click += onButtonControlCollapseGroupsClick;
             m_buttonControlsSelectAll.Click += onButtonControlsSelectAllClick;
+            m_buttonControlsHashingInformation.Click += onButtonControlsHashingInformationAllClick;
 
             // Define pop-up position
             x = m_listResults.Width;
@@ -562,6 +566,7 @@ namespace MSec
                         m_buttonControlsStart.Enabled = true;
                         m_buttonControlsCollapseGroups.Enabled = true;
                         m_buttonControlsSelectAll.Enabled = true;
+                        m_buttonControlsHashingInformation.Enabled = true;
                     };
 
                     // Exit
@@ -570,6 +575,7 @@ namespace MSec
                         m_buttonControlsStart.Enabled = false;
                         m_buttonControlsCollapseGroups.Enabled = false;
                         m_buttonControlsSelectAll.Enabled = false;
+                        m_buttonControlsHashingInformation.Enabled = false;
                     };
                 }
                 #endregion State: Ready
@@ -586,6 +592,7 @@ namespace MSec
                         m_buttonControlsStart.Enabled = false;
                         m_buttonControlsCollapseGroups.Enabled = false;
                         m_buttonControlsSelectAll.Enabled = false;
+                        m_buttonControlsHashingInformation.Enabled = false;
                         m_listResults.Enabled = false;
                         m_textFilter.Enabled = false;
                         lockTechniqueSelection();
@@ -599,6 +606,7 @@ namespace MSec
                         m_buttonControlsStart.Enabled = true;
                         m_buttonControlsCollapseGroups.Enabled = true;
                         m_buttonControlsSelectAll.Enabled = true;
+                        m_buttonControlsHashingInformation.Enabled = true;
                         m_listResults.Enabled = true;
                         m_textFilter.Enabled = true;
                         unlockTechniqueSelection();
@@ -618,6 +626,7 @@ namespace MSec
                         m_buttonControlsStart.Enabled = false;
                         m_buttonControlsCollapseGroups.Enabled = false;
                         m_buttonControlsSelectAll.Enabled = false;
+                        m_buttonControlsHashingInformation.Enabled = false;
                         m_listResults.Enabled = false;
                         m_textFilter.Enabled = false;
                         lockTechniqueSelection();
@@ -631,6 +640,7 @@ namespace MSec
                         m_buttonControlsStart.Enabled = true;
                         m_buttonControlsCollapseGroups.Enabled = true;
                         m_buttonControlsSelectAll.Enabled = true;
+                        m_buttonControlsHashingInformation.Enabled = true;
                         m_listResults.Enabled = true;
                         m_textFilter.Enabled = true;
                         unlockTechniqueSelection();
@@ -931,7 +941,6 @@ namespace MSec
                     }
                 }
                 pairQueue = new ConcurrentQueue<ComparisonPairForBindings>(pairs);
-                _bindings = null;
 
                 // Get current action text
                 oldActionText = setCustomActionText(CUSTOM_ACTION_COMPARISON);
@@ -1007,12 +1016,12 @@ namespace MSec
                 }
 
                 // Start unfolding
-                startUnfolding(pairs.ToArray());
+                startUnfolding(pairs.ToArray(), _bindings);
             });
         }
 
         // Starts the unfolding of the compared image hashes
-        private void startUnfolding(ComparisonPairForBindings[] _pairs)
+        private void startUnfolding(ComparisonPairForBindings[] _pairs, ImageSourceBinding[] _bindings)
         {
             // Spawn job
             new Job<bool?>((JobParameter<bool?> _params) =>
@@ -1070,6 +1079,10 @@ namespace MSec
                     MessageBox.Show("Hash comparison for the selected image sources failed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+                // Update hashing informations
+                m_hashingInformation.setData(_bindings);
+                _bindings = null;
 
                 // Done
                 setNextState(eState.STATE_READY);
@@ -1665,6 +1678,13 @@ namespace MSec
         {
             // Select all items
             m_listResults.SelectAll();
+        }
+
+        // Event Button::onButtonControlsHashingInformationAllClick
+        void onButtonControlsHashingInformationAllClick(object sender, EventArgs e)
+        {
+            // Show information
+            m_hashingInformation.ShowDialog();
         }
 
         // Event TextBox::onFilterMouseWheel
