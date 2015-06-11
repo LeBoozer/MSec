@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HashingInformation));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -64,6 +65,7 @@
             this.Label_Computation_AVG = new System.Windows.Forms.Label();
             this.Label_Total_AVG = new System.Windows.Forms.Label();
             this.Label_LC_AVG = new System.Windows.Forms.Label();
+            this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -373,6 +375,7 @@
             this.label10.TabIndex = 21;
             this.label10.Text = "T/C - Ratio";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ToolTip.SetToolTip(this.label10, "How much of the total time is spend on computation");
             // 
             // Label_LC_RADISH
             // 
@@ -491,6 +494,11 @@
             this.Label_LC_AVG.Text = "-";
             this.Label_LC_AVG.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // ToolTip
+            // 
+            this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.ToolTip.ToolTipTitle = "Information";
+            // 
             // HashingInformation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -502,6 +510,7 @@
             this.MaximumSize = new System.Drawing.Size(613, 227);
             this.MinimizeBox = false;
             this.Name = "HashingInformation";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hashing Information";
             this.groupBox1.ResumeLayout(false);
@@ -548,5 +557,6 @@
         private System.Windows.Forms.Label Label_Computation_AVG;
         private System.Windows.Forms.Label Label_Total_AVG;
         private System.Windows.Forms.Label Label_LC_AVG;
+        private System.Windows.Forms.ToolTip ToolTip;
     }
 }

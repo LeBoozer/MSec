@@ -39,9 +39,9 @@
             this.SS_Picture_Radish_DCT_0 = new System.Windows.Forms.PictureBox();
             this.SS_Label_Radish_FeatureVector = new System.Windows.Forms.Label();
             this.SS_Label_Radish_DCT = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.SS_Group_RADISH_0 = new System.Windows.Forms.GroupBox();
             this.SS_Picture_Radish_Original_0 = new System.Windows.Forms.PictureBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.SS_Group_RADISH_1 = new System.Windows.Forms.GroupBox();
             this.SS_Picture_Radish_Original_1 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_Radish_Grayscale_1 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_Radish_Blurred_1 = new System.Windows.Forms.PictureBox();
@@ -54,9 +54,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Radish_Radon_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Radish_Feature_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Radish_DCT_0)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.SS_Group_RADISH_0.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Radish_Original_0)).BeginInit();
-            this.groupBox2.SuspendLayout();
+            this.SS_Group_RADISH_1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Radish_Original_1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Radish_Grayscale_1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Radish_Blurred_1)).BeginInit();
@@ -89,6 +89,7 @@
             // 
             // SS_Label_Radish_Grayscale
             // 
+            this.SS_Label_Radish_Grayscale.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SS_Label_Radish_Grayscale.Location = new System.Drawing.Point(205, 226);
             this.SS_Label_Radish_Grayscale.Name = "SS_Label_Radish_Grayscale";
             this.SS_Label_Radish_Grayscale.Size = new System.Drawing.Size(180, 18);
@@ -98,6 +99,7 @@
             // 
             // SS_Label_Radish_Blurred
             // 
+            this.SS_Label_Radish_Blurred.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SS_Label_Radish_Blurred.Location = new System.Drawing.Point(391, 226);
             this.SS_Label_Radish_Blurred.Name = "SS_Label_Radish_Blurred";
             this.SS_Label_Radish_Blurred.Size = new System.Drawing.Size(180, 18);
@@ -118,6 +120,7 @@
             // 
             // SS_Label_Radish_RadonMap
             // 
+            this.SS_Label_Radish_RadonMap.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SS_Label_Radish_RadonMap.Location = new System.Drawing.Point(577, 226);
             this.SS_Label_Radish_RadonMap.Name = "SS_Label_Radish_RadonMap";
             this.SS_Label_Radish_RadonMap.Size = new System.Drawing.Size(180, 18);
@@ -149,6 +152,7 @@
             // 
             // SS_Label_Radish_FeatureVector
             // 
+            this.SS_Label_Radish_FeatureVector.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SS_Label_Radish_FeatureVector.Location = new System.Drawing.Point(763, 226);
             this.SS_Label_Radish_FeatureVector.Name = "SS_Label_Radish_FeatureVector";
             this.SS_Label_Radish_FeatureVector.Size = new System.Drawing.Size(180, 18);
@@ -158,6 +162,7 @@
             // 
             // SS_Label_Radish_DCT
             // 
+            this.SS_Label_Radish_DCT.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SS_Label_Radish_DCT.Location = new System.Drawing.Point(949, 226);
             this.SS_Label_Radish_DCT.Name = "SS_Label_Radish_DCT";
             this.SS_Label_Radish_DCT.Size = new System.Drawing.Size(180, 18);
@@ -165,20 +170,21 @@
             this.SS_Label_Radish_DCT.Text = "-";
             this.SS_Label_Radish_DCT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // groupBox1
+            // SS_Group_RADISH_0
             // 
-            this.groupBox1.Controls.Add(this.SS_Picture_Radish_Original_0);
-            this.groupBox1.Controls.Add(this.SS_Picture_Radish_Grayscale_0);
-            this.groupBox1.Controls.Add(this.SS_Picture_Radish_Blurred_0);
-            this.groupBox1.Controls.Add(this.SS_Picture_Radish_DCT_0);
-            this.groupBox1.Controls.Add(this.SS_Picture_Radish_Feature_0);
-            this.groupBox1.Controls.Add(this.SS_Picture_Radish_Radon_0);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1123, 207);
-            this.groupBox1.TabIndex = 12;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Source 0";
+            this.SS_Group_RADISH_0.Controls.Add(this.SS_Picture_Radish_Original_0);
+            this.SS_Group_RADISH_0.Controls.Add(this.SS_Picture_Radish_Grayscale_0);
+            this.SS_Group_RADISH_0.Controls.Add(this.SS_Picture_Radish_Blurred_0);
+            this.SS_Group_RADISH_0.Controls.Add(this.SS_Picture_Radish_DCT_0);
+            this.SS_Group_RADISH_0.Controls.Add(this.SS_Picture_Radish_Feature_0);
+            this.SS_Group_RADISH_0.Controls.Add(this.SS_Picture_Radish_Radon_0);
+            this.SS_Group_RADISH_0.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SS_Group_RADISH_0.Location = new System.Drawing.Point(12, 12);
+            this.SS_Group_RADISH_0.Name = "SS_Group_RADISH_0";
+            this.SS_Group_RADISH_0.Size = new System.Drawing.Size(1123, 207);
+            this.SS_Group_RADISH_0.TabIndex = 12;
+            this.SS_Group_RADISH_0.TabStop = false;
+            this.SS_Group_RADISH_0.Text = "Source 0";
             // 
             // SS_Picture_Radish_Original_0
             // 
@@ -191,20 +197,21 @@
             this.SS_Picture_Radish_Original_0.TabIndex = 10;
             this.SS_Picture_Radish_Original_0.TabStop = false;
             // 
-            // groupBox2
+            // SS_Group_RADISH_1
             // 
-            this.groupBox2.Controls.Add(this.SS_Picture_Radish_Original_1);
-            this.groupBox2.Controls.Add(this.SS_Picture_Radish_Grayscale_1);
-            this.groupBox2.Controls.Add(this.SS_Picture_Radish_Blurred_1);
-            this.groupBox2.Controls.Add(this.SS_Picture_Radish_DCT_1);
-            this.groupBox2.Controls.Add(this.SS_Picture_Radish_Feature_1);
-            this.groupBox2.Controls.Add(this.SS_Picture_Radish_Radon_1);
-            this.groupBox2.Location = new System.Drawing.Point(12, 251);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1123, 207);
-            this.groupBox2.TabIndex = 13;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Source 1";
+            this.SS_Group_RADISH_1.Controls.Add(this.SS_Picture_Radish_Original_1);
+            this.SS_Group_RADISH_1.Controls.Add(this.SS_Picture_Radish_Grayscale_1);
+            this.SS_Group_RADISH_1.Controls.Add(this.SS_Picture_Radish_Blurred_1);
+            this.SS_Group_RADISH_1.Controls.Add(this.SS_Picture_Radish_DCT_1);
+            this.SS_Group_RADISH_1.Controls.Add(this.SS_Picture_Radish_Feature_1);
+            this.SS_Group_RADISH_1.Controls.Add(this.SS_Picture_Radish_Radon_1);
+            this.SS_Group_RADISH_1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SS_Group_RADISH_1.Location = new System.Drawing.Point(12, 251);
+            this.SS_Group_RADISH_1.Name = "SS_Group_RADISH_1";
+            this.SS_Group_RADISH_1.Size = new System.Drawing.Size(1123, 207);
+            this.SS_Group_RADISH_1.TabIndex = 13;
+            this.SS_Group_RADISH_1.TabStop = false;
+            this.SS_Group_RADISH_1.Text = "Source 1";
             // 
             // SS_Picture_Radish_Original_1
             // 
@@ -274,6 +281,7 @@
             // 
             // SS_Label_Radish_Original
             // 
+            this.SS_Label_Radish_Original.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SS_Label_Radish_Original.Location = new System.Drawing.Point(19, 226);
             this.SS_Label_Radish_Original.Name = "SS_Label_Radish_Original";
             this.SS_Label_Radish_Original.Size = new System.Drawing.Size(180, 18);
@@ -287,8 +295,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1144, 470);
             this.Controls.Add(this.SS_Label_Radish_Original);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.SS_Group_RADISH_1);
+            this.Controls.Add(this.SS_Group_RADISH_0);
             this.Controls.Add(this.SS_Label_Radish_DCT);
             this.Controls.Add(this.SS_Label_Radish_RadonMap);
             this.Controls.Add(this.SS_Label_Radish_FeatureVector);
@@ -299,6 +307,7 @@
             this.MaximumSize = new System.Drawing.Size(1160, 509);
             this.MinimizeBox = false;
             this.Name = "StepByStepRADISH";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RADISH";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StepByStepRADISH_FormClosing);
@@ -307,9 +316,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Radish_Radon_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Radish_Feature_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Radish_DCT_0)).EndInit();
-            this.groupBox1.ResumeLayout(false);
+            this.SS_Group_RADISH_0.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Radish_Original_0)).EndInit();
-            this.groupBox2.ResumeLayout(false);
+            this.SS_Group_RADISH_1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Radish_Original_1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Radish_Grayscale_1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Radish_Blurred_1)).EndInit();
@@ -332,9 +341,9 @@
         private System.Windows.Forms.PictureBox SS_Picture_Radish_DCT_0;
         private System.Windows.Forms.Label SS_Label_Radish_FeatureVector;
         private System.Windows.Forms.Label SS_Label_Radish_DCT;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox SS_Group_RADISH_0;
         private System.Windows.Forms.PictureBox SS_Picture_Radish_Original_0;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox SS_Group_RADISH_1;
         private System.Windows.Forms.PictureBox SS_Picture_Radish_Original_1;
         private System.Windows.Forms.PictureBox SS_Picture_Radish_Grayscale_1;
         private System.Windows.Forms.PictureBox SS_Picture_Radish_Blurred_1;

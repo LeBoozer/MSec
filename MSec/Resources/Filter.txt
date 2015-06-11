@@ -50,6 +50,7 @@ list content (standard objects are not mentioned here, please see link above!):
 		- SourceX.FileID				(integer value)
 		- SourceX.FilePath				(string)
 		- SourceX.FileName				(string)
+		- SourceX.PlainFileName			(string)
 		- SourceX.Dir					(string)
 		- SourceXRADISH					(ImageSource)
 		- SourceXDCT					(ImageSource)

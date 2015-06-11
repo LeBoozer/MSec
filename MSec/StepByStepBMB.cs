@@ -14,6 +14,7 @@ namespace MSec
     public partial class StepByStepBMB : Form
     {
         // Constant values
+        private static readonly string LABEL_GROUP              = "Source {0} ({1})";
         private static readonly string LABEL_LOADING            = "Image data is being computed...";
         private static readonly string LABEL_ORIGINAL           = "Original image";
         private static readonly string LABEL_RESIZED            = "1. Grayscale and resize image";
@@ -51,6 +52,10 @@ namespace MSec
             addLargerImageViewPopupTo(SS_Picture_BMB_Resized_1);
             addLargerImageViewPopupTo(SS_Picture_BMB_BlockMedians_1);
             addLargerImageViewPopupTo(SS_Picture_BMB_Median_1);
+
+            // Set group labels
+            SS_Group_BMB_0.Text = string.Format(LABEL_GROUP, 0, _pair.Source0.FilePath);
+            SS_Group_BMB_1.Text = string.Format(LABEL_GROUP, 1, _pair.Source1.FilePath);
 
             // Create job
             new Job<bool?>((JobParameter<bool?> _params) =>

@@ -14,13 +14,14 @@ namespace MSec
     public partial class StepByStepDCT : Form
     {
         // Constant values
+        private static readonly string LABEL_GROUP              = "Source {0} ({1})";
         private static readonly string LABEL_LOADING            = "Image data is being computed...";
         private static readonly string LABEL_MEAN_ORIGINAL      = "Original image";
         private static readonly string LABEL_MEAN_FILTER        = "1. Grayscale and mean filter";
         private static readonly string LABEL_RESIZED            = "2. Resize image to 32x32";
         private static readonly string LABEL_DCT_MATRIX         = "3. Generated DCT matrix";
-        private static readonly string LABEL_DCT_IMAGE          = "4. Inverted! image frequencies";
-        private static readonly string LABEL_DCT_IMAGE_SUBSEC   = "5. Low image frequencies";
+        private static readonly string LABEL_DCT_IMAGE          = "4. Inverted! frequency space";
+        private static readonly string LABEL_DCT_IMAGE_SUBSEC   = "5. Extract structural information";
         private static readonly string LABEL_MEDIAN             = "6. Median of low frequencies";
 
         private StepByStepLargerImage   m_largerImageView = null;
@@ -63,6 +64,10 @@ namespace MSec
             addLargerImageViewPopupTo(SS_Picture_DCT_DCTImage_1);
             addLargerImageViewPopupTo(SS_Picture_DCT_DCTImageSubSec_1);
             addLargerImageViewPopupTo(SS_Picture_DCT_Median_1);
+
+            // Set group labels
+            SS_Group_DCT_0.Text = string.Format(LABEL_GROUP, 0, _pair.Source0.FilePath);
+            SS_Group_DCT_1.Text = string.Format(LABEL_GROUP, 1, _pair.Source1.FilePath);
 
             // Create job
             new Job<bool?>((JobParameter<bool?> _params) =>

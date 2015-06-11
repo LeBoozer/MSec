@@ -57,6 +57,12 @@ namespace MSec
             get { return Path.GetFileName(m_filePath); }
         }
 
+        // The file's name (without its extension)
+        public string PlainFileName
+        {
+            get { return Path.GetFileNameWithoutExtension(m_filePath); }
+        }
+
         // Returns the name of the directory
         public string Dir
         {

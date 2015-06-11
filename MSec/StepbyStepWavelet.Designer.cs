@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StepByStepWavelet));
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.SS_Group_Wavelet_0 = new System.Windows.Forms.GroupBox();
             this.SS_Picture_Wavelet_Original_0 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_Wavelet_Blurred_0 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_Wavelet_Kernel_0 = new System.Windows.Forms.PictureBox();
@@ -40,19 +40,19 @@
             this.SS_Label_Wavelet_Blocks = new System.Windows.Forms.Label();
             this.SS_Label_Wavelet_Kernel = new System.Windows.Forms.Label();
             this.SS_Label_Wavelet_Blurred = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.SS_Group_Wavelet_1 = new System.Windows.Forms.GroupBox();
             this.SS_Picture_Wavelet_Original_1 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_Wavelet_Blurred_1 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_Wavelet_Kernel_1 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_Wavelet_Blocks_1 = new System.Windows.Forms.PictureBox();
             this.SS_Picture_Wavelet_Edges_1 = new System.Windows.Forms.PictureBox();
-            this.groupBox1.SuspendLayout();
+            this.SS_Group_Wavelet_0.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Original_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Blurred_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Kernel_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Blocks_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Edges_0)).BeginInit();
-            this.groupBox2.SuspendLayout();
+            this.SS_Group_Wavelet_1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Original_1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Blurred_1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Kernel_1)).BeginInit();
@@ -60,19 +60,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Edges_1)).BeginInit();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // SS_Group_Wavelet_0
             // 
-            this.groupBox1.Controls.Add(this.SS_Picture_Wavelet_Original_0);
-            this.groupBox1.Controls.Add(this.SS_Picture_Wavelet_Blurred_0);
-            this.groupBox1.Controls.Add(this.SS_Picture_Wavelet_Kernel_0);
-            this.groupBox1.Controls.Add(this.SS_Picture_Wavelet_Blocks_0);
-            this.groupBox1.Controls.Add(this.SS_Picture_Wavelet_Edges_0);
-            this.groupBox1.Location = new System.Drawing.Point(9, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(938, 207);
-            this.groupBox1.TabIndex = 13;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Source 0";
+            this.SS_Group_Wavelet_0.Controls.Add(this.SS_Picture_Wavelet_Original_0);
+            this.SS_Group_Wavelet_0.Controls.Add(this.SS_Picture_Wavelet_Blurred_0);
+            this.SS_Group_Wavelet_0.Controls.Add(this.SS_Picture_Wavelet_Kernel_0);
+            this.SS_Group_Wavelet_0.Controls.Add(this.SS_Picture_Wavelet_Blocks_0);
+            this.SS_Group_Wavelet_0.Controls.Add(this.SS_Picture_Wavelet_Edges_0);
+            this.SS_Group_Wavelet_0.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SS_Group_Wavelet_0.Location = new System.Drawing.Point(9, 12);
+            this.SS_Group_Wavelet_0.Name = "SS_Group_Wavelet_0";
+            this.SS_Group_Wavelet_0.Size = new System.Drawing.Size(938, 207);
+            this.SS_Group_Wavelet_0.TabIndex = 13;
+            this.SS_Group_Wavelet_0.TabStop = false;
+            this.SS_Group_Wavelet_0.Text = "Source 0";
             // 
             // SS_Picture_Wavelet_Original_0
             // 
@@ -174,19 +175,20 @@
             this.SS_Label_Wavelet_Blurred.Text = "-";
             this.SS_Label_Wavelet_Blurred.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // groupBox2
+            // SS_Group_Wavelet_1
             // 
-            this.groupBox2.Controls.Add(this.SS_Picture_Wavelet_Original_1);
-            this.groupBox2.Controls.Add(this.SS_Picture_Wavelet_Blurred_1);
-            this.groupBox2.Controls.Add(this.SS_Picture_Wavelet_Kernel_1);
-            this.groupBox2.Controls.Add(this.SS_Picture_Wavelet_Blocks_1);
-            this.groupBox2.Controls.Add(this.SS_Picture_Wavelet_Edges_1);
-            this.groupBox2.Location = new System.Drawing.Point(9, 243);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(938, 207);
-            this.groupBox2.TabIndex = 14;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Source 1";
+            this.SS_Group_Wavelet_1.Controls.Add(this.SS_Picture_Wavelet_Original_1);
+            this.SS_Group_Wavelet_1.Controls.Add(this.SS_Picture_Wavelet_Blurred_1);
+            this.SS_Group_Wavelet_1.Controls.Add(this.SS_Picture_Wavelet_Kernel_1);
+            this.SS_Group_Wavelet_1.Controls.Add(this.SS_Picture_Wavelet_Blocks_1);
+            this.SS_Group_Wavelet_1.Controls.Add(this.SS_Picture_Wavelet_Edges_1);
+            this.SS_Group_Wavelet_1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SS_Group_Wavelet_1.Location = new System.Drawing.Point(9, 243);
+            this.SS_Group_Wavelet_1.Name = "SS_Group_Wavelet_1";
+            this.SS_Group_Wavelet_1.Size = new System.Drawing.Size(938, 207);
+            this.SS_Group_Wavelet_1.TabIndex = 14;
+            this.SS_Group_Wavelet_1.TabStop = false;
+            this.SS_Group_Wavelet_1.Text = "Source 1";
             // 
             // SS_Picture_Wavelet_Original_1
             // 
@@ -248,28 +250,29 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(956, 459);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.SS_Group_Wavelet_1);
             this.Controls.Add(this.SS_Label_Wavelet_Original);
             this.Controls.Add(this.SS_Label_Wavelet_Edges);
             this.Controls.Add(this.SS_Label_Wavelet_Blocks);
             this.Controls.Add(this.SS_Label_Wavelet_Kernel);
             this.Controls.Add(this.SS_Label_Wavelet_Blurred);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.SS_Group_Wavelet_0);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(972, 498);
             this.MinimizeBox = false;
             this.Name = "StepByStepWavelet";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Wavelet";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StepByStepWavelet_FormClosing);
-            this.groupBox1.ResumeLayout(false);
+            this.SS_Group_Wavelet_0.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Original_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Blurred_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Kernel_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Blocks_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Edges_0)).EndInit();
-            this.groupBox2.ResumeLayout(false);
+            this.SS_Group_Wavelet_1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Original_1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Blurred_1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SS_Picture_Wavelet_Kernel_1)).EndInit();
@@ -281,7 +284,7 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox SS_Group_Wavelet_0;
         private System.Windows.Forms.PictureBox SS_Picture_Wavelet_Original_0;
         private System.Windows.Forms.PictureBox SS_Picture_Wavelet_Blurred_0;
         private System.Windows.Forms.PictureBox SS_Picture_Wavelet_Kernel_0;
@@ -292,7 +295,7 @@
         private System.Windows.Forms.Label SS_Label_Wavelet_Blocks;
         private System.Windows.Forms.Label SS_Label_Wavelet_Kernel;
         private System.Windows.Forms.Label SS_Label_Wavelet_Blurred;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox SS_Group_Wavelet_1;
         private System.Windows.Forms.PictureBox SS_Picture_Wavelet_Original_1;
         private System.Windows.Forms.PictureBox SS_Picture_Wavelet_Blurred_1;
         private System.Windows.Forms.PictureBox SS_Picture_Wavelet_Kernel_1;
