@@ -4,4 +4,95 @@
 %#####################################################################################################################
 \section{Dokumentation der verwendeten Daten}
 \label{sec:appendix_b}
-ToDo
+{\Large \textbf{\textcolor{red}{KAPITEL EINFÜGEN!}}}
+\\
+Wie in Kapitel XYZ beschrieben, wurde das Bildmaterial in unterschiedliche Datensätze aufgeteilt. Dabei sind die ersten
+beiden Datensätze (ABC und DEF) mittels des von Windows angebotenen Programms \textit{Microsoft Paint} erstellt worden,
+während der dritte Datensatz mit Hilfe von diversen Digitalkameras generiert wurde.
+\\
+Die auf den Datensätzen angewandten Modifikationen und Änderungen sind mit dem Programm \textit{GIMP} durchgeführt worden.
+Art und Weise sowie die Parametrisierung der Abänderungen kann der nachstehenden Auflistung entnommen werden:
+\begin{description}[noitemsep,nolistsep]
+	\item[{\normalfont 2. Datensatz:}] \hfill
+	\begin{itemize}[noitemsep,nolistsep]
+		\item Skalierung: Faktoren = $\frac{1}{6}x, 6x$, Interpolation = kubisch
+		\item Gammakorrektur: Gamma = 9
+		\item Noise: Typ = \textit{Hurl}, Randomisierung = $80\%$, Wiederholung = 1
+	\end{itemize}
+	\item[{\normalfont 3. Datensatz:}] \hfill
+		\begin{itemize}[noitemsep,nolistsep]
+			\item Skalierung: Faktoren = $\frac{1}{6}x, 2x$, Interpolation = kubisch
+			\item Gammakorrektur: Untere Grenze: 128, Gamma = 4
+			\item Noise: Typ = \textit{Hurl}, Randomisierung = $60\%$, Wiederholung = 1
+		\end{itemize}
+\end{description}
+\noindent
+Alle Durchführungsschritte der Analysen erfolgten mit dem eigens konzipierten und anschließend erstellten Programms
+\textit{Perceptual Image Hashing}. Eine kurze und bündige Erläuterung der grafischen Oberfläche kann den nachfolgenden
+Sektionen~\ref{subsec:appendix_b_imgvsimg} und~\ref{subsec:appendix_b_cc} entnommen werden.
+\\
+Folgende Bildformate werden für den Import von Bildmaterial unterstützt: \textit{JPEG, Bitmap, PNG}.
+\newpage
+
+\subsection{Grafische Oberfläche: Image vs. Image}
+\label{subsec:appendix_b_imgvsimg}
+Die nachfolgende Abbildung~\ref{fig:appendix_b_imgvsimg} repräsentiert die grafische Benutzeroberfläche für den
+direkten Vergleich zweier Bilddateien miteinander. Der vom gewählten Algorithmus berechnete \textit{Hash} ist ebenfalls
+ablesbar.
+\begin{figure}[H]
+	\centering
+	\framepicture[page=1,width=0.96\linewidth]{Pictures/ImgVsImgExplained.pdf}
+	\caption{Benutzeroberfläche: Image vs. Image (Eigene Darstellung)}
+	\label{fig:appendix_b_imgvsimg}
+\end{figure}
+\begin{enumerate}[noitemsep]
+	\item Ermöglicht die Auswahl des zu nutzenden Algorithmus und dessen Parametrisierung (falls vorhanden).
+	\item Bietet die Auswahl der zu vergleichenden Bilddateien an. Für eine bessere Wiedererkennung werden die ausgewählten
+	Bilder durch eine Vorschau grafisch dargestellt. Nach erfolgreicher Berechnung der \textit{Hash}--Daten können diese
+	in dem unteren Bereich abgelesen werden.
+	\item Startet die Berechnung der \textit{Hash}--Daten und deren anschließenden Vergleich. Die Operation ist nur verfügbar,
+	falls beide Slots für die Bilddateien belegt wurden.
+	\item Gibt die vom gewählten Schwellenwert abhängige errechnete Ähnlichkeit für das Bildpaar an. Für eine verbesserte Darstellung
+	wird das Ergebnis abhängig von seiner Akzeptanz entweder grünlich (Ähnlichkeitsmaß liegt über dem Schwellenwert) oder
+	rötlich (Ähnlichkeit liegt unterhalb des Schwellenwerts) angezeigt.
+\end{enumerate}
+
+\subsection{Grafische Oberfläche: Cross Comparison}
+\label{subsec:appendix_b_cc}
+\begin{figure}[H]
+	\centering
+	\framepicture[page=1,width=0.96\linewidth]{Pictures/CCExplained.pdf}
+	\caption{Benutzeroberfläche: Cross Comparison (Eigene Darstellung)}
+	\label{fig:appendix_b_cc}
+\end{figure}
+\begin{enumerate}[noitemsep]
+	\item Ähnlich zu dem in Sektion~\ref{subsec:appendix_b_imgvsimg} (Grafische Oberfläche: Image vs. Image) beschriebenen Verhalten.
+	Eine Erweiterung stellt die mögliche Mehrfachauswahl der Techniken/Algorithmen, die während der Berechnung verwendet werden sollen,
+	dar.
+	\item In dem Vergleichsverfahren werden keine einzelnen Bilder für die Gegenüberstellung ausgewählt, sondern ein Quellverzeichnis,
+	welches das zu untersuchende Bildmaterial beinhaltet. Die gültigen Bilddateien werden automatisch extrahiert und für den Vergleich
+	gezählt sowie vorbereitet. Die Anzahl der in Frage kommenden Bildern wird seitlich angezeigt.
+	\item Bietet eine Ansammlung von unterschiedlichen Operationen an (links beginnend):
+	\begin{itemize}
+		\item Startet den Vergleichsprozess. Je nach Anzahl und Komplexität des Bildmaterials sowie der ausgewählten Algorithmen
+		kann dies einige Minuten dauern.
+		\item Gruppen werden mit nur einem Klick alle auf einmal geschlossen oder geöffnet (Vergleich Punkt 5.). Diese Funktion ist erst
+		nach erfolgreicher Berechnung für den Einsatz verfügbar.
+		\item Selektiert alle in der Liste (Vergleich Punkt 4.) vorhanden Vergleichspaare.
+		\item Liefert eine Übersicht der durchschnittlichen Zeitwerte für die einzelnen Algorithmen hinsichtlich derer Lade-- und
+		Berechnungszeiten.
+	\end{itemize}
+	\item Beinhaltet eine Auflistung aller ausgewählten Vergleichspaare und deren Maß an Ähnlichkeit zu einander in Abhängigkeit
+	des betrachteten Verfahrens. Für eine verbesserte grafische Darstellung werden die einzelnen Werte farblich hervorgehoben. Der Basisgrünton
+	wird für alle Elemente mit einer Ähnlichkeit gleich oder oberhalb des gesetzten Schwellenwerts verwendet. Eine lineare Interpolation zwischen
+	grün ($\ddot{U}bereinstimmung \stackrel{\wedge}{=} Schwellenwert$) und rot ($\ddot{U}bereinstimmung \stackrel{\wedge}{=} 0$) wird für
+	die übrigen Elemente durchgeführt.
+	\item Die in dem Vergleichsverfahren \textit{Cross Comparison} entstehende Anzahl von Ergebnissen ist bereits bei einer kleinen Menge an
+	verwendeten Bilddateien umfangreich und schnell unübersichtlich. Viele der erzeugte Paare sind für eine weitere Auswertung oftmals
+	überflüssig und können somit der Anzeige entfallen. Mit Hilfe der Filterbox können entweder bereits vordefinierte und/oder selbst erstellte
+	Filter auf die Gesamtergebnismenge für eine Reduzierung des Datenbestandes angewandt werden. Die Paare können zur Förderung der 
+	Übersichtlichkeit in unterschiedliche Gruppen eingeteilt werden. Der vollständige Befehlssatz und deren Syntax kann der Software
+	beiliegenden Datei \textit{Filter.txt} entnommen werden.
+	\item Bei der Selektion eines einzelnen Paaren werden Informationen mit Hilfe eines ausklappenden Fensters angezeigt. Gegebenenfalls besteht
+	die Möglichkeit die einzelnen Abarbeitungsschritte der verschiedenen Algorithmen anzeigen zu lassen.
+\end{enumerate}

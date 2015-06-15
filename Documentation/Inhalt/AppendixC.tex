@@ -2,6 +2,15 @@
 % Datei	: AppendixC.tex
 % Autor	: Byron Worms
 %#####################################################################################################################
+\newpage
 \section{Aufgetretene Probleme und offene Punkte}
 \label{sec:appendix_c}
-ToDo
+Während der Durchführung der verschiedenen Analysen und Experimenten konnten unterschiedliche Probleme festgestellt
+werden:
+\begin{itemize}
+	\item Bei dem Versuch ein Bild in dem Dateiformat \textit{PNG} zu importieren, stürzte die für die Aufgabe vorgegebene
+	externe Bibliothek \textit{phash} mit unbekanntem Fehler ab. Die Ursache liegt in einer von \textit{phash} verwendeten
+	Bibliothek für das Laden von Bildmaterialien aus unterschiedlichen Dateiformaten \textit{CImg}.
+	\item Bei dem dritten Datensatz führten Bildauflösungen größer als $2048xBel.$ zu nicht deterministischen Abstürzen der
+	externen Bibliothek \textit{phash}. Ursachen für diesen Fehler sind unbekannt.
+\end{itemize}

@@ -1,0 +1,9 @@
+[0] Config.pm:320> INFO - This is Biber 1.9
+[0] Config.pm:323> INFO - Logfile is 'MSec.blg'
+[48] biber-MSWIN:274> INFO - === %a %b %e, %Y, %H:%M:%S
+[49] Biber.pm:333> INFO - Reading 'MSec.bcf'
+[145] Biber.pm:635> INFO - Found 0 citekeys in bib section 0
+[145] Utils.pm:144> WARN - The file 'MSec.bcf' does not contain any citations!
+[190] bbl.pm:517> INFO - Writing 'MSec.bbl' with encoding 'latin1'
+[190] bbl.pm:606> INFO - Output to MSec.bbl
+[191] Biber.pm:106> INFO - WARNINGS: 1
