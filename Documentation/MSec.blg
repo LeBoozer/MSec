@@ -1,9 +1,15 @@
 [0] Config.pm:320> INFO - This is Biber 1.9
 [0] Config.pm:323> INFO - Logfile is 'MSec.blg'
 [48] biber-MSWIN:274> INFO - === %a %b %e, %Y, %H:%M:%S
-[49] Biber.pm:333> INFO - Reading 'MSec.bcf'
-[145] Biber.pm:635> INFO - Found 0 citekeys in bib section 0
-[145] Utils.pm:144> WARN - The file 'MSec.bcf' does not contain any citations!
-[190] bbl.pm:517> INFO - Writing 'MSec.bbl' with encoding 'latin1'
-[190] bbl.pm:606> INFO - Output to MSec.bbl
-[191] Biber.pm:106> INFO - WARNINGS: 1
+[48] Biber.pm:333> INFO - Reading 'MSec.bcf'
+[145] Biber.pm:635> INFO - Found 2 citekeys in bib section 0
+[190] Biber.pm:3051> INFO - Processing section 0
+[235] Biber.pm:3189> INFO - Looking for bibtex format file 'Literaturverzeichnis.bib' for section 0
+[240] bibtex.pm:990> INFO - Decoding LaTeX character macros into UTF-8
+[241] bibtex.pm:864> INFO - Found BibTeX data source 'Literaturverzeichnis.bib'
+[303] UCollate.pm:66> INFO - Overriding locale 'de-DE' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[304] UCollate.pm:66> INFO - Overriding locale 'de-DE' defaults 'variable = shifted' with 'variable = non-ignorable'
+[304] Biber.pm:2928> INFO - Sorting list 'none' of type 'entry' with scheme 'none' and locale 'de-DE'
+[304] Biber.pm:2932> INFO - No sort tailoring available for locale 'de-DE'
+[309] bbl.pm:517> INFO - Writing 'MSec.bbl' with encoding 'latin1'
+[310] bbl.pm:606> INFO - Output to MSec.bbl

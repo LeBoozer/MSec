@@ -27,28 +27,107 @@ dient einer Komplexität abhängigen, verbesserten Erkenntnisgewinnung der jeweili
 Algorithmen. Somit soll ein Zusammenspiel zwischen den Fehlfunktionen[SYN] der Algorithmen und dem strukturellen Aufbau der
 Bilder leichter detektiert werden.
 
-\subsubsection*{Einfache Farben}
+\boldtext{Einfache Farben}\\
+Diese Kategorie beinhaltet neun verschiedenfarbige Bilder mit den nachstehenden Spezifikationen. Der Farbbereich deckt dabei
+sowohl hell als auch dunkle Farben ab:\\
+TO DO!
 
-\subsubsection*{Elementar Formen}
+\boldtext{Elementare Formen}\\
+Die Kategorie ist in drei unterschiedliche Gruppen[SYN] mit je 54 Bildern eingeteilt, wobei die Bildmotive abhängig von der
+Gruppierung variieren. Die nachfolgenden Abbildung~\ref{fig:appendix_b_cc} schafft einen Überblick über die verwendeten Muster
+in den jeweiligen Gruppen. Die Farben der elementaren Formen sind dabei identisch zu den Farbwerten aus der Kategorie
+\textit{Einfache Farben}.
+\begin{figure}[H]
+	\centering
+	\framepicture[width=0.96\linewidth]{Pictures/simple_brushes.png}
+	\caption{Gruppierung der elementaren Formen (Eigene Darstellung)}
+	\label{fig:solution_brushes}
+\end{figure}
+\noindent
+Die drei Gruppen umfassen neben den Originalbildern ebenfalls durch zum Beispiel Filter verändertes Bildmaterial. Folgende
+Änderungen sind auf die originalen Bilder angewendet worden: \textit{Skalierungsänderungen, Rotationen, Gammaanpassungen und Noise}.
+Die Bildspezifikationen sind identisch zu denen aus der Kategorie \textit{Einfache Farben}. Die genaue Parametrisierung der Filter
+ist dem Anhang~\ref{sec:appendix_b} (\textit{Dokumentation der verwendeten Daten}) zu entnehmen.
 
-\subsubsection*{Komplexe Bilder}
+\boldtext{Komplexe Bilder}\\
+Die komplexen Bilder sind ähnlich zu der Kategorie \textit{Elementare Formen}. Diese beinhaltet eine Gruppe mit 21 verschiedenen
+Fotos, die folgenden Spezifikationen aufweisen:\\
+TO DO!\\
+Die Änderungen mittels von zum Beispiel Filtern entsprechen den Anpassungen aus der Kategorie \textit{Elementare Formen}.
 
 \subsection{Algorithmen}
 \label{sec:solution_algorithms}
+Alle vier in der \textit{Problemstellung} erwähnten Algorithmen arbeiten für die Berechnung eines robusten Hashes auf dem
+strukturellen Inhalt des Bildmaterials. Die verschiedenen Vorgehensweisen bei der Extraktion der erforderlichen Merkmale sowie
+der anschließende Vergleich der errechneten Hashes kann mit der nachfolgenden Tabelle~\ref{tab:solution_algorithms}
+zusammengefasst werden:
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|l|c|c|}
+			\mytoprule
+			\centering\bfseries Algorithmus & \bfseries Hashlänge & \bfseries Vergleichsverfahren
+			\\
+			\hline
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			RADISH & 320 Bit & Kreuzkorrelation
+			\\
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			DCT & 64 Bit & Hamming Distanz
+			\\
+			\hline	
+			%---------------------------------------------------------------------------------------------------------------------	
+			Wavelet & 576 Bit & Hamming Distanz
+			\\
+			\hline	
+			%---------------------------------------------------------------------------------------------------------------------	
+			BMB & variable & Hamming Distanz
+			\\																			
+			%---------------------------------------------------------------------------------------------------------------------
+			\mybottomrule			
+		\end{tabular}
+		\caption{Übersicht der Algorithmen (nach~\cite{ZAU10})}
+		\label{tab:solution_algorithms}
+	\end{center}
+\end{table}	
+\noindent
+Gemeinsamkeiten in dem internen Ablauf der vier unterschiedlichen Ansätze sind in der Umwandlung des Farbbilds zu einen Graustufenbild
+sowie in der Verminderung[SYN] der Auflösung des Bildes gegeben. Eine Ausnahme macht der Algorithmus \textit{RADISH}, welcher keine
+Verkleinerung des Bildmaterials vorsieht.
+\\
+Beide Vorbearbeitungsschritte dienen lediglich einer Verbesserung des Berechnungsaufwands. Durch die Umwandlung des Bilds in den
+Graustufenbereich und somit der Reduzierung der drei Farbkanäle auf einen Farbkanal, gehen keine für die Algorithmen erforderlichen
+Strukturinformationen verloren. Gleiches besitzt Gültigkeit für die Reduzierung[SYN] der Gesamtbildinformationen: die strukturellen 
+Informationen bleiben bestehen.
 
-\subsubsection*{RADISH}
+\boldtext{Discrete cosine transform (DCT)}\\
+Neben den gemeinsamen Vorbearbeitungsschritten wird bei dem \textit{DCT}--Verfahren zusätzlich ein Box--Filter auf die Bilddaten angewendet.
+Anschließend werden mit Hilfe der bereits umgestellten \textit{DCT} (\ref{eq:solution_dct}) die Spektralkomponenten des Bildes für die
+Berechnung des Hashes ermittelt~\cite{DRA}.
+\begin{align}
+\label{eq:solution_dct}
+X[n] = \displaystyle\sum_{m=1}^{N-1} c[n,m] * x[m] \\
+c[n,m] = \sqrt{\frac{2}{N}} * \cos(\frac{(2m+1) * n\pi}{2N})
+\end{align}
+\noindent
 
-\subsubsection*{DCT}
+\boldtext{Radial hash projections (RADISH)}\\
+Für die Berechnung des Hashwertes wird anstelle der Spektralkomponenten des Bildes vorerst eine Radon--Projektion auf den Bilddaten
+durchgeführt, die als Ergebnis für die Extraktion von Merkmalen dient. Der resultierende Hash wird mit Hilfe der bestimmten[SYN]
+Spektralkomponenten des Merkmalbildes[SYN] errechnet.
+\\
+Ein Blurring sowie eine Gamma--Anpassung werden als zusätzlichen Vorbearbeitungsschritt eingeführt.
 
-\subsubsection*{Wavelet}
+\boldtext{Marr/mexican hat wavelet (wavelet)}\\
+Diesem Verfahren werden als weitere Vorbearbeitungsschritte ein Blurring sowie einen Histogramm basierten Ausgleich der Bilddaten
+vorangestellt. Die Bestimmung der Bild abhängigen Merkmale und dem drauf folgenden Hashwert geschieht mittels einem
+\textit{Laplacian of Gaussian}--Kernel für die Kantenerkennung.
 
-\subsubsection*{BMB}
-
-
-\begin{itemize}
-	\item Struktur eines Bilder (hochfrequent, niedrigfrequent)
-	\item Bilder (Einteilung in die Gruppen (Feature-Gruppen), wieso macht man das, Manipulation -> Anhang)
-	\item Vier Algorithmen (Gemeinsamkeiten, Tabelle mit Kerneigenschaften)
-	\item Kurz die unterschiedlichen Algorithmen erläutern
-	\item http://www.debugmode.com/imagecmp/classify.htm	
-\end{itemize}
+\boldtext{Block mean value based (BMB)}\\
+Der Kern des Ansatzes basiert auf eine über das Bild projizierte uniforme Gitterstruktur. Je nach Vorgehensweise können die Gitterzellen
+sich gegenseitig überlappen. Im Anschluss wird sowohl für jede Gitterzelle der durchschnittliche Grauwert als auch der
+Gesamtdurchschnitt aller Grauwerte der Zellen errechnet. Aus der Kombination wird der finale Hashwert ermittelt.
+\\
+Das Verfahren bietet in der Theorie ebenfalls zwei rotationsvorbeugende Vorgehensweisen, welche nicht in der Bibliothek \textit{pHash}
+zur Verfügung stehen.

@@ -16,5 +16,49 @@
   {}
 \endgroup
 
+
+\refsection{0}
+  \sortlist{none}{none}
+    \entry{ZAU10}{article}{}
+      \name{labelname}{1}{}{%
+        {{hash=dc51db3f97812c357606e44656922c0f}{Zauner}{Z\bibinitperiod}{Christop}{C\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{1}{}{%
+        {{hash=dc51db3f97812c357606e44656922c0f}{Zauner}{Z\bibinitperiod}{Christop}{C\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{dc51db3f97812c357606e44656922c0f}
+      \strng{fullhash}{dc51db3f97812c357606e44656922c0f}
+      \field{labelalpha}{Zau10}
+      \field{sortinit}{0}
+      \field{sortinithash}{a08a9549c5c2429f8cec5d1a581b26ca}
+      \field{labeltitle}{Implementation and Benchmarking of Perceptual Image Hash Functions}
+      \field{title}{Implementation and Benchmarking of Perceptual Image Hash Functions}
+      \field{year}{2010}
+    \endentry
+    \entry{DRA}{online}{}
+      \name{labelname}{2}{}{%
+        {{hash=169b2aadf9e113eda83cfade6b01b05a}{Drakos}{D\bibinitperiod}{N.}{N\bibinitperiod}{}{}{}{}}%
+        {{hash=0b828a090c6588854e1966050ff54bf8}{Moore}{M\bibinitperiod}{R}{R\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{2}{}{%
+        {{hash=169b2aadf9e113eda83cfade6b01b05a}{Drakos}{D\bibinitperiod}{N.}{N\bibinitperiod}{}{}{}{}}%
+        {{hash=0b828a090c6588854e1966050ff54bf8}{Moore}{M\bibinitperiod}{R}{R\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{4390769779cf3a65ec0919f63fe54499}
+      \strng{fullhash}{4390769779cf3a65ec0919f63fe54499}
+      \field{labelalpha}{DM15}
+      \field{sortinit}{0}
+      \field{sortinithash}{a08a9549c5c2429f8cec5d1a581b26ca}
+      \field{labeltitle}{Definition of DCT}
+      \field{day}{29}
+      \field{month}{06}
+      \field{title}{Definition of DCT}
+      \field{year}{2015}
+      \verb{url}
+      \verb http://fourier.eng.hmc.edu/e161/lectures/dct/node1.html
+      \endverb
+    \endentry
+  \endsortlist
+\endrefsection
 \endinput
 
