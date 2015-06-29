@@ -7,4 +7,48 @@
 %---------------------------------------------------------------------------------------------------------------------
 \section{Lösungsansatz}
 \label{sec:solution}
-ToDo
+Für das Verständnis der sowohl grundlegenden Funktionsweisen der verschiedenen Algorithmen als auch die Wahl des
+variierenden Bildmaterials, ist ein Basiswissen über den allgemeinen Aufbau von Bildern und deren digitale Repräsentation 
+erforderlich.
+\\
+In Abhängigkeit des gewählten Farbmodells werden Bilder oftmals durch eine Koeffizientenmatrix von Helligkeitswerten
+beschrieben. Im Beispiel des RGB--Farbmodells ist die finale Pixelfarbe durch drei unterschiedliche Koeffizienten der
+einzelnen Farbkanäle (rot, grün und blau) definiert. Ein Graustufenbild besitzt dahingegen nur einen Farbkanal.
+\\
+Die Definition[SYN] und Belegung einer gegebenen Matrix aus Koeffizienten erzeugt dabei ein digitales Bild und/oder Muster, 
+welches strukturell in hochfrequente als auch in niederfrequente Bereiche unterteilt ist. Gleichmäßige Unterschiede innerhalb
+der Bildstruktur werden durch die niederfrequenten Anteile abgebildet, wohingegen hochfrequente Anteile[SYN] mit ungleichmäßigen
+sowie plötzlichen strukturellen Änderungen zum Detail des Gesamtbilds beitragen.
+
+\subsection{Testdaten}
+\label{sec:solution_testdata}
+Das verwendete Bildmaterial ist in die drei unten aufgeführten Kategorien eingeteilt. Die Unterteilung des Gesamtdatensatzes
+dient einer Komplexität abhängigen, verbesserten Erkenntnisgewinnung der jeweiligen Arbeitsweisen der verschiedenen eingesetzten
+Algorithmen. Somit soll ein Zusammenspiel zwischen den Fehlfunktionen[SYN] der Algorithmen und dem strukturellen Aufbau der
+Bilder leichter detektiert werden.
+
+\subsubsection*{Einfache Farben}
+
+\subsubsection*{Elementar Formen}
+
+\subsubsection*{Komplexe Bilder}
+
+\subsection{Algorithmen}
+\label{sec:solution_algorithms}
+
+\subsubsection*{RADISH}
+
+\subsubsection*{DCT}
+
+\subsubsection*{Wavelet}
+
+\subsubsection*{BMB}
+
+
+\begin{itemize}
+	\item Struktur eines Bilder (hochfrequent, niedrigfrequent)
+	\item Bilder (Einteilung in die Gruppen (Feature-Gruppen), wieso macht man das, Manipulation -> Anhang)
+	\item Vier Algorithmen (Gemeinsamkeiten, Tabelle mit Kerneigenschaften)
+	\item Kurz die unterschiedlichen Algorithmen erläutern
+	\item http://www.debugmode.com/imagecmp/classify.htm	
+\end{itemize}

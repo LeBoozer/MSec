@@ -91,15 +91,15 @@ namespace MSec
                 Utility.invokeInGuiThread(this, delegate
                 {
                     // Delete images
-                    if (m_pictureSource0.Image != null)
+                    if (m_pictureSource0.BackgroundImage != null)
                     {
-                        m_pictureSource0.Image.Dispose();
-                        m_pictureSource0.Image = null;
+                        m_pictureSource0.BackgroundImage.Dispose();
+                        m_pictureSource0.BackgroundImage = null;
                     }
-                    if (m_pictureSource1.Image != null)
+                    if (m_pictureSource1.BackgroundImage != null)
                     {
-                        m_pictureSource1.Image.Dispose();
-                        m_pictureSource1.Image = null;
+                        m_pictureSource1.BackgroundImage.Dispose();
+                        m_pictureSource1.BackgroundImage = null;
                     }
 
                     // Reset GUI content
@@ -149,7 +149,7 @@ namespace MSec
                         DirectoryInfo dirInfo = new DirectoryInfo((_params.Data[0] as ImageSource).FilePath);
 
                         // Set image
-                        (_params.Data[1] as PictureBox).Image = _params.Result;
+                        (_params.Data[1] as PictureBox).BackgroundImage = _params.Result;
 
                         // Set text
                         (_params.Data[2] as TextBox).Text = dirInfo.Parent.Name + "\\" + dirInfo.Name;

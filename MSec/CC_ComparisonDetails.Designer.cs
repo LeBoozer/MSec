@@ -98,6 +98,7 @@
             // 
             // CC_Picture_Source_1
             // 
+            this.CC_Picture_Source_1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CC_Picture_Source_1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.CC_Picture_Source_1.Location = new System.Drawing.Point(250, 19);
             this.CC_Picture_Source_1.Name = "CC_Picture_Source_1";
@@ -108,6 +109,7 @@
             // 
             // CC_Picture_Source0
             // 
+            this.CC_Picture_Source0.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CC_Picture_Source0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.CC_Picture_Source0.Location = new System.Drawing.Point(6, 19);
             this.CC_Picture_Source0.Name = "CC_Picture_Source0";

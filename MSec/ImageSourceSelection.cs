@@ -139,7 +139,7 @@ public partial class ImageSourceSelection : UserControl
             img = res.createSystemImage();
             Utility.invokeInGuiThread(m_picturePreview, delegate
             {
-                m_picturePreview.Image = img;
+                m_picturePreview.BackgroundImage = img;
                 m_textPath.Text = _params.Data[0] as string;
             });
 

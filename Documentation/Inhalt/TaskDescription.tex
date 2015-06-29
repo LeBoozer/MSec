@@ -7,4 +7,26 @@
 %---------------------------------------------------------------------------------------------------------------------
 \section{Problembeschreibung}
 \label{sec:tasks}
-ToDo
+Für eine aussagekräftige Analyse der berechneten Ähnlichkeitsmaße und deren Bewertung ist ein breit aufgestelltes
+Spektrum an verschiedenen Testdaten erforderlich. Der Umfang des zu testenden Bildmaterials beträgt insgesamt 297 variierende
+ähnliche sowie nicht ähnliche[SYN] Bilder, welches in einer Gesamtanzahl von 12501 Vergleichskombinationen (unter
+Berücksichtigung der originalen Gruppierung, Abschnitt~\ref{sec:solution_testdata} \textit{Testdaten}) resultiert.
+\\
+Das definierte Bildmaterial dient als Eingabewert von vier unterschiedlichen Algorithmen für Perceptual Hashing von Bildern,
+die in der C++ Bibliothek \textit{pHash} implementiert sind (Quelle):
+\begin{itemize}[noitemsep]
+	\item RADISH
+	\item DCT
+	\item Wavelet
+	\item BMB
+\end{itemize}
+\noindent
+Die resultierende[SYN] Auswertung der durchgeführten Analysen beschreibt den näheren Zusammenhang zwischen den berechneten[SYN] Ähnlichkeitsmaßen bezugnehmend auf den festgesetzten Threshold sowie die vier verwendeten Algorithmen.
+\\
+Zusätzlich erfolgt eine experimentelle Analyse[SYN] der potentiellen Geschwindigkeitssteigerung bei der Verwendung von
+Perceptual Hashing gegenüber dem Vergleich von Bilddaten mit vollständigen, nicht auf aussagekräftigen Merkmale reduzierten Informationssätzen.
+\\
+Die Ausführung der definierten Experimente und Untersuchungen[vergleich?] sowie die Extrahierung und Berechnung von
+relevanten Datenmengen basiert ausschließlich auf der Bibliothek \textit{pHash} und der dafür eigens konzipierten und
+entwickelten Benutzeroberfläche. Eine bündige Erläuterung der Oberfläche kann dem Anhang~\ref{sec:appendix_b}
+\textit{Dokumentation der verwendeten Daten} entnommen werden.
