@@ -7,4 +7,134 @@
 %---------------------------------------------------------------------------------------------------------------------
 \section{Experimentelle Untersuchungen}
 \label{sec:experimental}
-ToDo
+Die theoretische Definition und Beschreibung der einzelnen Algorithmen bieten keine Möglichkeit Rückschlüsse über die generelle
+Einsetzbarkeit in Abhängigkeit des verwendeten Bildmaterials zu ziehen. Aufgrund der hohen Komplexität und Varianz in
+den bildlichen Strukturen, können keine allgemeingültigen Aussagen über den Zusammenhang zwischen fehlerhaften Ergebnissen
+der Verfahren und dem strukturellen Aufbau der Bilder getroffen werden.
+\\
+Mit Hilfe der in Sektion~\ref{sec:solution} (\textit{Lösungsansatz}) wohldefinierten Kategorien an variierenden
+Bildmaterials, in Bezug auf Komplexität sowie Strukturaufbau, soll eine potentielle Korrelation zwischen den strukturellen
+Gegebenheiten und den grundlegenden Funktionsweisen der Algorithmen untersucht werden.
+\\
+Bereits in der Wissenschaft bekannte Fehleranfälligkeiten der genutzten Strategien werden dabei als solche markiert und nicht
+näher erläutert.
+\\[1em]
+Die nachfolgende Auflistung beinhaltet eine Übersicht der durchgeführten und in Kategorien gruppierten Experimente:
+\begin{enumerate}[noitemsep]
+	\item \boldtext{Fundamentale Funktionalitätstests}
+		\begin{itemize}[noitemsep]
+			\item Erkennungsraten bei Identitätstests
+			\item Erkennungsraten der \textit{Einfachen Farben}
+		\end{itemize}
+		
+	\item \boldtext{tbd}
+		\begin{itemize}[noitemsep]
+			\item Originalbild vs. Modifikationen (\textit{Elementare Formen})
+			\item Originalbild vs. Modifikationen (\textit{Komplexe Bilder})
+			\item Erkennungsraten beim Quervergleich \textit{Komplexe Bilder}
+		\end{itemize}		
+		
+	\item \boldtext{Geschwindigkeitsanalysen}
+		\begin{itemize}[noitemsep]
+			\item Berechnungszeiten der Algorithmen
+			\item tbd (Hash vs Ganzbild)
+		\end{itemize}
+\end{enumerate}
+\noindent
+TO DO: Fehlerraten oder so erwähnen (JEWEILS GEMESSENDE DATEN)\\
+\boldtext{Testsystem und Parametrisierung}\\
+Für die Gewährleistung, dass die einzelnen Experimente in weitestgehend system-- sowie hardwareunabhängigen Ergebnissen resultieren,
+geschieht deren Durchführung ausschließlich auf dem nachstehenden System:
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|l|l|}
+			\mytoprule
+			%---------------------------------------------------------------------------------------------------------------------	
+			Betriebssystem & Windows 8.1, x64
+			\\
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			Prozessor & AMD x6 1055t (~3.3GHz)
+			\\
+			\hline	
+			%---------------------------------------------------------------------------------------------------------------------	
+			RAM & 8GB DDR3
+			\\
+			\hline	
+			%---------------------------------------------------------------------------------------------------------------------	
+			Festplatte & SamsungSSD 850 EVO 512GB
+			\\																			
+			%---------------------------------------------------------------------------------------------------------------------
+			\mybottomrule			
+		\end{tabular}
+		\caption{Testsystem (eigene Darstellung)}
+		\label{tab:experimental_testsystem}
+	\end{center}
+\end{table}	
+\noindent
+Die Parametrisierung der unterschiedlichen Algorithmen erfolgt nach den in der Bibliothek \textit{pHash} angegebenen Standardwerte:
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|l|l|}
+			\mytoprule
+			\centering\bfseries Algorithmus & \bfseries Parameter(--typ)
+			\\
+			\hline
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			RADISH & Gamma: 1 \\
+			& Sigma: 2 \\
+			& \#Winkel: 180
+			\\
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			DCT & --
+			\\
+			\hline	
+			%---------------------------------------------------------------------------------------------------------------------	
+			Wavelet & Alpha: 2 \\
+			& Level: 1
+			\\
+			\hline	
+			%---------------------------------------------------------------------------------------------------------------------	
+			BMB & Methode: 1
+			\\																			
+			%---------------------------------------------------------------------------------------------------------------------
+			\mybottomrule			
+		\end{tabular}
+		\caption{Parametrisierung der Algorithmen (nach~\cite{PHASH})}
+		\label{tab:experimental_params}
+	\end{center}
+\end{table}	
+\noindent
+
+\subsection{Fundamentale Funktionalitätstests}
+\subsubsection{Erkennungsraten bei Identitätstests}
+Die Durchführung des Identitätstests dient als erforderliche Grundlage für alle nachfolgenden aufgestellten Testfälle und wird
+daher für alle vier Algorithmen realisiert. Während der Ausführung werden die Bilder aus den Kategorien \textit{Elementare Formen}
+sowie \textit{Komplexe Bilder} gegen die eigene Identität verglichen und die eventuell entstehenden Fehler protokolliert.
+\\
+Das Experiment umfasste insgesamt 288 unterschiedliche Bilddaten und führte zu dem nachstehenden Ergebnis:
+\begin{equation*}
+	FRR = 0
+\end{equation*}
+
+\subsubsection{Erkennungsraten der \textit{Einfachen Farben}}
+Das Experiment hat einen Quervergleich aller 9 einfarbigen Bilder der Kategorie \textit{Einfache Farben} mit allen vier Verfahren durchgeführt.
+Die entstehenden Resultate basieren dabei auf der Natur der internen Funktionsweise der Vergleichsalgorithmen für die Hashdaten
+(detaillierte Erläuterung kann TODO TODO TODO).
+\\
+Der Test beinhaltete 45 Vergleichsmöglichkeiten und generierte das folgende Ergebnis:
+\begin{align*}
+	FRR = 1 \\
+	FAR = 1
+\end{align*}
+
+\subsection{tbd}
+\subsubsection{Originalbild vs. Modifikationen (\textit{Elementare Formen}}
+\subsubsection{Originalbild vs. Modifikationen (\textit{Komplexe Bilder}}
+\subsubsection{Erkennungsraten beim Quervergleich \textit{Komplexe Bilder}}
+
+\subsection{Geschwindigkeitsanalysen}
+\subsubsection{Berechnungszeiten der Algorithmen}
+\subsubsection{tbd}

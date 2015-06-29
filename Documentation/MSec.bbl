@@ -58,6 +58,29 @@
       \verb http://fourier.eng.hmc.edu/e161/lectures/dct/node1.html
       \endverb
     \endentry
+    \entry{PHASH}{online}{}
+      \name{labelname}{2}{}{%
+        {{hash=af082fc6a777b6f653513ca72ff31de8}{Klinger}{K\bibinitperiod}{Evan}{E\bibinitperiod}{}{}{}{}}%
+        {{hash=e553ab705779afbf012c874b62928fb2}{Starkweather}{S\bibinitperiod}{David}{D\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{2}{}{%
+        {{hash=af082fc6a777b6f653513ca72ff31de8}{Klinger}{K\bibinitperiod}{Evan}{E\bibinitperiod}{}{}{}{}}%
+        {{hash=e553ab705779afbf012c874b62928fb2}{Starkweather}{S\bibinitperiod}{David}{D\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{88360cdb3717083a3ee6473a2e6eecab}
+      \strng{fullhash}{88360cdb3717083a3ee6473a2e6eecab}
+      \field{labelalpha}{KS15}
+      \field{sortinit}{0}
+      \field{sortinithash}{a08a9549c5c2429f8cec5d1a581b26ca}
+      \field{labeltitle}{pHash, The open source perceptual hash library}
+      \field{day}{29}
+      \field{month}{06}
+      \field{title}{pHash, The open source perceptual hash library}
+      \field{year}{2015}
+      \verb{url}
+      \verb http://phash.org/
+      \endverb
+    \endentry
   \endsortlist
 \endrefsection
 \endinput
