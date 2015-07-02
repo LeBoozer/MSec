@@ -223,7 +223,6 @@
             this.MaximumSize = new System.Drawing.Size(789, 498);
             this.MinimizeBox = false;
             this.Name = "StepByStepBMB";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BMB";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StepByStepBMB_FormClosing);

@@ -7,6 +7,157 @@
 %---------------------------------------------------------------------------------------------------------------------
 \section{Testergebnisse}
 \label{sec:results}
-\begin{itemize}
-	\item Determinimus 
-\end{itemize}
+Nachfolgend werden die Resultate sowie Beobachtungen der durchgeführten Experimente analysiert und gegebene Korrelationen
+zwischen den Funktionsweisen der vier eingesetzten Algorithmen und dem verwendeten Bildmaterials aufgezeigt.
+\\
+Aus der Wissenschaft stammende Fehleranfälligkeiten in der zugrundeliegenden Theorie der einzelnen Verfahren werden
+dabei als solche markiert und nicht eingehender erläutert.
+
+\subsection{Fundamentale Funktionalitätstests}
+Die Kategorie der fundamentalen Funktionalitätsexperimente umfasst zwei unterschiedlich definierte Testanwendungen.
+\\
+Die im Abschnitt~\ref{sec:experimental_selftests} (\textit{Erkennungsraten bei Identitätstests}) erzielten Erkenntnisse
+des Testfalls erfordern hierbei keine weiteren Diskussion oder Erläuterung.
+
+\subsubsection{Erkennungsraten der \textit{Einfachen Farben}}
+In diesem Test ist es keinem Algorithmus möglich gewesen, die bestehenden Ähnlichkeiten zwischen den einzelnen Bildern
+richtig zu detektieren. Die fehlenden Strukturinformationen innerhalb des Bildmaterials führten dazu, dass in einem
+bestimmten Bearbeitungsschritt der verschiedenen Verfahren ein ähnliches Zwischenergebnis errechnet wurde, sodass
+schlussendlich ein identischer Hashwert entstand:
+\begin{description}[noitemsep]
+	\item[\normalfont RADISH] (Hash: 0) \hfill \\
+		Die \textit{Radon--Projektion} liefert für verschiedene einfarbige Graustufenbilder das gleiche Resultat.
+	\item[\normalfont DCT] (Hash: 0) \hfill \\
+		Die Bildzerlegung in dessen Spektralkomponenten ist für einfarbige Graustufenbilder identisch.
+	\item[\normalfont Wavelet] (Hash: 0) \hfill \\
+		Fehlende strukturelle Informationen erzeugen ein identisches Ergebnis während der Kantenerkennung.	
+	\item[\normalfont BMB] (Hash: 1) \hfill \\
+		Der Durchschnitt aller Gitterzellen des uniformen Gitters ist identisch zu den einzelnen Werten der Gitterzellen. 
+\end{description}
+\noindent
+Basierend auf der internen Funktionsweise der eingesetzten Algorithmen für den Hashwertvergleich, ist entweder die \textit{FRR}
+oder die \textit{FAR} maximal. Bei identischen Hashwerten liefert die \textit{Hamming Distanz} immer einen Wert von 0
+und trägt somit zu der \textit{FAR} bei, während die \textit{Kreuzkorrelation} bei gleichen Hashwerten stets in einem
+Wert von 1 resultiert und dadurch die \textit{FRR} steigert.
+
+\subsection{Vertiefte Funktionalitätsanalysen}
+[TODO]
+
+\subsubsection{Originalbild vs. Modifikationen (\textit{Elementare Formen})}
+Während der Durchführung des Experiments wurden die Originalbilder aus der Kategorie \textit{Elementare Formen} gegen deren
+modifizierten Versionen verglichen. Ziel der Testanwendung war eine vertiefte Analyse der Algorithmus abhängigen Erkennungsqualitäten
+bei strukturell ähnlichen Bildmaterials.
+\\[1em]
+Wie bei den einfachen Farben zuvor, beeinflusst der strukturell einfach aufgebaute Inhalt der Bilder auch hier negativ die
+im Abschnitt~\ref{sec:experimental_origvsmod_brushes} protokollierten Ergebnisse. Bereits kleinere Änderungen an dem originalen
+Bildmaterial führen zu einer vollkommenen differierenden Modifikation der binären Darstellungsweise, sodass die Algorithmen 
+starke Abweichungen während der Bestimmung des Ähnlichkeitsmaßes aufweisen.
+\\
+Ein Beispiel ist anhand des \textit{Wavelet}--Algorithmus durch die folgende Abbildung~\ref{fig:results_origvsmod_brushes_wavelet} gegeben.
+\begin{figure}[H]
+	\centering
+	\framepicture[width=0.96\linewidth]{Pictures/Wavelet_ResizedDown_Brushes.png}
+	\caption{TBD (Eigene Darstellung)}
+	\label{fig:results_origvsmod_brushes_wavelet}
+\end{figure}
+\noindent
+Die Verringerung der Auflösung führt innerhalb des Vorbearbeitungsschrittes \textit{Histogramm basierter Ausgleich} zu einem 
+vollständig unterschiedlichen Erscheinungsbild, wodurch die Kantenerkennung erheblich mehr Kanten detektiert, als in dem ursprünglichen
+Bildmaterial.
+\\[1em]
+Die häufig angewandte Modifikation \textit{Rotationsänderungen} ist für alle vier Algorithmen ein bestehender Problemfall. Rotationen
+sind oftmals für den menschlichen Sehsinn leicht zu detektieren, wohingegen eine maschinelle Erkennung durch die extreme Differenz der
+binären Repräsentation eine große Herausforderung darstellt. Der Erkenntnisgewinn lehnt sich an die Ergebnisse aus~\cite{ZAU10} an.
+
+\subsubsection{Originalbild vs. Modifikationen (\textit{Komplexe Bilder})}
+Ein Wechsel des Bildmaterials von den elementaren Formen auf die Kategorie \textit{Komplexe Bilder} verbessert allgemein
+die entstehende Fehlerrate der verschiedenen Algorithmen während der Bestimmung von den Ähnlichkeitsmaßen.
+\\
+Durch den Einsatz von komplexen strukturellen Bildinformationen, weisen Modifikationen einen geringfügigeren Einfluss auf den
+eigentlichen Bildinhalt auf. Als Beispiel sei die folgenden Abbildung~\ref{fig:results_origvsmod_images_wavelet} des
+\textit{Wavelet}--Algorithmus gegeben.
+\begin{figure}[H]
+	\centering
+	\framepicture[width=0.96\linewidth]{Pictures/Wavelet_ResizedDown_Images.png}
+	\caption{TBD (Eigene Darstellung)}
+	\label{fig:results_origvsmod_images_wavelet}
+\end{figure}
+\noindent
+Voraussetzung für die minimalere Einflussnahme ist, dass die angewandten Veränderungen eine bestimmte Magnitude nicht
+überschreiten. Das Ausmaß bei Überschreitung der gewählten Intensität ist beispielsweise durch den Testfall \textit{Originalbilder vs.
+Gamma--Angleichungen des Originals} gegeben, bei dem eine Verschlechterung der Zuordnungsrate für die vier Algorithmen beobachtet wurde.
+\\
+Rotationsmodifikationen führen nach wie vor zu erheblichen Schwierigkeiten bei dem Erkennen von Ähnlichkeiten.
+
+\subsubsection{Erkennungsraten beim Quervergleich (\textit{Komplexe Bilder})}
+Der in Abschnitt~\ref{sec:experimental_cc_images} durchgeführte Quervergleich der komplexen Bilder resultiert in einer
+guten Fehlerverteilung für die einzelnen Algorithmen. Die gemessene Fehlerrate liegt dabei auch bei einem Threshold von 70\%
+beständig weit unter der 10\%--Grenze.
+\\
+Der Fehlerbestand bei einer Stufe von 90\% als Threshold besteht größtenteils aus ähnlichen Bildern. Erst mit der Verringerung des
+eingesetzten Thresholds wird der Fehlerbestand vor allem bei den Verfahren \textit{RADISH} sowie \textit{BMB} durch
+unlogische, als fälschlich ähnlich markierte Vergleichspaare erweitert. Das Verhalten lässt sich auf die interne Arbeitsweise
+der Algorithmen zurückführen.
+\\[1em]
+Ähnlich zueinander liegende Intensitätsverteilungen, bei zwei nicht gleichartiger Bilder, resultieren bei dem \textit{RADISH}--Ansatz
+in einer ähnlichen strukturellen Charakteristiken innerhalb der Ergebnisse der \textit{Radon--Projektion}, wodurch schlussendlich
+ähnliche[SYN] Hashwerte erzielt werden (in Bezug auf den verwendeten Threshold).
+\\
+Die folgenden Abbildung~\ref{fig:results_cc_radish} ist ein Beispiel für das Phänomen. 
+\begin{figure}[H]
+	\centering
+	\framepicture[width=0.96\linewidth]{Pictures/Radish_Far.png}
+	\caption{Übereinstimmende Intensitätsdistributionen (Eigene Darstellung)}
+	\label{fig:results_cc_radish}
+\end{figure}
+\noindent
+Die bei dem \textit{BMB}--Algorithmus entstehende Toleranz gegenüber der Fehlerrate steigt gleichzeitig mit dem Absinken des
+Thresholds, sodass die Abweichungen zwischen den durchschnittlichen Gitterzellwerten und dem Gesamtdurchschnitt des Gitters
+stufenweise akzeptiert werden.
+\\[1em]
+Der vermeidlich bestbewertete Algorithmus ist die \textit{Wavelet}--Variante, die durchgehend eine Fehlerrate von $FAR = 0$
+erzielte. In Kombinationen mit dem hohen Fehleranteil in der \textit{FRR} aus den vorherigen Tests lässt sich ableiten,
+dass das allgemeine Erkennungsvermögen des \textit{Wavelet}--Ansatzes wenig überzeugend ist (ungeachtet ob gewollte oder nicht
+gewollte Ähnlichkeitserkennungen). 
+
+\subsection{Geschwindigkeitsanalysen}
+[TODO]
+
+\subsubsection{Berechnungszeiten der Algorithmen}
+Wie in Abschnitt~\ref{sec:experimental_speed} definiert, wurden bei diesem Testfall nur die entstehenden Berechnungszeiten
+in die Betrachtung mit einbezogen. Die Ladezeiten der einzelnen Bilddaten haben somit keinen Einfluss auf die gemessenen Werte.
+\\
+Bei der Analyse der internen Arbeitsweise der vier Algorithmen werden die zeitlichen Berechnungsdifferenzen schnell ersichtlich.
+Während die Verfahren \textit{BMB} sowie \textit{RADISH} einfach strukturierte Pixeloperationen für die Extraktion der Merkmale
+verwenden, kommen bei den Ansätzen \textit{DCT} und \textit{Wavelet} komplizierte und zeitaufwändige Operationen auf Pixelbasis
+zum Einsatz (vgl.~\cite{ZAU10}).
+\\[1em]
+Unter der Berücksichtigung der erforderlichen Kommunikationszeit zwischen den Infrastrukturen \textit{Systemspeicher} sowie \textit{Festplatte},
+ergibt sich das in Abbildung~\ref{fig:results_speed_ratio} ermittelte Durchschnittsverhältnis aus Lade-- und
+Berechnungszeit je Bild bezüglich der Algorithmen.
+\begin{figure}[H]
+	\centering
+	\framepicture[width=0.96\linewidth]{Pictures/speed_ratio.png}
+	\caption{Geschwindigkeitsverhältnisse (Eigene Darstellung)}
+	\label{fig:results_speed_ratio}
+\end{figure}
+\noindent
+Aus dieser Betrachtungsweise lässt sich die benötigte Gesamtzeit für ein Vergleich zweier beliebiger Bilder ableiten:
+\begin{equation}
+	\label{eq:results_speed_total}
+	Total = 2 * Ladezeit + 2 * Rechenzeit
+\end{equation}
+\noindent
+Unter der Annahme, dass eines der beiden Bilder vor dem Vergleich bereits als bekannt angesehen werden kann, besteht die
+Möglichkeit, die Hashwerte für das Bild im Vorfeld zu berechnen und beispielsweise in einer Datenbank zu sichern.
+\\
+Daraus folgt eine Vereinfachung der Formel~\ref{eq:results_speed_total} zu:
+\begin{equation}
+	\begin{split}
+		Total = 1 * Ladezeit + 1 * Rechenzeit \\
+		+ 1 * Datenbankladezeit
+	\end{split}
+\end{equation}
+\noindent
+Aufgrund der deutlichen geringeren Dateigröße des abgespeicherten Hashwertes, konnten Geschwindigkeitssteigerungen bis zu
+\hbox{$\sim49\%$} gemessen werden.

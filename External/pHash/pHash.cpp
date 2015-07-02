@@ -325,7 +325,7 @@ int _ph_image_digest_dump_to_file(const CImg<uint8_t> &img, double sigma, double
 
 	// TEMP: SAVE TO FILE
 	CImg<uint8_t> imageGrayscale = graysc;
-	imageGrayscale.normalize(0, 255);
+	//imageGrayscale.normalize(0, 255);
 	imageGrayscale.save_jpeg(fileGrayscale);
 
 	graysc.blur((float)sigma);
@@ -333,7 +333,7 @@ int _ph_image_digest_dump_to_file(const CImg<uint8_t> &img, double sigma, double
 
 	// TEMP: SAVE TO FILE
 	CImg<uint8_t> imageBlur = graysc;
-	imageBlur.normalize(0, 255);
+	//imageBlur.normalize(0, 255);
 	imageBlur.save_jpeg(fileBlurred);
 
 	Projections projs;
@@ -354,7 +354,7 @@ int _ph_image_digest_dump_to_file(const CImg<uint8_t> &img, double sigma, double
 	{
 		// TEMP: SAVE TO FILE
 		CImg<double> featureVector(features.features, features.size);
-		featureVector.normalize(0.0, 255.0);
+		featureVector.normalize(0, 255);
 		featureVector.save_jpeg(fileFeature);
 	}
 
@@ -691,7 +691,7 @@ int ph_bmb_imagehash_dump_to_file(const char *file, uint8_t method, const char* 
 
 	// TEMP: SAVE TO FILE
 	CImg<uint8_t> grayscaleImage = img;
-	grayscaleImage.normalize(0, 255);
+	//grayscaleImage.normalize(0, 255);
 	grayscaleImage.save_jpeg(fileResized);
 
 	// ~step b
@@ -758,7 +758,7 @@ int ph_bmb_imagehash_dump_to_file(const char *file, uint8_t method, const char* 
 
 	// TEMP: SAVE TO FILE
 	CImg<double> mediansImage(mean_vals, number_of_blocks);
-	mediansImage.normalize(0.0, 255.0);
+	//mediansImage.normalize(0.0, 255.0);
 	mediansImage.save_jpeg(fileBlockMedians);
 
 	/* calculate the median */
@@ -861,14 +861,14 @@ int ph_dct_imagehash_dump_to_file(const char* file,
 
 	// TEMP: SAVE TO FILE
 	CImg<uint8_t> imageMeanFilter = img;
-	imageMeanFilter.normalize(0, 255);
+	//imageMeanFilter.normalize(0, 255);
 	imageMeanFilter.save_jpeg(fileMeanFilter);
 
 	img.resize(32,32);
 
 	// TEMP: SAVE TO FILE
 	CImg<uint8_t> imageResized = img;
-	imageResized.normalize(0, 255);
+	//imageResized.normalize(0, 255);
 	imageResized.save_jpeg(fileResized);
 
 	CImg<float> *C  = ph_dct_matrix(32);
@@ -1478,7 +1478,7 @@ int ph_mh_imagehash_dump_to_file(const char *filename, float alpha, float lvl, c
 
 	// TEMP: SAVE TO FILE
 	CImg<uint8_t> grayscaleImage = img;
-	grayscaleImage.normalize(0, 255);
+	//grayscaleImage.normalize(0, 255);
 	grayscaleImage.save_jpeg(fileBlurred);
 
 	CImg<float> *pkernel = GetMHKernel(alpha, lvl);

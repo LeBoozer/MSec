@@ -7,17 +7,15 @@
 %---------------------------------------------------------------------------------------------------------------------
 \section{Experimentelle Untersuchungen}
 \label{sec:experimental}
-Die theoretische Definition und Beschreibung der einzelnen Algorithmen bieten keine Möglichkeit Rückschlüsse über die generelle
+Die theoretische Definition und Beschreibung der einzelnen Algorithmen bieten keine Möglichkeiten Rückschlüsse über die generelle
 Einsetzbarkeit in Abhängigkeit des verwendeten Bildmaterials zu ziehen. Aufgrund der hohen Komplexität und Varianz in
 den bildlichen Strukturen, können keine allgemeingültigen Aussagen über den Zusammenhang zwischen fehlerhaften Ergebnissen
 der Verfahren und dem strukturellen Aufbau der Bilder getroffen werden.
 \\
 Mit Hilfe der in Sektion~\ref{sec:solution} (\textit{Lösungsansatz}) wohldefinierten Kategorien an variierenden
-Bildmaterials, in Bezug auf Komplexität sowie Strukturaufbau, soll eine potentielle Korrelation zwischen den strukturellen
-Gegebenheiten und den grundlegenden Funktionsweisen der Algorithmen untersucht werden.
-\\
-Bereits in der Wissenschaft bekannte Fehleranfälligkeiten der genutzten Strategien werden dabei als solche markiert und nicht
-näher erläutert.
+Bildmaterials, in Bezug auf Komplexität sowie Strukturaufbau, soll neben der Protokollierung der Stärken und Schwächen der
+Algorithmen eine potentielle Korrelation zwischen den strukturellen Gegebenheiten und den grundlegenden Funktionsweisen der
+Ansätze untersucht werden.
 \\[1em]
 Die nachfolgende Auflistung beinhaltet eine Übersicht der durchgeführten und in Kategorien gruppierten Experimente:
 \begin{enumerate}[noitemsep]
@@ -113,6 +111,7 @@ Der Bereich der konstitutiven Funktionalitätstests dient der Protokollierung von
 Arbeitsweisen der zu betrachtenden Algorithmen.
 
 \subsubsection{Erkennungsraten bei Identitätstests}
+\label{sec:experimental_selftests}
 Die Durchführung des Identitätstests dient als erforderliche Grundlage für alle nachfolgenden aufgestellten Testfälle und wird
 daher für alle vier Algorithmen realisiert. Während der Ausführung werden die Bilder aus den Kategorien \textit{Elementare Formen}
 sowie \textit{Komplexe Bilder} gegen die eigene Identität verglichen und die eventuell entstehenden Fehler protokolliert.
@@ -123,13 +122,13 @@ Das Experiment umfasste insgesamt 288 unterschiedliche Bilddaten und führte zu d
 \end{equation*}
 \noindent
 Daraus lässt sich schlussfolgern, dass die vier Ansätze für die Berechnung von Perceptual Hashes mit einer hohen Wahrscheinlichkeit
-eine deterministische Vorgehensweise inhärieren. Für eine 100\%e Sicherheit ist hingegen ein formaler Beweis notwendig, der nicht im Rahmen
+eine deterministische Vorgehensweise inhärieren. Für eine absolute Sicherheit ist hingegen ein formaler Beweis notwendig, der nicht im Rahmen
 des vorliegenden Papers abgedeckt wird.
 
 \subsubsection{Erkennungsraten der \textit{Einfachen Farben}}
 Das Experiment hat einen Quervergleich aller 9 einfarbigen Bilder der Kategorie \textit{Einfache Farben} mit allen vier Verfahren durchgeführt.
 Die entstehenden Resultate basieren dabei auf der Natur der internen Funktionsweise der Vergleichsalgorithmen für die Hashdaten
-(detaillierte Erläuterung kann TODO TODO TODO).
+(eine detaillierte Erläuterung erfolgt in dem Abschnitt~\ref{sec:results} (\textit{Testergebnisse})).
 \\
 Der Test beinhaltete 45 Vergleichsmöglichkeiten und generierte das folgende Ergebnis:
 \begin{equation*}
@@ -137,10 +136,11 @@ Der Test beinhaltete 45 Vergleichsmöglichkeiten und generierte das folgende Erge
 \end{equation*}
 
 \subsection{Vertiefte Funktionalitätsanalysen}
-Mit Hilfe der nachstehenden Experimente werden Untersuchungen bezüglich sowohl der Erkennungsstabilität bei Modifikationen des
-Originalbildmaterials als auch der Detektierung von fälschlich als ähnlich markierten Vergleichspaaren dargelegt. 
+Mit Hilfe der nachstehenden Experimente werden Untersuchungen bezüglich der Erkennungsstabilität bei Modifikationen des
+Originalbildmaterials und der Detektierung von fälschlich als ähnlich markierten Vergleichspaaren dargelegt. 
 
 \subsubsection{Originalbild vs. Modifikationen (\textit{Elementare Formen}}
+\label{sec:experimental_origvsmod_brushes}
 Dieser Test analysiert die Robustheit der Algorithmen hinsichtlich der Bilder sowie deren Modifikationen aus der Kategorie
 \textit{Elementare Formen}.
 Durchführung des Tests erfolgte wie nachstehend:
@@ -161,7 +161,7 @@ repräsentiert die ermittelt Durchschnittsergebnisse (TODO: ANHANG FÜR TABELLEN; 
 	\label{fig:experimental_frr_brushes}
 \end{figure}
 \noindent
-Der Abbildung~\ref{fig:experimental_frr_brushes} nach zufolge, ist der \textit{BMB}--Algorithmus mit einer durchschnittlichen Fehlerrate
+Der Abbildung~\ref{fig:experimental_frr_brushes} nach zufolge ist der \textit{BMB}--Algorithmus mit einer durchschnittlichen Fehlerrate
 von $\varnothing FRR = 0,34$ das stabilste Verfahren in diesem Experiment. Dahingegen verhält sich die \textit{Wavelet}--Vorgehensweise
 mit einer Durchschnittsfehlerrate von $\varnothing FRR = 0,87$ am negativsten. Sowohl der \textit{DCT}--Ansatz ($\varnothing FRR = 0.45$) als auch das
 \textit{RADISH}--Vorgehen ($\varnothing FRR = 0.51$) weisen nur geringfügige Unterschiede in den Ergebnissen auf und belegen somit das Mittelfeld.
@@ -214,9 +214,10 @@ Die folgenden Tabelle~\ref{tab:experimental_mfrr_images} beinhaltet die Durchsch
 \end{table}	
 
 \subsubsection{Erkennungsraten beim Quervergleich \textit{Komplexe Bilder}}
+\label{sec:experimental_cc_images}
 Im Gegensatz zu den beiden vorherigen[SYN] Experimenten wird bei diesem Test nicht die \textit{False--Rejection--Rate} als Maß für
 die Fehlerrate verwendet, sondern die \textit{False--Acceptance--Rate}. Bei einem Kreuzvergleich mit allem aus der Kategorie
-\textit{Komplexe Bilder} stammenden Bildmaterials ist die Detektierung von als fälschlich ähnlich markierten Bildpaaren das Testziel,
+\textit{Komplexe Bilder} stammenden Bildmaterial, ist die Detektierung von als fälschlich ähnlich markierten Bildpaaren das Testziel,
 wodurch weitere Rückschlüsse auf die potentielle interne Arbeitsweise der Algorithmen gezogen werden können. Der Inhaltsumfang betrug
 dabei \hbox{8001 verschiedene Vergleichspaare}.
 \\
@@ -236,5 +237,42 @@ Vergleichspaare fälschlicherweise als ähnlich deklarierte.
 Besonders die auftretenden Fehlerraten der Verfahren \textit{BMB} und \textit{RADISH} wurden durch die Änderung des Thresholds beeinflusst.
 
 \subsection{Geschwindigkeitsanalysen}
+Der Einsatz neuer Verfahrensweisen in etablierte Systemstrukturen führt oftmals zu einem nicht unerheblichen Aufwand für
+die beteiligten Stakeholder. Vor der Integration sind somit eingehende Tests notwendig um die Effizienz des neues Ansatzes zu
+validieren sowie zu bestätigen.
+\\
+In dem Fall von \textit{Perceptual Hashing} ist neben der Verifizierung der Fehlerraten ebenfalls die benötigte Zeit beziehungsweise
+die Berechnungsgeschwindigkeit der beteiligten Algorithmen eine ausschlaggebende Eigenschaft für dessen Verwendung.
+\\
+Die nachfolgenden Experimente analysieren die Berechnungszeiten und setzen diese in einen direkten Vergleich mit bereits bestehenden
+Ansätzen.
+
 \subsubsection{Berechnungszeiten der Algorithmen}
+\label{sec:experimental_speed}
+Die durchschnittlichen Berechnungszeiten der vier Algorithmen basieren auf einer Vielzahl von Randbedingungen. Am ausschlaggebendsten
+ist die Kommunikationsgeschwindigkeit zwischen den verschiedenen Infrastrukturen (zum Beispiel die Geschwindigkeit der Host--Festplatte
+oder die Internetgeschwindigkeit), die wiederum als konstante (Lade--)Zeit in die Gesamtzeit mit eingeht (unabhängig von der eigentlichen
+Berechnungsgeschwindigkeit).
+\\
+Ein zusätzlicher Faktor ist durch die Implementierung (zum Beispiel eine Optimierung für die Verwendung von mehreren CPU--Kernen) der
+einzelnen Algorithmen gegeben, die zuzüglich der Parametrisierung einen großen Einfluss auf die Geschwindigkeit während der Berechnung ausübt.
+Die eigentliche Berechnung[SYN] ist zusätzlich[SYN] an die CPU--Geschwindigkeit gebunden.
+\\
+Die Bestimmung der durchschnittlichen Berechnungszeiten (beinhalten keine Ladezeiten) der vier betrachteten Algorithmen wurde mit Hilfe der
+Kategorie \textit{Komplexe Bilder} ausgeführt, wobei nur die drei Gruppen berücksichtigt wurden: \textit{Original, Verkleinerungen und Vergrößerungen}.
+TODO: AUSBLEIB VON OPTIMIERUNGEN; JEDES MAL WIEDER GELADEN UND BERECHNET; SYSTEM WIE OBEN GENUTZT; 6 KERNE!\\
+Die Berechnungszeiten für die vier Verfahren können in der Abbildung~\ref{fig:experimental_speed} abgelesen werden.
+\begin{figure}[H]
+	\centering
+	\framepicture[width=0.96\linewidth]{Pictures/speed.png}
+	\caption{Durchschnittliche Berechnungszeiten (Eigene Darstellung)}
+	\label{fig:experimental_speed}
+\end{figure}
+\noindent
+Die Berechnungszeiten für jeden Algorithmus steigen erwartungsgemäß mit einer Zunahme an Bildinformationen an. Die Verfahren \textit{BMB} sowie
+\textit{RADISH} berechnen den Hashwert durchschnittlich am effizientesten, wohingegen die Ansätze \textit{DCT} und \textit{Wavelet} zu
+den langsameren Verfahren zählen. Die Beobachtungen decken sich mit~\cite{ZAU10}.
+\\
+Besonders die erhöhte Berechnungszeit des \textit{Wavelet}--Algorithmus ist bei dem verkleinerten Bildmaterial hervorzuheben.  
+
 \subsubsection{tbd}

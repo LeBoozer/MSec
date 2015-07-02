@@ -262,7 +262,6 @@
             this.MaximumSize = new System.Drawing.Size(972, 498);
             this.MinimizeBox = false;
             this.Name = "StepByStepWavelet";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Wavelet";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StepByStepWavelet_FormClosing);

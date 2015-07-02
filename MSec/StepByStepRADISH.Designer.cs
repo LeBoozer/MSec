@@ -307,7 +307,6 @@
             this.MaximumSize = new System.Drawing.Size(1160, 509);
             this.MinimizeBox = false;
             this.Name = "StepByStepRADISH";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RADISH";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StepByStepRADISH_FormClosing);
