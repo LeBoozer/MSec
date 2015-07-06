@@ -12,7 +12,7 @@ Einsetzbarkeit in Abhängigkeit des verwendeten Bildmaterials zu ziehen. Aufgrund
 den bildlichen Strukturen, können keine allgemeingültigen Aussagen über den Zusammenhang zwischen fehlerhaften Ergebnissen
 der Verfahren und dem strukturellen Aufbau der Bilder getroffen werden.
 \\
-Mit Hilfe der in Sektion~\ref{sec:solution} (\textit{Lösungsansatz}) wohldefinierten Kategorien an variierenden
+Mit Hilfe der in Abschnitt~\ref{sec:solution} (\textit{Lösungsansatz}) wohldefinierten Kategorien variierenden
 Bildmaterials, in Bezug auf Komplexität sowie Strukturaufbau, soll neben der Protokollierung der Stärken und Schwächen der
 Algorithmen eine potentielle Korrelation zwischen den strukturellen Gegebenheiten und den grundlegenden Funktionsweisen der
 Ansätze untersucht werden.
@@ -42,7 +42,7 @@ Die nachfolgende Auflistung beinhaltet eine Übersicht der durchgeführten und in 
 TO DO: Fehlerraten oder so erwähnen (JEWEILS GEMESSENDE DATEN)\\
 \boldtext{Testsystem und Parametrisierung}\\
 Für die Gewährleistung, dass die einzelnen Experimente in weitestgehend system-- sowie hardwareunabhängigen Ergebnissen resultieren,
-geschieht deren Durchführung ausschließlich auf dem nachstehenden System:
+geschieht deren Durchführung ausschließlich auf dem in Tabelle~\ref{tab:experimental_testsystem} beschriebenen System:
 \begin{table}[H]
 	\begin{center}
 		\begin{tabular}{|l|l|}
@@ -70,7 +70,7 @@ geschieht deren Durchführung ausschließlich auf dem nachstehenden System:
 	\end{center}
 \end{table}	
 \noindent
-Die Parametrisierung der unterschiedlichen Algorithmen erfolgt nach den in der Bibliothek \textit{pHash} angegebenen Standardwerte:
+Die Parametrisierung der unterschiedlichen Algorithmen erfolgt nach den in der Bibliothek \textit{pHash} angegebenen Standardwerten:
 \begin{table}[H]
 	\begin{center}
 		\begin{tabular}{|l|l|}
@@ -116,19 +116,19 @@ Die Durchführung des Identitätstests dient als erforderliche Grundlage für alle 
 daher für alle vier Algorithmen realisiert. Während der Ausführung werden die Bilder aus den Kategorien \textit{Elementare Formen}
 sowie \textit{Komplexe Bilder} gegen die eigene Identität verglichen und die eventuell entstehenden Fehler protokolliert.
 \\
-Das Experiment umfasste insgesamt 288 unterschiedliche Bilddaten und führte zu dem nachstehenden Ergebnis:
+Das Experiment umfasst insgesamt 288 unterschiedliche Bilddaten und führte zu dem nachstehenden Ergebnis:
 \begin{equation*}
 	FRR = 0
 \end{equation*}
 \noindent
 Daraus lässt sich schlussfolgern, dass die vier Ansätze für die Berechnung von Perceptual Hashes mit einer hohen Wahrscheinlichkeit
-eine deterministische Vorgehensweise inhärieren. Für eine absolute Sicherheit ist hingegen ein formaler Beweis notwendig, der nicht im Rahmen
-des vorliegenden Papers abgedeckt wird.
+eine deterministische Vorgehensweise inhärieren. Für eine absolute Sicherheit ist hingegen ein formaler Beweis notwendig, der aufgrund der Komplexität
+nicht im Rahmen des vorliegenden Papers abgedeckt werden kann.
 
 \subsubsection{Erkennungsraten der \textit{Einfachen Farben}}
-Das Experiment hat einen Quervergleich aller 9 einfarbigen Bilder der Kategorie \textit{Einfache Farben} mit allen vier Verfahren durchgeführt.
+Das Experiment hat einen Quervergleich aller neun einfarbigen Bilder der Kategorie \textit{Einfache Farben} mit allen vier Verfahren durchgeführt.
 Die entstehenden Resultate basieren dabei auf der Natur der internen Funktionsweise der Vergleichsalgorithmen für die Hashdaten
-(eine detaillierte Erläuterung erfolgt in dem Abschnitt~\ref{sec:results} (\textit{Testergebnisse})).
+(eine detaillierte Erläuterung erfolgt in Abschnitt~\ref{sec:results} (\textit{Testergebnisse})).
 \\
 Der Test beinhaltete 45 Vergleichsmöglichkeiten und generierte das folgende Ergebnis:
 \begin{equation*}
@@ -139,11 +139,11 @@ Der Test beinhaltete 45 Vergleichsmöglichkeiten und generierte das folgende Erge
 Mit Hilfe der nachstehenden Experimente werden Untersuchungen bezüglich der Erkennungsstabilität bei Modifikationen des
 Originalbildmaterials und der Detektierung von fälschlich als ähnlich markierten Vergleichspaaren dargelegt. 
 
-\subsubsection{Originalbild vs. Modifikationen (\textit{Elementare Formen}}
+\subsubsection{Originalbild vs. Modifikationen (\textit{Elementare Formen})}
 \label{sec:experimental_origvsmod_brushes}
 Dieser Test analysiert die Robustheit der Algorithmen hinsichtlich der Bilder sowie deren Modifikationen aus der Kategorie
 \textit{Elementare Formen}.
-Durchführung des Tests erfolgte wie nachstehend:
+Die Durchführung des Tests erfolgte wie nachstehend:
 \begin{itemize}[noitemsep]
 	\item Originalbilder vs. Verkleinerungen des Originals
 	\item Originalbilder vs. Vergrößerungen des Originals
@@ -152,7 +152,7 @@ Durchführung des Tests erfolgte wie nachstehend:
 	\item Originalbilder vs. Noise--Verfälschungen des Originals
 \end{itemize} 
 \noindent
-Die Gesamtanzahl der untersuchten Vergleichspaare betrug \hbox{135 Paare}. Die folgenden Abbildung~\ref{fig:experimental_frr_brushes}
+Die Gesamtanzahl der untersuchten Vergleichspaare betrug \hbox{135 Paare}. Die folgende Abbildung~\ref{fig:experimental_frr_brushes}
 repräsentiert die ermittelt Durchschnittsergebnisse (TODO: ANHANG FÜR TABELLEN; TRENNUNG DER GRUPPE!).
 \begin{figure}[H]
 	\centering
@@ -161,14 +161,14 @@ repräsentiert die ermittelt Durchschnittsergebnisse (TODO: ANHANG FÜR TABELLEN; 
 	\label{fig:experimental_frr_brushes}
 \end{figure}
 \noindent
-Der Abbildung~\ref{fig:experimental_frr_brushes} nach zufolge ist der \textit{BMB}--Algorithmus mit einer durchschnittlichen Fehlerrate
+Der Abbildung~\ref{fig:experimental_frr_brushes} zufolge ist der \textit{BMB}--Algorithmus mit einer durchschnittlichen Fehlerrate
 von $\varnothing FRR = 0,34$ das stabilste Verfahren in diesem Experiment. Dahingegen verhält sich die \textit{Wavelet}--Vorgehensweise
 mit einer Durchschnittsfehlerrate von $\varnothing FRR = 0,87$ am negativsten. Sowohl der \textit{DCT}--Ansatz ($\varnothing FRR = 0.45$) als auch das
 \textit{RADISH}--Vorgehen ($\varnothing FRR = 0.51$) weisen nur geringfügige Unterschiede in den Ergebnissen auf und belegen somit das Mittelfeld.
 
-\subsubsection{Originalbild vs. Modifikationen (\textit{Komplexe Bilder}}
+\subsubsection{Originalbild vs. Modifikationen (\textit{Komplexe Bilder})}
 Das Experiment ist von dem Ablauf bis auf die untersuchte Datenkategorie identisch zu dem Vorherigen. Anstelle der elementaren Formen
-wird das Verhalten der Algorithmen hinsichtlich der Kategorie \textit{Komplexe Bilder} analysiert. Das Bildmaterial generierte 105 unterschiedliche
+wird das Verhalten der Algorithmen jedoch hinsichtlich der Kategorie \textit{Komplexe Bilder} analysiert. Das Bildmaterial generierte 105 unterschiedliche
 Vergleichspaare und führte zu dem in Abbildung~\ref{fig:experimental_frr_images} dargestellten Resultat.
 \begin{figure}[H]
 	\centering
@@ -213,7 +213,7 @@ Die folgenden Tabelle~\ref{tab:experimental_mfrr_images} beinhaltet die Durchsch
 	\end{center}
 \end{table}	
 
-\subsubsection{Erkennungsraten beim Quervergleich \textit{Komplexe Bilder}}
+\subsubsection{Erkennungsraten beim Quervergleich (\textit{Komplexe Bilder})}
 \label{sec:experimental_cc_images}
 Im Gegensatz zu den beiden vorherigen[SYN] Experimenten wird bei diesem Test nicht die \textit{False--Rejection--Rate} als Maß für
 die Fehlerrate verwendet, sondern die \textit{False--Acceptance--Rate}. Bei einem Kreuzvergleich mit allem aus der Kategorie
@@ -222,7 +222,7 @@ wodurch weitere Rückschlüsse auf die potentielle interne Arbeitsweise der Algori
 dabei \hbox{8001 verschiedene Vergleichspaare}.
 \\
 Das Erkennungsverhalten der einzelnen Algorithmen wurde für drei Threshold--Stufen (90\%, 80\% und 70\%) protokolliert und führte
-zu dem in der Abbildung~\ref{fig:experimental_far_cc} illustrierte Ergebnis.
+zu dem in der Abbildung~\ref{fig:experimental_far_cc} illustrierten Ergebnis.
 \begin{figure}[H]
 	\centering
 	\framepicture[width=0.96\linewidth]{Pictures/far_crosscomparison.png}
@@ -230,7 +230,7 @@ zu dem in der Abbildung~\ref{fig:experimental_far_cc} illustrierte Ergebnis.
 	\label{fig:experimental_far_cc}
 \end{figure}
 \noindent
-Erwartungsgemäß ist ein paralleler Einsteig der tolerierten Fehler während des Vergleichs von Ähnlichkeiten mit der Verringerung des
+Erwartungsgemäß ist ein paralleler Anstieg der tolerierten Fehler während des Vergleichs von Ähnlichkeiten mit der Verringerung des
 genutzten Thresholds zu beobachten. Eine Ausnahme stellt die \textit{Wavelet}--Vorgehensweise dar, die in allen drei Stufen keine
 Vergleichspaare fälschlicherweise als ähnlich deklarierte.
 \\
@@ -249,10 +249,10 @@ Ansätzen.
 
 \subsubsection{Berechnungszeiten der Algorithmen}
 \label{sec:experimental_speed}
-Die durchschnittlichen Berechnungszeiten der vier Algorithmen basieren auf einer Vielzahl von Randbedingungen. Am ausschlaggebendsten
+Die durchschnittlichen Berechnungszeiten der vier Algorithmen basieren auf einer Vielzahl von Rahmenbedingungen. Am ausschlaggebendsten
 ist die Kommunikationsgeschwindigkeit zwischen den verschiedenen Infrastrukturen (zum Beispiel die Geschwindigkeit der Host--Festplatte
-oder die Internetgeschwindigkeit), die wiederum als konstante (Lade--)Zeit in die Gesamtzeit mit eingeht (unabhängig von der eigentlichen
-Berechnungsgeschwindigkeit).
+oder die Internetgeschwindigkeit), die wiederum, unabhängig von der eigentlichen
+Berechnungsgeschwindigkeit, als konstante (Lade--)Zeit in die Gesamtzeit mit eingeht.
 \\
 Ein zusätzlicher Faktor ist durch die Implementierung (zum Beispiel eine Optimierung für die Verwendung von mehreren CPU--Kernen) der
 einzelnen Algorithmen gegeben, die zuzüglich der Parametrisierung einen großen Einfluss auf die Geschwindigkeit während der Berechnung ausübt.

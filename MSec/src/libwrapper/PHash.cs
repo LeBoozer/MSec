@@ -56,6 +56,10 @@ namespace MSec
         [DllImport(@"pHash.dll", EntryPoint = "ph_crosscorr", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern int computeCrossCorrelation(IntPtr _d0, IntPtr _d1, ref double _peak, double _threshold = 0.90);
 
+        // Dll function: import -> ph_crosscorr (cross correlation)
+        [DllImport(@"pHash.dll", EntryPoint = "ph_crosscorr_file", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern int computeCrossCorrelation(String _file0, String _file1, ref double _peak, HashComputationTimings _timings, int _resizeX = 0, int _resizeY = 0);
+
         // Dll function: import -> ph_hamming_distance (hamming distance)
         [DllImport(@"pHash.dll", EntryPoint = "ph_hamming_distance", CallingConvention = CallingConvention.Cdecl, CharSet=CharSet.Ansi)]
         public static extern int computeHammingDistance(UInt64 _hash0, UInt64 _hash1);

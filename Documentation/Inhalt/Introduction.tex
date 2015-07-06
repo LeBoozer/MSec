@@ -9,33 +9,36 @@
 \label{sec:motivation}
 Die bestehende und schnell anwachsende globale Vernetzung der Menschen untereinander fördert unter anderem den Austausch
 sowie die Verbreitung von unterschiedlichsten Informationen über das Internet. Vor allem bei der Jugend beliebte Dienste
-wie Facebook, Instagram oder Twitter dienen dabei oftmals als zugrundeliegende Plattform für den öffentlichen Austausch[SYN]
+wie Facebook, Instagram oder Twitter dienen dabei oftmals als zugrundeliegende Plattform für den öffentlichen Transfer
 von verschiedenen Medientypen (z.B. Bilder, Videos, Audio und Text). Eine Vielzahl der bei den Diensten[SYN] oder auf
-(privaten) Internetseiten eingesetzten Medien werden oftmals[SYN] ohne Bedacht auf Urheberrechte (verändert)[???] verwendet
+(privaten) Internetseiten eingesetzten Medien werden meist ohne Bedacht auf Urheberrechte (verändert)[???] verwendet
 und im schlimmsten Fall ohne Quellenangabe eingesetzt.
 \\
 Ein mögliches Verfahren für die Zuordnung eines Urhebers zu dem von ihm erstellten Medium stellt das sogenannte
 \textit{robuste Watermarking} dar. Hierbei werden digitale Signaturen direkt mit in das Mediaobjekt (nachfolgend für
 Bilder, Videos und Audio) versteckt integriert, die für eine spätere Authentifizierung extrahiert werden können. Nachteile
 des Watermarkings sind neben Performance intensiven Berechnungen unter anderem inhaltsbewahrende Veränderungen (z.B.
-Formatänderungen), das Entfernen von den Signaturen und die nicht bestehende Möglichkeit digitale Signaturen in bereits publizierte Mediaobjekte nachträglich zu integrieren (Quelle: VL).
+Formatänderungen), das Entfernen der Signaturen und die nicht bestehende Möglichkeit digitale Signaturen in bereits
+publizierte Mediaobjekte nachträglich zu integrieren (Quelle: VL).
 \\
-Perceptual Hashing offeriert eine alternative Herangehensweise an die Problemstellung, welche auf die Performance
+Perceptual Hashing offeriert im Gegensatz dazu eine alternative Herangehensweise an die Problemstellung, welche auf die Performance
 intensiven Integrationen von digitalen Signaturen verzichtet und auch inhaltsbewahrende Veränderungen mit berücksichtigt.
 
 %---------------------------------------------------------------------------------------------------------------------
 % Description of the used approach
 %---------------------------------------------------------------------------------------------------------------------
 \section{Perceptual Hashing of Images}
-Mit dem Wort \textit{Hash} ist oftmals[SYN] ein kryptografisches Hashverfahren gemeint, welches einen beliebig langen[SYN] Eingabewert, unter Berücksichtigung des \textit{Avalance--Effekts}, auf einen meist festen Ausgabewert abbildet.
+Mit dem Wort \textit{Hash} wird in der Regel ein kryptografisches Hashverfahren bezeichnet, das einen beliebig langen[SYN] Eingabewert,
+unter Berücksichtigung des \textit{Avalance--Effekts}, auf einen meist festen Ausgabewert abbildet.
 Diese Art des Hashings findet einen großen Einsatz in dem Bereich der Integritätsprüfung.
 \\
-Mediaobjekte können nach Veränderungen oder Manipulationen (z.B. Formatänderungen und Komprimierungen) für die menschlichen Sinne ähnlich bis gleich wahrgenommen werden, unterscheiden sich in ihrer binären Präsentation hingegen erheblich, sodass
+Mediaobjekte können nach Veränderungen oder Manipulationen (z.B. Formatänderungen und Komprimierungen) für die menschlichen Sinne
+ähnlich bis gleich wahrgenommen werden, unterscheiden sich in ihrer binären Präsentation hingegen erheblich, sodass
 der Einsatz[SYN] von kryptografischen Verfahren aufgrund des \textit{Avalance--Effekts} ungeeignet ist.
 \\
 Perceptual Hashing berücksichtigt dahingegen Veränderungen und Manipulationen in der zugrundeliegenden Arbeitsweise des Verfahrens[SYN], indem typische strukturelle Merkmale (im Vergleich zu detaillierten Merkmalen[SYN] stabiler gegenüber Veränderungen) der Mediaobjekte extrahiert und miteinander verglichen werden. Je mehr Merkmale[SYN] miteinander
 übereinstimmen, desto höher ist anschließend die Wahrscheinlichkeit, dass die beiden Mediaobjekte ähnlich bis gleich
-zueinander sind. Das Maß an Berücksichtigung von Veränderungen[SYN] an dem Mediaobjekt ist abhängig von dem gewählten Algorithmus.
+zueinander sind. Das Maß an Berücksichtigung von Korrekturen an dem Mediaobjekt ist abhängig von dem gewählten Algorithmus.
 \\
 Durch die Einführung eines Ähnlichkeitsmaßes wird ein Threshold erforderlich, der in Bezug auf die errechnete Ähnlichkeit Angaben zu der unteren Akzeptanzgrenze der Merkmalsübereinstimmungen macht. Im Gegensatz zu den kryptografischen Ansätzen existieren bei dem Perceptual Hashing die Fehlerraten FAR (False--Acceptance--Rate) und FRR (False--Rejection--Rate)
 [Irgendwas mit Threshold und nur Einbeziehung von Ähnlichkeiten].

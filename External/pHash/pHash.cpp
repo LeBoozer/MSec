@@ -257,6 +257,86 @@ int ph_crosscorr(const Digest &x,const Digest &y,double &pcc,double threshold){
     return result;
 }
 
+int ph_crosscorr_file(const char* file1, const char* file2, double &pcc, Timings& timings, int _resizeX, int _resizeY)
+{
+	LARGE_INTEGER frequency, start, end;
+
+	QueryPerformanceFrequency(&frequency);
+	QueryPerformanceCounter(&start);
+
+	CImg<uint8_t> f0(file1);
+	CImg<uint8_t> f1(file2);
+
+	QueryPerformanceCounter(&end);
+	timings.imageLoadingTimeMS = static_cast<double>(end.QuadPart - start.QuadPart) / frequency.QuadPart;
+	QueryPerformanceCounter(&start);
+
+	if (f0.spectrum() >= 3){
+		f0 = f0.get_RGBtoYCbCr().channel(0);
+	}
+	else if (f0.spectrum() == 1)
+	{
+		f0 = f0;
+	}
+	else
+		return 0;
+
+	if (f1.spectrum() >= 3){
+		f1 = f1.get_RGBtoYCbCr().channel(0);
+	}
+	else if (f1.spectrum() == 1)
+	{
+		f1 = f1;
+	}
+	else
+		return 0;
+
+	if (_resizeX > 0 && _resizeY > 0)
+	{
+		f0 = f0.resize(_resizeX, _resizeY);
+		f1 = f1.resize(_resizeX, _resizeY);
+	}
+
+	if (f0.size() != f1.size())
+		return 0;
+
+	unsigned long N = f0.size();
+
+	uint8_t *x_coeffs = f0.data();
+	uint8_t *y_coeffs = f1.data();
+
+	double *r = new double[N];
+	double sumx = 0.0;
+	double sumy = 0.0;
+	for (unsigned long i = 0; i < N; i++){
+		sumx += x_coeffs[i];
+		sumy += y_coeffs[i];
+	}
+	double meanx = sumx / N;
+	double meany = sumy / N;
+	double max = 0;
+	for (unsigned long d = 0; d<N; d++){
+		double num = 0.0;
+		double denx = 0.0;
+		double deny = 0.0;
+		for (unsigned long i = 0; i<N; i++){
+			num += (x_coeffs[i] - meanx)*(y_coeffs[(N + i - d) % N] - meany);
+			denx += pow((x_coeffs[i] - meanx), 2);
+			deny += pow((y_coeffs[(N + i - d) % N] - meany), 2);
+		}
+		r[d] = num / sqrt(denx*deny);
+		if (r[d] > max)
+			max = r[d];
+	}
+	delete[] r;
+	pcc = max;
+
+	QueryPerformanceCounter(&end);
+	timings.hashComputationTimeMS = static_cast<double>(end.QuadPart - start.QuadPart) / frequency.QuadPart;
+
+	return 1;
+}
+
 #ifdef max
 #undef max
 #endif

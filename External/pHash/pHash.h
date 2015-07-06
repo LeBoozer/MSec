@@ -251,6 +251,7 @@ int ph_dct(const Features &fv, Digest &digest);
  */
 
 __declspec(dllexport) int __cdecl ph_crosscorr(const Digest &x,const Digest &y,double &pcc, double threshold = 0.90);
+__declspec(dllexport) int __cdecl ph_crosscorr_file(const char* file1, const char* file2, double &pcc, Timings& timings, int _resizeX = 0, int _resizeY = 0);
 
 /*! /brief image digest
  *  Compute the image digest for an image given the input image

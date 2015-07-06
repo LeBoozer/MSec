@@ -7,7 +7,7 @@
 %---------------------------------------------------------------------------------------------------------------------
 \section{Testergebnisse}
 \label{sec:results}
-Nachfolgend werden die Resultate sowie Beobachtungen der durchgeführten Experimente analysiert und gegebene Korrelationen
+Nachfolgend werden die Resultate sowie Beobachtungen der durchgeführten Experimente analysiert und mögliche Korrelationen
 zwischen den Funktionsweisen der vier eingesetzten Algorithmen und dem verwendeten Bildmaterials aufgezeigt.
 \\
 Aus der Wissenschaft stammende Fehleranfälligkeiten in der zugrundeliegenden Theorie der einzelnen Verfahren werden
@@ -46,9 +46,9 @@ Wert von 1 resultiert und dadurch die \textit{FRR} steigert.
 \subsubsection{Originalbild vs. Modifikationen (\textit{Elementare Formen})}
 Während der Durchführung des Experiments wurden die Originalbilder aus der Kategorie \textit{Elementare Formen} gegen deren
 modifizierten Versionen verglichen. Ziel der Testanwendung war eine vertiefte Analyse der Algorithmus abhängigen Erkennungsqualitäten
-bei strukturell ähnlichen Bildmaterials.
+bei strukturell ähnlichem Bildmaterial.
 \\[1em]
-Wie bei den einfachen Farben zuvor, beeinflusst der strukturell einfach aufgebaute Inhalt der Bilder auch hier negativ die
+Ähnlich wie bei den einfachen Farben zuvor, beeinflusst der strukturell einfach aufgebaute Inhalt der Bilder auch hier negativ die
 im Abschnitt~\ref{sec:experimental_origvsmod_brushes} protokollierten Ergebnisse. Bereits kleinere Änderungen an dem originalen
 Bildmaterial führen zu einer vollkommenen differierenden Modifikation der binären Darstellungsweise, sodass die Algorithmen 
 starke Abweichungen während der Bestimmung des Ähnlichkeitsmaßes aufweisen.
@@ -67,11 +67,12 @@ Bildmaterial.
 \\[1em]
 Die häufig angewandte Modifikation \textit{Rotationsänderungen} ist für alle vier Algorithmen ein bestehender Problemfall. Rotationen
 sind oftmals für den menschlichen Sehsinn leicht zu detektieren, wohingegen eine maschinelle Erkennung durch die extreme Differenz der
-binären Repräsentation eine große Herausforderung darstellt. Der Erkenntnisgewinn lehnt sich an die Ergebnisse aus~\cite{ZAU10} an.
+binären Repräsentation eine große Herausforderung darstellt. Der Erkenntnisgewinn spiegelt sich auch in anderen wissenschaftlichen 
+Ergebnissen wieder (vgl.~\cite{ZAU10}).
 
 \subsubsection{Originalbild vs. Modifikationen (\textit{Komplexe Bilder})}
 Ein Wechsel des Bildmaterials von den elementaren Formen auf die Kategorie \textit{Komplexe Bilder} verbessert allgemein
-die entstehende Fehlerrate der verschiedenen Algorithmen während der Bestimmung von den Ähnlichkeitsmaßen.
+die entstehende Fehlerrate der verschiedenen Algorithmen während der Bestimmung der Ähnlichkeitsmaße.
 \\
 Durch den Einsatz von komplexen strukturellen Bildinformationen, weisen Modifikationen einen geringfügigeren Einfluss auf den
 eigentlichen Bildinhalt auf. Als Beispiel sei die folgenden Abbildung~\ref{fig:results_origvsmod_images_wavelet} des
@@ -99,11 +100,11 @@ eingesetzten Thresholds wird der Fehlerbestand vor allem bei den Verfahren \text
 unlogische, als fälschlich ähnlich markierte Vergleichspaare erweitert. Das Verhalten lässt sich auf die interne Arbeitsweise
 der Algorithmen zurückführen.
 \\[1em]
-Ähnlich zueinander liegende Intensitätsverteilungen, bei zwei nicht gleichartiger Bilder, resultieren bei dem \textit{RADISH}--Ansatz
-in einer ähnlichen strukturellen Charakteristiken innerhalb der Ergebnisse der \textit{Radon--Projektion}, wodurch schlussendlich
+Ähnlich zueinander liegende Intensitätsverteilungen, bei zwei nicht gleichartigen Bildern, resultieren bei dem \textit{RADISH}--Ansatz
+in einer ähnlich strukturellen Charakteristik innerhalb der Ergebnisse der \textit{Radon--Projektion}, wodurch schlussendlich
 ähnliche[SYN] Hashwerte erzielt werden (in Bezug auf den verwendeten Threshold).
 \\
-Die folgenden Abbildung~\ref{fig:results_cc_radish} ist ein Beispiel für das Phänomen. 
+Die folgende Abbildung~\ref{fig:results_cc_radish} ist ein Beispiel für das Phänomen. 
 \begin{figure}[H]
 	\centering
 	\framepicture[width=0.96\linewidth]{Pictures/Radish_Far.png}
