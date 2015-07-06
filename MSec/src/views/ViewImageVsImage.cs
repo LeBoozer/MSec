@@ -151,12 +151,6 @@ namespace MSec
                 ComparativeData result = null;
                 Job<HashData> j0 = null, j1 = null;
 
-                double peak = 0.0;
-                HashComputationTimings timings = new HashComputationTimings();
-                PHash.computeCrossCorrelation(m_controlImageSourceSelection0.Source.FilePath, m_controlImageSourceSelection1.Source.FilePath, ref peak, timings, 300, 300);
-                string data = "Loading: " + timings.m_imageLoadingTimeMS + " || Computation: " + timings.m_hashComputationTimeMS + " || Total: " + (timings.m_imageLoadingTimeMS + timings.m_hashComputationTimeMS);
-                System.IO.File.AppendAllText("times.txt", data + "\r\n");
-
                 // Create jobs: computing hashes
                 j0 = Job<HashData>.createJobComputeHash(m_controlImageSourceSelection0.Source, SingleModeTechnique,
                     (JobParameter<HashData> _r) =>

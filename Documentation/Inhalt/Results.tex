@@ -41,7 +41,9 @@ und trägt somit zu der \textit{FAR} bei, während die \textit{Kreuzkorrelation} b
 Wert von 1 resultiert und dadurch die \textit{FRR} steigert.
 
 \subsection{Vertiefte Funktionalitätsanalysen}
-[TODO]
+Die Kategorie der vertieften Funktionalitätsuntersuchungen umfasst drei unterschiedliche Experimente. Die ersten beiden Tests
+analysieren das Verhalten der \textit{FRR} bei der Anwendung von Modifikationen auf das Originalbild, wohingegen der dritte
+Testfalls die \textit{FAR} während dem Vergleich von nicht ähnlichen Bildmaterials untersucht.
 
 \subsubsection{Originalbild vs. Modifikationen (\textit{Elementare Formen})}
 Während der Durchführung des Experiments wurden die Originalbilder aus der Kategorie \textit{Elementare Formen} gegen deren
@@ -90,7 +92,7 @@ Gamma--Angleichungen des Originals} gegeben, bei dem eine Verschlechterung der Z
 \\
 Rotationsmodifikationen führen nach wie vor zu erheblichen Schwierigkeiten bei dem Erkennen von Ähnlichkeiten.
 
-\subsubsection{Erkennungsraten beim Quervergleich (\textit{Komplexe Bilder})}
+\subsubsection{Erkennungsraten beim Quervergleich (\textit{Komplexe\\Bilder})}
 Der in Abschnitt~\ref{sec:experimental_cc_images} durchgeführte Quervergleich der komplexen Bilder resultiert in einer
 guten Fehlerverteilung für die einzelnen Algorithmen. Die gemessene Fehlerrate liegt dabei auch bei einem Threshold von 70\%
 beständig weit unter der 10\%--Grenze.
@@ -102,7 +104,7 @@ der Algorithmen zurückführen.
 \\[1em]
 Ähnlich zueinander liegende Intensitätsverteilungen, bei zwei nicht gleichartigen Bildern, resultieren bei dem \textit{RADISH}--Ansatz
 in einer ähnlich strukturellen Charakteristik innerhalb der Ergebnisse der \textit{Radon--Projektion}, wodurch schlussendlich
-ähnliche[SYN] Hashwerte erzielt werden (in Bezug auf den verwendeten Threshold).
+gleichartige Hashwerte erzielt werden (in Bezug auf den verwendeten Threshold).
 \\
 Die folgende Abbildung~\ref{fig:results_cc_radish} ist ein Beispiel für das Phänomen. 
 \begin{figure}[H]
@@ -116,15 +118,18 @@ Die bei dem \textit{BMB}--Algorithmus entstehende Toleranz gegenüber der Fehlerr
 Thresholds, sodass die Abweichungen zwischen den durchschnittlichen Gitterzellwerten und dem Gesamtdurchschnitt des Gitters
 stufenweise akzeptiert werden.
 \\[1em]
-Der vermeidlich bestbewertete Algorithmus ist die \textit{Wavelet}--Variante, die durchgehend eine Fehlerrate von $FAR = 0$
+Der vermeintlich als gut bewertete Algorithmus ist die \textit{Wavelet}--Variante, die durchgehend eine Fehlerrate von \hbox{$FAR = 0$}
 erzielte. In Kombinationen mit dem hohen Fehleranteil in der \textit{FRR} aus den vorherigen Tests lässt sich ableiten,
 dass das allgemeine Erkennungsvermögen des \textit{Wavelet}--Ansatzes wenig überzeugend ist (ungeachtet ob gewollte oder nicht
 gewollte Ähnlichkeitserkennungen). 
 
 \subsection{Geschwindigkeitsanalysen}
-[TODO]
+Die Kategorie der Geschwindigkeitsanalyse beinhaltet zwei verschieden definierte Experimente hinsichtlich der Berechnungszeiten
+der Algorithmen. Während der erste Testfall die reine Bearbeitungsgeschwindigkeit in bezugnehmend auf die vorhandene Datenkomplexität
+analysiert, untersucht der zweite Test die prozentuale Effizienzsteigerung der vier Algorithmen gegenüber eines nativen Ansatzes.
 
 \subsubsection{Berechnungszeiten der Algorithmen}
+\label{sec:results_speed}
 Wie in Abschnitt~\ref{sec:experimental_speed} definiert, wurden bei diesem Testfall nur die entstehenden Berechnungszeiten
 in die Betrachtung mit einbezogen. Die Ladezeiten der einzelnen Bilddaten haben somit keinen Einfluss auf die gemessenen Werte.
 \\
@@ -150,7 +155,7 @@ Aus dieser Betrachtungsweise lässt sich die benötigte Gesamtzeit für ein Verglei
 \end{equation}
 \noindent
 Unter der Annahme, dass eines der beiden Bilder vor dem Vergleich bereits als bekannt angesehen werden kann, besteht die
-Möglichkeit, die Hashwerte für das Bild im Vorfeld zu berechnen und beispielsweise in einer Datenbank zu sichern.
+Möglichkeit, den Hashwert für das Bild im Vorfeld zu berechnen und beispielsweise in einer Datenbank zu sichern.
 \\
 Daraus folgt eine Vereinfachung der Formel~\ref{eq:results_speed_total} zu:
 \begin{equation}
@@ -162,3 +167,64 @@ Daraus folgt eine Vereinfachung der Formel~\ref{eq:results_speed_total} zu:
 \noindent
 Aufgrund der deutlichen geringeren Dateigröße des abgespeicherten Hashwertes, konnten Geschwindigkeitssteigerungen bis zu
 \hbox{$\sim49\%$} gemessen werden.
+
+\subsubsection{Kreuzkorrelation mit vollständigem Informationsraum}
+Das in Abschnitt~\ref{sec:experimental_speed_cc} durchgeführte Experiment determinierte einen gemeinsamen Bezugspunkt hinsichtlich
+der Berechnungsgeschwindigkeiten der unterschiedlichen Algorithmen mittels einer der nativen Herangehensweise \textit{Kreuzkorrelation}.
+\\
+Eine Nebeneinanderstellung der sowohl in Abschnitt~\ref{sec:experimental_speed_cc} als auch in der Passage~\ref{sec:experimental_speed}
+ermittelten linearen Trendlinien veranschaulicht den immensen Geschwindigkeitsverlust bei der Berechnung des Ähnlichkeitsmaßes mit Hilfe
+des nativen Ansatzes.
+\\
+Die wiederholte Verdoppelung der Eingaberaumdimension führte zu einem Anstieg des Aufwandmultiplikators im Bereich von \hbox{$[5,16]$}.
+Ein Bildpaar mit der Auflösung von 600x600px benötigt somit im Schnitt \hbox{$\sim38min\%$} für die Bestimmung der Ähnlichkeit (ungeachtet der
+erzielten Erkennungsqualität). Bildmaterial von modernen Digitalkameras würden dementsprechend mehrere Stunden für den Berechnungsprozess
+erfordern.
+\\
+Aufgrund der internen Funktionsweise der \textit{Kreuzkorrelation} sind Optimierungen, wie beispielsweise in dem vorherigen
+Abschnitt~\ref{sec:results_speed} aufgezeigt, ausgeschlossen. Der Algorithmus ist auf die Vollständigkeit der originalen Dateninformationen
+angewiesen, sodass zum Beispiel eine Zwischenspeicherung der Teilergebnisse nicht möglich ist.
+\\[1em]
+Ein direkter Vergleich zwischen den in Abschnitt~\ref{sec:experimental_speed} ermittelten Berechnungszeiten der einzelnen Algorithmen
+und den Zeiten der \textit{Kreuzkorrelation} ergibt eine signifikante Leistungssteigerung, die in der nachstehenden
+Tabelle~\ref{tab:result_speed_cc_ratio} aufgeführt ist. Der Zustand beschreibt ausschließlich die prozentualen Zeitverhältnisse des
+verkleinerten Bildmaterials (Auflösung beträgt: 170x128px) gegenüber der Eingabedimension \textit{100x100px} sowie
+des vergrößerten Bildmaterials (Auflösung beträgt: 2048x1536px) in Bezug auf die Dimension \textit{600x600px}.
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|l|c|c|}
+			\mytoprule
+			\centering\bfseries Algorithmus & \bfseries 100x100px & \bfseries 600x600px
+			\\
+			\hline
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			\textit{RADISH} & 795\% & 8723,43\%
+			\\
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			\textit{DCT} & 397,5\% & 4254,93\%
+			\\
+			\hline	
+			%---------------------------------------------------------------------------------------------------------------------	
+			\textit{Wavelet} & 6,68\% & 4138,04\%
+			\\	
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			\textit{BMB} & 1590\% & 24828,24\%
+			\\
+			\hline
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			\textit{Durchschnitt} & 697,29\% & 10486,16\%
+			\\																						
+			%---------------------------------------------------------------------------------------------------------------------
+			\mybottomrule			
+		\end{tabular}
+		\caption{Leistungssteigerungen gegenüber der \textit{Kreuzkorrelation} (Eigene Darstellung)}
+		\label{tab:result_speed_cc_ratio}
+	\end{center}
+\end{table}	
+\noindent
+Die Tabelle~\ref{tab:result_speed_cc_ratio} unterstreicht zusätzlich, dass mit zunehmender Auflösung des Eingabebildmaterials die
+Effizienz des nativen Verfahrens gegenüber den im vorliegenden Paper eingesetzten Algorithmen drastisch abfällt.

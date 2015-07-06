@@ -35,11 +35,14 @@ Die nachfolgende Auflistung beinhaltet eine Übersicht der durchgeführten und in 
 	\item \boldtext{Geschwindigkeitsanalysen}
 		\begin{itemize}[noitemsep]
 			\item Berechnungszeiten der Algorithmen
-			\item tbd (Hash vs Ganzbild)
+			\item Kreuzkorrelation mit vollständigem Informationsraum
 		\end{itemize}
 \end{enumerate}
 \noindent
-TO DO: Fehlerraten oder so erwähnen (JEWEILS GEMESSENDE DATEN)\\
+In Abhängigkeit des betrachteten Experiments werden die Fehlerraten \textit{FAR} sowie \textit{FRR} als ein Maß
+der Qualität innerhalb der ersten beiden Testgruppen verwendet. Die Geschwindigkeit betreffenden Analysen verwenden
+für die qualitative Bewertung der einzelnen Testparameter dahingegen die benötigte Zeit in Sekunden.
+
 \boldtext{Testsystem und Parametrisierung}\\
 Für die Gewährleistung, dass die einzelnen Experimente in weitestgehend system-- sowie hardwareunabhängigen Ergebnissen resultieren,
 geschieht deren Durchführung ausschließlich auf dem in Tabelle~\ref{tab:experimental_testsystem} beschriebenen System:
@@ -126,11 +129,11 @@ eine deterministische Vorgehensweise inhärieren. Für eine absolute Sicherheit is
 nicht im Rahmen des vorliegenden Papers abgedeckt werden kann.
 
 \subsubsection{Erkennungsraten der \textit{Einfachen Farben}}
-Das Experiment hat einen Quervergleich aller neun einfarbigen Bilder der Kategorie \textit{Einfache Farben} mit allen vier Verfahren durchgeführt.
+Im Experiment wird ein Quervergleich aller neun einfarbigen Bilder der Kategorie \textit{Einfache Farben} mit allen vier Verfahren durchgeführt.
 Die entstehenden Resultate basieren dabei auf der Natur der internen Funktionsweise der Vergleichsalgorithmen für die Hashdaten
 (eine detaillierte Erläuterung erfolgt in Abschnitt~\ref{sec:results} (\textit{Testergebnisse})).
 \\
-Der Test beinhaltete 45 Vergleichsmöglichkeiten und generierte das folgende Ergebnis:
+Der Test beinhaltet 45 Vergleichsmöglichkeiten und generiert das folgende Ergebnis:
 \begin{equation*}
 	FRR = 1, FAR = 1
 \end{equation*}
@@ -152,8 +155,8 @@ Die Durchführung des Tests erfolgte wie nachstehend:
 	\item Originalbilder vs. Noise--Verfälschungen des Originals
 \end{itemize} 
 \noindent
-Die Gesamtanzahl der untersuchten Vergleichspaare betrug \hbox{135 Paare}. Die folgende Abbildung~\ref{fig:experimental_frr_brushes}
-repräsentiert die ermittelt Durchschnittsergebnisse (TODO: ANHANG FÜR TABELLEN; TRENNUNG DER GRUPPE!).
+Die Gesamtanzahl der untersuchten Vergleichspaare beträgt \hbox{135 Paare}. Die folgende Abbildung~\ref{fig:experimental_frr_brushes}
+repräsentiert die ermittelt Durchschnittsergebnisse:
 \begin{figure}[H]
 	\centering
 	\framepicture[width=0.96\linewidth]{Pictures/frr_brushes.png}
@@ -168,8 +171,8 @@ mit einer Durchschnittsfehlerrate von $\varnothing FRR = 0,87$ am negativsten. S
 
 \subsubsection{Originalbild vs. Modifikationen (\textit{Komplexe Bilder})}
 Das Experiment ist von dem Ablauf bis auf die untersuchte Datenkategorie identisch zu dem Vorherigen. Anstelle der elementaren Formen
-wird das Verhalten der Algorithmen jedoch hinsichtlich der Kategorie \textit{Komplexe Bilder} analysiert. Das Bildmaterial generierte 105 unterschiedliche
-Vergleichspaare und führte zu dem in Abbildung~\ref{fig:experimental_frr_images} dargestellten Resultat.
+wird das Verhalten der Algorithmen jedoch hinsichtlich der Kategorie \textit{Komplexe Bilder} analysiert. Das Bildmaterial generiert 105 unterschiedliche
+Vergleichspaare und führt zu dem in Abbildung~\ref{fig:experimental_frr_images} dargestellten Resultat.
 \begin{figure}[H]
 	\centering
 	\framepicture[width=0.96\linewidth]{Pictures/frr_images.png}
@@ -215,7 +218,7 @@ Die folgenden Tabelle~\ref{tab:experimental_mfrr_images} beinhaltet die Durchsch
 
 \subsubsection{Erkennungsraten beim Quervergleich (\textit{Komplexe Bilder})}
 \label{sec:experimental_cc_images}
-Im Gegensatz zu den beiden vorherigen[SYN] Experimenten wird bei diesem Test nicht die \textit{False--Rejection--Rate} als Maß für
+Im Gegensatz zu den beiden vorherigen Experimenten wird bei diesem Test nicht die \textit{False--Rejection--Rate} als Maß für
 die Fehlerrate verwendet, sondern die \textit{False--Acceptance--Rate}. Bei einem Kreuzvergleich mit allem aus der Kategorie
 \textit{Komplexe Bilder} stammenden Bildmaterial, ist die Detektierung von als fälschlich ähnlich markierten Bildpaaren das Testziel,
 wodurch weitere Rückschlüsse auf die potentielle interne Arbeitsweise der Algorithmen gezogen werden können. Der Inhaltsumfang betrug
@@ -232,7 +235,7 @@ zu dem in der Abbildung~\ref{fig:experimental_far_cc} illustrierten Ergebnis.
 \noindent
 Erwartungsgemäß ist ein paralleler Anstieg der tolerierten Fehler während des Vergleichs von Ähnlichkeiten mit der Verringerung des
 genutzten Thresholds zu beobachten. Eine Ausnahme stellt die \textit{Wavelet}--Vorgehensweise dar, die in allen drei Stufen keine
-Vergleichspaare fälschlicherweise als ähnlich deklarierte.
+Vergleichspaare fälschlicherweise als ähnlich deklariert.
 \\
 Besonders die auftretenden Fehlerraten der Verfahren \textit{BMB} und \textit{RADISH} wurden durch die Änderung des Thresholds beeinflusst.
 
@@ -256,11 +259,14 @@ Berechnungsgeschwindigkeit, als konstante (Lade--)Zeit in die Gesamtzeit mit ein
 \\
 Ein zusätzlicher Faktor ist durch die Implementierung (zum Beispiel eine Optimierung für die Verwendung von mehreren CPU--Kernen) der
 einzelnen Algorithmen gegeben, die zuzüglich der Parametrisierung einen großen Einfluss auf die Geschwindigkeit während der Berechnung ausübt.
-Die eigentliche Berechnung[SYN] ist zusätzlich[SYN] an die CPU--Geschwindigkeit gebunden.
+Die eigentliche Kalkulation ist darüber hinaus an die CPU--Geschwindigkeit gebunden.
 \\
-Die Bestimmung der durchschnittlichen Berechnungszeiten (beinhalten keine Ladezeiten) der vier betrachteten Algorithmen wurde mit Hilfe der
-Kategorie \textit{Komplexe Bilder} ausgeführt, wobei nur die drei Gruppen berücksichtigt wurden: \textit{Original, Verkleinerungen und Vergrößerungen}.
-TODO: AUSBLEIB VON OPTIMIERUNGEN; JEDES MAL WIEDER GELADEN UND BERECHNET; SYSTEM WIE OBEN GENUTZT; 6 KERNE!\\
+Die Bestimmung der durchschnittlichen Berechnungszeiten (beinhaltet keine Ladezeiten) der vier betrachteten Algorithmen wird mit Hilfe der
+Kategorie \textit{Komplexe Bilder} ausgeführt, wobei nur die drei Gruppen berücksichtigt werden: \textit{Original, Verkleinerungen und Vergrößerungen}.
+Für die Sicherstellung, dass die ermittelten Zeiten unverfälscht gemessen werden und somit die Ansprüche an die Wiederholbarkeit
+ausreichend sind, werden keine Optimierungsschritte integriert (wie zum Beispiel das einmalige Laden der Bildinformationen und die
+anschließende wiederholte Verwendung der Daten).
+\\
 Die Berechnungszeiten für die vier Verfahren können in der Abbildung~\ref{fig:experimental_speed} abgelesen werden.
 \begin{figure}[H]
 	\centering
@@ -270,9 +276,94 @@ Die Berechnungszeiten für die vier Verfahren können in der Abbildung~\ref{fig:ex
 \end{figure}
 \noindent
 Die Berechnungszeiten für jeden Algorithmus steigen erwartungsgemäß mit einer Zunahme an Bildinformationen an. Die Verfahren \textit{BMB} sowie
-\textit{RADISH} berechnen den Hashwert durchschnittlich am effizientesten, wohingegen die Ansätze \textit{DCT} und \textit{Wavelet} zu
-den langsameren Verfahren zählen. Die Beobachtungen decken sich mit~\cite{ZAU10}.
+\textit{RADISH} berechnen den Hashwert durchschnittlich effizienter als die Ansätze \textit{DCT} und \textit{Wavelet}.
+Diese Beobachtungen decken sich mit anderen wissenschaftlichen Ausarbeitungen (vgl.~\cite{ZAU10}).
 \\
-Besonders die erhöhte Berechnungszeit des \textit{Wavelet}--Algorithmus ist bei dem verkleinerten Bildmaterial hervorzuheben.  
+Besonders die erhöhte Berechnungszeit des \textit{Wavelet}--Algorithmus ist bei dem verkleinerten Bildmaterial hervorzuheben.
+\\[1em]
+Mit Hilfe der vorangehenden Abbildung~\ref{fig:experimental_speed} können die nachstehenden linearen Trendlinien für die Algorithmen
+\textit{RADISH}~(\ref{eq:experimental_speed_radish_trend}), \textit{DCT}~(\ref{eq:experimental_speed_dct_trend}),
+\textit{Wavelet}~(\ref{eq:experimental_speed_wavelet_trend}) und \textit{BMB}~(\ref{eq:experimental_speed_bmb_trend}) ermittelt werden.
+\\
+\begin{minipage}[H]{0.49\linewidth}
+	\begin{equation}
+		\label{eq:experimental_speed_radish_trend}
+		y = 0,1286x - 0,1493
+	\end{equation}
+	\vspace{-3em}
+	\begin{equation}
+		\label{eq:experimental_speed_dct_trend}
+		y = 0,2635x - 0,3037
+	\end{equation}	
+\end{minipage}
+\begin{minipage}[H]{0.49\linewidth}
+	\begin{equation}
+		\label{eq:experimental_speed_wavelet_trend}
+		y = 0,154x + 0,0543
+	\end{equation}
+	\vspace{-3em}
+	\begin{equation}
+		\label{eq:experimental_speed_bmb_trend}
+		y = 0,045x - 0,0517
+	\end{equation}
+\end{minipage}
 
-\subsubsection{tbd}
+\subsubsection{Kreuzkorrelation mit vollständigem Informationsraum}
+\label{sec:experimental_speed_cc}
+Ohne einen konkreten zeitlichen Bezugspunkt besteht keine Möglichkeit qualitative Aussagen über die im vorherigen Test ermittelten
+Durchschnittsgeschwindigkeiten der einzelnen Algorithmen zu treffen und somit die potentielle Zeitabnahme zu unterstreichen.
+\\
+Die Definition einer zeitlichen Referenzachse erfolgt mit Hilfe des aus der Signalanalyse stammende Verfahren \textit{Kreuzkorrelation},
+das ein Maß der Ähnlichkeit von zwei unterschiedlichen Signalen beschreibt (vgl.~\cite{MAR95}). In dem vorliegenden Experiment werden dahingegen
+diskrete Werte in Form von Bildinformationen adressiert.
+\\[1em]
+Die zeitliche Analyse des nativen Ansatzes wird mit den drei Kategorien \textit{Einfache Farben}, \textit{Elementare Formen} und
+\textit{Komplexe Bilder} ausgeführt. Für eine verbesserte Möglichkeit zur Protokollierung der zeitlichen Entwicklung hinsichtlich
+der ansteigenden Komplexität des verwendeten Bildmaterials, erfolgt eine Skalierung der Eingabebilder in vier verschiedene
+Dimensionen: \textit{100x100px} (1), \textit{200x200px} (2), \textit{300x300px} (3) und \textit{600x600px} (4).
+\\
+Zusätzlich werden die Farbbilder in Graustufenbilder umgewandelt, sodass die Ausgangssituation für die \textit{Kreuzkorrelation}
+grundlegenden ähnlich zu den anderen Algorithmen ist. Ansonsten werden keine weiteren Optimierungen vorgenommen.
+\\[1em]
+Jedes Kombinationspaar aus Kategorie und Dimension ergibt dabei zehn Zeitwerte, sodass insgesamt 120 verschiedene Messwerte
+für die Berechnungszeit mittels \textit{Kreuzkorrelation} vorliegen. Die während der Berechnung erzielten Erkennungsraten
+sind für das Experiment uninteressant und somit nicht weiter aufgeführt.
+\\
+Die ermittelten Durchschnittszeiten können der nachstehenden Tabelle~\ref{tab:experimental_speed_cc} entnommen werden.
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|l|c|c|c|c|}
+			\mytoprule
+			\centering\bfseries Kategorie & \bfseries(1) & \bfseries(2) & \bfseries(3) & \bfseries(4)
+			\\
+			\hline
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			\textit{Einfache Farben} & 1,58s & 26,13s & 135,09s & 2258,78s
+			\\
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			\textit{Elementare Formen} & 1,58s & 26,36s & 135,24s & 2259,02s
+			\\
+			\hline	
+			%---------------------------------------------------------------------------------------------------------------------	
+			\textit{Komplexe Bilder} & 1,63s & 26,65s & 136,08s & 2260,31s
+			\\	
+			\hline
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			\textit{Gesamt} & 1,59s & 26,38s & 135,47s & 2259,37s
+			\\																				
+			%---------------------------------------------------------------------------------------------------------------------
+			\mybottomrule			
+		\end{tabular}
+		\caption{Durchschnittszeiten der \textit{Kreuzkorrelation} (Eigene Darstellung)}
+		\label{tab:experimental_speed_cc}
+	\end{center}
+\end{table}	
+\noindent
+Aus der Tabelle~\ref{tab:experimental_speed_cc} kann dementsprechend die folgende lineare Trendlinie~(\ref{eq:experimental_speed_cc_trend}) errechnet werden:
+\begin{equation}
+	\label{eq:experimental_speed_cc_trend}
+	y = 688,32x - 1114,9
+\end{equation}

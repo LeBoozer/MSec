@@ -19,6 +19,49 @@
 
 \refsection{0}
   \sortlist{none}{none}
+    \entry{DITT15}{article}{}
+      \name{labelname}{3}{}{%
+        {{hash=42913fd30ae295c910c4abd28be723f3}{Dittmann}{D\bibinitperiod}{Jana}{J\bibinitperiod}{}{}{}{}}%
+        {{hash=ddb27c4b41b147051ffc7331caa77b78}{Kraetzer}{K\bibinitperiod}{Christian}{C\bibinitperiod}{}{}{}{}}%
+        {{hash=eef25b80cfce8ca6c407848e94a1944c}{Vielhauer}{V\bibinitperiod}{Claus}{C\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{3}{}{%
+        {{hash=42913fd30ae295c910c4abd28be723f3}{Dittmann}{D\bibinitperiod}{Jana}{J\bibinitperiod}{}{}{}{}}%
+        {{hash=ddb27c4b41b147051ffc7331caa77b78}{Kraetzer}{K\bibinitperiod}{Christian}{C\bibinitperiod}{}{}{}{}}%
+        {{hash=eef25b80cfce8ca6c407848e94a1944c}{Vielhauer}{V\bibinitperiod}{Claus}{C\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{37f19554cbe31ae9da4ee69503aa2fa8}
+      \strng{fullhash}{37f19554cbe31ae9da4ee69503aa2fa8}
+      \field{labelalpha}{DKV15}
+      \field{sortinit}{0}
+      \field{sortinithash}{a08a9549c5c2429f8cec5d1a581b26ca}
+      \field{labeltitle}{Perceptual Hashing}
+      \field{title}{Perceptual Hashing}
+      \field{year}{2015}
+    \endentry
+    \entry{PHASH}{online}{}
+      \name{labelname}{2}{}{%
+        {{hash=af082fc6a777b6f653513ca72ff31de8}{Klinger}{K\bibinitperiod}{Evan}{E\bibinitperiod}{}{}{}{}}%
+        {{hash=e553ab705779afbf012c874b62928fb2}{Starkweather}{S\bibinitperiod}{David}{D\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{2}{}{%
+        {{hash=af082fc6a777b6f653513ca72ff31de8}{Klinger}{K\bibinitperiod}{Evan}{E\bibinitperiod}{}{}{}{}}%
+        {{hash=e553ab705779afbf012c874b62928fb2}{Starkweather}{S\bibinitperiod}{David}{D\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{88360cdb3717083a3ee6473a2e6eecab}
+      \strng{fullhash}{88360cdb3717083a3ee6473a2e6eecab}
+      \field{labelalpha}{KS15}
+      \field{sortinit}{0}
+      \field{sortinithash}{a08a9549c5c2429f8cec5d1a581b26ca}
+      \field{labeltitle}{pHash, The open source perceptual hash library}
+      \field{day}{29}
+      \field{month}{06}
+      \field{title}{pHash, The open source perceptual hash library}
+      \field{year}{2015}
+      \verb{url}
+      \verb http://phash.org/
+      \endverb
+    \endentry
     \entry{ZAU10}{article}{}
       \name{labelname}{1}{}{%
         {{hash=dc51db3f97812c357606e44656922c0f}{Zauner}{Z\bibinitperiod}{Christop}{C\bibinitperiod}{}{}{}{}}%
@@ -58,28 +101,23 @@
       \verb http://fourier.eng.hmc.edu/e161/lectures/dct/node1.html
       \endverb
     \endentry
-    \entry{PHASH}{online}{}
+    \entry{MAR95}{article}{}
       \name{labelname}{2}{}{%
-        {{hash=af082fc6a777b6f653513ca72ff31de8}{Klinger}{K\bibinitperiod}{Evan}{E\bibinitperiod}{}{}{}{}}%
-        {{hash=e553ab705779afbf012c874b62928fb2}{Starkweather}{S\bibinitperiod}{David}{D\bibinitperiod}{}{}{}{}}%
+        {{hash=b79368940b093f13fa3823d1e0d2d318}{Martin}{M\bibinitperiod}{Jerome}{J\bibinitperiod}{}{}{}{}}%
+        {{hash=af9024975bcb73928608b791a1e00db6}{Crowley}{C\bibinitperiod}{James\bibnamedelima L.}{J\bibinitperiod\bibinitdelim L\bibinitperiod}{}{}{}{}}%
       }
       \name{author}{2}{}{%
-        {{hash=af082fc6a777b6f653513ca72ff31de8}{Klinger}{K\bibinitperiod}{Evan}{E\bibinitperiod}{}{}{}{}}%
-        {{hash=e553ab705779afbf012c874b62928fb2}{Starkweather}{S\bibinitperiod}{David}{D\bibinitperiod}{}{}{}{}}%
+        {{hash=b79368940b093f13fa3823d1e0d2d318}{Martin}{M\bibinitperiod}{Jerome}{J\bibinitperiod}{}{}{}{}}%
+        {{hash=af9024975bcb73928608b791a1e00db6}{Crowley}{C\bibinitperiod}{James\bibnamedelima L.}{J\bibinitperiod\bibinitdelim L\bibinitperiod}{}{}{}{}}%
       }
-      \strng{namehash}{88360cdb3717083a3ee6473a2e6eecab}
-      \strng{fullhash}{88360cdb3717083a3ee6473a2e6eecab}
-      \field{labelalpha}{KS15}
+      \strng{namehash}{f25354d96125b9faa8f3cb9034e0232d}
+      \strng{fullhash}{f25354d96125b9faa8f3cb9034e0232d}
+      \field{labelalpha}{MC95}
       \field{sortinit}{0}
       \field{sortinithash}{a08a9549c5c2429f8cec5d1a581b26ca}
-      \field{labeltitle}{pHash, The open source perceptual hash library}
-      \field{day}{29}
-      \field{month}{06}
-      \field{title}{pHash, The open source perceptual hash library}
-      \field{year}{2015}
-      \verb{url}
-      \verb http://phash.org/
-      \endverb
+      \field{labeltitle}{Comparison of Correlation Techniques}
+      \field{title}{Comparison of Correlation Techniques}
+      \field{year}{1995}
     \endentry
   \endsortlist
 \endrefsection
