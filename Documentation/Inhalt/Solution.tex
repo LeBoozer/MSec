@@ -13,7 +13,7 @@ erforderlich.
 \\
 In Abhängigkeit des gewählten Farbmodells werden Bilder oftmals durch eine Koeffizientenmatrix von Helligkeitswerten
 beschrieben. Im Beispiel des RGB--Farbmodells ist die finale Pixelfarbe durch drei unterschiedliche Koeffizienten der
-einzelnen Farbkanäle (rot, grün und blau) definiert. Ein Graustufenbild besitzt dahingegen nur einen Farbkanal.
+einzelnen Farbkanäle (rot, grün und blau) definiert, wohingegen ein Graustufenbild nur einen Farbkanal besitzt.
 \\
 Die Konkretisierung einer gegebenen Matrix aus Koeffizienten erzeugt dabei ein digitales Bild und/oder Muster, 
 das strukturell in sowohl hochfrequente als auch in niederfrequente Bereiche unterteilt ist. Gleichmäßige Unterschiede innerhalb
@@ -29,7 +29,7 @@ Bilder leichter detektiert werden.
 
 \boldtext{Einfache Farben}\\
 Diese Kategorie beinhaltet neun verschiedenfarbige Bilder mit den in der Tabelle~\ref{tab:solution_simplecolors_specs} stehenden
-Spezifikationen. Der Farbbereich deckt dabei sowohl hell als auch dunkle Farben ab.
+Spezifikationen. Der Farbbereich deckt dabei sowohl helle als auch dunkle Farben ab.
 \begin{table}[H]
 	\begin{center}
 		\begin{tabular}{|l|c|}
@@ -68,7 +68,7 @@ in den jeweiligen Gruppen. Die Farben der elementaren Formen sind dabei identisc
 Die drei Gruppen umfassen neben den Originalbildern ebenfalls durch Filter verändertes Bildmaterial. Folgende
 Änderungen sind auf die originalen Bilder angewendet worden: \textit{Skalierungsänderungen, Rotationen, Gammaanpassungen und Rauschen}.
 Die Bildspezifikationen sind identisch zu denen aus der Kategorie \textit{Einfache Farben}. Die genaue Parametrisierung der Filter
-ist dem Anhang~\ref{sec:appendix_b} (\textit{Dokumentation der verwendeten Daten}) zu entnehmen.
+ist dabei dem Anhang~\ref{sec:appendix_b} (\textit{Dokumentation der verwendeten Daten}) zu entnehmen.
 
 \boldtext{Komplexe Bilder}\\
 Die komplexen Bilder sind ähnlich zu der Kategorie \textit{Elementare Formen}. Diese beinhaltet jedoch nur eine Gruppe mit 21 verschieden
@@ -101,7 +101,7 @@ Die Änderungen mittels Filter entsprechen den Anpassungen aus der Kategorie \tex
 \label{sec:solution_algorithms}
 Alle vier in der \textit{Problemstellung} erwähnten Algorithmen arbeiten für die Berechnung eines robusten Hashes auf dem
 strukturellen Inhalt des Bildmaterials. Die verschiedenen Vorgehensweisen bei der Extraktion der erforderlichen Merkmale sowie
-der anschließende Vergleich der errechneten Hashes kann mit der nachfolgenden Tabelle~\ref{tab:solution_algorithms}
+der anschließende Vergleich der errechneten Hashwerte kann mit der nachfolgenden Tabelle~\ref{tab:solution_algorithms}
 zusammengefasst werden:
 \begin{table}[H]
 	\begin{center}
@@ -135,12 +135,12 @@ zusammengefasst werden:
 \end{table}	
 \noindent
 Gemeinsamkeiten in den internen Abläufen der vier unterschiedlichen Ansätze sind in der Umwandlung des Farbbilds zu einen Graustufenbild
-sowie in der Verminderung der Auflösung des Bildes gegeben. Eine Ausnahme macht der Algorithmus \textit{RADISH}, welcher keine
+sowie in der Verminderung der Auflösung des Bildes gegeben. Eine Ausnahme macht der Algorithmus \textit{RADISH}, der keine
 Verkleinerung des Bildmaterials vorsieht.
 \\
 Die beiden genannten Vorbearbeitungsschritte dienen lediglich einer Verbesserung des Berechnungsaufwands. Durch die Umwandlung des Bilds in den
 Graustufenbereich und somit der Reduzierung der drei Farbkanäle auf einen Farbkanal, werden keine für die Algorithmen erforderlichen
-Strukturinformationen entfernt. Diese Tatsache gilt ebenfalls für die Reduzierung der Gesamtbildinformationen.
+Strukturinformationen entfernt. Diese Tatsache besitzt ebenfalls für die Reduzierung der Gesamtbildinformationen Gültigkeit.
 
 \boldtext{Radial hash projections (RADISH)}\\
 Für die Berechnung des Hashwertes wird anstelle der Spektralkomponenten des Bildes vorerst eine Radon--Projektion auf den Bilddaten
@@ -174,5 +174,5 @@ Der Kern des Ansatzes basiert auf eine über das Bild projizierte uniforme Gitter
 sich gegenseitig überlappen. Im Anschluss wird sowohl für jede Gitterzelle der durchschnittliche Grauwert als auch der
 Gesamtdurchschnitt aller Grauwerte der Zellen errechnet. Aus der Kombination wird der finale Hashwert ermittelt.
 \\
-Das Verfahren bietet in der Theorie ebenfalls zwei rotationsvorbeugende Vorgehensweisen, welche nicht in der Bibliothek \textit{pHash}
+Das Verfahren bietet in der Theorie ebenfalls zwei rotationsvorbeugende Vorgehensweisen, die nicht in der Bibliothek \textit{pHash}
 zur Verfügung stehen.

@@ -29,7 +29,7 @@ Die nachfolgende Auflistung beinhaltet eine Übersicht der durchgeführten und in 
 		\begin{itemize}[noitemsep]
 			\item Originalbild vs. Modifikationen (\textit{Elementare Formen})
 			\item Originalbild vs. Modifikationen (\textit{Komplexe Bilder})
-			\item Erkennungsraten beim Quervergleich \textit{Komplexe Bilder}
+			\item Erkennungsraten beim Quervergleich der Kategorie \textit{Komplexe Bilder}
 		\end{itemize}		
 		
 	\item \boldtext{Geschwindigkeitsanalysen}
@@ -68,7 +68,7 @@ geschieht deren Durchführung ausschließlich auf dem in Tabelle~\ref{tab:experime
 			%---------------------------------------------------------------------------------------------------------------------
 			\mybottomrule			
 		\end{tabular}
-		\caption{Testsystem (eigene Darstellung)}
+		\caption{Testsystem (Eigene Darstellung)}
 		\label{tab:experimental_testsystem}
 	\end{center}
 \end{table}	
@@ -119,7 +119,7 @@ Die Durchführung des Identitätstests dient als erforderliche Grundlage für alle 
 daher für alle vier Algorithmen realisiert. Während der Ausführung werden die Bilder aus den Kategorien \textit{Elementare Formen}
 sowie \textit{Komplexe Bilder} gegen die eigene Identität verglichen und die eventuell entstehenden Fehler protokolliert.
 \\
-Das Experiment umfasst insgesamt 288 unterschiedliche Bilddaten und führte zu dem nachstehenden Ergebnis:
+Das Experiment umfasst insgesamt 288 unterschiedliche Bilddaten und führt zu dem nachstehenden Ergebnis:
 \begin{equation*}
 	FRR = 0
 \end{equation*}
@@ -129,7 +129,7 @@ eine deterministische Vorgehensweise inhärieren. Für eine absolute Sicherheit is
 nicht im Rahmen des vorliegenden Papers abgedeckt werden kann.
 
 \subsubsection{Erkennungsraten der \textit{Einfachen Farben}}
-Im Experiment wird ein Quervergleich aller neun einfarbigen Bilder der Kategorie \textit{Einfache Farben} mit allen vier Verfahren durchgeführt.
+Im Experiment wird ein Quervergleich aller neun einfarbigen Bilder der Kategorie \textit{Einfache Farben} mittels der vier Verfahren durchgeführt.
 Die entstehenden Resultate basieren dabei auf der Natur der internen Funktionsweise der Vergleichsalgorithmen für die Hashdaten
 (eine detaillierte Erläuterung erfolgt in Abschnitt~\ref{sec:results} (\textit{Testergebnisse})).
 \\
@@ -146,13 +146,13 @@ Originalbildmaterials und der Detektierung von fälschlich als ähnlich markierten
 \label{sec:experimental_origvsmod_brushes}
 Dieser Test analysiert die Robustheit der Algorithmen hinsichtlich der Bilder sowie deren Modifikationen aus der Kategorie
 \textit{Elementare Formen}.
-Die Durchführung des Tests erfolgte wie nachstehend:
+Die Durchführung des Tests erfolgt wie nachstehend:
 \begin{itemize}[noitemsep]
 	\item Originalbilder vs. Verkleinerungen des Originals
 	\item Originalbilder vs. Vergrößerungen des Originals
 	\item Originalbilder vs. Rotationen des Originals
 	\item Originalbilder vs. Gamma--Angleichungen des Originals
-	\item Originalbilder vs. Noise--Verfälschungen des Originals
+	\item Originalbilder vs. Rausch--Verfälschungen des Originals
 \end{itemize} 
 \noindent
 Die Gesamtanzahl der untersuchten Vergleichspaare beträgt \hbox{135 Paare}. Die folgende Abbildung~\ref{fig:experimental_frr_brushes}
@@ -165,8 +165,8 @@ repräsentiert die ermittelt Durchschnittsergebnisse:
 \end{figure}
 \noindent
 Der Abbildung~\ref{fig:experimental_frr_brushes} zufolge ist der \textit{BMB}--Algorithmus mit einer durchschnittlichen Fehlerrate
-von $\varnothing FRR = 0,34$ das stabilste Verfahren in diesem Experiment. Dahingegen verhält sich die \textit{Wavelet}--Vorgehensweise
-mit einer Durchschnittsfehlerrate von $\varnothing FRR = 0,87$ am negativsten. Sowohl der \textit{DCT}--Ansatz ($\varnothing FRR = 0.45$) als auch das
+von $\varnothing FRR = 0,34$ das stabilste Verfahren in diesem Experiment. Dahingegen überzeugt die \textit{Wavelet}--Vorgehensweise
+mit einer Durchschnittsfehlerrate von \hbox{$\varnothing FRR = 0,87$} nicht. Sowohl der \textit{DCT}--Ansatz ($\varnothing FRR = 0.45$) als auch das
 \textit{RADISH}--Vorgehen ($\varnothing FRR = 0.51$) weisen nur geringfügige Unterschiede in den Ergebnissen auf und belegen somit das Mittelfeld.
 
 \subsubsection{Originalbild vs. Modifikationen (\textit{Komplexe Bilder})}
@@ -180,9 +180,9 @@ Vergleichspaare und führt zu dem in Abbildung~\ref{fig:experimental_frr_images} 
 	\label{fig:experimental_frr_images}
 \end{figure}
 \noindent
-Durch den Austausch der elementaren Formen gegen komplexere Bilder konnte eine Reduzierung der durchschnittlichen Fehlerraten erzielt werden.
-Im Ergebnis konnten für den Testfall \textit{Originalbilder vs. Gamma--Angleichungen des Originals} schlechtere \textit{FRR}--Werte beobachtet
-werden, wohingegen sich die restlichen Testfälle verbesserten oder ähnliche Ergebnisse wie im vorherigen Experiment lieferten.
+Durch den Austausch der elementaren Formen gegen komplexere Bilder kann eine Reduzierung der durchschnittlichen Fehlerraten erzielt werden.
+Im Ergebnis können für den Testfall \textit{Originalbilder vs. Gamma--Angleichungen des Originals} schlechtere \textit{FRR}--Werte beobachtet
+werden, wohingegen sich die restlichen Testfälle verbessern oder ähnliche Ergebnisse wie im vorherigen Experiment liefern.
 \\
 Die folgenden Tabelle~\ref{tab:experimental_mfrr_images} beinhaltet die Durchschnittsfehlerraten der vier Algorithmen.
 \begin{table}[H]
@@ -211,20 +211,20 @@ Die folgenden Tabelle~\ref{tab:experimental_mfrr_images} beinhaltet die Durchsch
 			%---------------------------------------------------------------------------------------------------------------------
 			\mybottomrule			
 		\end{tabular}
-		\caption{Durchschnittsfehlerraten (eigene Darstellung)}
+		\caption{Durchschnittsfehlerraten (Eigene Darstellung)}
 		\label{tab:experimental_mfrr_images}
 	\end{center}
 \end{table}	
 
-\subsubsection{Erkennungsraten beim Quervergleich (\textit{Komplexe Bilder})}
+\subsubsection{Erkennungsraten beim Quervergleich (\textit{Komplexe\\Bilder})}
 \label{sec:experimental_cc_images}
 Im Gegensatz zu den beiden vorherigen Experimenten wird bei diesem Test nicht die \textit{False--Rejection--Rate} als Maß für
 die Fehlerrate verwendet, sondern die \textit{False--Acceptance--Rate}. Bei einem Kreuzvergleich mit allem aus der Kategorie
 \textit{Komplexe Bilder} stammenden Bildmaterial, ist die Detektierung von als fälschlich ähnlich markierten Bildpaaren das Testziel,
-wodurch weitere Rückschlüsse auf die potentielle interne Arbeitsweise der Algorithmen gezogen werden können. Der Inhaltsumfang betrug
+wodurch weitere Rückschlüsse auf die potentielle interne Arbeitsweise der Algorithmen gezogen werden können. Der Inhaltsumfang beträgt
 dabei \hbox{8001 verschiedene Vergleichspaare}.
 \\
-Das Erkennungsverhalten der einzelnen Algorithmen wurde für drei Threshold--Stufen (90\%, 80\% und 70\%) protokolliert und führte
+Das Erkennungsverhalten der einzelnen Algorithmen wird für drei Threshold--Stufen (90\%, 80\% und 70\%) protokolliert und führt
 zu dem in der Abbildung~\ref{fig:experimental_far_cc} illustrierten Ergebnis.
 \begin{figure}[H]
 	\centering
@@ -245,17 +245,17 @@ die beteiligten Stakeholder. Vor der Integration sind somit eingehende Tests not
 validieren sowie zu bestätigen.
 \\
 In dem Fall von \textit{Perceptual Hashing} ist neben der Verifizierung der Fehlerraten ebenfalls die benötigte Zeit beziehungsweise
-die Berechnungsgeschwindigkeit der beteiligten Algorithmen eine ausschlaggebende Eigenschaft für dessen Verwendung.
+die Berechnungsgeschwindigkeit der beteiligten Algorithmen eine ausschlaggebende Eigenschaft für deren Verwendung.
 \\
 Die nachfolgenden Experimente analysieren die Berechnungszeiten und setzen diese in einen direkten Vergleich mit bereits bestehenden
-Ansätzen.
+nativen Ansätzen.
 
 \subsubsection{Berechnungszeiten der Algorithmen}
 \label{sec:experimental_speed}
 Die durchschnittlichen Berechnungszeiten der vier Algorithmen basieren auf einer Vielzahl von Rahmenbedingungen. Am ausschlaggebendsten
 ist die Kommunikationsgeschwindigkeit zwischen den verschiedenen Infrastrukturen (zum Beispiel die Geschwindigkeit der Host--Festplatte
-oder die Internetgeschwindigkeit), die wiederum, unabhängig von der eigentlichen
-Berechnungsgeschwindigkeit, als konstante (Lade--)Zeit in die Gesamtzeit mit eingeht.
+oder die Internetgeschwindigkeit), die wiederum, unabhängig von der eigentlichen Berechnungsgeschwindigkeit, als konstante (Lade--)Zeit
+in die Gesamtzeit mit eingeht.
 \\
 Ein zusätzlicher Faktor ist durch die Implementierung (zum Beispiel eine Optimierung für die Verwendung von mehreren CPU--Kernen) der
 einzelnen Algorithmen gegeben, die zuzüglich der Parametrisierung einen großen Einfluss auf die Geschwindigkeit während der Berechnung ausübt.
@@ -263,11 +263,10 @@ Die eigentliche Kalkulation ist darüber hinaus an die CPU--Geschwindigkeit gebun
 \\
 Die Bestimmung der durchschnittlichen Berechnungszeiten (beinhaltet keine Ladezeiten) der vier betrachteten Algorithmen wird mit Hilfe der
 Kategorie \textit{Komplexe Bilder} ausgeführt, wobei nur die drei Gruppen berücksichtigt werden: \textit{Original, Verkleinerungen und Vergrößerungen}.
-Für die Sicherstellung, dass die ermittelten Zeiten unverfälscht gemessen werden und somit die Ansprüche an die Wiederholbarkeit
-ausreichend sind, werden keine Optimierungsschritte integriert (wie zum Beispiel das einmalige Laden der Bildinformationen und die
-anschließende wiederholte Verwendung der Daten).
+Zur Sicherstellung, dass die ermittelten Zeiten unverfälscht gemessen werden und somit den Ansprüchen der Wiederholbarkeit genügen,
+werden keine weiteren Optimierungsschritte integriert.
 \\
-Die Berechnungszeiten für die vier Verfahren können in der Abbildung~\ref{fig:experimental_speed} abgelesen werden.
+Die Berechnungszeiten der vier Verfahren können in der Abbildung~\ref{fig:experimental_speed} abgelesen werden.
 \begin{figure}[H]
 	\centering
 	\framepicture[width=0.96\linewidth]{Pictures/speed.png}
@@ -314,11 +313,11 @@ Ohne einen konkreten zeitlichen Bezugspunkt besteht keine Möglichkeit qualitativ
 Durchschnittsgeschwindigkeiten der einzelnen Algorithmen zu treffen und somit die potentielle Zeitabnahme zu unterstreichen.
 \\
 Die Definition einer zeitlichen Referenzachse erfolgt mit Hilfe des aus der Signalanalyse stammende Verfahren \textit{Kreuzkorrelation},
-das ein Maß der Ähnlichkeit von zwei unterschiedlichen Signalen beschreibt (vgl.~\cite{MAR95}). In dem vorliegenden Experiment werden dahingegen
+das ein Maß der Ähnlichkeit von zwei unterschiedlichen Signalen beschreibt (\cite{MAR95}). In dem vorliegenden Experiment werden unterdessen
 diskrete Werte in Form von Bildinformationen adressiert.
 \\[1em]
 Die zeitliche Analyse des nativen Ansatzes wird mit den drei Kategorien \textit{Einfache Farben}, \textit{Elementare Formen} und
-\textit{Komplexe Bilder} ausgeführt. Für eine verbesserte Möglichkeit zur Protokollierung der zeitlichen Entwicklung hinsichtlich
+\textit{Komplexe Bilder} ausgeführt. Für eine verbesserte Protokollierung der zeitlichen Entwicklung hinsichtlich
 der ansteigenden Komplexität des verwendeten Bildmaterials, erfolgt eine Skalierung der Eingabebilder in vier verschiedene
 Dimensionen: \textit{100x100px} (1), \textit{200x200px} (2), \textit{300x300px} (3) und \textit{600x600px} (4).
 \\

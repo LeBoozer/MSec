@@ -37,35 +37,36 @@ schlussendlich ein identischer Hashwert entstand:
 \noindent
 Basierend auf der internen Funktionsweise der eingesetzten Algorithmen für den Hashwertvergleich, ist entweder die \textit{FRR}
 oder die \textit{FAR} maximal. Bei identischen Hashwerten liefert die \textit{Hamming Distanz} immer einen Wert von 0
-und trägt somit zu der \textit{FAR} bei, während die \textit{Kreuzkorrelation} bei gleichen Hashwerten stets in einem
-Wert von 1 resultiert und dadurch die \textit{FRR} steigert.
+und trägt somit zu der \textit{FRR} bei, während die \textit{Kreuzkorrelation} bei gleichen Hashwerten stets in einem
+Wert von 1 resultiert und dadurch die \textit{FAR} steigert.
 
 \subsection{Vertiefte Funktionalitätsanalysen}
 Die Kategorie der vertieften Funktionalitätsuntersuchungen umfasst drei unterschiedliche Experimente. Die ersten beiden Tests
-analysieren das Verhalten der \textit{FRR} bei der Anwendung von Modifikationen auf das Originalbild, wohingegen der dritte
-Testfalls die \textit{FAR} während dem Vergleich von nicht ähnlichen Bildmaterials untersucht.
+analysierten das Verhalten der \textit{FRR} bei der Anwendung von Modifikationen auf das Originalbild, wohingegen der dritte
+Testfalls die \textit{FAR} während des Vergleichs von nicht ähnlichen Bildmaterials untersuchte.
 
 \subsubsection{Originalbild vs. Modifikationen (\textit{Elementare Formen})}
 Während der Durchführung des Experiments wurden die Originalbilder aus der Kategorie \textit{Elementare Formen} gegen deren
 modifizierten Versionen verglichen. Ziel der Testanwendung war eine vertiefte Analyse der Algorithmus abhängigen Erkennungsqualitäten
 bei strukturell ähnlichem Bildmaterial.
 \\[1em]
-Ähnlich wie bei den einfachen Farben zuvor, beeinflusst der strukturell einfach aufgebaute Inhalt der Bilder auch hier negativ die
-im Abschnitt~\ref{sec:experimental_origvsmod_brushes} protokollierten Ergebnisse. Bereits kleinere Änderungen an dem originalen
+Ähnlich wie bei den einfachen Farben zuvor, beeinflusst der strukturell einfach aufgebaute Inhalt der Bilder auch hier die
+im Abschnitt~\ref{sec:experimental_origvsmod_brushes} protokollierten Ergebnisse negativ. Bereits kleinere Änderungen an dem originalen
 Bildmaterial führen zu einer vollkommenen differierenden Modifikation der binären Darstellungsweise, sodass die Algorithmen 
 starke Abweichungen während der Bestimmung des Ähnlichkeitsmaßes aufweisen.
 \\
 Ein Beispiel ist anhand des \textit{Wavelet}--Algorithmus durch die folgende Abbildung~\ref{fig:results_origvsmod_brushes_wavelet} gegeben.
+Die gemessene Erkennungsrate des Bildpaares liegt bei $52\%$.
 \begin{figure}[H]
 	\centering
 	\framepicture[width=0.96\linewidth]{Pictures/Wavelet_ResizedDown_Brushes.png}
-	\caption{TBD (Eigene Darstellung)}
+	\caption{Wavelet Schritt für Schritt (Eigene Darstellung)}
 	\label{fig:results_origvsmod_brushes_wavelet}
 \end{figure}
 \noindent
 Die Verringerung der Auflösung führt innerhalb des Vorbearbeitungsschrittes \textit{Histogramm basierter Ausgleich} zu einem 
 vollständig unterschiedlichen Erscheinungsbild, wodurch die Kantenerkennung erheblich mehr Kanten detektiert, als in dem ursprünglichen
-Bildmaterial.
+Bildmaterial vorhanden sind.
 \\[1em]
 Die häufig angewandte Modifikation \textit{Rotationsänderungen} ist für alle vier Algorithmen ein bestehender Problemfall. Rotationen
 sind oftmals für den menschlichen Sehsinn leicht zu detektieren, wohingegen eine maschinelle Erkennung durch die extreme Differenz der
@@ -79,14 +80,15 @@ die entstehende Fehlerrate der verschiedenen Algorithmen während der Bestimmung 
 Durch den Einsatz von komplexen strukturellen Bildinformationen, weisen Modifikationen einen geringfügigeren Einfluss auf den
 eigentlichen Bildinhalt auf. Als Beispiel sei die folgenden Abbildung~\ref{fig:results_origvsmod_images_wavelet} des
 \textit{Wavelet}--Algorithmus gegeben.
+Die gemessene Erkennungsrate des Bildpaares liegt bei $78\%$.
 \begin{figure}[H]
 	\centering
 	\framepicture[width=0.96\linewidth]{Pictures/Wavelet_ResizedDown_Images.png}
-	\caption{TBD (Eigene Darstellung)}
+	\caption{Wavelet Schritt für Schritt (Eigene Darstellung)}
 	\label{fig:results_origvsmod_images_wavelet}
 \end{figure}
 \noindent
-Voraussetzung für die minimalere Einflussnahme ist, dass die angewandten Veränderungen eine bestimmte Magnitude nicht
+Voraussetzung für die reduzierte Einflussnahme ist, dass die angewandten Veränderungen eine bestimmte Magnitude nicht
 überschreiten. Das Ausmaß bei Überschreitung der gewählten Intensität ist beispielsweise durch den Testfall \textit{Originalbilder vs.
 Gamma--Angleichungen des Originals} gegeben, bei dem eine Verschlechterung der Zuordnungsrate für die vier Algorithmen beobachtet wurde.
 \\
@@ -94,10 +96,10 @@ Rotationsmodifikationen führen nach wie vor zu erheblichen Schwierigkeiten bei d
 
 \subsubsection{Erkennungsraten beim Quervergleich (\textit{Komplexe\\Bilder})}
 Der in Abschnitt~\ref{sec:experimental_cc_images} durchgeführte Quervergleich der komplexen Bilder resultiert in einer
-guten Fehlerverteilung für die einzelnen Algorithmen. Die gemessene Fehlerrate liegt dabei auch bei einem Threshold von 70\%
+guten Fehlerverteilung für die einzelnen Algorithmen. Die gemessenen Fehlerraten lagen dabei auch bei einem Threshold von 70\%
 beständig weit unter der 10\%--Grenze.
 \\
-Der Fehlerbestand bei einer Stufe von 90\% als Threshold besteht größtenteils aus ähnlichen Bildern. Erst mit der Verringerung des
+Der Fehlerbestand bei einer Stufe von 90\% als Threshold besteht dabei vorwiegend aus ähnlichen Bildern. Erst mit der Verringerung des
 eingesetzten Thresholds wird der Fehlerbestand vor allem bei den Verfahren \textit{RADISH} sowie \textit{BMB} durch
 unlogische, als fälschlich ähnlich markierte Vergleichspaare erweitert. Das Verhalten lässt sich auf die interne Arbeitsweise
 der Algorithmen zurückführen.
@@ -118,15 +120,15 @@ Die bei dem \textit{BMB}--Algorithmus entstehende Toleranz gegenüber der Fehlerr
 Thresholds, sodass die Abweichungen zwischen den durchschnittlichen Gitterzellwerten und dem Gesamtdurchschnitt des Gitters
 stufenweise akzeptiert werden.
 \\[1em]
-Der vermeintlich als gut bewertete Algorithmus ist die \textit{Wavelet}--Variante, die durchgehend eine Fehlerrate von \hbox{$FAR = 0$}
+Der vermeintlich als gut bewertete Algorithmus ist die \textit{Wavelet}--Variante, der durchgehend eine Fehlerrate von \hbox{$FAR = 0$}
 erzielte. In Kombinationen mit dem hohen Fehleranteil in der \textit{FRR} aus den vorherigen Tests lässt sich ableiten,
 dass das allgemeine Erkennungsvermögen des \textit{Wavelet}--Ansatzes wenig überzeugend ist (ungeachtet ob gewollte oder nicht
 gewollte Ähnlichkeitserkennungen). 
 
 \subsection{Geschwindigkeitsanalysen}
-Die Kategorie der Geschwindigkeitsanalyse beinhaltet zwei verschieden definierte Experimente hinsichtlich der Berechnungszeiten
+Die Kategorie der Geschwindigkeitsanalyse beinhaltete zwei verschieden definierte Experimente hinsichtlich der Berechnungszeiten
 der Algorithmen. Während der erste Testfall die reine Bearbeitungsgeschwindigkeit in bezugnehmend auf die vorhandene Datenkomplexität
-analysiert, untersucht der zweite Test die prozentuale Effizienzsteigerung der vier Algorithmen gegenüber eines nativen Ansatzes.
+analysierte, untersuchte der zweite Test die prozentuale Effizienzsteigerung der vier Algorithmen gegenüber eines nativen Ansatzes.
 
 \subsubsection{Berechnungszeiten der Algorithmen}
 \label{sec:results_speed}
@@ -155,9 +157,8 @@ Aus dieser Betrachtungsweise lässt sich die benötigte Gesamtzeit für ein Verglei
 \end{equation}
 \noindent
 Unter der Annahme, dass eines der beiden Bilder vor dem Vergleich bereits als bekannt angesehen werden kann, besteht die
-Möglichkeit, den Hashwert für das Bild im Vorfeld zu berechnen und beispielsweise in einer Datenbank zu sichern.
-\\
-Daraus folgt eine Vereinfachung der Formel~\ref{eq:results_speed_total} zu:
+Möglichkeit, den Hashwert für das Bild im Vorfeld zu berechnen und beispielsweise in einer Datenbank zu sichern. Daraus folgt
+eine Vereinfachung der Formel~\ref{eq:results_speed_total} zu:
 \begin{equation}
 	\begin{split}
 		Total = 1 * Ladezeit + 1 * Rechenzeit \\
@@ -170,20 +171,20 @@ Aufgrund der deutlichen geringeren Dateigröße des abgespeicherten Hashwertes, ko
 
 \subsubsection{Kreuzkorrelation mit vollständigem Informationsraum}
 Das in Abschnitt~\ref{sec:experimental_speed_cc} durchgeführte Experiment determinierte einen gemeinsamen Bezugspunkt hinsichtlich
-der Berechnungsgeschwindigkeiten der unterschiedlichen Algorithmen mittels einer der nativen Herangehensweise \textit{Kreuzkorrelation}.
+der Berechnungsgeschwindigkeiten der unterschiedlichen Algorithmen mittels der nativen Herangehensweise \textit{Kreuzkorrelation}.
 \\
 Eine Nebeneinanderstellung der sowohl in Abschnitt~\ref{sec:experimental_speed_cc} als auch in der Passage~\ref{sec:experimental_speed}
 ermittelten linearen Trendlinien veranschaulicht den immensen Geschwindigkeitsverlust bei der Berechnung des Ähnlichkeitsmaßes mit Hilfe
 des nativen Ansatzes.
 \\
 Die wiederholte Verdoppelung der Eingaberaumdimension führte zu einem Anstieg des Aufwandmultiplikators im Bereich von \hbox{$[5,16]$}.
-Ein Bildpaar mit der Auflösung von 600x600px benötigt somit im Schnitt \hbox{$\sim38min\%$} für die Bestimmung der Ähnlichkeit (ungeachtet der
+Ein Bildpaar mit der Auflösung von 600x600px benötigt somit im Schnitt \hbox{$\sim38min$} für die Bestimmung der Ähnlichkeit (ungeachtet der
 erzielten Erkennungsqualität). Bildmaterial von modernen Digitalkameras würden dementsprechend mehrere Stunden für den Berechnungsprozess
 erfordern.
 \\
 Aufgrund der internen Funktionsweise der \textit{Kreuzkorrelation} sind Optimierungen, wie beispielsweise in dem vorherigen
 Abschnitt~\ref{sec:results_speed} aufgezeigt, ausgeschlossen. Der Algorithmus ist auf die Vollständigkeit der originalen Dateninformationen
-angewiesen, sodass zum Beispiel eine Zwischenspeicherung der Teilergebnisse nicht möglich ist.
+angewiesen, sodass zum Beispiel eine Zwischenspeicherung der im Vorfeld bekannten Teilergebnisse nicht möglich ist.
 \\[1em]
 Ein direkter Vergleich zwischen den in Abschnitt~\ref{sec:experimental_speed} ermittelten Berechnungszeiten der einzelnen Algorithmen
 und den Zeiten der \textit{Kreuzkorrelation} ergibt eine signifikante Leistungssteigerung, die in der nachstehenden
