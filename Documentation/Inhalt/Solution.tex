@@ -112,11 +112,11 @@ zusammengefasst werden:
 			\hline
 			\hline
 			%---------------------------------------------------------------------------------------------------------------------	
-			RADISH & 320 Bit & Kreuzkorrelation
+			DCT & 64 Bit & Hamming Distanz
 			\\
 			\hline
 			%---------------------------------------------------------------------------------------------------------------------	
-			DCT & 64 Bit & Hamming Distanz
+			RADISH & 320 Bit & Kreuzkorrelation
 			\\
 			\hline	
 			%---------------------------------------------------------------------------------------------------------------------	
@@ -142,13 +142,6 @@ Die beiden genannten Vorbearbeitungsschritte dienen lediglich einer Verbesserung
 Graustufenbereich und somit der Reduzierung der drei Farbkanäle auf einen Farbkanal, werden keine für die Algorithmen erforderlichen
 Strukturinformationen entfernt. Diese Tatsache besitzt ebenfalls für die Reduzierung der Gesamtbildinformationen Gültigkeit.
 
-\boldtext{Radial hash projections (RADISH)}\\
-Für die Berechnung des Hashwertes wird anstelle der Spektralkomponenten des Bildes vorerst eine Radon--Projektion auf den Bilddaten
-durchgeführt, die als Ergebnis für die Extraktion von Merkmalen dient. Der resultierende Hash wird mit Hilfe der errechneten
-Spektralkomponenten des Charakteristikbildes errechnet.
-\\
-Ein Blurring sowie eine Gamma--Anpassung werden als zusätzlichen Vorbearbeitungsschritt eingeführt.
-
 \boldtext{Discrete Cosine Transform (DCT)}\\
 Neben den gemeinsamen Vorbearbeitungsschritten wird bei dem \textit{DCT}--Verfahren zusätzlich ein Box--Filter auf die Bilddaten angewendet.
 Anschließend werden mit Hilfe der bereits umgestellten \textit{DCT} (\ref{eq:solution_dct}) die Spektralkomponenten des Bildes für die
@@ -163,6 +156,13 @@ mit
 	c[n,m] = \sqrt{\frac{2}{N}} * \cos(\frac{(2m+1) * n\pi}{2N})
 \end{equation*}
 \noindent
+
+\boldtext{Radial hash projections (RADISH)}\\
+Für die Berechnung des Hashwertes wird anstelle der Spektralkomponenten des Bildes vorerst eine Radon--Projektion auf den Bilddaten
+durchgeführt, die als Ergebnis für die Extraktion von Merkmalen dient. Der resultierende Hash wird mit Hilfe der errechneten
+Spektralkomponenten des Charakteristikbildes errechnet.
+\\
+Ein Blurring sowie eine Gamma--Anpassung werden als zusätzlichen Vorbearbeitungsschritt eingeführt.
 
 \boldtext{Marr/mexican hat wavelet (wavelet)}\\
 Diesem Verfahren werden als weitere Vorbearbeitungsschritte ein Blurring sowie einer Histogramm basierter Ausgleich der Bilddaten
