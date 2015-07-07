@@ -13,13 +13,11 @@ werden:
 	Bibliothek für das Laden von Bildmaterialien aus unterschiedlichen Dateiformaten \textit{CImg}.
 	\item Bei dem dritten Datensatz führten Bildauflösungen größer als $2048xBel.$ zu nicht deterministischen Abstürzen der
 	externen Bibliothek \textit{pHash}. Ursachen für diesen Fehler sind unbekannt.
-	\begin{itemize}
-		\item Daten aus dem \textit{Course media repository} (CMR) konnten aufgrund der hohen Auflösung nicht für die 
-		experimentelle Untersuchung verwendet werden. Das Problem betrifft die folgenden Themen:
-		\begin{itemize}
-			\item Thema 1: Image Steganography
-			\item Thema 7: Digital Camera Forensics
-			\item Thema 9: Image Manipulation Detection
-		\end{itemize}
-	\end{itemize}
+	\item Die Nutzung der Daten aus dem \textit{Course media repository} (CMR) resultierte, ähnlich zu dem voranstehenden
+	Punkt in nicht nachvollziehbare Abstürze der externen Bibliothek \textit{pHash} oder der von \textit{pHash} verwendeten
+	Bibliothek \textit{CImg}. Aufgrund der teils immensen Reduzierung des nutzbaren Bildmaterials aus dem CMR, wurden
+	die restlichen Bilder der potentiellen CMR--Inhalte nicht weiter analysiert.
+	\item Mehrere CMR--Inhalte waren für eine eingehenden Analyse mittels \textit{Perceptual Hashing} entweder durch die oben
+	genannten Probleme oder durch einen stark vereinfachten Bildumfang nicht brauchbar. Diese Daten wurden ebenfalls nicht
+	näher analysiert.
 \end{itemize}
