@@ -7,10 +7,77 @@
 %---------------------------------------------------------------------------------------------------------------------
 \section{Abschluss}
 \label{sec:conclusion}
-\begin{itemize}
-	\item Wavelet generell ein großes Problem bei Modifikationen (hochfrequenter Bereich adressiert)
-	\item Native Ansätze bei zunehmenden Bilddatenumfang deutlich ineffizienter (ungeachtet der Ähnlichkeitserkennung)
-\end{itemize}
+In dem vorliegenden technischen Paper wurden vier verschiedene Algorithmen aus dem Bereich \textit{Perceptual Hashing}
+über den Bildraum mit Hilfe mehrerer verschieden definierten Experimenten analysiert und ausgewertet. Die Ergebnisse
+der Untersuchungen werden nachfolgend zusammengefasst aufgeführt.
+\\[1em]
+Jeder eingesetzte Algorithmus arbeitet auf Basis des strukturellen Aufbau des Bildmaterials (eingeteilt in hochfrequente
+und niederfrequente Anteile). Die Komplexität der Struktur hat dabei einen erheblichen Einfluss auf die Zuordnungsqualität
+während der Bestimmung von Ähnlichkeitsmaßen. Die Bedeutsamkeit der Bildmodifikationen steigt parallel mit der Erhöhung
+der strukturellen Transparenz des Bildmaterials, sodass bereits leichte Veränderungen bei einfachen Bildinhalten zu großen
+Änderungen im Aufbau führen.
+\\
+Besonders der \textit{Wavelet}--Algorithmus ist durch die Adressierung von hochfrequenten Bildbereichen (vgl. grundlegende
+Funktionsweisen von grafischen Kantendetektierungen) anfällig gegenüber geringfügigen Veränderungen. Dahingegen sind
+Rotationsänderungen (zum Beispiel horizontales Spiegel) eine Schwachstelle, die alle der vier verwendeten Algorithmen betrifft.
+\\
+Die Auswertung des durchgeführten Quervergleichs der Bildkategorie \textit{Komplexe Bilder} führte zu dem Ergebnis,
+dass die \textit{RADISH}--Vorgehensweise durch ähnliche Intensitätsverteilungen in den abgeglichenen Bildmaterial zu einer
+falschen Zuordnung von ähnlichen Bildpaaren neigt. Die Erkennungsqualitäten des \textit{BMB}--Verfahrens sinken dahingegen
+mit der gleichzeitigen Verringerungen des Thresholds.
+\\[1em]
+Ungeachtet der gemessenen Erkennungsfehlerraten operieren die Algorithmen \textit{BMB} und \textit{RADISH} durch die
+ausschließliche Nutzung einfacher Pixeloperationen effizienter als die Verfahren \textit{DCT} sowie \textit{Wavelet},
+die kostenintensive Operationen auf Pixelebene einsetzen.
+\\
+In einem direkten Vergleich der vier Algorithmen zu der nativen Herangehensweise mittels \textit{Kreuzkorrelation} wurde
+eine durchschnittliche Geschwindigkeitssteigerung von bis zu \hbox{$\sim10500\%$} protokolliert.
+\\[1em]
+Auf Basis der gemessenen Erkennungsraten sowie Berechnungszeiten besteht die Möglichkeit, ein \textit{Ranking} der vier
+Algorithmen zu Gunsten der nachstehenden Bewertungsgruppen zu definieren: \textit{FRR}, \textit{FAR}, \textit{Berechnungszeiten}
+und die Gesamtwertung.
+\\
+Die einzelnen Fehlerraten und Zeiten werden dabei aufaddiert und anschließend durch die kumulierte obere Grenze dividiert.
+Die vereinfachte Rechnung ist anwendbar, da alle quantifizierten Messwerte in dem Bereich von \hbox{$[0,1]$} liegen. Trotzdem
+ist die nachstehende \textit{Ranking}--Tabelle~\ref{tab:conclusion_ranking} nur ein Schätzmaß für die allgemeine Qualität und
+Effizienz der Algorithmen. Zum einem werden nicht vereinbare Einheiten miteinander in Verbindung gesetzt (Fehlerraten und Sekunden)
+und zum anderen sind die in Abschnitt~\ref{sec:experimental} ermittelten Maße abhängig von dem ausgewählten Bildmaterial.
+Ein Austausch des eingesetzten Materials kann dementsprechend zu einer differenzierenden \textit{Ranking}--Tabelle führen.
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|l|c|c|c|c|}
+			\mytoprule
+			\centering\bfseries Eigenschaft & \bfseries \textit{RADISH} & \bfseries \textit{DCT} & \bfseries \textit{Wavelet} & \bfseries \textit{BMB}
+			\\
+			\hline
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			\textit{FRR} & 0,39 & 0,469 & \cellcolor{myorange}0,828 & \cellcolor{mygreen}0,256
+			\\
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			\textit{FAR} & \cellcolor{myorange}0,028 & 0,0009 & \cellcolor{mygreen}0 & 0,02
+			\\
+			\hline	
+			%---------------------------------------------------------------------------------------------------------------------	
+			\textit{Geschwindigkeit} & 0,107s & 0,223s & \cellcolor{myorange}0,362s & \cellcolor{mygreen}0,038s 
+			\\	
+			\hline
+			\hline
+			%---------------------------------------------------------------------------------------------------------------------	
+			\textit{Gesamt} & 0,175 & 0,23 & \cellcolor{myorange}0,39 & \cellcolor{mygreen}0,104 
+			\\																						
+			%---------------------------------------------------------------------------------------------------------------------
+			\mybottomrule			
+		\end{tabular}
+		\caption{Ranking der Algorithmen (Eigene Darstellung)}
+		\label{tab:conclusion_ranking}
+	\end{center}
+\end{table}
+\noindent
+Der Algorithmus mit den besten Werten bezüglich der betrachteten Eigenschaft wird mit der Farbe {\color{mygreen}\rule[0cm]{0.2cm}{0.2cm}}
+hervorgehoben, wohingegen das Verfahren mit den schlechtesten Werten mit der Farbe {\color{myorange}\rule[0cm]{0.2cm}{0.2cm}} kodiert
+wird.
 
 \subsection{Zusammenfassung}
 \label{sec:summary}
