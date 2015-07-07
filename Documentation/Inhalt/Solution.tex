@@ -157,19 +157,19 @@ mit
 \end{equation*}
 \noindent
 
-\boldtext{Radial hash projections (RADISH)}\\
+\boldtext{Radial Hash Projections (RADISH)}\\
 Für die Berechnung des Hashwertes wird anstelle der Spektralkomponenten des Bildes vorerst eine Radon--Projektion auf den Bilddaten
 durchgeführt, die als Ergebnis für die Extraktion von Merkmalen dient. Der resultierende Hash wird mit Hilfe der errechneten
 Spektralkomponenten des Charakteristikbildes errechnet.
 \\
 Ein Blurring sowie eine Gamma--Anpassung werden als zusätzlichen Vorbearbeitungsschritt eingeführt.
 
-\boldtext{Marr/mexican hat wavelet (wavelet)}\\
+\boldtext{Marr/mexican hat Wavelet (Wavelet)}\\
 Diesem Verfahren werden als weitere Vorbearbeitungsschritte ein Blurring sowie einer Histogramm basierter Ausgleich der Bilddaten
 vorangestellt. Die Bestimmung der vom Bild abhängigen Merkmale und dem daraus folgenden Hashwert geschieht mittels eines
 \textit{Laplacian of Gaussian}--Kernels für die Kantenerkennung.
 
-\boldtext{Block mean value based (BMB)}\\
+\boldtext{Block Mean Value Based (BMB)}\\
 Der Kern des Ansatzes basiert auf eine über das Bild projizierte uniforme Gitterstruktur. Je nach Vorgehensweise können die Gitterzellen
 sich gegenseitig überlappen. Im Anschluss wird sowohl für jede Gitterzelle der durchschnittliche Grauwert als auch der
 Gesamtdurchschnitt aller Grauwerte der Zellen errechnet. Aus der Kombination wird der finale Hashwert ermittelt.
