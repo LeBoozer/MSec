@@ -62,6 +62,22 @@
       \verb http://phash.org/
       \endverb
     \endentry
+    \entry{DSP97}{book}{}
+      \name{labelname}{1}{}{%
+        {{hash=c8897e12373e1453d8a1004a0c4b78fc}{Smith}{S\bibinitperiod}{Steven\bibnamedelima W}{S\bibinitperiod\bibinitdelim W\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{1}{}{%
+        {{hash=c8897e12373e1453d8a1004a0c4b78fc}{Smith}{S\bibinitperiod}{Steven\bibnamedelima W}{S\bibinitperiod\bibinitdelim W\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{c8897e12373e1453d8a1004a0c4b78fc}
+      \strng{fullhash}{c8897e12373e1453d8a1004a0c4b78fc}
+      \field{labelalpha}{Smi97}
+      \field{sortinit}{0}
+      \field{sortinithash}{a08a9549c5c2429f8cec5d1a581b26ca}
+      \field{labeltitle}{Scientist and Engineer's Guide to Digital Signal Processing}
+      \field{title}{Scientist and Engineer's Guide to Digital Signal Processing}
+      \field{year}{1997}
+    \endentry
     \entry{ZAU10}{article}{}
       \name{labelname}{1}{}{%
         {{hash=dc51db3f97812c357606e44656922c0f}{Zauner}{Z\bibinitperiod}{Christop}{C\bibinitperiod}{}{}{}{}}%
@@ -118,6 +134,47 @@
       \field{labeltitle}{Comparison of Correlation Techniques}
       \field{title}{Comparison of Correlation Techniques}
       \field{year}{1995}
+    \endentry
+    \entry{AHASH}{online}{}
+      \name{labelname}{1}{}{%
+        {{hash=c5cc18800e56f4428beb653ef7bdeea0}{Krawetz}{K\bibinitperiod}{Dr.\bibnamedelimi Neal}{D\bibinitperiod\bibinitdelim N\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{1}{}{%
+        {{hash=c5cc18800e56f4428beb653ef7bdeea0}{Krawetz}{K\bibinitperiod}{Dr.\bibnamedelimi Neal}{D\bibinitperiod\bibinitdelim N\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{c5cc18800e56f4428beb653ef7bdeea0}
+      \strng{fullhash}{c5cc18800e56f4428beb653ef7bdeea0}
+      \field{labelalpha}{Kra15}
+      \field{sortinit}{0}
+      \field{sortinithash}{a08a9549c5c2429f8cec5d1a581b26ca}
+      \field{labeltitle}{Looks Like It}
+      \field{day}{07}
+      \field{month}{07}
+      \field{title}{Looks Like It}
+      \field{year}{2015}
+      \verb{url}
+      \verb http://www.hackerfactor.com/blog/%5C?/archives/432-Looks-Like-It.html
+      \endverb
+    \endentry
+    \entry{HHASH}{article}{}
+      \name{labelname}{3}{}{%
+        {{hash=dfb38c360c9d8c8caf62dc2e0032dfaf}{Xiang}{X\bibinitperiod}{Shijun}{S\bibinitperiod}{}{}{}{}}%
+        {{hash=11d8b665638b79c5ce6fe192a95d4459}{Kim}{K\bibinitperiod}{Hyoung-Joong}{H\bibinithyphendelim J\bibinitperiod}{}{}{}{}}%
+        {{hash=254654d7f02e635f738c18ed639d2c0e}{Huang}{H\bibinitperiod}{Jiwu}{J\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{3}{}{%
+        {{hash=dfb38c360c9d8c8caf62dc2e0032dfaf}{Xiang}{X\bibinitperiod}{Shijun}{S\bibinitperiod}{}{}{}{}}%
+        {{hash=11d8b665638b79c5ce6fe192a95d4459}{Kim}{K\bibinitperiod}{Hyoung-Joong}{H\bibinithyphendelim J\bibinitperiod}{}{}{}{}}%
+        {{hash=254654d7f02e635f738c18ed639d2c0e}{Huang}{H\bibinitperiod}{Jiwu}{J\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{d6c2ea9646523b1b5c78befd2b2837ac}
+      \strng{fullhash}{d6c2ea9646523b1b5c78befd2b2837ac}
+      \field{labelalpha}{XKH07}
+      \field{sortinit}{0}
+      \field{sortinithash}{a08a9549c5c2429f8cec5d1a581b26ca}
+      \field{labeltitle}{Histogram-Based Image Hashing Scheme Robust Against Geometric Deformations}
+      \field{title}{Histogram-Based Image Hashing Scheme Robust Against Geometric Deformations}
+      \field{year}{2007}
     \endentry
   \endsortlist
 \endrefsection
